@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LoopForge — Autonomous Coding Agent Loops for macOS</title>
+  <meta name="description" content="LoopForge is an open-source macOS control plane for long-running Codex and local-LLM coding agent loops, dependency-aware multi-agent graphs, and adaptive watchers.">
+  <meta name="author" content="LoopForge contributors">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+  <meta name="theme-color" content="#07111f">
+  <link rel="canonical" href="https://godicewang.github.io/LoopForge/">
+  <link rel="icon" type="image/png" href="assets/loopforge-icon.png">
+  <link rel="alternate" hreflang="en" href="https://godicewang.github.io/LoopForge/">
+  <link rel="alternate" hreflang="zh-CN" href="https://github.com/godicewang/LoopForge/blob/main/README.zh-CN.md">
+  <link rel="alternate" hreflang="x-default" href="https://godicewang.github.io/LoopForge/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LoopForge">
+  <meta property="og:title" content="LoopForge — Autonomous coding that stays observable">
+  <meta property="og:description" content="Supervise Codex, APIs, and local models with verified agent loops, dependency-aware graphs, and self-healing watchers.">
+  <meta property="og:url" content="https://godicewang.github.io/LoopForge/">
+  <meta property="og:image" content="https://godicewang.github.io/LoopForge/assets/social-preview.png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="640">
+  <meta property="og:image:alt" content="LoopForge coordinating a dependency-aware multi-agent coding graph on macOS">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LoopForge — Autonomous coding that stays observable">
+  <meta name="twitter:description" content="A native macOS control plane for verified coding agent loops, multi-agent graphs, and adaptive watchers.">
+  <meta name="twitter:image" content="https://godicewang.github.io/LoopForge/assets/social-preview.png">
+  <meta name="twitter:image:alt" content="LoopForge Auto Graph running on macOS">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://godicewang.github.io/LoopForge/#website",
+        "url": "https://godicewang.github.io/LoopForge/",
+        "name": "LoopForge",
+        "alternateName": "LoopForge Auto Loop",
+        "description": "A native macOS control plane for observable, recoverable, and verified autonomous coding.",
+        "inLanguage": "en"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://godicewang.github.io/LoopForge/#software",
+        "name": "LoopForge",
+        "applicationCategory": "DeveloperApplication",
+        "applicationSubCategory": "Autonomous coding agent orchestrator",
+        "operatingSystem": "macOS 14 or later on Apple Silicon",
+        "softwareVersion": "1.0.0",
+        "description": "Open-source macOS software for supervising Codex CLI, OpenAI-compatible APIs, and local Ollama models through single agent loops, dependency-aware multi-agent graphs, and adaptive watchers.",
+        "url": "https://godicewang.github.io/LoopForge/",
+        "downloadUrl": "https://github.com/godicewang/LoopForge/releases/latest",
+        "installUrl": "https://github.com/godicewang/LoopForge#quick-start",
+        "codeRepository": "https://github.com/godicewang/LoopForge",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "image": "https://godicewang.github.io/LoopForge/assets/social-preview.png",
+        "screenshot": [
+          "https://godicewang.github.io/LoopForge/assets/auto-graph.png",
+          "https://godicewang.github.io/LoopForge/assets/single-loop.png",
+          "https://godicewang.github.io/LoopForge/assets/continuum-watcher.png"
+        ],
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock"
+        },
+        "featureList": [
+          "Evidence-gated autonomous coding loops",
+          "Dependency-aware multi-agent execution graphs",
+          "Adaptive long-running local watchers",
+          "Crash recovery and durable checkpoints",
+          "Codex CLI, OpenAI-compatible API, and local Ollama model support",
+          "Self-contained HTML delivery reports"
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07111f;
+      --bg-deep: #040912;
+      --panel: rgba(18, 31, 50, .72);
+      --line: rgba(148, 177, 214, .16);
+      --text: #f4f8ff;
+      --muted: #9dacbf;
+      --blue: #4a9cff;
+      --cyan: #57e2db;
+      --green: #52de83;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(900px 600px at 82% -10%, rgba(45, 116, 255, .24), transparent 62%),
+        radial-gradient(700px 580px at 8% 32%, rgba(31, 219, 209, .09), transparent 62%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+      font: 16px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; }
+    img { display: block; max-width: 100%; }
+    .wrap { width: min(calc(100% - 40px), var(--max)); margin: 0 auto; }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(7, 17, 31, .78);
+      backdrop-filter: blur(22px) saturate(140%);
+    }
+    .nav-inner {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: -.02em;
+    }
+    .brand img { width: 34px; height: 34px; border-radius: 9px; }
+    .nav-links { display: flex; align-items: center; gap: 24px; }
+    .nav-links a {
+      color: var(--muted);
+      font-size: 14px;
+      text-decoration: none;
+      transition: color .18s ease;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border: 1px solid rgba(255, 255, 255, .13);
+      border-radius: 12px;
+      color: var(--text);
+      background: rgba(255, 255, 255, .06);
+      font-weight: 650;
+      text-decoration: none;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+    .button:hover { transform: translateY(-1px); background: rgba(255, 255, 255, .1); }
+    .button.primary {
+      color: #04101c;
+      border-color: transparent;
+      background: linear-gradient(135deg, #7fc0ff, #4ee3d9);
+      box-shadow: 0 12px 42px rgba(75, 169, 255, .22);
+    }
+    .button.primary:hover { background: linear-gradient(135deg, #9aceff, #6aeee5); }
+    .button.small { min-height: 38px; padding-inline: 14px; font-size: 14px; }
+
+    .hero {
+      padding: 106px 0 76px;
+      text-align: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 22px;
+      color: #b6d9ff;
+      font-size: 13px;
+      font-weight: 650;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 18px var(--green);
+    }
+    h1 {
+      max-width: 980px;
+      margin: 0 auto;
+      font-size: clamp(48px, 7vw, 86px);
+      line-height: .99;
+      letter-spacing: -.062em;
+    }
+    .gradient {
+      color: transparent;
+      background: linear-gradient(95deg, #86bdff 15%, #f4f8ff 49%, #72e4dc 84%);
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+    .lede {
+      max-width: 760px;
+      margin: 28px auto 0;
+      color: #afbed0;
+      font-size: clamp(18px, 2.3vw, 23px);
+      line-height: 1.5;
+      letter-spacing: -.017em;
+    }
+    .actions { display: flex; justify-content: center; gap: 12px; margin-top: 34px; }
+    .trust {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 9px 22px;
+      margin-top: 28px;
+      color: #7f90a6;
+      font-size: 13px;
+    }
+    .trust span::before { content: "✓"; margin-right: 7px; color: var(--green); }
+
+    .product-shot {
+      position: relative;
+      margin-top: 76px;
+      padding: 1px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(91, 176, 255, .55), rgba(255, 255, 255, .1) 36%, rgba(69, 219, 211, .32));
+      box-shadow: 0 40px 120px rgba(0, 0, 0, .55);
+    }
+    .product-shot::after {
+      content: "";
+      position: absolute;
+      inset: 22% 9% -8%;
+      z-index: -1;
+      border-radius: 50%;
+      background: rgba(47, 139, 255, .2);
+      filter: blur(76px);
+    }
+    .product-shot img { width: 100%; border-radius: 21px; }
+
+    section { padding: 96px 0; }
+    .section-head { max-width: 680px; margin-bottom: 42px; }
+    .kicker { color: var(--blue); font-size: 13px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
+    h2 { margin: 12px 0 0; font-size: clamp(34px, 4vw, 52px); line-height: 1.08; letter-spacing: -.047em; }
+    .section-head p { margin: 18px 0 0; color: var(--muted); font-size: 18px; }
+
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card {
+      min-width: 0;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(155deg, rgba(23, 40, 63, .77), rgba(10, 19, 32, .78));
+      box-shadow: inset 0 1px rgba(255, 255, 255, .025);
+    }
+    .card .number { color: var(--blue); font: 650 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace; }
+    h3 { margin: 22px 0 9px; font-size: 22px; line-height: 1.2; letter-spacing: -.027em; }
+    .card p { margin: 0; color: var(--muted); }
+    .card ul { padding: 0; margin: 20px 0 0; list-style: none; color: #d6e0ec; font-size: 14px; }
+    .card li { padding: 8px 0; border-top: 1px solid rgba(148, 177, 214, .09); }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: .82fr 1.18fr;
+      gap: 48px;
+      align-items: center;
+      padding: 32px 0;
+    }
+    .workflow + .workflow { margin-top: 48px; }
+    .workflow:nth-child(even) .copy { order: 2; }
+    .workflow:nth-child(even) .visual { order: 1; }
+    .copy p { color: var(--muted); }
+    .copy .use { color: #d9e5f2; }
+    .visual {
+      padding: 1px;
+      border-radius: 17px;
+      background: linear-gradient(135deg, rgba(81, 166, 255, .35), rgba(255, 255, 255, .09));
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .32);
+    }
+    .visual img { border-radius: 16px; }
+
+    .proof {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 42px;
+      align-items: center;
+      padding: 42px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(130deg, rgba(34, 68, 111, .5), rgba(8, 17, 29, .9));
+    }
+    .proof img { border-radius: 14px; box-shadow: 0 20px 50px rgba(0, 0, 0, .3); }
+    .metric-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 24px; }
+    .metric { min-width: 120px; }
+    .metric strong { display: block; font-size: 24px; letter-spacing: -.035em; }
+    .metric span { color: var(--muted); font-size: 13px; }
+
+    .faq { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    details {
+      align-self: start;
+      padding: 20px 22px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: rgba(17, 30, 48, .57);
+    }
+    summary { cursor: pointer; font-weight: 650; }
+    details p { margin: 13px 0 0; color: var(--muted); font-size: 15px; }
+
+    .cta {
+      padding: 68px 24px;
+      border: 1px solid rgba(111, 188, 255, .22);
+      border-radius: 26px;
+      text-align: center;
+      background:
+        radial-gradient(520px 240px at 50% 100%, rgba(46, 178, 255, .18), transparent),
+        rgba(14, 26, 43, .64);
+    }
+    .cta p { max-width: 620px; margin: 16px auto 26px; color: var(--muted); }
+
+    footer {
+      margin-top: 100px;
+      padding: 32px 0 44px;
+      border-top: 1px solid var(--line);
+      color: #77899e;
+      font-size: 13px;
+    }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; }
+    footer a { color: #9cafc4; text-decoration: none; }
+
+    @media (max-width: 850px) {
+      .nav-links > a:not(.button) { display: none; }
+      .hero { padding-top: 78px; }
+      .grid, .faq, .proof { grid-template-columns: 1fr; }
+      .workflow { grid-template-columns: 1fr; gap: 24px; }
+      .workflow:nth-child(even) .copy, .workflow:nth-child(even) .visual { order: initial; }
+      .proof { padding: 24px; }
+    }
+    @media (max-width: 520px) {
+      .wrap { width: min(calc(100% - 24px), var(--max)); }
+      .actions { flex-direction: column; }
+      .button { width: 100%; }
+      .nav .button { width: auto; }
+      h1 { font-size: 46px; }
+      section { padding: 70px 0; }
+      .footer-inner { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Primary navigation">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#" aria-label="LoopForge home">
+        <img src="assets/loopforge-icon.png" alt="">
+        <span>LoopForge</span>
+      </a>
+      <div class="nav-links">
+        <a href="#workflows">Workflows</a>
+        <a href="#evidence">Evidence</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://github.com/godicewang/LoopForge/blob/main/README.zh-CN.md" lang="zh-CN">中文</a>
+        <a class="button small" href="https://github.com/godicewang/LoopForge">View on GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <header class="hero wrap">
+      <div class="eyebrow">Open source · Native macOS</div>
+      <h1>Autonomous coding that <span class="gradient">stays accountable.</span></h1>
+      <p class="lede">LoopForge supervises Codex, APIs, and local models until real evidence—not an Agent claim—says the work is done.</p>
+      <div class="actions">
+        <a class="button primary" href="https://github.com/godicewang/LoopForge/releases/latest">Download for macOS</a>
+        <a class="button" href="https://github.com/godicewang/LoopForge#quick-start">Build from source</a>
+      </div>
+      <div class="trust" aria-label="Key project properties">
+        <span>Apache 2.0</span>
+        <span>Apple Silicon</span>
+        <span>Keys stay in Keychain</span>
+        <span>No bundled model weights</span>
+      </div>
+      <figure class="product-shot">
+        <img src="assets/auto-graph.png" width="1160" height="768" alt="LoopForge Auto Graph showing completed and dependent coding-agent nodes with audit counts and active runtime">
+      </figure>
+    </header>
+
+    <section id="why">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="kicker">Why LoopForge</span>
+          <h2>Agents can write code. Shipping requires a control plane.</h2>
+          <p>Long-running work fails at the seams: false completion, broken recovery, unsafe parallelism, and no useful handoff.</p>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <span class="number">01 / VERIFY</span>
+            <h3>Evidence over confidence</h3>
+            <p>LoopForge audits commands, tests, artifacts, screenshots, and the live workspace before accepting completion.</p>
+            <ul>
+              <li>Hard active-work targets</li>
+              <li>Iterative Main Agent review</li>
+              <li>Visible acceptance gaps</li>
+            </ul>
+          </article>
+          <article class="card">
+            <span class="number">02 / RECOVER</span>
+            <h3>Durable by design</h3>
+            <p>Atomic checkpoints preserve legitimate progress across pauses, crashes, sleep, and infrastructure failures.</p>
+            <ul>
+              <li>No invented runtime</li>
+              <li>Bounded process recovery</li>
+              <li>Inspectable control history</li>
+            </ul>
+          </article>
+          <article class="card">
+            <span class="number">03 / DELIVER</span>
+            <h3>A handoff humans can use</h3>
+            <p>Every completed task ends with a local HTML report that explains outcomes, proof, limits, and next actions.</p>
+            <ul>
+              <li>Real project screenshots</li>
+              <li>Requirement coverage</li>
+              <li>Reproducible validation</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflows">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="kicker">Three workflows</span>
+          <h2>Choose the execution shape—not a different standard of proof.</h2>
+        </div>
+
+        <article class="workflow">
+          <div class="copy">
+            <span class="kicker">Single Loop</span>
+            <h3>Finish one demanding outcome</h3>
+            <p>For builds, repairs, migrations, optimization, experiments, and baselines. The control Agent repeatedly audits the workspace and gives the Sub Agent the highest-value next instruction.</p>
+            <p class="use"><strong>Use it for:</strong> a release-ready utility, a persistent race, a slow path, or an ML baseline.</p>
+          </div>
+          <div class="visual">
+            <img src="assets/single-loop.png" width="1160" height="768" loading="lazy" alt="LoopForge Single Loop supervising a command-line repair with progress and Agent activity">
+          </div>
+        </article>
+
+        <article class="workflow">
+          <div class="copy">
+            <span class="kicker">Auto Graph</span>
+            <h3>Coordinate complex, dependent work</h3>
+            <p>Only ready nodes exist. Independent work may run in isolated Git worktrees; a dependent node is dispatched only after its complete predecessor group is integrated and audited.</p>
+            <p class="use"><strong>Use it for:</strong> backend + UI + migration, multi-module refactors, or research that must converge into implementation.</p>
+          </div>
+          <div class="visual">
+            <img src="assets/auto-graph.png" width="1160" height="768" loading="lazy" alt="LoopForge dependency-aware multi-agent execution graph with audited predecessor nodes">
+          </div>
+        </article>
+
+        <article class="workflow">
+          <div class="copy">
+            <span class="kicker">Continuum Watcher</span>
+            <h3>Automate the long tail without an Agent polling</h3>
+            <p>Codex first turns routine work into a bounded local pipeline. Rules, failures, staleness, thresholds, or periodic review wake intelligence only when judgment is useful.</p>
+            <p class="use"><strong>Use it for:</strong> anomaly monitoring, batch processing, condition alerts, or scheduled data-quality checks.</p>
+          </div>
+          <div class="visual">
+            <img src="assets/continuum-watcher.png" width="1160" height="768" loading="lazy" alt="LoopForge Continuum Watcher showing a bounded local automation pipeline and Agent wake conditions">
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="evidence">
+      <div class="wrap">
+        <div class="proof">
+          <div>
+            <span class="kicker">Evidence-backed delivery</span>
+            <h2>Know what changed without reading every diff.</h2>
+            <p class="lede" style="margin:18px 0 0;font-size:18px">The final report preserves the original contract, before/after signals, real screenshots, requirement coverage, verification runs, known limits, and the full control history.</p>
+            <div class="metric-row">
+              <div class="metric"><strong>208</strong><span>tests executed</span></div>
+              <div class="metric"><strong>0</strong><span>failures</span></div>
+              <div class="metric"><strong>17</strong><span>release scenarios</span></div>
+            </div>
+            <div class="actions" style="justify-content:flex-start;margin-top:28px">
+              <a class="button" href="examples/completion-report/">Open a real report</a>
+            </div>
+          </div>
+          <img src="assets/completion-report.jpg" width="1280" height="720" loading="lazy" alt="LoopForge self-contained HTML completion report summarizing evidence and screenshots">
+        </div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="kicker">Straight answers</span>
+          <h2>Frequently asked questions</h2>
+        </div>
+        <div class="faq">
+          <details open>
+            <summary>What is LoopForge?</summary>
+            <p>LoopForge is an open-source native macOS application that supervises autonomous coding agents. It adds durable recovery, evidence-based audits, safe parallel execution, and a readable final delivery report.</p>
+          </details>
+          <details>
+            <summary>Is LoopForge a replacement for Codex CLI?</summary>
+            <p>No. It is a control plane around official Codex, OpenAI-compatible APIs, or local Ollama models. The selected Sub Agent still performs the project work; LoopForge manages the loop and verifies the outcome.</p>
+          </details>
+          <details>
+            <summary>Does it support local LLMs?</summary>
+            <p>Yes. Local models are optional user downloads and run through Ollama with the Codex OSS tool harness. LoopForge does not bundle model weights, and API keys stay in macOS Keychain.</p>
+          </details>
+          <details>
+            <summary>How is Auto Graph different from parallel Agents?</summary>
+            <p>Auto Graph models dependencies explicitly. It dispatches only dependency-ready nodes, isolates safe parallel work in Git worktrees, integrates results, and audits a complete join group before creating dependent work.</p>
+          </details>
+          <details>
+            <summary>Can LoopForge monitor long-running tasks?</summary>
+            <p>Continuum Watcher turns recurring work into a deterministic local pass with bounded telemetry and checkpoints. It wakes an Agent for anomalies, staleness, periodic review, adaptation, or completion—not for idle polling.</p>
+          </details>
+          <details>
+            <summary>Is the macOS build notarized?</summary>
+            <p>The v1.0 community archive is ad-hoc signed, not Developer ID notarized. Until a notarized build is published, first launch may require Control-click → Open. This limitation is kept explicit.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap cta">
+        <span class="kicker">Built for work that must finish</span>
+        <h2>Give one outcome. Keep the evidence.</h2>
+        <p>Download the Apple Silicon build, or inspect every line under the Apache 2.0 license.</p>
+        <div class="actions">
+          <a class="button primary" href="https://github.com/godicewang/LoopForge/releases/latest">Get LoopForge</a>
+          <a class="button" href="https://github.com/godicewang/LoopForge">Star on GitHub</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>LoopForge is an independent open-source project.</span>
+      <span>
+        <a href="https://github.com/godicewang/LoopForge/blob/main/LICENSE">Apache 2.0</a>
+        &nbsp;·&nbsp;
+        <a href="https://github.com/godicewang/LoopForge/blob/main/SECURITY.md">Security</a>
+        &nbsp;·&nbsp;
+        <a href="https://github.com/godicewang/LoopForge/issues">Issues</a>
+      </span>
+    </div>
+  </footer>
+</body>
+</html>

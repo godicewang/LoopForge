@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If LoopForge supports your work, cite the software using this metadata."
+type: software
+title: "LoopForge"
+abstract: "A native macOS control plane for evidence-gated autonomous coding agent loops, dependency-aware multi-agent graphs, and adaptive local watchers."
+authors:
+  - family-names: "godicewang"
+    alias: "godicewang"
+    website: "https://github.com/godicewang"
+version: 1.0.0
+date-released: 2026-07-28
+url: "https://github.com/godicewang/LoopForge"
+repository-code: "https://github.com/godicewang/LoopForge"
+license: Apache-2.0
+keywords:
+  - autonomous coding agent
+  - agent loop
+  - Codex CLI
+  - multi-agent orchestration
+  - local LLM
+  - macOS

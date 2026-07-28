@@ -25,3 +25,5 @@ jobs:
         run: swift test
       - name: Release build with warnings as errors
         run: swift build -c release -Xswiftc -warnings-as-errors
+      - name: Discovery metadata
+        run: zsh Scripts/validate_discovery.sh

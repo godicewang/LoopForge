@@ -1,0 +1,52 @@
+{
+  "@context": "https://w3id.org/codemeta/3.1",
+  "@type": "SoftwareSourceCode",
+  "@id": "https://github.com/godicewang/LoopForge",
+  "name": "LoopForge",
+  "alternateName": "LoopForge Auto Loop",
+  "description": "A native macOS control plane for evidence-gated autonomous coding agent loops, dependency-aware multi-agent graphs, and adaptive local watchers.",
+  "version": "1.0.0",
+  "dateCreated": "2026-07-22",
+  "dateModified": "2026-07-28",
+  "datePublished": "2026-07-28",
+  "codeRepository": "https://github.com/godicewang/LoopForge.git",
+  "issueTracker": "https://github.com/godicewang/LoopForge/issues",
+  "downloadUrl": "https://github.com/godicewang/LoopForge/releases/latest",
+  "buildInstructions": "https://github.com/godicewang/LoopForge#build-from-source",
+  "readme": "https://github.com/godicewang/LoopForge/blob/main/README.md",
+  "license": "https://spdx.org/licenses/Apache-2.0",
+  "programmingLanguage": "Swift",
+  "runtimePlatform": "macOS 14 or later on Apple Silicon",
+  "operatingSystem": "macOS",
+  "applicationCategory": "DeveloperApplication",
+  "developmentStatus": "active",
+  "keywords": [
+    "agent loop",
+    "autonomous coding agent",
+    "Codex CLI",
+    "multi-agent orchestration",
+    "dependency graph",
+    "local LLM",
+    "Ollama",
+    "macOS developer tools",
+    "AI coding",
+    "workflow automation"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "godicewang",
+    "url": "https://github.com/godicewang"
+  },
+  "maintainer": {
+    "@type": "Person",
+    "name": "godicewang",
+    "url": "https://github.com/godicewang"
+  },
+  "softwareRequirements": [
+    "Apple Silicon Mac",
+    "macOS 14 or later",
+    "Xcode Command Line Tools when building from source"
+  ],
+  "continuousIntegration": "https://github.com/godicewang/LoopForge/actions",
+  "releaseNotes": "https://github.com/godicewang/LoopForge/blob/main/docs/RELEASE_NOTES_v1.0.0.md"
+}

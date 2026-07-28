@@ -1,0 +1,40 @@
+# LoopForge
+
+> LoopForge is an open-source native macOS control plane for autonomous coding
+> agents. It supervises official Codex, OpenAI-compatible APIs, and local Ollama
+> models through evidence-gated single loops, dependency-aware multi-agent
+> graphs, and adaptive long-running watchers.
+
+LoopForge is designed for software builds, code repair, performance work,
+experiments, complex multi-module projects, batch processing, monitoring, and
+other tasks that can be delegated to a coding agent. It preserves durable
+checkpoints, counts only successful active Sub Agent work, audits real commands
+and artifacts, and produces a self-contained HTML delivery report.
+
+## Canonical resources
+
+- [Project home](https://godicewang.github.io/LoopForge/)
+- [Source repository](https://github.com/godicewang/LoopForge)
+- [English README](https://github.com/godicewang/LoopForge/blob/main/README.md)
+- [Chinese README](https://github.com/godicewang/LoopForge/blob/main/README.zh-CN.md)
+- [Latest release](https://github.com/godicewang/LoopForge/releases/latest)
+- [Release validation](https://github.com/godicewang/LoopForge/blob/main/docs/RELEASE_VALIDATION.md)
+- [Example completion report](https://godicewang.github.io/LoopForge/examples/completion-report/)
+- [Security model](https://github.com/godicewang/LoopForge/blob/main/SECURITY.md)
+- [Contributing](https://github.com/godicewang/LoopForge/blob/main/CONTRIBUTING.md)
+
+## Core workflows
+
+- Single Loop: iterative execution and evidence-based review for one outcome.
+- Auto Graph: dependency-aware agent loops with safe Git worktree parallelism.
+- Continuum Watcher: deterministic local automation with bounded telemetry and
+  intelligent wake conditions.
+
+## Important facts
+
+- Platform: Apple Silicon, macOS 14 or later.
+- License: Apache License 2.0.
+- Models: official Codex, OpenAI-compatible APIs, or opt-in local Ollama models.
+- Privacy: API keys are stored in macOS Keychain; model weights are not bundled.
+- Distribution: the v1.0 community build is ad-hoc signed, not notarized.
+- Independence: LoopForge is not an official OpenAI or Ollama product.
