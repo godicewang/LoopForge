@@ -1,0 +1,14 @@
+帮我在当前文件夹在当前我已经打开的 Google Chrome 浏览器中用我当前的 GPT 账号打开 10 个新窗口，分别输入对应提示词，让每个窗口生成一张照片，一共 10 张。
+
+Shared visual contract: high-fidelity expected in-engine gameplay screenshot for a premium PC Steam wuxia RPG; true 16:9; orthographic or long-lens 35-degree isometric camera; roofs plus substantial vertical wall faces visible; strong foreground, midground and background depth, occlusion, elevation, parallax and cast shadows; premium stylized-realistic 3D; physically based hand-painted materials; detailed roof tiles, stone, wood grain, cloth folds and foliage volume. The player is a young East Asian wanderer in a dark teal knee-length robe-coat, rust-red scarf, tied black hair, worn leather satchel and simple sword. Restrained functional PC game HUD at the edges; no title, logo or watermark. It must look like a production-feasible real-time 3D gameplay frame with the player small at normal gameplay scale. Avoid flat illustration, vector art, paper-cut look, simple primitives, painted 2D background, top-down map, promotional key art, close-up hero pose and pixel art.
+
+1. 归雁渡全景探索：立体渡口村庄，官差盘问货郎、门派弟子经过、乞丐观察食摊、农民卸货、流民在车边休息，暖阳手绘 PBR。
+2. 庙会集市与阶级：内门弟子、外门弟子、杂役、捕快、商人、百衣会乞丐和普通民众同场活动，清晰表现衣着和地位差异。
+3. 铁匠铺与玩家造物：半开放立体工坊，玩家组合刀身、护手和刀柄，锻炉火光照亮墙面，复杂制作 UI。
+4. 农田、水车与模块建造：多层梯田、真实水体、水车和施工中的院落，NPC 工匠协作，建筑具有高度和内部功能。
+5. 自由对话：客栈院中与沈砚秋交谈，背景 NPC 仍在生活，底部自由输入与记忆线索 UI，不暂停世界。
+6. 动态身份转变：流民营地，一名农民接受乡勇武器，另一人跟随山寨招募者，还有人进入寺院队伍，展示选择而非职业菜单。
+7. 竹林夜间潜行：月光、体积雾、竹影、坡地、屋顶和守卫视线产生真实立体遮挡，新水墨与 PBR 混合。
+8. 渡口实时战斗：暴雨中乡勇、前山贼和玩家守水门，敌人可以投降，电影化写实材质和战术指令 UI。
+9. 河神庙会群体 Agent：数十名 NPC 独立交易、争执、传播流言、追踪嫌疑人，灯笼照亮建筑立面和湿地面。
+10. 四十七日后重返村庄：新粮仓、扩建院落、废弃房屋和改变职业的 NPC 同时出现，折面化但精致的低多边形 3D。

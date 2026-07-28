@@ -1,0 +1,20 @@
+name: Feature request
+description: Propose a user outcome or workflow improvement
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: textarea
+    attributes:
+      label: Problem
+      description: What outcome is difficult today, and for whom?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Desired behavior
+      description: Describe the observable result and success criteria.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Alternatives considered

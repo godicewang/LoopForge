@@ -1,0 +1,43 @@
+name: Bug report
+description: Report a reproducible LoopForge defect
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: checkboxes
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched existing issues and removed credentials/private data.
+          required: true
+        - label: This is not a security vulnerability.
+          required: true
+  - type: input
+    attributes:
+      label: LoopForge version
+      placeholder: 1.0.0 (100)
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: macOS and hardware
+      placeholder: macOS 15.x, M4 Pro, 48 GB
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Module
+      options:
+        - Single Loop
+        - Auto Graph
+        - Continuum Watcher
+        - Model or connection
+        - Packaging or permissions
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Reproduction
+      description: Minimal steps, expected result, actual result, and sanitized logs.
+    validations:
+      required: true
