@@ -144,7 +144,7 @@ struct CompletionReportGenerator {
 
         let document = """
         <!doctype html>
-        <html lang="en" data-loopforge-report-schema="3"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+        <html lang="en" data-loopforge-report-schema="3"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect rx='18' width='64' height='64' fill='%230A84FF'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='38' fill='white'%3E%E2%88%9E%3C/text%3E%3C/svg%3E">
         <title>\(html(task.displayTaskSummary)) · LoopForge Status</title>
         <style>
         :root{color-scheme:light dark;--bg:#f5f5f7;--surface:rgba(255,255,255,.84);--surface-solid:#fff;--ink:#1d1d1f;--muted:#6e6e73;--line:rgba(0,0,0,.085);--accent:#0a7aff;--accent-soft:rgba(10,122,255,.1);--ok:#248a3d;--ok-soft:rgba(36,138,61,.09);--danger:#c52b32;--shadow:0 22px 70px rgba(0,0,0,.065)}

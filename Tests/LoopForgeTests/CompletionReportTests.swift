@@ -108,6 +108,7 @@ final class CompletionReportTests: XCTestCase {
         XCTAssertTrue(html.contains("Verification and audit trail"))
         XCTAssertTrue(html.contains("dialog class=\"lightbox\""))
         XCTAssertTrue(html.contains("aria-label=\"Report sections\""))
+        XCTAssertTrue(html.contains("rel=\"icon\" href=\"data:image/svg+xml"))
         XCTAssertTrue(html.contains("Atlas &lt;script&gt;"))
         XCTAssertFalse(html.contains("<h1>Atlas <script>"))
         XCTAssertTrue(FileManager.default.fileExists(atPath: URL(fileURLWithPath: path).deletingLastPathComponent().appendingPathComponent("media/evidence-01.png").path))
