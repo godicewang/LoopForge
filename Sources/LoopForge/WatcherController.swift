@@ -41,10 +41,11 @@ final class WatcherController: ObservableObject {
         pollIntervalSeconds: TimeInterval,
         reviewIntervalSeconds: TimeInterval,
         notificationsEnabled: Bool,
-        launchAtLogin: Bool
+        launchAtLogin: Bool,
+        agentSelection: AgentSelection
     ) {
-        guard !preferredAgents().isEmpty else {
-            statusMessage = "Connect Codex, configure an API model, or download a local model first."
+        guard isAgentAvailable(agentSelection) else {
+            statusMessage = "The selected Agent is not available. Reconnect it or choose another model."
             return
         }
         let clean = request.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -78,6 +79,7 @@ final class WatcherController: ObservableObject {
             resumeOnNextLaunch: true,
             notificationsEnabled: notificationsEnabled,
             launchAtLogin: launchAtLogin,
+            agentSelection: agentSelection,
             lastProvider: nil,
             lastAgentMessage: "",
             bootstrapThreadID: nil,
@@ -244,11 +246,11 @@ final class WatcherController: ObservableObject {
         requestedReviewSeconds: TimeInterval
     ) async {
         guard var watcher = store.watcher(id: watcherID) else { return }
-        let agents = preferredAgents()
+        let agents = agents(for: watcher)
         guard !agents.isEmpty else {
             fail(
                 watcherID: watcherID,
-                message: "No healthy Agent provider is currently available."
+                message: "The selected Agent is unavailable. Reconnect it or choose another model."
             )
             return
         }
@@ -312,14 +314,14 @@ final class WatcherController: ObservableObject {
                 store.appendEvent(id: watcherID, WatcherEvent(
                     kind: .pipelineFailure,
                     severity: .warning,
-                    message: "Provider attempt \(attempt + 1) did not complete; trying the next configured fallback. \(message.prefixText(420))",
+                    message: "The selected Agent did not complete the pipeline build. \(message.prefixText(420))",
                     provider: agent.summary
                 ))
             }
         }
         fail(
             watcherID: watcherID,
-            message: "All available Agent providers failed to build the pipeline. "
+            message: "The selected Agent failed to build the pipeline. "
                 + failures.joined(separator: " · ").prefixText(900)
         )
     }
@@ -527,12 +529,12 @@ final class WatcherController: ObservableObject {
               watcher.pipeline != nil,
               watcher.status != .paused,
               watcher.status != .stopped else { return }
-        let agents = preferredAgents()
+        let agents = agents(for: watcher)
         guard !agents.isEmpty else {
             if store.watcher(id: watcherID)?.status != .paused {
                 fail(
                     watcherID: watcherID,
-                    message: "The watcher needs an Agent review, but no provider is available."
+                    message: "The watcher needs a review, but its selected Agent is unavailable."
                 )
             }
             return
@@ -662,14 +664,14 @@ final class WatcherController: ObservableObject {
                 store.appendEvent(id: watcherID, WatcherEvent(
                     kind: .pipelineFailure,
                     severity: .warning,
-                    message: "Review provider attempt \(attempt + 1) did not complete; trying the next configured fallback. \(message.prefixText(420))",
+                    message: "The selected Agent did not complete the review. \(message.prefixText(420))",
                     provider: agent.summary
                 ))
             }
         }
         fail(
             watcherID: watcherID,
-            message: "Agent review failed across all available providers. "
+            message: "The selected Agent failed to complete the review. "
                 + failures.joined(separator: " · ").prefixText(900),
             preserveSchedule: true
         )
@@ -718,44 +720,63 @@ final class WatcherController: ObservableObject {
         )
     }
 
-    private func preferredAgents() -> [AgentSelection] {
-        var candidates: [AgentSelection] = []
+    private func agents(for watcher: ContinuumWatcher) -> [AgentSelection] {
+        if let selected = watcher.agentSelection {
+            return isAgentAvailable(selected) ? [selected] : []
+        }
+
+        // Records created before explicit Watcher model selection are migrated
+        // once. Their first healthy provider becomes durable configuration so
+        // later wakes and recovery never silently change models.
+        guard let migrated = legacyPreferredAgent() else { return [] }
+        store.update(id: watcher.id) {
+            $0.agentSelection = migrated
+            $0.lastProvider = migrated.summary
+        }
+        store.appendEvent(id: watcher.id, WatcherEvent(
+            kind: .lifecycle,
+            message: "Legacy watcher model fixed to \(migrated.summary).",
+            provider: migrated.summary
+        ))
+        return [migrated]
+    }
+
+    private func isAgentAvailable(_ selection: AgentSelection) -> Bool {
+        switch selection.provider {
+        case .codex:
+            return codexConnection.isConnected
+        case .api:
+            guard let connection = selection.apiConnection else { return false }
+            return APIKeyVault.get(for: connection.id)?.isEmpty == false
+        case .local:
+            guard let profile = selection.localProfile else { return false }
+            return agentCatalog.isLocalModelReady(profile)
+        }
+    }
+
+    private func legacyPreferredAgent() -> AgentSelection? {
         if codexConnection.isConnected {
             let model = codexConnection.recommendedModel
-            let reasoning = model.supportedReasoningLevels.contains {
-                $0.effort == "high"
-            } ? "high" : CodexCatalog.strongestReasoning(for: model)
-            candidates.append(.codex(
+            return .codex(
                 model: model.slug,
                 displayName: model.displayName,
-                reasoning: reasoning,
+                reasoning: CodexCatalog.strongestReasoning(for: model),
                 access: .fullAccess
-            ))
+            )
         }
         if let api = agentCatalog.apiConnections.first(where: {
             APIKeyVault.get(for: $0.id)?.isEmpty == false
         }) {
-            candidates.append(.api(
+            return .api(
                 connection: api,
                 reasoning: api.reasoningOptions.last,
                 access: .fullAccess
-            ))
+            )
         }
         if let local = agentCatalog.localModels.first(where: agentCatalog.isLocalModelReady) {
-            candidates.append(.local(profile: local, access: .fullAccess))
+            return .local(profile: local, access: .fullAccess)
         }
-        // If no distinct fallback is configured, one fresh official session at
-        // Medium reasoning is more useful than leaving a transient High request
-        // in Needs Attention. It remains after API and Local in the priority.
-        if candidates.count == 1,
-           let first = candidates.first,
-           first.provider == .codex,
-           first.reasoningEffort != "medium" {
-            var recovery = first
-            recovery.reasoningEffort = "medium"
-            candidates.append(recovery)
-        }
-        return candidates
+        return nil
     }
 
     private func harnessTask(

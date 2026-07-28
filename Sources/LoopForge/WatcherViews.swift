@@ -1,6 +1,91 @@
 import AppKit
 import SwiftUI
 
+enum WatcherGuideStep: Int, CaseIterable {
+    case target
+    case project
+    case cadence
+    case continuity
+    case model
+    case build
+
+    var title: String {
+        switch self {
+        case .target: return "Describe the target"
+        case .project: return "Choose its workspace"
+        case .cadence: return "Set the cadence"
+        case .continuity: return "Keep it continuous"
+        case .model: return "Choose the Agent"
+        case .build: return "Build the Watcher"
+        }
+    }
+
+    var symbol: String {
+        switch self {
+        case .target: return "scope"
+        case .project: return "folder"
+        case .cadence: return "clock"
+        case .continuity: return "arrow.triangle.2.circlepath"
+        case .model: return "cpu"
+        case .build: return "sparkles"
+        }
+    }
+
+    var summary: String {
+        switch self {
+        case .target:
+            return "State the recurring outcome in plain language. Include the condition, action, and evidence you expect."
+        case .project:
+            return "Use an existing project or create a dedicated folder. The pipeline, checkpoints, telemetry, and generated reports stay there."
+        case .cadence:
+            return "Routine pass runs the inexpensive deterministic pipeline. Agent review wakes the selected model to inspect evidence and adapt the pipeline."
+        case .continuity:
+            return "Notifications surface meaningful changes. Launch at login restores active watchers after a restart from their saved checkpoint."
+        case .model:
+            return "Choose one Codex, configured API, or downloaded local model. That exact selection is retained for building, reviews, and recovery."
+        case .build:
+            return "LoopForge asks the Agent to create and verify a bounded local pipeline, then schedules it. You can pause, resume, inspect, or stop it at any time."
+        }
+    }
+
+    var notes: [String] {
+        switch self {
+        case .target:
+            return [
+                "Be specific about what should be checked or processed.",
+                "Say when to notify, repair, report, or finish."
+            ]
+        case .project:
+            return [
+                "Existing Project keeps work beside the system it operates.",
+                "New Project is useful for a standalone monitor or batch pipeline."
+            ]
+        case .cadence:
+            return [
+                "Routine pass: frequent script run without model cost.",
+                "Agent review: deeper analysis, never scheduled more often than every 2 hours.",
+                "The Agent may safely tune both after observing real data."
+            ]
+        case .continuity:
+            return [
+                "Closing the window does not stop active watchers.",
+                "Quitting saves state; the next launch resumes from the checkpoint."
+            ]
+        case .model:
+            return [
+                "Codex uses your authenticated ChatGPT account.",
+                "API uses a tested provider connection; Local uses a verified download.",
+                "Full Access lets the generated pipeline work inside the chosen project."
+            ]
+        case .build:
+            return [
+                "The first build includes policy checks and real verification.",
+                "Only signals, failures, scheduled reviews, or your actions wake the Agent."
+            ]
+        }
+    }
+}
+
 struct ContinuumSidebarView: View {
     @EnvironmentObject private var model: AppModel
     @ObservedObject var store: WatcherStore
@@ -61,6 +146,20 @@ struct ContinuumSidebarView: View {
                 .padding(.horizontal, 8)
                 .padding(.top, 14)
             }
+
+            Button {
+                model.showWatcherGuide(startingAtCadence: true)
+            } label: {
+                Label("Watcher Guide", systemImage: "questionmark.circle")
+                    .font(.callout)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 13)
+                    .frame(minHeight: 36)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(.secondary)
+            .accessibilityIdentifier("watcher-guide")
 
             Divider()
             VStack(alignment: .leading, spacing: 7) {
@@ -166,21 +265,30 @@ struct ContinuumNewWatcherView: View {
 
                 WatcherCard {
                     VStack(alignment: .leading, spacing: 12) {
-                        Label("Outcome", systemImage: "scope")
+                        Label("Target", systemImage: "scope")
                             .font(.headline)
                         TextEditor(text: $model.watcherDraftRequest)
                             .font(.body)
                             .scrollContentBackground(.hidden)
                             .padding(10)
-                            .frame(minHeight: 126)
+                            .frame(minHeight: 174)
                             .background(
                                 Color(nsColor: .textBackgroundColor).opacity(0.55),
                                 in: RoundedRectangle(cornerRadius: 10)
                             )
                             .overlay(alignment: .topLeading) {
                                 if model.watcherDraftRequest.isEmpty {
-                                    Text("Monitor, process, alert, or complete a long-running outcome…")
-                                        .foregroundStyle(.tertiary)
+                                    VStack(alignment: .leading, spacing: 6) {
+                                        Text("Try one of these:")
+                                            .fontWeight(.medium)
+                                        Text("• Check a service's error rate and notify me if it stays abnormal.")
+                                        Text("• Process new data in a folder without handling anything twice.")
+                                        Text("• Watch for an event condition, then generate a report.")
+                                        Text("• Check data quality on a schedule and safely repair deterministic issues.")
+                                        Text("• Run a long experiment, analyze each stage, and adjust its parameters.")
+                                    }
+                                        .font(.callout)
+                                        .foregroundStyle(Color.secondary.opacity(0.68))
                                         .padding(.horizontal, 15)
                                         .padding(.vertical, 18)
                                         .allowsHitTesting(false)
@@ -270,24 +378,91 @@ struct ContinuumNewWatcherView: View {
                 }
 
                 WatcherCard {
-                    HStack(spacing: 14) {
-                        Image(systemName: "cpu")
-                            .font(.title2)
-                            .foregroundStyle(Color.accentColor)
-                        VStack(alignment: .leading, spacing: 3) {
-                            Text("Automatic Agent priority")
+                    VStack(alignment: .leading, spacing: 14) {
+                        HStack {
+                            Label("Agent Model", systemImage: "cpu")
                                 .font(.headline)
-                            Text("Codex → configured API → downloaded local model")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                            Spacer()
+                            Text("Full Access")
+                                .font(.caption)
+                                .padding(.horizontal, 9)
+                                .padding(.vertical, 5)
+                                .background(Color.orange.opacity(0.13), in: Capsule())
+                                .foregroundStyle(.orange)
                         }
-                        Spacer()
-                        Text("Full Access")
+
+                        HStack(alignment: .top, spacing: 14) {
+                            watcherSettingField("Source") {
+                                Picker("Source", selection: Binding(
+                                    get: { model.watcherDraftProvider },
+                                    set: { model.setWatcherProvider($0) }
+                                )) {
+                                    ForEach(
+                                        [
+                                            AgentProviderKind.codex,
+                                            AgentProviderKind.api,
+                                            AgentProviderKind.local
+                                        ]
+                                    ) { provider in
+                                        Label(provider.title, systemImage: provider.symbol)
+                                            .tag(provider)
+                                    }
+                                }
+                                .labelsHidden()
+                            }
+
+                            watcherSettingField("Model") {
+                                if model.watcherModelChoices.isEmpty {
+                                    Button(model.watcherDraftProvider == .local ? "Download…" : "Configure…") {
+                                        model.openModelManager(
+                                            preferredProvider: model.watcherDraftProvider
+                                        )
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                } else {
+                                    Picker("Model", selection: Binding(
+                                        get: { model.watcherDraftModelReference },
+                                        set: { model.setWatcherModelReference($0) }
+                                    )) {
+                                        ForEach(model.watcherModelChoices) { choice in
+                                            Text(choice.displayName).tag(choice.id)
+                                        }
+                                    }
+                                    .labelsHidden()
+                                }
+                            }
+
+                            if !model.watcherReasoningOptions.isEmpty {
+                                watcherSettingField("Reasoning") {
+                                    Picker("Reasoning", selection: Binding(
+                                        get: { model.watcherDraftReasoningEffort },
+                                        set: { model.setWatcherReasoningEffort($0) }
+                                    )) {
+                                        ForEach(model.watcherReasoningOptions, id: \.self) {
+                                            Text($0.capitalized).tag($0)
+                                        }
+                                    }
+                                    .labelsHidden()
+                                }
+                            }
+
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text("Configuration")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                Button("Manage Models…") {
+                                    model.openModelManager(
+                                        preferredProvider: model.watcherDraftProvider
+                                    )
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+
+                        Text(model.watcherAgentSetupMessage)
                             .font(.caption)
-                            .padding(.horizontal, 9)
-                            .padding(.vertical, 5)
-                            .background(Color.orange.opacity(0.13), in: Capsule())
-                            .foregroundStyle(.orange)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(2)
                     }
                 }
 
@@ -305,7 +480,9 @@ struct ContinuumNewWatcherView: View {
                     .disabled(
                         model.watcherDraftRequest.trimmingCharacters(
                             in: .whitespacesAndNewlines
-                        ).isEmpty || model.watcherDraftWorkspacePath == nil
+                        ).isEmpty
+                            || model.watcherDraftWorkspacePath == nil
+                            || model.selectedWatcherAgent() == nil
                     )
                     .accessibilityIdentifier("build-watcher")
                 }
@@ -314,6 +491,130 @@ struct ContinuumNewWatcherView: View {
             .padding(36)
             .frame(maxWidth: .infinity)
         }
+        .onAppear {
+            model.presentWatcherGuideIfNeeded()
+        }
+    }
+
+    private func watcherSettingField<Content: View>(
+        _ title: String,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(title)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            content()
+                .pickerStyle(.menu)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+struct WatcherGuideView: View {
+    @EnvironmentObject private var model: AppModel
+    @Environment(\.dismiss) private var dismiss
+    @State private var stepIndex: Int
+
+    init(startIndex: Int) {
+        let upper = max(0, WatcherGuideStep.allCases.count - 1)
+        _stepIndex = State(initialValue: min(max(0, startIndex), upper))
+    }
+
+    private var step: WatcherGuideStep {
+        WatcherGuideStep(rawValue: stepIndex) ?? .target
+    }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack {
+                Text("Continuum Watcher Guide")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                Spacer()
+                Text("\(stepIndex + 1) of \(WatcherGuideStep.allCases.count)")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .padding(24)
+
+            ProgressView(
+                value: Double(stepIndex + 1),
+                total: Double(WatcherGuideStep.allCases.count)
+            )
+            .progressViewStyle(.linear)
+            .tint(.accentColor)
+
+            VStack(alignment: .leading, spacing: 22) {
+                HStack(alignment: .top, spacing: 18) {
+                    Image(systemName: step.symbol)
+                        .font(.system(size: 27, weight: .medium))
+                        .foregroundStyle(Color.accentColor)
+                        .frame(width: 52, height: 52)
+                        .background(Color.accentColor.opacity(0.12), in: RoundedRectangle(cornerRadius: 14))
+
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(step.title)
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                        Text(step.summary)
+                            .font(.body)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+
+                VStack(alignment: .leading, spacing: 11) {
+                    ForEach(step.notes, id: \.self) { note in
+                        HStack(alignment: .top, spacing: 10) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(Color.accentColor)
+                            Text(note)
+                                .foregroundStyle(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+                }
+                .padding(16)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color.primary.opacity(0.045), in: RoundedRectangle(cornerRadius: 12))
+            }
+            .padding(28)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+
+            Divider()
+            HStack {
+                Button("Skip All") {
+                    model.finishWatcherGuide()
+                    dismiss()
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.secondary)
+
+                Spacer()
+
+                Button("Back") {
+                    stepIndex = max(0, stepIndex - 1)
+                }
+                .disabled(stepIndex == 0)
+
+                Button(stepIndex == WatcherGuideStep.allCases.count - 1 ? "Done" : "Next") {
+                    if stepIndex == WatcherGuideStep.allCases.count - 1 {
+                        model.finishWatcherGuide()
+                        dismiss()
+                    } else {
+                        withAnimation(.easeInOut(duration: 0.18)) {
+                            stepIndex += 1
+                        }
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .keyboardShortcut(.defaultAction)
+            }
+            .padding(20)
+        }
+        .frame(width: 600, height: 470)
     }
 }
 

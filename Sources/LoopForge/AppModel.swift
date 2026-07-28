@@ -44,6 +44,7 @@ final class AppModel: ObservableObject {
     @Published var draftSubProvider: AgentProviderKind = .codex
     @Published var draftSubModelReference = AppConstants.officialWorkerModel
     @Published var showingModelManager = false
+    @Published var modelManagerPreferredProvider: AgentProviderKind = .local
     @Published var modelManagerRequestedRole: AgentRole?
     @Published var pendingTaskDeletion: LoopTask?
     @Published var showingPromptOptimizationOffer = false
@@ -58,6 +59,11 @@ final class AppModel: ObservableObject {
     @Published var watcherDraftReviewSeconds: TimeInterval = 4 * 60 * 60
     @Published var watcherDraftNotifications = true
     @Published var watcherDraftLaunchAtLogin = true
+    @Published var watcherDraftProvider: AgentProviderKind = .codex
+    @Published var watcherDraftModelReference = AppConstants.officialWorkerModel
+    @Published var watcherDraftReasoningEffort = "ultra"
+    @Published var showingWatcherGuide = false
+    @Published var watcherGuideStartIndex = 0
     @Published var showingNewWatcher = true
 
     let store: TaskStore
@@ -72,6 +78,7 @@ final class AppModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var pendingOriginalPromptForTask: String?
     private var pendingPromptOptimizationSource: String?
+    private var watcherAgentWasCustomized = false
 
     init(
         store: TaskStore? = nil,
@@ -190,6 +197,7 @@ final class AppModel: ObservableObject {
     func connectionStateChanged() {
         guard codexConnection.phase == .ready else { return }
         if draftProjectMode == nil { adoptRecommendedCodexDefaults() }
+        if !watcherAgentWasCustomized { adoptRecommendedWatcherCodexDefault() }
         resumeInterruptedTaskIfNeeded()
     }
 
@@ -279,11 +287,15 @@ final class AppModel: ObservableObject {
     func openLocalModelPicker(for role: AgentRole) {
         setProvider(.local, role: role)
         modelManagerRequestedRole = role
+        modelManagerPreferredProvider = .local
         showingModelManager = true
     }
 
-    func openModelManager() {
+    func openModelManager(preferredProvider: AgentProviderKind? = nil) {
         modelManagerRequestedRole = nil
+        if let preferredProvider, preferredProvider != .codex {
+            modelManagerPreferredProvider = preferredProvider
+        }
         showingModelManager = true
     }
 
@@ -376,6 +388,7 @@ final class AppModel: ObservableObject {
             showingNewTask = store.tasks.isEmpty
         } else {
             showingNewWatcher = watcherStore.watchers.isEmpty
+            presentWatcherGuideIfNeeded()
         }
     }
 
@@ -387,7 +400,144 @@ final class AppModel: ObservableObject {
         watcherDraftReviewSeconds = 4 * 60 * 60
         watcherDraftNotifications = true
         watcherDraftLaunchAtLogin = true
+        watcherAgentWasCustomized = false
+        adoptRecommendedWatcherCodexDefault()
         showingNewWatcher = true
+    }
+
+    func presentWatcherGuideIfNeeded() {
+        guard selectedModule == .continuumWatcher,
+              !UserDefaults.standard.bool(forKey: AppConstants.watcherGuideCompletedKey),
+              !showingWatcherGuide else { return }
+        watcherGuideStartIndex = 0
+        showingWatcherGuide = true
+    }
+
+    func showWatcherGuide(startingAtCadence: Bool = false) {
+        watcherGuideStartIndex = startingAtCadence ? WatcherGuideStep.cadence.rawValue : 0
+        showingWatcherGuide = true
+    }
+
+    func finishWatcherGuide() {
+        showingWatcherGuide = false
+        UserDefaults.standard.set(true, forKey: AppConstants.watcherGuideCompletedKey)
+    }
+
+    var watcherModelChoices: [AgentModelChoice] {
+        switch watcherDraftProvider {
+        case .codex:
+            return modelChoices(provider: .codex, role: .control)
+        case .api:
+            return modelChoices(provider: .api, role: .control)
+        case .local:
+            return modelChoices(provider: .local, role: .control).filter { choice in
+                guard let profile = agentCatalog.localProfile(idOrName: choice.id) else {
+                    return false
+                }
+                return agentCatalog.isLocalModelReady(profile)
+            }
+        }
+    }
+
+    var watcherReasoningOptions: [String] {
+        watcherModelChoices.first {
+            $0.id == watcherDraftModelReference
+        }?.reasoningOptions ?? []
+    }
+
+    var watcherSelectedModelChoice: AgentModelChoice? {
+        watcherModelChoices.first { $0.id == watcherDraftModelReference }
+    }
+
+    func setWatcherProvider(_ provider: AgentProviderKind) {
+        watcherAgentWasCustomized = true
+        watcherDraftProvider = provider
+        if provider == .codex, codexConnection.isConnected {
+            let recommended = codexConnection.recommendedModel
+            watcherDraftModelReference = recommended.slug
+            watcherDraftReasoningEffort = CodexCatalog.strongestReasoning(for: recommended)
+            return
+        }
+        if let first = watcherModelChoices.first {
+            setWatcherModelReference(first.id)
+        } else {
+            watcherDraftModelReference = ""
+            watcherDraftReasoningEffort = ""
+        }
+    }
+
+    func setWatcherModelReference(_ reference: String) {
+        watcherAgentWasCustomized = true
+        watcherDraftModelReference = reference
+        let options = watcherReasoningOptions
+        if !options.contains(watcherDraftReasoningEffort) {
+            watcherDraftReasoningEffort = options.last ?? ""
+        }
+    }
+
+    func setWatcherReasoningEffort(_ effort: String) {
+        watcherAgentWasCustomized = true
+        watcherDraftReasoningEffort = effort
+    }
+
+    func adoptRecommendedWatcherCodexDefault() {
+        watcherDraftProvider = .codex
+        let recommended = codexConnection.recommendedModel
+        watcherDraftModelReference = recommended.slug
+        watcherDraftReasoningEffort = CodexCatalog.strongestReasoning(for: recommended)
+    }
+
+    func selectedWatcherAgent() -> AgentSelection? {
+        let reasoning = watcherDraftReasoningEffort
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        switch watcherDraftProvider {
+        case .codex:
+            guard codexConnection.isConnected,
+                  let choice = watcherSelectedModelChoice else { return nil }
+            return .codex(
+                model: choice.id,
+                displayName: choice.displayName,
+                reasoning: reasoning.isEmpty ? nil : reasoning,
+                access: .fullAccess
+            )
+        case .api:
+            guard let id = UUID(uuidString: watcherDraftModelReference),
+                  let connection = agentCatalog.apiConnection(id: id),
+                  APIKeyVault.get(for: connection.id)?.isEmpty == false else {
+                return nil
+            }
+            return .api(
+                connection: connection,
+                reasoning: reasoning.isEmpty ? nil : reasoning,
+                access: .fullAccess
+            )
+        case .local:
+            guard let profile = agentCatalog.localProfile(
+                idOrName: watcherDraftModelReference
+            ), agentCatalog.isLocalModelReady(profile) else { return nil }
+            return .local(
+                profile: profile,
+                reasoning: reasoning.isEmpty ? nil : reasoning,
+                access: .fullAccess
+            )
+        }
+    }
+
+    var watcherAgentSetupMessage: String {
+        switch watcherDraftProvider {
+        case .codex:
+            return codexConnection.isConnected
+                ? (watcherSelectedModelChoice?.detail ?? "Choose a Codex model.")
+                : "Connect with ChatGPT before building, or choose API or Local Deployment."
+        case .api:
+            return watcherModelChoices.isEmpty
+                ? "Add and test an API connection in Manage Models."
+                : (watcherSelectedModelChoice?.detail ?? "Choose a configured API model.")
+        case .local:
+            return watcherModelChoices.isEmpty
+                ? "Download and verify a local model in Manage Models."
+                : (watcherSelectedModelChoice?.detail ?? "Choose a downloaded local model.")
+        }
     }
 
     func chooseExistingWatcherProject() {
@@ -443,12 +593,16 @@ final class AppModel: ObservableObject {
     func buildWatcher() {
         let request = watcherDraftRequest.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !request.isEmpty else {
-            alertMessage = "Describe what Continuum Watcher should monitor or process."
+            alertMessage = "Describe the target Continuum Watcher should monitor or process."
             return
         }
         guard let workspace = watcherDraftWorkspacePath,
               watcherDraftProjectMode != nil else {
             alertMessage = "Choose an existing project or create a project folder first."
+            return
+        }
+        guard let agentSelection = selectedWatcherAgent() else {
+            alertMessage = watcherAgentSetupMessage
             return
         }
         showingNewWatcher = false
@@ -461,7 +615,8 @@ final class AppModel: ObservableObject {
                 watcherDraftReviewSeconds
             ),
             notificationsEnabled: watcherDraftNotifications,
-            launchAtLogin: watcherDraftLaunchAtLogin
+            launchAtLogin: watcherDraftLaunchAtLogin,
+            agentSelection: agentSelection
         )
     }
 

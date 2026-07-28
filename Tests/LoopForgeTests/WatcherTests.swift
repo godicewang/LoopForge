@@ -9,6 +9,76 @@ final class WatcherTests: XCTestCase {
         ])
     }
 
+    func testWatcherGuideCoversEveryConfigurationStage() {
+        XCTAssertEqual(
+            WatcherGuideStep.allCases.map(\.title),
+            [
+                "Describe the target",
+                "Choose its workspace",
+                "Set the cadence",
+                "Keep it continuous",
+                "Choose the Agent",
+                "Build the Watcher"
+            ]
+        )
+        XCTAssertTrue(
+            WatcherGuideStep.cadence.notes.contains {
+                $0.contains("Routine pass")
+            }
+        )
+        XCTAssertTrue(
+            WatcherGuideStep.cadence.notes.contains {
+                $0.contains("Agent review")
+            }
+        )
+        XCTAssertTrue(
+            WatcherGuideStep.continuity.notes.contains {
+                $0.contains("checkpoint")
+            }
+        )
+    }
+
+    func testWatcherPersistsItsExplicitAgentAcrossRestart() throws {
+        let root = temporaryDirectory()
+        var watcher = makeWatcher(workspace: root)
+        watcher.agentSelection = .codex(
+            model: "gpt-test-latest",
+            displayName: "GPT Test Latest",
+            reasoning: "ultra",
+            access: .fullAccess
+        )
+
+        let data = try JSONEncoder.loopForge.encode(watcher)
+        let restored = try JSONDecoder.loopForge.decode(
+            ContinuumWatcher.self,
+            from: data
+        )
+
+        XCTAssertEqual(restored.agentSelection, watcher.agentSelection)
+        XCTAssertEqual(restored.agentSelection?.modelID, "gpt-test-latest")
+        XCTAssertEqual(restored.agentSelection?.reasoningEffort, "ultra")
+        XCTAssertEqual(restored.agentSelection?.accessMode, .fullAccess)
+    }
+
+    func testLegacyWatcherWithoutAgentSelectionStillDecodes() throws {
+        let root = temporaryDirectory()
+        let watcher = makeWatcher(workspace: root)
+        let encoded = try JSONEncoder.loopForge.encode(watcher)
+        var object = try XCTUnwrap(
+            JSONSerialization.jsonObject(with: encoded) as? [String: Any]
+        )
+        object.removeValue(forKey: "agentSelection")
+
+        let legacy = try JSONSerialization.data(withJSONObject: object)
+        let restored = try JSONDecoder.loopForge.decode(
+            ContinuumWatcher.self,
+            from: legacy
+        )
+
+        XCTAssertNil(restored.agentSelection)
+        XCTAssertEqual(restored.request, watcher.request)
+    }
+
     func testSignalKindsAcceptRatesRatiosAndFuturePresentationMetadata() throws {
         let decoder = JSONDecoder()
         XCTAssertEqual(

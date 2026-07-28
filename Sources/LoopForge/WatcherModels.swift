@@ -265,6 +265,7 @@ struct ContinuumWatcher: Codable, Identifiable, Equatable {
     var resumeOnNextLaunch: Bool
     var notificationsEnabled: Bool
     var launchAtLogin: Bool
+    var agentSelection: AgentSelection? = nil
     var lastProvider: String?
     var lastAgentMessage: String
     var bootstrapThreadID: String?

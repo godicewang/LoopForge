@@ -422,6 +422,10 @@ private struct WorkspaceShell: View {
             .background(Color(nsColor: .windowBackgroundColor))
         }
         .navigationSplitViewStyle(.balanced)
+        .sheet(isPresented: $model.showingWatcherGuide) {
+            WatcherGuideView(startIndex: model.watcherGuideStartIndex)
+                .environmentObject(model)
+        }
     }
 }
 
@@ -1103,11 +1107,13 @@ private struct ModelManagerView: View {
             .padding(20)
 
             Divider()
-            TabView {
+            TabView(selection: $model.modelManagerPreferredProvider) {
                 localModelsTab
                     .tabItem { Label("Local Deployment", systemImage: "desktopcomputer") }
+                    .tag(AgentProviderKind.local)
                 apiConnectionsTab
                     .tabItem { Label("API Connections", systemImage: "network") }
+                    .tag(AgentProviderKind.api)
             }
             .padding(16)
         }

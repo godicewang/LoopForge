@@ -1089,6 +1089,7 @@ enum AppConstants {
     static let minimumCustomRuntimeMinutes = 15
     static let ollamaHost = "127.0.0.1:11434"
     static let codexOnboardingKey = "loopforge.codex-onboarding-complete.v3"
+    static let watcherGuideCompletedKey = "loopforge.watcher-guide-complete.v1"
     static let appManagementConfirmationKey = "loopforge.app-management-confirmed.v1"
     static let permissionOnboardingDismissedKey = "loopforge.permission-onboarding-dismissed.v1"
 }
