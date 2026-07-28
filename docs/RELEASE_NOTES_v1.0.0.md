@@ -13,7 +13,7 @@ Version 1.0 ships three production workflows:
 ## Release evidence
 
 - 17 comprehensive scenarios across two independent passes.
-- 205 tests executed with 0 failures.
+- 206 tests executed with 0 failures.
 - Real process, Git worktree, AppKit screenshot, checkpoint recovery, timeout,
   pressure, cardinality, stale-data, and workspace-boundary coverage.
 - Pinned, checksum-verified Codex `0.145.0-alpha.30` and Ollama `0.32.0`.

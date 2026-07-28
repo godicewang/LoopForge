@@ -17,7 +17,7 @@
   <img alt="macOS 14+" src="https://img.shields.io/badge/macOS-14%2B-111111?logo=apple">
   <img alt="Apple Silicon" src="https://img.shields.io/badge/Apple%20Silicon-native-111111">
   <img alt="Swift" src="https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white">
-  <img alt="测试" src="https://img.shields.io/badge/tests-205%20passed-24A148">
+  <img alt="测试" src="https://img.shields.io/badge/tests-206%20passed-24A148">
   <img alt="许可证" src="https://img.shields.io/badge/license-Apache--2.0-4C6EF5">
 </p>
 
@@ -148,7 +148,7 @@ v1.0 候选版本已完成两轮独立验证：
 
 - Single Loop、Auto Graph、Continuum Watcher 共 **17 个复杂综合场景**；
 - 第一轮含 **至少 5 类 Watcher 任务**，第二轮重新覆盖压力、超时、恢复与高基数边界；
-- **205 项测试、0 失败**；另有 6 项需要外部密钥、本地模型或已登录浏览器的测试，默认明确跳过。
+- **206 项测试、0 失败**；另有 6 项需要外部密钥、本地模型或已登录浏览器的测试，默认明确跳过。
 
 全部场景与实际修复见 [发布验证报告](docs/RELEASE_VALIDATION.md)。
 

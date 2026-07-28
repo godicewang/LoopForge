@@ -51,13 +51,15 @@ packaged LoopForge application.
 - The process line buffer was changed from repeated whole-buffer scans to a
   single-pass bounded stream parser. The 25 MB pressure scenario changed from a
   10-second timeout to a successful run in approximately 2.5 seconds.
+- Python-style fractional RFC 3339 timestamps now decode consistently across
+  macOS/Swift Foundation releases, including clean GitHub-hosted runners.
 - Public-facing workspace paths are abbreviated with `~` to avoid exposing the
   local account name in screenshots.
 
 ## Final regression
 
 ```text
-205 tests executed
+206 tests executed
 0 failures
 6 explicit external-environment skips
 ```

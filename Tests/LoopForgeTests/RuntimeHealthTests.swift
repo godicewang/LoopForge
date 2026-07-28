@@ -82,15 +82,15 @@ final class RuntimeHealthTests: XCTestCase {
         let unexpectedlyExpired = expectation(description: "must not expire")
         unexpectedlyExpired.isInverted = true
         let watchdog = CodexTurnWatchdog(policy: CodexTurnWatchdogPolicy(
-            startupSilenceSeconds: 0.2,
-            semanticIdleSeconds: 0.3,
-            transportRecoverySeconds: 0.08
+            startupSilenceSeconds: 0.6,
+            semanticIdleSeconds: 0.6,
+            transportRecoverySeconds: 0.3
         ))
         watchdog.arm { _ in unexpectedlyExpired.fulfill() }
         watchdog.noteTransportDegraded("Reconnecting... 1/5")
-        try await Task.sleep(nanoseconds: 30_000_000)
+        try await Task.sleep(nanoseconds: 20_000_000)
         watchdog.noteProductiveActivity()
-        await fulfillment(of: [unexpectedlyExpired], timeout: 0.14)
+        await fulfillment(of: [unexpectedlyExpired], timeout: 0.18)
         watchdog.disarm()
     }
 

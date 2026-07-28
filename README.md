@@ -17,7 +17,7 @@
   <img alt="macOS 14+" src="https://img.shields.io/badge/macOS-14%2B-111111?logo=apple">
   <img alt="Apple Silicon" src="https://img.shields.io/badge/Apple%20Silicon-native-111111">
   <img alt="Swift" src="https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white">
-  <img alt="Tests" src="https://img.shields.io/badge/tests-205%20passed-24A148">
+  <img alt="Tests" src="https://img.shields.io/badge/tests-206%20passed-24A148">
   <img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-4C6EF5">
 </p>
 
@@ -187,7 +187,7 @@ The v1.0 candidate completed two independent scenario passes:
   Continuum Watcher;
 - **5+ distinct Watcher workloads** in the first pass, followed by fresh
   pressure, timeout, recovery, and cardinality tests;
-- **205 tests executed, 0 failures**, with 6 external credential/model/browser
+- **206 tests executed, 0 failures**, with 6 external credential/model/browser
   integrations explicitly opt-in.
 
 The exact scenarios and defects found are documented in

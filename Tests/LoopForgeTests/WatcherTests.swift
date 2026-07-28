@@ -320,6 +320,38 @@ final class WatcherTests: XCTestCase {
         XCTAssertEqual(telemetry.checkpoint, "fixture-12")
     }
 
+    func testPersistenceDecoderAcceptsPortableWatcherTimestampVariants() throws {
+        let template = """
+        {
+          "schemaVersion": 1,
+          "capturedAt": "%@",
+          "status": "ok",
+          "summary": "Portable timestamp",
+          "signals": {},
+          "events": [],
+          "completed": false,
+          "checkpoint": "portable"
+        }
+        """
+        let variants = [
+            "2026-07-28T12:13:09.123456Z",
+            "2026-07-28T12:13:09.123Z",
+            "2026-07-28T12:13:09Z",
+            "2026-07-28T20:13:09.123456+08:00"
+        ]
+
+        for timestamp in variants {
+            let payload = String(format: template, timestamp)
+            XCTAssertNoThrow(
+                try JSONDecoder.loopForge.decode(
+                    WatcherTelemetryEnvelope.self,
+                    from: Data(payload.utf8)
+                ),
+                "Failed to decode \(timestamp)"
+            )
+        }
+    }
+
     private func makePipeline() -> WatcherPipeline {
         WatcherPipeline(
             schemaVersion: 1,

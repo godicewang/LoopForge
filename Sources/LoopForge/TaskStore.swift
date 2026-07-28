@@ -283,7 +283,36 @@ extension JSONEncoder {
 extension JSONDecoder {
     static var loopForge: JSONDecoder {
         let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
+        // Watcher pipelines are intentionally language-agnostic. Python's
+        // `datetime.isoformat()` commonly emits six fractional digits, while
+        // Foundation's built-in `.iso8601` strategy has accepted that format
+        // inconsistently across macOS releases. Decode both fractional and
+        // whole-second RFC 3339 timestamps so a pipeline behaves identically
+        // on the user's Mac and on a clean release runner.
+        decoder.dateDecodingStrategy = .custom { decoder in
+            let container = try decoder.singleValueContainer()
+            let value = try container.decode(String.self)
+
+            let fractional = ISO8601DateFormatter()
+            fractional.formatOptions = [
+                .withInternetDateTime,
+                .withFractionalSeconds
+            ]
+            if let date = fractional.date(from: value) {
+                return date
+            }
+
+            let wholeSeconds = ISO8601DateFormatter()
+            wholeSeconds.formatOptions = [.withInternetDateTime]
+            if let date = wholeSeconds.date(from: value) {
+                return date
+            }
+
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Expected an RFC 3339 / ISO-8601 timestamp."
+            )
+        }
         return decoder
     }
 }

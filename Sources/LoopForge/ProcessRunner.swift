@@ -100,17 +100,24 @@ private final class LineBuffer {
 
     private func appendPending(_ fragment: Data.SubSequence) {
         guard !fragment.isEmpty else { return }
-        let available = maximumLineBytes - min(data.count, maximumLineBytes)
-        if fragment.count <= available {
+
+        // Stay allocation-free for ordinary output. Once a single line
+        // crosses the limit, retain a rolling tail and compact only after the
+        // buffer has grown back to the full limit. The previous implementation
+        // copied a multi-megabyte Data value for every small pipe chunk, which
+        // made a 25 MB no-newline child output disproportionately expensive on
+        // slower/shared machines.
+        if data.count + fragment.count <= maximumLineBytes {
             data.append(contentsOf: fragment)
             return
         }
-        let combinedTailCount = min(maximumLineBytes, data.count + fragment.count)
-        if fragment.count >= combinedTailCount {
-            data = Data(fragment.suffix(combinedTailCount))
+
+        let tailTarget = max(1, maximumLineBytes / 2)
+        if fragment.count >= tailTarget {
+            data = Data(fragment.suffix(tailTarget))
         } else {
-            let retainedPrefixCount = combinedTailCount - fragment.count
-            data = Data(data.suffix(retainedPrefixCount))
+            let retainedTailCount = max(0, tailTarget - fragment.count)
+            data = Data(data.suffix(retainedTailCount))
             data.append(contentsOf: fragment)
         }
         pendingWasTruncated = true

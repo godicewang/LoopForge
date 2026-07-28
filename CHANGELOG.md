@@ -24,12 +24,14 @@ All notable user-visible changes are documented here.
 - Atomic persistence and safe interruption recovery.
 - Watcher path, file, cardinality, output, timeout, freshness, revision, and
   environment-secret boundaries.
+- Portable RFC 3339 telemetry decoding across macOS releases and bounded
+  rolling-tail capture for very large no-newline child output.
 - Full graph predecessor, integration, and review gates before successor
   dispatch.
 
 ### Validated
 
 - 17 comprehensive cross-module release scenarios.
-- 205 tests executed with 0 failures and 6 explicit external-environment skips.
+- 206 tests executed with 0 failures and 6 explicit external-environment skips.
 
 [1.0.0]: https://github.com/godicewang/LoopForge/releases/tag/v1.0.0
