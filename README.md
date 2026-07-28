@@ -50,15 +50,21 @@ local HTML delivery page instead of stopping at an Agent claim.
 
 ## Why LoopForge
 
-- **Finish, do not merely answer.** Hard active-work targets, iterative audits,
-  reproducible commands, visual evidence, and a final delivery gate.
-- **Parallelize only when safe.** Auto Graph materializes work only after its
-  predecessors are completed, integrated, and reviewed.
-- **Stop paying an Agent to wait.** Continuum Watcher turns recurring work into
-  a bounded local pipeline and wakes intelligence only for anomalies, reviews,
-  adaptation, or completion.
-- **Keep control visible.** Every instruction, iteration, checkpoint, branch
-  replacement, blocked interval, and Main Agent decision remains inspectable.
+- **Minimal interaction.** A native macOS interface turns complex Agent-loop
+  control into an automatic workflow: describe the outcome, adjust a few clear
+  parameters, and let LoopForge coordinate demanding general-purpose work.
+- **Built for exceptionally long, complex tasks.** Start with one sentence and,
+  within the runtime and permissions you approve, LoopForge can work
+  independently for more than 20 hours toward a production-grade deliverable.
+- **Results you can actually see.** Every completed task opens a visual HTML
+  delivery page with outcomes, changes, real screenshots, verification,
+  limitations, and next steps—restoring the control often lost in vibe coding.
+- **One product, three Agent backends.** Use an existing Codex/ChatGPT account,
+  connect common third-party APIs with both Responses and Chat Completions
+  compatibility, or download an open model for local deployment.
+- **Fully open source.** The complete LoopForge application is available under
+  Apache 2.0, including its orchestration, recovery, audit, graph, Watcher, and
+  delivery-report implementation.
 
 ## Three workflows
 
