@@ -378,7 +378,7 @@
     <header class="hero wrap">
       <div class="eyebrow">Open source · Native macOS</div>
       <h1>Autonomous coding that <span class="gradient">stays accountable.</span></h1>
-      <p class="lede">LoopForge supervises Codex, APIs, and local models until real evidence—not an Agent claim—says the work is done.</p>
+      <p class="lede">A native macOS tool built around the Codex agent architecture. Give it one outcome and it automatically plans, runs, audits, recovers, and continues through Single Loop, Auto Graph, or Continuum Watcher.</p>
       <div class="actions">
         <a class="button primary" href="https://github.com/godicewang/LoopForge/releases/latest">Download for macOS</a>
         <a class="button" href="https://github.com/godicewang/LoopForge#quick-start">Build from source</a>
@@ -515,11 +515,15 @@
           </details>
           <details>
             <summary>Is LoopForge a replacement for Codex CLI?</summary>
-            <p>No. It is a control plane around official Codex, OpenAI-compatible APIs, or local Ollama models. The selected Sub Agent still performs the project work; LoopForge manages the loop and verifies the outcome.</p>
+            <p>No. The official Codex CLI is included in the app; users do not install it separately. LoopForge uses Codex, OpenAI-compatible APIs, or local models as Agents, then manages the loop and verifies the outcome.</p>
           </details>
           <details>
             <summary>Does it support local LLMs?</summary>
-            <p>Yes. Local models are optional user downloads and run through Ollama with the Codex OSS tool harness. LoopForge does not bundle model weights, and API keys stay in macOS Keychain.</p>
+            <p>Yes. The Ollama runtime is included, so only the selected model weights are downloaded. Local models use the Codex OSS tool harness; API keys stay in macOS Keychain.</p>
+          </details>
+          <details>
+            <summary>How does Codex sign-in work?</summary>
+            <p>LoopForge first reuses an existing Codex/ChatGPT session. If no session exists, click Connect with ChatGPT and complete the official device authorization in the browser. API and local-model workflows can run without Codex sign-in.</p>
           </details>
           <details>
             <summary>How is Auto Graph different from parallel Agents?</summary>
@@ -530,8 +534,8 @@
             <p>Continuum Watcher turns recurring work into a deterministic local pass with bounded telemetry and checkpoints. It wakes an Agent for anomalies, staleness, periodic review, adaptation, or completion—not for idle polling.</p>
           </details>
           <details>
-            <summary>Is the macOS build notarized?</summary>
-            <p>The v1.0 community archive is ad-hoc signed, not Developer ID notarized. Until a notarized build is published, first launch may require Control-click → Open. This limitation is kept explicit.</p>
+            <summary>Why may macOS ask me to confirm first launch?</summary>
+            <p>The current community build has not yet been Apple-notarized. Users do not configure signing; macOS may require Control-click → Open once. A future notarized release will remove this step.</p>
           </details>
         </div>
       </div>

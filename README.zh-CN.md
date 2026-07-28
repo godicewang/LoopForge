@@ -23,7 +23,15 @@
 
 ![LoopForge Auto Graph 完成一个真实项目](docs/assets/auto-graph.png)
 
-LoopForge 让长时间 Agent 工作持续推进，同时保持可见、可暂停、可恢复和可审计。它可以监督官方 Codex、兼容 API 或本地 Ollama 模型，验证真实命令和截图，并以本地 HTML 交付页结束任务，而不是停在一句“已经完成”。
+LoopForge 是一款围绕 Codex Agent 架构构建的原生 macOS 工具，通过全自动
+Single Loop、依赖感知 Auto Graph 和自适应 Continuum Watcher 三种 Loop
+形态完成超长、复杂任务。安装包已内置官方 Codex 和 Ollama 运行时，同时
+支持第三方 API，以及按需下载开源模型到本地运行。
+
+用户只需给出一个结果目标，LoopForge 就会自动持续规划、执行、审计、恢复
+并发出下一步指令，同时保持过程可见、可暂停、可恢复和可检查。它验证真实
+命令、产物、测试和截图，并以本地 HTML 交付页结束任务，而不是停在 Agent
+的一句“已经完成”。
 
 ## 目录
 
@@ -34,7 +42,6 @@ LoopForge 让长时间 Agent 工作持续推进，同时保持可见、可暂停
 - [运行逻辑](#运行逻辑)
 - [关键控制项](#关键控制项)
 - [模型隐私与权限](#模型隐私与权限)
-- [验证结果](#验证结果)
 - [参与贡献](#参与贡献)
 
 ## 为什么使用 LoopForge
@@ -82,27 +89,62 @@ Codex 首先把常规部分固化为一次性、幂等、带原子遥测和检�
 
 ## 快速开始
 
-### 下载应用
+### 1. 安装 LoopForge
 
-1. 在 [最新 Release](https://github.com/godicewang/LoopForge/releases/latest) 下载 `LoopForge-macOS-arm64.zip`。
-2. 解压并把 **LoopForge.app** 拖入 `/Applications`。
-3. 打开应用，按任务需要授予权限，并使用已有 Codex/ChatGPT 登录连接。
+以下两种安装方式任选其一：
 
-LoopForge v1.0 支持 Apple Silicon 与 macOS 14 及以上。当前社区包为 ad-hoc 签名；在提供 Developer ID 公证包前，首次启动可能需要 **按住 Control 点击 → 打开**。
+- **下载应用——推荐。** 在
+  [最新 Release](https://github.com/godicewang/LoopForge/releases/latest)
+  下载 `LoopForge-macOS-arm64.zip`，解压并把 **LoopForge.app** 拖入
+  `/Applications`。安装包已经包含 Codex CLI 和 Ollama 运行时。
+- **从源码构建。** 适合开发 LoopForge 本身，需要 Xcode Command Line
+  Tools、`curl` 和 Apple Silicon：
 
-### 从源码构建
+  ```bash
+  git clone https://github.com/godicewang/LoopForge.git
+  cd LoopForge
+  zsh Scripts/bootstrap_vendor.sh
+  zsh Scripts/package_app.sh
+  open dist/LoopForge.app
+  ```
 
-需要 Xcode Command Line Tools、`curl` 和 Apple Silicon。
+源码构建脚本会下载并校验固定版本的官方 Codex 与 Ollama 发行文件；仓库和
+应用包均不携带模型权重。
+两种方式均要求 Apple Silicon 和 macOS 14 及以上。
 
-```bash
-git clone https://github.com/godicewang/LoopForge.git
-cd LoopForge
-zsh Scripts/bootstrap_vendor.sh
-zsh Scripts/package_app.sh
-open dist/LoopForge.app
-```
+当前社区包尚未完成 Apple 公证。用户不需要配置签名；首次打开时 macOS
+可能需要执行一次 **按住 Control 点击 → 打开**。
 
-脚本会下载并校验固定版本的官方 Codex 与 Ollama 发行文件；仓库和应用包均不携带模型权重。
+### 2. 选择 Agent 后端
+
+以下三种方式彼此独立，都能使用相同的 LoopForge 工作流：
+
+- **官方 Codex——默认选项，适合要求最高智能体能力的任务。** 无需另行
+  安装 Codex。LoopForge 首次启动会自动检查已有 Codex/ChatGPT 登录；如果
+  尚未登录，点击 **Connect with ChatGPT**，在浏览器完成官方设备授权即可，
+  无需向 LoopForge 填写 API Key。
+- **API 模型——适合已有第三方模型账号或需要指定云端模型的用户。** 选择
+  Continue with Local or API Models，进入 **Manage Models → API
+  Connections**，选择服务商并填写 API Key。密钥只保存在 macOS Keychain，
+  模型继续使用相同的 Codex 工具框架和 Loop 控制逻辑。
+- **本地模型——适合强调隐私或离线推理的任务。** 选择 Continue with Local
+  or API Models，进入 **Manage Models → Local Deployment**，点击下载所需
+  模型。Ollama 运行时已经内置，只会额外下载模型权重；无需安装 Ollama，
+  也无需登录 Codex。
+
+Loop Control Agent 和 Sub Agent 可以分别选择不同的模型后端。
+
+### 3. 选择工作方式
+
+- **Single Loop：** 面向一个明确构建、修复、优化、实验或 baseline 的
+  全自动“执行—审计—继续”循环。
+- **Auto Graph：** 面向复杂多模块任务的依赖感知并行 Agent Loop，分阶段
+  安全集成并审计后再继续派发。
+- **Continuum Watcher：** 面向常驻、批量、长耗时监控或处理任务的本地
+  持久管线，只在需要判断或调整时唤醒 Agent。
+
+新建或选择项目，输入一个结果目标，选择 Task Quality 与 Agent 配置，按需
+调整建议工作时长，然后启动 Loop。
 
 ### 运行测试
 
@@ -146,23 +188,14 @@ Watcher 每次只执行一个有界确定性 pass 然后退出。遥测、检查
 
 ## 模型隐私与权限
 
-两个角色默认使用本机官方 Codex CLI 返回的最新模型、最强可用推理和 Full Access。用户也可以选择：
+两个角色默认使用 LoopForge 内置或本机已有的官方 Codex CLI 返回的最新
+模型、最强可用推理和 Full Access。用户也可以选择：
 
 - 使用 Mac 已有 ChatGPT 身份的官方 Codex；
 - 保存的 OpenAI-compatible API；
 - 通过 Codex OSS 工具框架工作的 Ollama 本地模型。
 
 API Key 只保存在 macOS Keychain，不进入任务 JSON 或命令参数。Watcher 子进程使用最小环境，不能继承无关 API/CI 密钥。本地模型必须由用户确认下载，并通过大小、能力、摘要与真实响应检查。详见 [SECURITY.md](SECURITY.md)。
-
-## 验证结果
-
-v1.0 候选版本已完成两轮独立验证：
-
-- Single Loop、Auto Graph、Continuum Watcher 共 **17 个复杂综合场景**；
-- 第一轮含 **至少 5 类 Watcher 任务**，第二轮重新覆盖压力、超时、恢复与高基数边界；
-- **208 项测试、0 失败**；另有 6 项需要外部密钥、本地模型或已登录浏览器的测试，默认明确跳过。
-
-全部场景与实际修复见 [发布验证报告](docs/RELEASE_VALIDATION.md)。
 
 ## 参与贡献
 
