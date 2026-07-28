@@ -17,7 +17,7 @@
   <img alt="macOS 14+" src="https://img.shields.io/badge/macOS-14%2B-111111?logo=apple">
   <img alt="Apple Silicon" src="https://img.shields.io/badge/Apple%20Silicon-native-111111">
   <img alt="Swift" src="https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white">
-  <img alt="测试" src="https://img.shields.io/badge/tests-206%20passed-24A148">
+  <img alt="测试" src="https://img.shields.io/badge/tests-208%20passed-24A148">
   <img alt="许可证" src="https://img.shields.io/badge/license-Apache--2.0-4C6EF5">
 </p>
 
@@ -29,6 +29,7 @@ LoopForge 让长时间 Agent 工作持续推进，同时保持可见、可暂停
 
 - [为什么使用 LoopForge](#为什么使用-loopforge)
 - [三种工作方式](#三种工作方式)
+- [任务交付页](#任务交付页)
 - [快速开始](#快速开始)
 - [运行逻辑](#运行逻辑)
 - [关键控制项](#关键控制项)
@@ -53,6 +54,8 @@ LoopForge 让长时间 Agent 工作持续推进，同时保持可见、可暂停
 
 示例：修复持久化竞态 · 完成可发布工具 · 复现并优化慢路径 · 建立机器学习 baseline。
 
+如果一个结果不够，可以启用 **Parallel candidates**，选择 **2–8** 份结果。LoopForge 会在彼此隔离的 Git worktree 中完成它们，再由 Agent 根据证据自动保留最佳结果，或交给用户最终选择。
+
 ### Auto Graph：协同完成复杂系统
 
 ![LoopForge Auto Graph 执行图](docs/assets/auto-graph.png)
@@ -68,6 +71,14 @@ Main Graph Agent 只创建当前可以执行的节点。相互独立的节点可
 Codex 首先把常规部分固化为一次性、幂等、带原子遥测和检查点的程序；轻量调度器负责运行。只有规则、陈旧数据、失败、阈值或周期复核才会唤醒 Agent，分析当前状态并改进管线本身。
 
 示例：服务与安全异常监控 · 大批量数据处理 · 条件达成通知 · 周期性数据质量检查。
+
+## 任务交付页
+
+![LoopForge 带真实证据的本地任务交付页](docs/assets/completion-report.jpg)
+
+每个完成任务都会生成一个本地、自包含的 HTML 交付页。首屏先给出结果、有效工作时长与审计置信度，随后依次呈现原始任务、前后变化、项目真实截图、需求证据覆盖、验证命令、已知限制、后续建议和完整控制历史。截图可以放大查看；缺失的证据会被明确标出，不会被模型结论掩盖。
+
+任务顶部的 **Final Report** 可以随时重新打开交付页。由正式渲染器生成的可复现实例位于 [`docs/examples/completion-report`](docs/examples/completion-report)。
 
 ## 快速开始
 
@@ -125,12 +136,13 @@ Watcher 每次只执行一个有界确定性 pass 然后退出。遥测、检查
 | **Task Quality** | Lightweight、Normal、Enhanced、Ultra 四档证据深度 |
 | **Active runtime** | 根据目标建议，开始前可增减 |
 | **Single / Graph / Candidates** | 单循环、依赖图或隔离候选结果 |
+| **Candidate branches** | 可选 2–8 个隔离 Git worktree，并由 Agent 或用户保留最佳结果 |
 | **Loop Control Agent** | 规划、审计、恢复并决定下一条指令 |
 | **Sub Agent** | 执行具体项目任务 |
 | **Full Access / Workspace Only** | 为两个角色分别设置权限边界 |
 | **Pause Task** | 保存检查点并等待进程安全退出 |
 | **End Task…** | 停止 Agent，同时保留项目与证据 |
-| **Final Report** | 打开完整本地交付页 |
+| **Final Report** | 打开包含真实截图与验证证据的本地交付页 |
 
 ## 模型隐私与权限
 
@@ -148,7 +160,7 @@ v1.0 候选版本已完成两轮独立验证：
 
 - Single Loop、Auto Graph、Continuum Watcher 共 **17 个复杂综合场景**；
 - 第一轮含 **至少 5 类 Watcher 任务**，第二轮重新覆盖压力、超时、恢复与高基数边界；
-- **206 项测试、0 失败**；另有 6 项需要外部密钥、本地模型或已登录浏览器的测试，默认明确跳过。
+- **208 项测试、0 失败**；另有 6 项需要外部密钥、本地模型或已登录浏览器的测试，默认明确跳过。
 
 全部场景与实际修复见 [发布验证报告](docs/RELEASE_VALIDATION.md)。
 

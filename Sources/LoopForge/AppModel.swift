@@ -130,6 +130,7 @@ final class AppModel: ObservableObject {
             guard let path = task.completionReportPath,
                   let document = try? String(contentsOfFile: path, encoding: .utf8),
                   !document.contains("data-loopforge-report-schema=\"2\""),
+                  !document.contains("data-loopforge-report-schema=\"3\""),
                   document.contains(
                     "<h2>Verification runs</h2><ul><li>No verified item is available yet.</li>"
                   ) else { continue }

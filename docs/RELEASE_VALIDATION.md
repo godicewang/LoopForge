@@ -59,7 +59,7 @@ packaged LoopForge application.
 ## Final regression
 
 ```text
-206 tests executed
+208 tests executed
 0 failures
 6 explicit external-environment skips
 ```

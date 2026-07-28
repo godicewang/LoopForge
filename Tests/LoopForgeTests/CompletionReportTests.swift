@@ -103,8 +103,39 @@ final class CompletionReportTests: XCTestCase {
         XCTAssertTrue(html.contains("Graph performance"))
         XCTAssertTrue(html.contains("parallel work factor"))
         XCTAssertTrue(html.contains("Primary workflow: candidate evidence attached"))
+        XCTAssertTrue(html.contains("data-loopforge-report-schema=\"3\""))
+        XCTAssertTrue(html.contains("Grounded in retained local evidence"))
+        XCTAssertTrue(html.contains("Verification and audit trail"))
+        XCTAssertTrue(html.contains("dialog class=\"lightbox\""))
+        XCTAssertTrue(html.contains("aria-label=\"Report sections\""))
         XCTAssertTrue(html.contains("Atlas &lt;script&gt;"))
         XCTAssertFalse(html.contains("<h1>Atlas <script>"))
         XCTAssertTrue(FileManager.default.fileExists(atPath: URL(fileURLWithPath: path).deletingLastPathComponent().appendingPathComponent("media/evidence-01.png").path))
+    }
+
+    func testParallelCandidateReportExplainsConfiguredWorktreeCount() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let now = Date()
+        var task = LoopTask(
+            id: UUID(), title: "Candidate comparison", request: "Build alternatives", quality: .low,
+            category: .maintenance, workspacePath: directory.path,
+            targetSeconds: 7_200, accumulatedCodexSeconds: 7_200,
+            model: .advancedVisualAuditor, status: .completed, stage: "Done", iteration: 2, threadID: nil,
+            auditScore: 90, auditSummary: "Winner verified", lastAgentMessage: "Done", consecutiveFailures: 0,
+            createdAt: now, updatedAt: now, completedAt: now, logs: []
+        )
+        task.executionMode = .parallelCandidates
+        task.parallelCandidateCount = 6
+        let audit = AuditResult(score: 90, passed: true, summary: "Winner verified.", findings: [], nextActions: [])
+        let path = try CompletionReportGenerator().generate(
+            task: task,
+            audit: audit,
+            snapshot: WorkspaceSnapshot()
+        )
+        let html = try String(contentsOfFile: path, encoding: .utf8)
+        XCTAssertTrue(html.contains("Candidate branches"))
+        XCTAssertTrue(html.contains("6 isolated Git worktrees"))
     }
 }

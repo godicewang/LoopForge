@@ -1603,7 +1603,7 @@ final class GraphLoopTests: XCTestCase {
         XCTAssertTrue(html.contains("Auto Graph Loop"))
         XCTAssertTrue(html.contains("18 tests passed"))
         XCTAssertTrue(html.contains("Codex · Test"))
-        XCTAssertTrue(html.contains("data-loopforge-report-schema=\"2\""))
+        XCTAssertTrue(html.contains("data-loopforge-report-schema=\"3\""))
     }
 
     func testParallelCandidatePolicyBoundsCountAndRejectsUnknownWinner() {
@@ -1740,7 +1740,7 @@ final class GraphLoopTests: XCTestCase {
         XCTAssertTrue(html.contains("Parallel Candidates"))
         XCTAssertTrue(html.contains("Candidate comparison"))
         XCTAssertTrue(html.contains("Candidate performance"))
-        XCTAssertTrue(html.contains("total candidate work"))
+        XCTAssertTrue(html.contains("verified candidate time"))
     }
 
     private func node(
