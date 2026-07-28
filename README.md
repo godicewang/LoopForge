@@ -29,6 +29,8 @@ fully autonomous Single Loop, a dependency-aware Auto Graph, and an adaptive
 Continuum Watcher. It includes the official Codex and Ollama runtimes, and can
 also use third-party APIs or opt-in open models downloaded locally.
 
+**LoopForge is fully open source under the Apache 2.0 license.**
+
 Give it one outcome and LoopForge keeps the selected workflow advancing
 automatically—planning, executing, auditing, recovering, and issuing the next
 instruction—while remaining visible, pausable, resumable, and inspectable. It

@@ -28,6 +28,8 @@ Single Loop、依赖感知 Auto Graph 和自适应 Continuum Watcher 三种 Loop
 形态完成超长、复杂任务。安装包已内置官方 Codex 和 Ollama 运行时，同时
 支持第三方 API，以及按需下载开源模型到本地运行。
 
+**LoopForge 项目全部开源，采用 Apache 2.0 许可证。**
+
 用户只需给出一个结果目标，LoopForge 就会自动持续规划、执行、审计、恢复
 并发出下一步指令，同时保持过程可见、可暂停、可恢复和可检查。它验证真实
 命令、产物、测试和截图，并以本地 HTML 交付页结束任务，而不是停在 Agent
