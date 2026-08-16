@@ -38,6 +38,59 @@ private actor WatcherAgentTurnGate {
     }
 }
 
+@MainActor
+protocol WatcherAgentTurnRunning: AnyObject {
+    func isAvailable(
+        _ selection: AgentSelection,
+        codexConnection: CodexConnectionManager,
+        agentCatalog: AgentCatalog
+    ) -> Bool
+
+    func runTurn(
+        task: LoopTask,
+        prompt: String,
+        onThreadStarted: @escaping (String) -> Void,
+        onEvent: @escaping (LogKind, String) -> Void
+    ) async throws -> CodexTurnResult
+}
+
+@MainActor
+private final class LiveWatcherAgentTurnRunner: WatcherAgentTurnRunning {
+    private let runner = CodexRunner()
+
+    func isAvailable(
+        _ selection: AgentSelection,
+        codexConnection: CodexConnectionManager,
+        agentCatalog: AgentCatalog
+    ) -> Bool {
+        switch selection.provider {
+        case .codex:
+            return codexConnection.isConnected
+        case .api:
+            guard let connection = selection.apiConnection else { return false }
+            return APIKeyVault.get(for: connection.id)?.isEmpty == false
+        case .local:
+            guard let profile = selection.localProfile else { return false }
+            return agentCatalog.isLocalModelReady(profile)
+        }
+    }
+
+    func runTurn(
+        task: LoopTask,
+        prompt: String,
+        onThreadStarted: @escaping (String) -> Void,
+        onEvent: @escaping (LogKind, String) -> Void
+    ) async throws -> CodexTurnResult {
+        try await runner.runTurn(
+            task: task,
+            prompt: prompt,
+            watchdogPolicy: .continuumWatcher,
+            onThreadStarted: onThreadStarted,
+            onEvent: onEvent
+        )
+    }
+}
+
 enum WatcherReviewContext {
     static func triggeringMessages(
         from evaluation: WatcherEvaluation
@@ -111,7 +164,7 @@ final class WatcherController: ObservableObject {
     let store: WatcherStore
     private let codexConnection: CodexConnectionManager
     private let agentCatalog: AgentCatalog
-    private let codexRunner = CodexRunner()
+    private let agentTurnRunner: any WatcherAgentTurnRunning
     private let processRunner = ProcessRunner()
     private let reportGenerator = WatcherReportGenerator()
     private let agentTurnGate = WatcherAgentTurnGate()
@@ -130,11 +183,13 @@ final class WatcherController: ObservableObject {
     init(
         store: WatcherStore,
         codexConnection: CodexConnectionManager,
-        agentCatalog: AgentCatalog
+        agentCatalog: AgentCatalog,
+        agentTurnRunner: (any WatcherAgentTurnRunning)? = nil
     ) {
         self.store = store
         self.codexConnection = codexConnection
         self.agentCatalog = agentCatalog
+        self.agentTurnRunner = agentTurnRunner ?? LiveWatcherAgentTurnRunner()
     }
 
     func beginStartup() {
@@ -1078,10 +1133,9 @@ final class WatcherController: ObservableObject {
             stage: stage
         )
         do {
-            let result = try await codexRunner.runTurn(
+            let result = try await agentTurnRunner.runTurn(
                 task: task,
                 prompt: prompt,
-                watchdogPolicy: .continuumWatcher,
                 onThreadStarted: { [weak self] threadID in
                     Task { @MainActor in
                         self?.store.update(id: watcherID) {
@@ -1130,16 +1184,11 @@ final class WatcherController: ObservableObject {
     }
 
     private func isAgentAvailable(_ selection: AgentSelection) -> Bool {
-        switch selection.provider {
-        case .codex:
-            return codexConnection.isConnected
-        case .api:
-            guard let connection = selection.apiConnection else { return false }
-            return APIKeyVault.get(for: connection.id)?.isEmpty == false
-        case .local:
-            guard let profile = selection.localProfile else { return false }
-            return agentCatalog.isLocalModelReady(profile)
-        }
+        agentTurnRunner.isAvailable(
+            selection,
+            codexConnection: codexConnection,
+            agentCatalog: agentCatalog
+        )
     }
 
     private func legacyPreferredAgent() -> AgentSelection? {

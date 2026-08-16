@@ -1,6 +1,107 @@
 import XCTest
 @testable import LoopForge
 
+@MainActor
+private final class ScriptedWatcherCompletionTurnRunner: WatcherAgentTurnRunning {
+    private(set) var stages: [String] = []
+    private(set) var independentReviewWasReadOnlyAndMutationFree = false
+
+    func isAvailable(
+        _ selection: AgentSelection,
+        codexConnection: CodexConnectionManager,
+        agentCatalog: AgentCatalog
+    ) -> Bool {
+        true
+    }
+
+    func runTurn(
+        task: LoopTask,
+        prompt: String,
+        onThreadStarted: @escaping (String) -> Void,
+        onEvent: @escaping (LogKind, String) -> Void
+    ) async throws -> CodexTurnResult {
+        stages.append(task.stage)
+        let workspace = URL(fileURLWithPath: task.workspacePath, isDirectory: true)
+        let threadID: String
+        let message: String
+        if task.stage == "Reviewing a Continuum Watcher signal" {
+            threadID = "scripted-author-thread"
+            let assessment = WatcherAgentAssessment(
+                schemaVersion: 1,
+                reviewedAt: Date(),
+                headline: "Disposable completion chain is closed",
+                summary: "The fresh telemetry, checkpoint, and verification command support completion.",
+                issues: [],
+                importantInformation: [WatcherImportantInformation(
+                    id: "fixture-goal-closure",
+                    title: "Disposable fixture reached its goal",
+                    detail: "The bounded fixture emitted a current durable checkpoint and passed independent verification.",
+                    severity: .info,
+                    signalKey: nil,
+                    value: nil,
+                    unit: nil,
+                    goalAnchorID: "fixture-goal",
+                    userActionRequired: false
+                )]
+            )
+            let reviewURL = workspace.appendingPathComponent(
+                WatcherPolicy.reviewRelativePath
+            )
+            try FileManager.default.createDirectory(
+                at: reviewURL.deletingLastPathComponent(),
+                withIntermediateDirectories: true
+            )
+            try JSONEncoder.loopForge.encode(assessment).write(
+                to: reviewURL,
+                options: .atomic
+            )
+            message = "LOOPFORGE_WATCHER_STATUS: COMPLETE"
+        } else if task.stage == "Independently reviewing a Watcher assessment" {
+            threadID = "scripted-independent-reviewer-thread"
+            let before = try workspaceContents(at: workspace)
+            message = "LOOPFORGE_WATCHER_INDEPENDENT_REVIEW: APPROVED"
+            let after = try workspaceContents(at: workspace)
+            independentReviewWasReadOnlyAndMutationFree =
+                task.resolvedSubAgent.accessMode == .readOnly && before == after
+        } else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "unexpected scripted Agent stage: \(task.stage)"
+            )
+        }
+        onThreadStarted(threadID)
+        onEvent(.agent, message)
+        return CodexTurnResult(
+            exitCode: 0,
+            elapsed: 0,
+            eligibleElapsed: 0,
+            threadID: threadID,
+            lastAgentMessage: message,
+            commandSuccesses: 0,
+            commandFailures: 0,
+            stderr: "",
+            eventErrors: [],
+            recoveryReason: nil
+        )
+    }
+
+    private func workspaceContents(at root: URL) throws -> [String: Data] {
+        guard let enumerator = FileManager.default.enumerator(
+            at: root,
+            includingPropertiesForKeys: [.isRegularFileKey],
+            options: []
+        ) else { return [:] }
+        var contents: [String: Data] = [:]
+        for case let url as URL in enumerator {
+            guard try url.resourceValues(forKeys: [.isRegularFileKey]).isRegularFile == true else {
+                continue
+            }
+            contents[url.path.replacingOccurrences(of: root.path + "/", with: "")] =
+                try Data(contentsOf: url)
+        }
+        return contents
+    }
+}
+
 final class WatcherTests: XCTestCase {
     func testLaunchProfileRequiresExplicitInspectionArgument() {
         let temporary = URL(fileURLWithPath: "/private/tmp/loopforge-profile-tests")
@@ -1349,6 +1450,198 @@ final class WatcherTests: XCTestCase {
         XCTAssertNil(restored?.completedAt)
         XCTAssertTrue(restored?.events.last?.message.contains("did not resume or mutate") == true)
         XCTAssertFalse(controller.runningWatcherIDs.contains(watcher.id))
+    }
+
+    @MainActor
+    func testDisposableControllerExecutesEntireCompletionChainWithoutLiveAgent() async throws {
+        let root = temporaryDirectory()
+        let artifacts = root.appendingPathComponent(
+            ".loopforge/watcher",
+            isDirectory: true
+        )
+        try FileManager.default.createDirectory(
+            at: artifacts,
+            withIntermediateDirectories: true
+        )
+        let pipelineScript = root.appendingPathComponent("fixture_pipeline.py")
+        try """
+        import json
+        from datetime import datetime, timezone
+        from pathlib import Path
+
+        root = Path(".loopforge/watcher")
+        root.mkdir(parents=True, exist_ok=True)
+        captured = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        (root / "checkpoint.json").write_text(json.dumps({
+            "schemaVersion": 1,
+            "completedItems": 4,
+            "lastItem": "fixture-4"
+        }, sort_keys=True))
+        (root / "telemetry.json").write_text(json.dumps({
+            "schemaVersion": 1,
+            "capturedAt": captured,
+            "status": "ok",
+            "summary": "Disposable fixture completed four bounded items",
+            "signals": {"fixture.progress": 1.0},
+            "events": [],
+            "completed": True,
+            "checkpoint": "fixture-4"
+        }, sort_keys=True))
+        """.write(to: pipelineScript, atomically: true, encoding: .utf8)
+        let verificationScript = root.appendingPathComponent("verify_fixture.py")
+        try """
+        import json
+        from pathlib import Path
+
+        root = Path(".loopforge/watcher")
+        telemetry = json.loads((root / "telemetry.json").read_text())
+        checkpoint = json.loads((root / "checkpoint.json").read_text())
+        assert telemetry["completed"] is True
+        assert telemetry["status"] == "ok"
+        assert telemetry["checkpoint"] == "fixture-4"
+        assert checkpoint["completedItems"] == 4
+        """.write(to: verificationScript, atomically: true, encoding: .utf8)
+
+        var pipeline = completionPipeline()
+        pipeline.command = ["/usr/bin/python3", pipelineScript.lastPathComponent]
+        pipeline.verificationCommands = [[
+            "/usr/bin/python3",
+            verificationScript.lastPathComponent
+        ]]
+        pipeline.signals = [WatcherSignalSpec(
+            key: "fixture.progress",
+            title: "Fixture progress",
+            kind: .progress,
+            unit: "ratio",
+            description: "Share of the disposable fixture processed.",
+            expectedMinimum: 0,
+            expectedMaximum: 1,
+            staleAfterSeconds: 300
+        )]
+        pipeline.dashboard = WatcherDashboardSpec(
+            headline: "Complete the disposable fixture",
+            goalAnchors: [WatcherGoalAnchor(
+                id: "fixture-goal",
+                title: "Disposable fixture is durably complete"
+            )],
+            progressSignalKey: "fixture.progress",
+            primarySignalKeys: ["fixture.progress"],
+            importantSignalKeys: ["fixture.progress"]
+        )
+        pipeline.generatedPaths = [
+            WatcherPolicy.defaultTelemetryRelativePath,
+            WatcherPolicy.defaultCheckpointRelativePath,
+            WatcherPolicy.reviewRelativePath,
+            ".loopforge/watcher/report"
+        ]
+        try JSONEncoder.loopForge.encode(pipeline).write(
+            to: artifacts.appendingPathComponent("manifest.json"),
+            options: .atomic
+        )
+
+        let selection = AgentSelection.codex(
+            model: "scripted-completion-fixture",
+            displayName: "Scripted completion fixture",
+            reasoning: "test",
+            access: .workspaceOnly
+        )
+        var watcher = makeWatcher(workspace: root)
+        watcher.pipeline = pipeline
+        watcher.agentSelection = selection
+        watcher.runtime.nextReviewAt = Date(timeIntervalSince1970: 0)
+        let storageURL = root.appendingPathComponent("disposable-watchers.json")
+        let store = WatcherStore(storageURL: storageURL)
+        store.add(watcher)
+
+        let defaultsName = "LoopForgeDisposableCompletionTests-\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: defaultsName)!
+        addTeardownBlock { defaults.removePersistentDomain(forName: defaultsName) }
+        let runner = ScriptedWatcherCompletionTurnRunner()
+        let controller = WatcherController(
+            store: store,
+            codexConnection: CodexConnectionManager(defaults: defaults),
+            agentCatalog: AgentCatalog(
+                storageURL: root.appendingPathComponent("agents.json")
+            ),
+            agentTurnRunner: runner
+        )
+
+        controller.runNow(watcherID: watcher.id)
+        for _ in 0..<400 {
+            if !controller.runningWatcherIDs.contains(watcher.id),
+               store.watcher(id: watcher.id)?.status == .completed {
+                break
+            }
+            try await Task.sleep(for: .milliseconds(25))
+        }
+
+        let completed = try XCTUnwrap(store.watcher(id: watcher.id))
+        XCTAssertEqual(completed.status, .completed)
+        XCTAssertTrue(completed.isDeterministicallyCompleted)
+        XCTAssertEqual(completed.runtime.totalRuns, 1)
+        XCTAssertEqual(completed.runtime.lastExitCode, 0)
+        XCTAssertEqual(completed.latestCompletionReceipt?.coveredGoalAnchorIDs, ["fixture-goal"])
+        XCTAssertEqual(
+            completed.latestIndependentReview?.authorThreadID,
+            "scripted-author-thread"
+        )
+        XCTAssertEqual(
+            completed.latestIndependentReview?.reviewerThreadID,
+            "scripted-independent-reviewer-thread"
+        )
+        XCTAssertNotEqual(
+            completed.latestIndependentReview?.authorLineageDigest,
+            completed.latestIndependentReview?.reviewerLineageDigest
+        )
+        XCTAssertEqual(
+            runner.stages,
+            [
+                "Reviewing a Continuum Watcher signal",
+                "Independently reviewing a Watcher assessment"
+            ]
+        )
+        XCTAssertTrue(runner.independentReviewWasReadOnlyAndMutationFree)
+        let reportPath = try XCTUnwrap(completed.reportPath)
+        let report = try String(contentsOfFile: reportPath, encoding: .utf8)
+        XCTAssertTrue(report.contains("Independently approved"))
+        XCTAssertTrue(report.contains("fixture-goal"))
+
+        let reloadedStore = WatcherStore(storageURL: storageURL)
+        let reloaded = try XCTUnwrap(reloadedStore.watcher(id: watcher.id))
+        XCTAssertTrue(reloaded.isDeterministicallyCompleted)
+        XCTAssertEqual(
+            reloaded.latestCompletionReceipt?.observation.telemetryDigest,
+            completed.latestCompletionReceipt?.observation.telemetryDigest
+        )
+        XCTAssertEqual(
+            reloaded.latestCompletionReceipt?.observation.checkpointDigest,
+            completed.latestCompletionReceipt?.observation.checkpointDigest
+        )
+        XCTAssertEqual(
+            reloaded.latestCompletionReceipt?.verificationPlanDigest,
+            completed.latestCompletionReceipt?.verificationPlanDigest
+        )
+        XCTAssertEqual(
+            reloaded.latestCompletionReceipt?.coveredGoalAnchorIDs,
+            completed.latestCompletionReceipt?.coveredGoalAnchorIDs
+        )
+        XCTAssertEqual(
+            reloaded.latestIndependentReview?.authorLineageDigest,
+            completed.latestIndependentReview?.authorLineageDigest
+        )
+        XCTAssertEqual(
+            reloaded.latestIndependentReview?.reviewerLineageDigest,
+            completed.latestIndependentReview?.reviewerLineageDigest
+        )
+        XCTAssertEqual(
+            reloaded.latestIndependentReview?.completionReceiptDigest,
+            completed.latestIndependentReview?.completionReceiptDigest
+        )
+        try WatcherCompletionPolicy.validateCurrentCheckpoint(
+            try XCTUnwrap(reloaded.latestCompletionReceipt),
+            pipeline: try XCTUnwrap(reloaded.pipeline),
+            workspacePath: reloaded.workspacePath
+        )
     }
 
     func testUnreviewedWatcherAssessmentRemainsAdvisoryAfterRelaunch() {
