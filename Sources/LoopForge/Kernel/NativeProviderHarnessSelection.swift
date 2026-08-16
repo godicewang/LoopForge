@@ -66,6 +66,39 @@ enum LoopForgeReleaseMutationCapabilityClassification: String, Codable,
     }
 }
 
+/// Product-level release disposition for repository-generation telemetry.
+///
+/// This ordinary bundle cannot create an accepted workspace transition, so a
+/// resolved generation/cache-hit receipt is not a release prerequisite. The
+/// runtime may still project resolved telemetry from a genuine historical
+/// journal transition; this classification never mints that transition or
+/// weakens `WorkspaceRepositoryIndexRecoveryStatus.notApplicable`.
+enum LoopForgeRepositoryGenerationTelemetryDisposition: String, Codable,
+    Equatable, Sendable {
+    case nonMutatingNotApplicable
+    case unavailableFailClosed
+
+    var resolvedTelemetryRequiredForRelease: Bool { false }
+
+    var title: String {
+        switch self {
+        case .nonMutatingNotApplicable:
+            return "Repository telemetry not required"
+        case .unavailableFailClosed:
+            return "Repository telemetry unavailable"
+        }
+    }
+
+    var detail: String {
+        switch self {
+        case .nonMutatingNotApplicable:
+            return "This package cannot create an accepted workspace transition; exact runs without one remain not applicable."
+        case .unavailableFailClosed:
+            return "No ratified repository-generation disposition is available; cache authority remains withheld."
+        }
+    }
+}
+
 struct NativeProviderHarnessManifest: Codable, Equatable, Sendable {
     var schemaVersion: Int
     var protocolVersion: Int
@@ -80,6 +113,9 @@ struct NativeProviderHarnessManifest: Codable, Equatable, Sendable {
     var releaseMutationCapabilityClassification:
         LoopForgeReleaseMutationCapabilityClassification
     var workspaceMutationAvailable: Bool
+    var repositoryGenerationTelemetryDisposition:
+        LoopForgeRepositoryGenerationTelemetryDisposition
+    var resolvedRepositoryGenerationTelemetryRequired: Bool
     var selfTestSHA256: ContentDigest
 }
 
@@ -144,6 +180,8 @@ enum NativeProviderHarnessSelectionLoader {
                 "productiveExecutionAvailable", "productiveProviderBackends",
                 "protocolVersion", "releaseCapabilityClassification",
                 "releaseMutationCapabilityClassification", "schemaVersion",
+                "repositoryGenerationTelemetryDisposition",
+                "resolvedRepositoryGenerationTelemetryRequired",
                 "selfTestSHA256", "workspaceMutationAvailable",
               ],
               let decoded = try? JSONDecoder().decode(
@@ -165,7 +203,12 @@ enum NativeProviderHarnessSelectionLoader {
                 .nonMutatingContainmentVeto,
               decoded.workspaceMutationAvailable == false,
               decoded.releaseMutationCapabilityClassification
-                .workspaceMutationAvailable == false else {
+                .workspaceMutationAvailable == false,
+              decoded.repositoryGenerationTelemetryDisposition ==
+                .nonMutatingNotApplicable,
+              decoded.resolvedRepositoryGenerationTelemetryRequired == false,
+              decoded.repositoryGenerationTelemetryDisposition
+                .resolvedTelemetryRequiredForRelease == false else {
             throw NativeProviderHarnessSelectionError.manifestInvalid
         }
 

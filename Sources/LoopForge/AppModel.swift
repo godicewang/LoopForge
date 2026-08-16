@@ -125,6 +125,14 @@ final class AppModel: ObservableObject {
             .manifest.releaseMutationCapabilityClassification
             ?? .unavailableFailClosed
     }
+    /// Release-level repository telemetry policy. It does not replace the
+    /// per-run journal projection and cannot mint resolved cache authority.
+    var repositoryGenerationTelemetryDisposition:
+        LoopForgeRepositoryGenerationTelemetryDisposition {
+        NativeProviderHarnessSelectionLoader.bundled()?
+            .manifest.repositoryGenerationTelemetryDisposition
+            ?? .unavailableFailClosed
+    }
     /// Explicit new-kernel enrollment capability. No legacy task or Graph
     /// path calls this service; a future native confirmation flow must supply
     /// a sealed `RatifiedTaskContract` before enrollment is possible.

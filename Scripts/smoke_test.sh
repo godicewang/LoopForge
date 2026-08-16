@@ -33,10 +33,14 @@ fi
 [[ "$(/usr/bin/plutil -extract productiveExecutionAvailable raw "$PROVIDER_HARNESS_MANIFEST")" == "false" ]]
 [[ "$(/usr/bin/plutil -extract releaseMutationCapabilityClassification raw "$PROVIDER_HARNESS_MANIFEST")" == "nonMutatingContainmentVeto" ]]
 [[ "$(/usr/bin/plutil -extract workspaceMutationAvailable raw "$PROVIDER_HARNESS_MANIFEST")" == "false" ]]
+[[ "$(/usr/bin/plutil -extract repositoryGenerationTelemetryDisposition raw "$PROVIDER_HARNESS_MANIFEST")" == "nonMutatingNotApplicable" ]]
+[[ "$(/usr/bin/plutil -extract resolvedRepositoryGenerationTelemetryRequired raw "$PROVIDER_HARNESS_MANIFEST")" == "false" ]]
 [[ "$(/usr/bin/plutil -extract releaseCapabilityClassification raw "$BUILD_MANIFEST")" == "nonProductiveTransportVeto" ]]
 [[ "$(/usr/bin/plutil -extract productiveExecutionAvailable raw "$BUILD_MANIFEST")" == "false" ]]
 [[ "$(/usr/bin/plutil -extract releaseMutationCapabilityClassification raw "$BUILD_MANIFEST")" == "nonMutatingContainmentVeto" ]]
 [[ "$(/usr/bin/plutil -extract workspaceMutationAvailable raw "$BUILD_MANIFEST")" == "false" ]]
+[[ "$(/usr/bin/plutil -extract repositoryGenerationTelemetryDisposition raw "$BUILD_MANIFEST")" == "nonMutatingNotApplicable" ]]
+[[ "$(/usr/bin/plutil -extract resolvedRepositoryGenerationTelemetryRequired raw "$BUILD_MANIFEST")" == "false" ]]
 [[ "$(/usr/bin/plutil -extract providerHarnessOperationalMode raw "$BUILD_MANIFEST")" == "transportVetoOnly" ]]
 EXPECTED_HARNESS_SHA="$(/usr/bin/plutil -extract executableSHA256 raw "$PROVIDER_HARNESS_MANIFEST")"
 ACTUAL_HARNESS_SHA="$(/usr/bin/shasum -a 256 "$PROVIDER_HARNESS" | /usr/bin/awk '{print $1}')"

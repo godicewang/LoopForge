@@ -27,6 +27,13 @@ final class NativeProviderHarnessSelectionTests: XCTestCase {
         )
         XCTAssertFalse(selection.manifest.workspaceMutationAvailable)
         XCTAssertEqual(
+            selection.manifest.repositoryGenerationTelemetryDisposition,
+            .nonMutatingNotApplicable
+        )
+        XCTAssertFalse(
+            selection.manifest.resolvedRepositoryGenerationTelemetryRequired
+        )
+        XCTAssertEqual(
             selection.manifest.selfTestSHA256,
             NativeProviderHarnessSelectionLoader.expectedSelfTestSHA256
         )
@@ -139,6 +146,41 @@ final class NativeProviderHarnessSelectionTests: XCTestCase {
         }
     }
 
+    func testResolvedRepositoryTelemetryClaimCannotMintTransitionAuthority() throws {
+        var fixture = try makeFixture()
+        defer { try? FileManager.default.removeItem(at: fixture.root) }
+        fixture.manifest.resolvedRepositoryGenerationTelemetryRequired = true
+        try write(fixture.manifest, to: fixture.manifestURL)
+
+        XCTAssertThrowsError(try NativeProviderHarnessSelectionLoader.load(
+            manifestURL: fixture.manifestURL,
+            executableURL: harnessURL
+        )) { error in
+            XCTAssertEqual(
+                error as? NativeProviderHarnessSelectionError,
+                .manifestInvalid
+            )
+        }
+    }
+
+    func testUnavailableRepositoryTelemetryDispositionCannotRelabelPackage() throws {
+        var fixture = try makeFixture()
+        defer { try? FileManager.default.removeItem(at: fixture.root) }
+        fixture.manifest.repositoryGenerationTelemetryDisposition =
+            .unavailableFailClosed
+        try write(fixture.manifest, to: fixture.manifestURL)
+
+        XCTAssertThrowsError(try NativeProviderHarnessSelectionLoader.load(
+            manifestURL: fixture.manifestURL,
+            executableURL: harnessURL
+        )) { error in
+            XCTAssertEqual(
+                error as? NativeProviderHarnessSelectionError,
+                .manifestInvalid
+            )
+        }
+    }
+
     func testMissingHarnessClassificationFailsClosed() {
         XCTAssertFalse(
             LoopForgeReleaseCapabilityClassification.unavailableFailClosed
@@ -151,6 +193,10 @@ final class NativeProviderHarnessSelectionTests: XCTestCase {
         XCTAssertFalse(
             LoopForgeReleaseMutationCapabilityClassification
                 .unavailableFailClosed.workspaceMutationAvailable
+        )
+        XCTAssertFalse(
+            LoopForgeRepositoryGenerationTelemetryDisposition
+                .unavailableFailClosed.resolvedTelemetryRequiredForRelease
         )
     }
 
@@ -210,6 +256,9 @@ final class NativeProviderHarnessSelectionTests: XCTestCase {
             releaseMutationCapabilityClassification:
                 .nonMutatingContainmentVeto,
             workspaceMutationAvailable: false,
+            repositoryGenerationTelemetryDisposition:
+                .nonMutatingNotApplicable,
+            resolvedRepositoryGenerationTelemetryRequired: false,
             selfTestSHA256:
                 NativeProviderHarnessSelectionLoader.expectedSelfTestSHA256
         )

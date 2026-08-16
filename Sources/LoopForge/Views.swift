@@ -105,6 +105,22 @@ struct RootView: View {
             .accessibilityIdentifier(
                 "release-mutation-capability-classification"
             )
+            HStack(spacing: 8) {
+                Image(systemName: "externaldrive.badge.checkmark")
+                Text(model.repositoryGenerationTelemetryDisposition.title)
+                    .fontWeight(.semibold)
+                Text(model.repositoryGenerationTelemetryDisposition.detail)
+                    .foregroundStyle(.secondary)
+                Spacer()
+            }
+            .font(.caption)
+            .padding(.horizontal, 14)
+            .frame(minHeight: 32)
+            .background(Color.orange.opacity(0.09))
+            .overlay(alignment: .bottom) { Divider() }
+            .accessibilityIdentifier(
+                "repository-generation-telemetry-disposition"
+            )
             if model.launchProfile.isIsolatedInspection {
                 HStack(spacing: 8) {
                     Image(systemName: "eye.circle.fill")
