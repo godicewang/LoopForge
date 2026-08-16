@@ -1,6 +1,6 @@
 # Provider-Neutral Substitution Contract Implementation
 
-Status: **typed contract and verifier enforcement implemented; production compiler cutover pending**
+Status: **typed contract, verifier enforcement, and native population implemented; current package and native walkthrough pending**
 
 ## Root cause
 
@@ -53,7 +53,11 @@ which is the intended fail-closed migration behavior.
 
 ## Boundary
 
-This advances B-05 at the kernel enforcement layer. Final acceptance still
-requires production contract-compilation/cutover to populate these bindings,
-a clean revision-bound build and push receipt, and the current native UI matrix.
-EasyBusiness remained stopped and read-only.
+Native population is now implemented by the Journaled Auto Graph composer. Exact
+opaque IDs are parsed without vocabulary inference, bound to a distinct user
+source and typed constraint, shown in the immutable confirmation sheet, and
+retained through journal-first enrollment and explicit production activation.
+See `NATIVE_EXACT_IMPLEMENTATION_AUTHORITY_IMPLEMENTATION.md` for the current
+source and targeted-test receipt. Final acceptance still requires a clean
+current-source full suite/package and a real native composer/confirmation
+walkthrough. EasyBusiness remained stopped and read-only.

@@ -1262,6 +1262,7 @@ private struct TaskComposer: View {
                 executionSettings
                 providerAuthoritySettings
                 sourceRevisionCapturePolicy
+                exactImplementationAuthority
                 verificationProbeSelection
                 projectRow
 
@@ -1423,6 +1424,32 @@ private struct TaskComposer: View {
             .accessibilityLabel("Excluded source-revision directory names")
             .accessibilityIdentifier("source-revision-exclusions-field")
             Text("Comma- or newline-separated directory names apply at any depth. Paths, traversal, duplicates, symlink entries outside excluded trees, and silent inference all fail closed. The canonical policy and digest are shown again before confirmation.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+        .padding(15)
+        .background(
+            ForgeStyle.panel,
+            in: RoundedRectangle(cornerRadius: 13, style: .continuous)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 13).stroke(ForgeStyle.hairline)
+        )
+    }
+
+    private var exactImplementationAuthority: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label("Exact implementation identities", systemImage: "equal.circle")
+                .font(.headline)
+            TextField(
+                "Optional opaque IDs, comma or newline separated",
+                text: $model.draftPermittedImplementationIDs
+            )
+            .textFieldStyle(.roundedBorder)
+            .font(.system(.body, design: .monospaced))
+            .accessibilityLabel("Permitted exact implementation identities")
+            .accessibilityIdentifier("exact-implementation-identities-field")
+            Text("Leave empty when substitution is not part of the contract. When supplied, only these user-confirmed opaque identities may satisfy the requirement; duplicates, whitespace ambiguity, model inference, and product-name matching fail closed.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -2379,6 +2406,21 @@ private struct NativeAutoGraphContractConfirmationView: View {
                             Text("No artificial duration requirement is declared for Auto Graph.")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
+                        }
+                        if !draft.displayPermittedImplementationIDs.isEmpty {
+                            contractSection("Exact implementation authority") {
+                                ForEach(
+                                    draft.displayPermittedImplementationIDs,
+                                    id: \.self
+                                ) { implementationID in
+                                    Text(implementationID)
+                                        .font(.system(.body, design: .monospaced))
+                                        .textSelection(.enabled)
+                                }
+                                Text("Only these opaque identities may satisfy the requirement. Confirmation binds the exact set; product names, objective prose, and verifier substitutions grant no equivalence.")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
                         }
                         contractSection("Bound execution budgets") {
                             let mutation = draft.displayExecutionBudgets.mutation

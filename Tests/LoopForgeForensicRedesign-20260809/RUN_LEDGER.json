@@ -3,7 +3,7 @@
   "project": "LoopForge Forensic Redesign 20h",
   "startedAt": "2026-08-09T13:13:58Z",
   "requiredActiveSeconds": 72000,
-  "coveredActiveSeconds": 198093,
+  "coveredActiveSeconds": 198693,
   "remainingActiveSeconds": 0,
   "requiredForensicAnalysisBeforeImplementationSeconds": 36000,
   "coveredForensicAnalysisSeconds": 39370,
@@ -5543,7 +5543,28 @@
         "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/PACKAGE_AND_NATIVE_VERIFICATION_SCORECARD.json",
         "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NATIVE_BASELINE_CANDIDATE_MATRIX_SCORECARD.json"
       ]
+    },
+    {
+      "id": "native-exact-implementation-authority-263",
+      "startedAt": "2026-08-16T10:45:34Z",
+      "endedAt": "2026-08-16T11:00:33Z",
+      "coveredSeconds": 600,
+      "status": "accepted",
+      "excludedFailures": [
+        "build and test execution and wait duration count zero",
+        "all time beyond the 600-second accepted active-work cap counts zero"
+      ],
+      "activity": "Traced the real Release composition and corrected an overbroad production-cutover blocker: LoopForgeApp already constructs KernelProductionExecutionCoordinator, AppModel invokes its readiness and activation boundaries, and the coordinator reconstructs and retains the exact journal-owned production session. Isolated the genuine B-05 defect to missing native exact-implementation population. Implemented a vocabulary-neutral opaque-identity parser, fail-closed uniqueness and whitespace validation, candidate-identity digest binding, a distinct explicit user source, a typed prohibit-substitution constraint bound to the mandatory requirement, immutable confirmation display, AppModel state/reset handling, and enrollment/activation retention. The authoring 17/0, enrollment 14/0, store 20/0, and compiler 24/0 targeted suites passed; diff validation passed. Current full-suite/package and real native composer/confirmation proof remain pending. EasyBusiness remained read-only.",
+      "evidence": [
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/Kernel/NativeTaskContractAuthoring.swift",
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/AppModel.swift",
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/Views.swift",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeTests/NativeTaskContractAuthoringTests.swift",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeTests/NativeKernelEnrollmentFlowTests.swift",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NATIVE_EXACT_IMPLEMENTATION_AUTHORITY_IMPLEMENTATION.md",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NATIVE_EXACT_IMPLEMENTATION_AUTHORITY_SCORECARD.json"
+      ]
     }
   ],
-  "lastUpdatedAt": "2026-08-16T10:40:41Z"
+  "lastUpdatedAt": "2026-08-16T11:00:33Z"
 }

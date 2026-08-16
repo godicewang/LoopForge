@@ -139,6 +139,8 @@ final class NativeKernelEnrollmentFlowTests: XCTestCase {
             objective: "Observe the exact accepted revision without mutation."
         )
         model.draftAccessMode = .readOnly
+        model.draftPermittedImplementationIDs =
+            "opaque-implementation-b, opaque-implementation-a"
 
         model.startWithOriginalPrompt()
 
@@ -152,6 +154,16 @@ final class NativeKernelEnrollmentFlowTests: XCTestCase {
                 maximumChangedFiles: 0,
                 maximumChangedBytes: 0
             )
+        )
+        XCTAssertEqual(
+            draft.displayPermittedImplementationIDs,
+            ["opaque-implementation-a", "opaque-implementation-b"]
+        )
+        XCTAssertEqual(
+            draft.compiled.candidate.contract.constraints.first(where: {
+                $0.kind == .prohibitSubstitution
+            })?.substitutionRule?.permittedImplementationIDs,
+            ["opaque-implementation-a", "opaque-implementation-b"]
         )
         XCTAssertEqual(
             draft.displayExecutionBudgets.convergence.maximumMutationCost,

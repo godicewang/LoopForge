@@ -42,6 +42,7 @@ final class NativeTaskContractAuthoringTests: XCTestCase {
         )
         XCTAssertEqual(draft.displayExecutionProfile, fixture.executionProfile)
         XCTAssertTrue(draft.displayAuthorityCapabilityIDs.isEmpty)
+        XCTAssertTrue(draft.displayPermittedImplementationIDs.isEmpty)
         XCTAssertEqual(draft.displayExecutionBudgets, fixture.executionBudgets)
         XCTAssertEqual(
             draft.compiled.candidate.contract.executionBudgets,
@@ -411,6 +412,95 @@ final class NativeTaskContractAuthoringTests: XCTestCase {
         }
         XCTAssertTrue(pathIssues.contains {
             $0.contains("unique canonical components")
+        })
+    }
+
+    func testNativeExactImplementationAuthorityIsUserBoundAndFailsClosed()
+        throws
+    {
+        XCTAssertEqual(
+            NativeExactImplementationIdentityParser.parse(
+                "opaque-implementation-b, opaque-implementation-a\nopaque-implementation-b"
+            ),
+            [
+                "opaque-implementation-a",
+                "opaque-implementation-b",
+                "opaque-implementation-b"
+            ]
+        )
+
+        let fixture = try Fixture()
+        defer { fixture.remove() }
+        var request = fixture.request(duration: nil)
+        request.permittedImplementationIDs =
+            NativeExactImplementationIdentityParser.parse(
+                "opaque-implementation-b, opaque-implementation-a"
+            )
+        let draft = try prepared(request)
+        XCTAssertEqual(
+            draft.displayPermittedImplementationIDs,
+            ["opaque-implementation-a", "opaque-implementation-b"]
+        )
+        let constraint = try XCTUnwrap(
+            draft.compiled.candidate.contract.constraints.first(where: {
+                $0.kind == .prohibitSubstitution
+            })
+        )
+        XCTAssertEqual(
+            constraint.substitutionRule,
+            ExactImplementationConstraint(
+                requirementIDs: Set(
+                    draft.compiled.candidate.contract.requirements.map(\.id)
+                ),
+                permittedImplementationIDs: [
+                    "opaque-implementation-a",
+                    "opaque-implementation-b"
+                ]
+            )
+        )
+        let binding = try XCTUnwrap(
+            draft.compiled.candidate.constraintBindings.first(where: {
+                $0.constraintID == constraint.id
+            })
+        )
+        XCTAssertEqual(binding.epistemicState, .explicit)
+        let sourceID = try XCTUnwrap(binding.sourceSpans.first?.sourceID)
+        let source = try XCTUnwrap(
+            draft.compiled.candidate.sources.first(where: {
+                $0.id == sourceID
+            })
+        )
+        XCTAssertEqual(source.authority, .user)
+        XCTAssertEqual(
+            source.exactUTF8,
+            Data("opaque-implementation-a\u{1f}opaque-implementation-b".utf8)
+        )
+
+        var changed = fixture.request(duration: nil)
+        changed.permittedImplementationIDs = ["opaque-implementation-c"]
+        XCTAssertNotEqual(
+            try prepared(changed).compiled.candidateDigest,
+            draft.compiled.candidateDigest
+        )
+
+        var duplicate = fixture.request(duration: nil)
+        duplicate.permittedImplementationIDs = ["opaque-a", "opaque-a"]
+        guard case .invalidExactImplementationIDs(let duplicateIssues) =
+                authoringFailure(duplicate) else {
+            return XCTFail("duplicate exact identities must fail before capture")
+        }
+        XCTAssertTrue(duplicateIssues.contains {
+            $0.contains("must be unique")
+        })
+
+        var ambiguous = fixture.request(duration: nil)
+        ambiguous.permittedImplementationIDs = [" opaque-a"]
+        guard case .invalidExactImplementationIDs(let whitespaceIssues) =
+                authoringFailure(ambiguous) else {
+            return XCTFail("whitespace-shaped identity must fail before capture")
+        }
+        XCTAssertTrue(whitespaceIssues.contains {
+            $0.contains("already trimmed")
         })
     }
 

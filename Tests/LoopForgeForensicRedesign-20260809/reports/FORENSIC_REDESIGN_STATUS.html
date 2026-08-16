@@ -171,6 +171,8 @@
         <a href="MINIMUM_AUTHORITY_AND_RELEASE_PROVENANCE_IMPLEMENTATION.md">Minimum-authority defaults, non-escalating inference, source/test binding, and real executable smoke</a>
         <a href="FAIL_CLOSED_CONTROL_PLANE_RETIREMENTS.md">Strict Graph envelope, bounded Watcher cadence, and negative executable-startup proof</a>
         <a href="PROVIDER_NEUTRAL_SUBSTITUTION_CONTRACT_IMPLEMENTATION.md">Typed exact-implementation contracts and provider-neutral substitution rejection</a>
+        <a href="NATIVE_EXACT_IMPLEMENTATION_AUTHORITY_IMPLEMENTATION.md">Native exact-implementation authoring, confirmation, enrollment, and activation retention</a>
+        <a href="NATIVE_EXACT_IMPLEMENTATION_AUTHORITY_SCORECARD.json">Native exact-implementation authority scorecard (JSON)</a>
         <a href="WATCHER_INDEPENDENT_REVIEW_IMPLEMENTATION.md">Digest-bound read-only Watcher review and fail-closed assessment authority</a>
         <a href="WATCHER_DETERMINISTIC_COMPLETION_IMPLEMENTATION.md">Receipt-bound deterministic Watcher completion and startup invalidation</a>
         <a href="DIGEST_ADDRESSED_HEAVY_EVIDENCE_CACHE_IMPLEMENTATION.md">Digest-addressed heavy-evidence cache, tamper rejection, coalescing, and bounded retention</a>
@@ -502,9 +504,15 @@
     </section>
 
     <section class="card full">
+      <span class="status amber">B-05 source gap closed</span>
+      <h2>Exact implementation authority reaches the native contract</h2>
+      <p>Forensic tracing showed that the Release app already constructs the journaled production coordinator and routes explicit activation through it; the earlier broad native-start-cutover description was stale. The real B-05 gap was native population. The composer now accepts optional opaque implementation IDs, rejects duplicate or whitespace-ambiguous authority, binds the canonical bytes to a distinct user source and typed prohibit-substitution constraint, displays the exact set for immutable confirmation, and retains it through enrollment and activation. The authoring, enrollment, store, and compiler targeted suites passed 75/0. A clean current-source full package and real native composer/confirmation walkthrough remain pending, so this does not change global final acceptance.</p>
+    </section>
+
+    <section class="card full">
       <span class="status amber">Global cutover blocked</span>
       <h2>Remaining mandatory work</h2>
-      <p>All legacy controller execution ingress is retired, and the implementation commit, clean-source package, 874/8/0 suite, signatures, hashes, native matrix, clean-package confirmation, and first remote integration are complete. The gate-specific receipts nevertheless still mark native production-controller cutover and full unlocked runtime walkthroughs as pending: Journaled Auto Graph authoring/planning/execution must invoke the retained journaled production session, visual and final-completion authorities must flow through that controller, and Watcher plus repository-generation telemetry require current native proof. The ordinary-macOS physical-footprint issuer and ordinary-app productive-provider install/cutover strategies remain disproven and retired; mutation-backed verifier/reviewer/observer execution requires separately scoped privileged or virtualized isolation. These are substantive release gates, not paperwork, so final acceptance remains zero under the all-or-nothing metric.</p>
+      <p>All legacy controller execution ingress is retired, and the prior implementation commit, clean-source package, 874/8/0 suite, signatures, hashes, native matrix, clean-package confirmation, and first remote integration are complete. The current exact-implementation source change now needs its own clean full-suite/package and native composer/confirmation proof. Other gate-specific receipts still require visual and final-completion authority through the journaled production session plus current Watcher and repository-generation telemetry walkthroughs. The ordinary-macOS physical-footprint issuer and ordinary-app productive-provider install/cutover strategies remain disproven and retired; mutation-backed verifier/reviewer/observer execution requires separately scoped privileged or virtualized isolation. These are substantive release gates, not paperwork, so final acceptance remains zero under the all-or-nothing metric.</p>
     </section>
 
     <section class="card full">

@@ -16,6 +16,22 @@ enum NativeSourceRevisionCapturePolicyParser {
     }
 }
 
+enum NativeExactImplementationIdentityParser {
+    /// Produces canonical opaque identities without interpreting product,
+    /// framework, provider, filename, or brand vocabulary. Duplicates remain
+    /// present so authoring validation can reject ambiguous user authority.
+    static func parse(_ text: String) -> [String] {
+        text.split(
+            maxSplits: .max,
+            omittingEmptySubsequences: true,
+            whereSeparator: { $0 == "," || $0.isNewline }
+        )
+        .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+        .filter { !$0.isEmpty }
+        .sorted()
+    }
+}
+
 struct NativeTaskContractAuthoringRequest: Sendable {
     static let defaultSourceRevisionCapturePolicy =
         WorkspaceCandidatePostimageCapturePolicy(
@@ -58,6 +74,10 @@ struct NativeTaskContractAuthoringRequest: Sendable {
     /// repository layout or error path. The complete policy is digest-bound,
     /// displayed, and re-used unchanged for confirmation-time recapture.
     var sourceRevisionCapturePolicy = defaultSourceRevisionCapturePolicy
+    /// Optional exact implementation identities explicitly entered by the
+    /// user. Empty means no substitution claim. The native path never derives
+    /// these values from objective prose or repository vocabulary.
+    var permittedImplementationIDs: [String] = []
     var userActor: ActorIdentity
     var recordedAt: Date
     var authoringNonce: ContentDigest
@@ -75,6 +95,7 @@ enum NativeTaskContractAuthoringError: Error, Equatable {
     case invalidExecutionBudgets([String])
     case invalidDesignBaselineSource([String])
     case invalidSourceRevisionCapturePolicy([String])
+    case invalidExactImplementationIDs([String])
     case sourceRevisionCaptureFailed(String)
     case unsupportedExecutionAuthority(String)
     case compilationFailed([TaskContractCompilationIssue])
@@ -96,6 +117,7 @@ struct NativeTaskContractConfirmationDraft: Sendable {
     let displayCausalStrategyAuthority: KernelCausalStrategyAuthority
     let displayExecutionPlan: KernelPlanProposal
     let displayDesignBaselineSelection: NativeDesignBaselineSelection?
+    let displayPermittedImplementationIDs: [String]
 
     fileprivate init(
         compiled: CompiledTaskContractCandidate,
@@ -112,7 +134,8 @@ struct NativeTaskContractConfirmationDraft: Sendable {
         displaySourceRevision: WorkspaceSourceRevisionArtifact,
         displayCausalStrategyAuthority: KernelCausalStrategyAuthority,
         displayExecutionPlan: KernelPlanProposal,
-        displayDesignBaselineSelection: NativeDesignBaselineSelection?
+        displayDesignBaselineSelection: NativeDesignBaselineSelection?,
+        displayPermittedImplementationIDs: [String]
     ) {
         self.compiled = compiled
         self.workspaceID = workspaceID
@@ -129,6 +152,7 @@ struct NativeTaskContractConfirmationDraft: Sendable {
         self.displayCausalStrategyAuthority = displayCausalStrategyAuthority
         self.displayExecutionPlan = displayExecutionPlan
         self.displayDesignBaselineSelection = displayDesignBaselineSelection
+        self.displayPermittedImplementationIDs = displayPermittedImplementationIDs
     }
 }
 
@@ -200,6 +224,26 @@ enum NativeTaskContractAuthor {
             return .failure(.invalidScope)
         }
         let capabilities = request.authorityCapabilityIDs.sorted()
+        let implementationIDs = request.permittedImplementationIDs.sorted()
+        var implementationIdentityIssues: [String] = []
+        if Set(implementationIDs).count != implementationIDs.count {
+            implementationIdentityIssues.append(
+                "Exact implementation identities must be unique."
+            )
+        }
+        if implementationIDs.contains(where: {
+            $0.isEmpty
+                || $0 != $0.trimmingCharacters(in: .whitespacesAndNewlines)
+        }) {
+            implementationIdentityIssues.append(
+                "Exact implementation identities must be nonempty and already trimmed."
+            )
+        }
+        guard implementationIdentityIssues.isEmpty else {
+            return .failure(.invalidExactImplementationIDs(
+                implementationIdentityIssues.sorted()
+            ))
+        }
         let authorityCeiling = KernelAuthorityCeiling(
             readableScopes: request.readableScopes,
             writableScopes: request.writableScopes,
@@ -317,6 +361,12 @@ enum NativeTaskContractAuthor {
             (capabilities.isEmpty ? "none" : capabilities.joined(separator: "\u{1f}"))
                 .utf8
         )
+        let implementationIdentityData = Data(
+            (implementationIDs.isEmpty
+                ? "none"
+                : implementationIDs.joined(separator: "\u{1f}"))
+                .utf8
+        )
         let durationSelection = request.acceptedDuration.map {
             "\($0.requiredSeconds)\u{1f}\($0.eligibleClass.rawValue)"
         }
@@ -326,6 +376,7 @@ enum NativeTaskContractAuthor {
             TaskContractCompiler.digest(objectiveData).rawValue,
             TaskContractCompiler.digest(workspaceData).rawValue,
             TaskContractCompiler.digest(capabilityData).rawValue,
+            TaskContractCompiler.digest(implementationIdentityData).rawValue,
             durationSelection ?? "no-duration",
             executionDigest.rawValue,
             TaskContractCompiler.digest(executionBudgetData).rawValue,
@@ -468,6 +519,18 @@ enum NativeTaskContractAuthor {
             recordedAt: request.recordedAt
         )
         let capabilitySpan = fullSpan(capabilitySource)
+        let implementationIdentitySource = TaskContractSourceArtifact(
+            id: TaskContractSourceID(
+                "native-implementation-identities-\(shortIdentity)"
+            ),
+            exactUTF8: implementationIdentityData,
+            authority: .user,
+            author: request.userActor,
+            recordedAt: request.recordedAt
+        )
+        let implementationIdentitySpan = fullSpan(
+            implementationIdentitySource
+        )
         let executionSource = TaskContractSourceArtifact(
             id: TaskContractSourceID("native-execution-\(shortIdentity)"),
             exactUTF8: executionData,
@@ -545,6 +608,24 @@ enum NativeTaskContractAuthor {
             sourceSpans: [capabilitySpan],
             epistemicState: .explicit
         ))
+        if !implementationIDs.isEmpty {
+            sources.append(implementationIdentitySource)
+            let substitutionConstraint = ConstraintContract(
+                id: "native-exact-implementation-\(shortIdentity)",
+                kind: .prohibitSubstitution,
+                statement: "Accept only the exact opaque implementation identities explicitly confirmed by the user.",
+                substitutionRule: ExactImplementationConstraint(
+                    requirementIDs: [requirementID],
+                    permittedImplementationIDs: Set(implementationIDs)
+                )
+            )
+            constraints.append(substitutionConstraint)
+            constraintBindings.append(ConstraintSourceBinding(
+                constraintID: substitutionConstraint.id,
+                sourceSpans: [implementationIdentitySpan],
+                epistemicState: .explicit
+            ))
+        }
         if let selection = designBaselineSelection {
             let encoder = JSONEncoder()
             encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
@@ -737,7 +818,8 @@ enum NativeTaskContractAuthor {
                 displaySourceRevision: sourceRevision,
                 displayCausalStrategyAuthority: strategyAuthority,
                 displayExecutionPlan: executionPlan,
-                displayDesignBaselineSelection: designBaselineSelection
+                displayDesignBaselineSelection: designBaselineSelection,
+                displayPermittedImplementationIDs: implementationIDs
             ))
         case .failure(let failure):
             return .failure(.compilationFailed(failure.issues))

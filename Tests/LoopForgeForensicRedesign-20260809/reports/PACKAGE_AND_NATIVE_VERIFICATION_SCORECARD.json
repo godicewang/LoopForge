@@ -1,8 +1,18 @@
 {
   "schemaVersion": 34,
-  "status": "clean-source-package-native-and-remote-integration-pass-production-cutover-pending",
-  "recordedAt": "2026-08-16T10:40:41Z",
-  "currentSourcePackage": true,
+  "status": "prior-clean-package-native-and-remote-integration-pass-newer-exact-implementation-source-package-pending",
+  "recordedAt": "2026-08-16T11:00:33Z",
+  "currentSourcePackage": false,
+  "newerCurrentSource": {
+    "purpose": "native exact-implementation authority population and confirmation",
+    "changedProductionFiles": 3,
+    "changedTestFiles": 3,
+    "targetedTestsExecuted": 75,
+    "targetedTestFailures": 0,
+    "fullSuitePending": true,
+    "packagePending": true,
+    "nativeComposerAndConfirmationWalkthroughPending": true
+  },
   "currentSourceSnapshotSHA256": "3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845",
   "currentSourceVerification": {
     "executed": 874,
@@ -379,8 +389,8 @@
     "closureReceipt": "the commit containing this scorecard must equal origin/main after publication"
   },
   "remainingGaps": [
-    "production native controller cutover to the journaled kernel for authoring, planning, compilation, visual evaluation, and final completion",
-    "full unlocked native authoring, activation, Watcher, and repository-generation telemetry walkthrough",
+    "clean current-source full-suite/package proof and a real native exact-implementation composer/confirmation walkthrough",
+    "journaled production-session visual and final-completion authority plus current Watcher and repository-generation telemetry walkthroughs",
     "a separately ratified productive-provider isolation architecture or an explicitly non-productive release classification",
     "trusted Release containment and mutation isolation remain typed vetoes, so mutation-backed execution is intentionally unavailable"
   ],

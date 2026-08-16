@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T11:00:33Z",
+  "status": "native-authoring-confirmation-enrollment-activation-retention-source-pass-current-package-native-proof-pending",
+  "acceptanceRowAdvanced": "B-05",
+  "forensicCorrection": {
+    "productionExecutionCoordinatorConstructedByReleaseApp": true,
+    "nativeActivationRoutesThroughProductionCoordinator": true,
+    "previousBroadNativeStartCutoverDescriptionStale": true,
+    "actualMissingBoundary": "native exact-implementation identity authoring and confirmation"
+  },
+  "nativeAuthoring": {
+    "optionalOpaqueIdentityFieldPresent": true,
+    "commaAndNewlineParsing": true,
+    "canonicalOrdering": true,
+    "duplicatesPreservedForFailClosedValidation": true,
+    "duplicateAuthorityRejected": true,
+    "whitespaceAmbiguityRejected": true,
+    "productOrBrandDictionaryUsed": false,
+    "objectiveOrModelInferenceUsed": false
+  },
+  "contractAuthority": {
+    "candidateIdentityDigestBound": true,
+    "userSourceArtifactBound": true,
+    "typedProhibitSubstitutionConstraintBound": true,
+    "mandatoryRequirementBound": true,
+    "explicitSourceSpanBound": true,
+    "exactConfirmationDisplayPresent": true,
+    "enrollmentRetainsExactSet": true,
+    "activationRetainsExactSet": true
+  },
+  "targetedVerification": {
+    "nativeTaskContractAuthoringTests": { "executed": 17, "failures": 0 },
+    "nativeKernelEnrollmentFlowTests": { "executed": 14, "failures": 0 },
+    "taskStoreTests": { "executed": 20, "failures": 0 },
+    "taskContractCompilerTests": { "executed": 24, "failures": 0 },
+    "diffCheckPassed": true
+  },
+  "currentSourceFullSuitePassed": false,
+  "currentSourcePackagePassed": false,
+  "currentNativeComposerWalkthroughPassed": false,
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

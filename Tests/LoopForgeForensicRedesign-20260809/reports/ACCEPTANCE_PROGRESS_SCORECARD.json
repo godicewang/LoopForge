@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-08-16T10:40:41Z",
+  "recordedAt": "2026-08-16T11:00:33Z",
   "contract": "REDESIGN_ACCEPTANCE_MATRIX.md",
   "totalMandatoryGates": 81,
   "finalAcceptedGates": 0,
   "finalAcceptanceBlocked": true,
   "reasonFinalAcceptedIsZero": "package, native matrix, terminal quiescence, clean source binding, and remote integration pass, but mandatory native production-controller cutover and full unlocked runtime walkthrough gates remain explicitly pending; this all-or-nothing metric must not convert strong partial evidence into final acceptance",
   "latestCrossCuttingUpdate": {
-    "status": "clean-source-implementation-package-native-and-remote-integration-pass-global-cutover-pending",
-    "result": "A preserved independent red-to-red-to-green chain closed the four-cell native matrix. The reviewed source snapshot is bound to clean implementation commit 65d050f7300ae62073ed8ac36eeeda5f30f9e5ec. Its package-owned suite passed 874/8/0, embedded sourceDirty false, strict signing and hashes passed, Computer Use relaunched the exact clean package for native confirmation with zero residual packaged processes, and implementation plus clean-package evidence commits were observed on origin/main.",
-    "remaining": "complete the mandatory native production-controller cutover and full unlocked runtime walkthroughs already enumerated by the gate-specific receipts",
-    "evidence": "NATIVE_BASELINE_CANDIDATE_MATRIX_SCORECARD.json"
+    "status": "native-exact-implementation-authority-source-and-targeted-tests-pass-current-package-native-proof-pending",
+    "result": "Forensic tracing corrected an overbroad cutover claim: the Release app already constructs and invokes the journaled production coordinator for explicit native activation. The genuine B-05 gap was native exact-implementation population. The composer now accepts optional opaque IDs, binds their canonical bytes to user source and a typed prohibit-substitution constraint, displays the exact set for confirmation, and retains it through enrollment and activation. Authoring 17/0, enrollment 14/0, store 20/0, and compiler 24/0 targeted suites passed.",
+    "remaining": "rebuild and run the current full package-owned suite, capture the exact composer and confirmation surfaces through the real native UI, then continue the unrelated mandatory Watcher, visual/final-completion, repository-telemetry, provider, containment, and mutation-isolation gates",
+    "evidence": "NATIVE_EXACT_IMPLEMENTATION_AUTHORITY_SCORECARD.json"
   },
   "newlyAdvanced": [
     {
@@ -165,9 +165,9 @@
     },
     {
       "id": "B-05",
-      "status": "kernel-enforcement-and-pure-compiler-receipts-present-native-population-cutover-pending",
-      "result": "accepted verification for bound requirements requires exact opaque implementation identities and rejects substitutions without provider or brand dictionaries; the pure compiler now preserves typed constraint/source authority but the native authoring path does not populate substitution identities yet",
-      "remaining": "native contract population and confirmation plus production execution-session invocation"
+      "status": "native-authoring-confirmation-enrollment-activation-retention-source-receipts-present-current-package-native-proof-pending",
+      "result": "accepted verification for bound requirements requires exact opaque implementation identities and rejects substitutions without provider or brand dictionaries. The native composer now parses optional opaque IDs without vocabulary inference, rejects duplicate or ambiguous authority, binds canonical bytes to a distinct user source and typed prohibit-substitution constraint, displays the exact set for confirmation, and retains it through journal-first enrollment and explicit production activation. Targeted authoring, enrollment, store, and compiler suites passed 75/0.",
+      "remaining": "clean current-source full-suite/package proof and a real native composer/confirmation walkthrough"
     },
     {
       "id": "B-07",

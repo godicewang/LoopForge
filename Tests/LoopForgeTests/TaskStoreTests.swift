@@ -31,10 +31,12 @@ final class TaskStoreTests: XCTestCase {
             model.draftSourceRevisionExcludedDirectoryNames,
             ".build, .git, .loopforge, .swiftpm, DerivedData"
         )
+        XCTAssertTrue(model.draftPermittedImplementationIDs.isEmpty)
 
         model.draftControlProvider = .local
         model.draftControlAccessMode = .fullAccess
         model.draftSourceRevisionExcludedDirectoryNames = "dist"
+        model.draftPermittedImplementationIDs = "opaque-implementation"
         model.resetDraft()
         XCTAssertEqual(model.draftControlProvider, .codex)
         XCTAssertEqual(model.draftControlAccessMode, .readOnly)
@@ -44,6 +46,7 @@ final class TaskStoreTests: XCTestCase {
             model.draftSourceRevisionExcludedDirectoryNames,
             ".build, .git, .loopforge, .swiftpm, DerivedData"
         )
+        XCTAssertTrue(model.draftPermittedImplementationIDs.isEmpty)
     }
 
     func testRetiredDraftModesRemainHistoricalSettingsOnly() throws {
