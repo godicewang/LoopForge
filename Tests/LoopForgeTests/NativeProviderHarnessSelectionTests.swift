@@ -22,6 +22,11 @@ final class NativeProviderHarnessSelectionTests: XCTestCase {
         )
         XCTAssertFalse(selection.manifest.productiveExecutionAvailable)
         XCTAssertEqual(
+            selection.manifest.releaseMutationCapabilityClassification,
+            .nonMutatingContainmentVeto
+        )
+        XCTAssertFalse(selection.manifest.workspaceMutationAvailable)
+        XCTAssertEqual(
             selection.manifest.selfTestSHA256,
             NativeProviderHarnessSelectionLoader.expectedSelfTestSHA256
         )
@@ -99,6 +104,41 @@ final class NativeProviderHarnessSelectionTests: XCTestCase {
         }
     }
 
+    func testWorkspaceMutationAvailabilityClaimCannotMintNativeAuthority() throws {
+        var fixture = try makeFixture()
+        defer { try? FileManager.default.removeItem(at: fixture.root) }
+        fixture.manifest.workspaceMutationAvailable = true
+        try write(fixture.manifest, to: fixture.manifestURL)
+
+        XCTAssertThrowsError(try NativeProviderHarnessSelectionLoader.load(
+            manifestURL: fixture.manifestURL,
+            executableURL: harnessURL
+        )) { error in
+            XCTAssertEqual(
+                error as? NativeProviderHarnessSelectionError,
+                .manifestInvalid
+            )
+        }
+    }
+
+    func testUnavailableMutationClassificationCannotRelabelPackagedHarness() throws {
+        var fixture = try makeFixture()
+        defer { try? FileManager.default.removeItem(at: fixture.root) }
+        fixture.manifest.releaseMutationCapabilityClassification =
+            .unavailableFailClosed
+        try write(fixture.manifest, to: fixture.manifestURL)
+
+        XCTAssertThrowsError(try NativeProviderHarnessSelectionLoader.load(
+            manifestURL: fixture.manifestURL,
+            executableURL: harnessURL
+        )) { error in
+            XCTAssertEqual(
+                error as? NativeProviderHarnessSelectionError,
+                .manifestInvalid
+            )
+        }
+    }
+
     func testMissingHarnessClassificationFailsClosed() {
         XCTAssertFalse(
             LoopForgeReleaseCapabilityClassification.unavailableFailClosed
@@ -107,6 +147,10 @@ final class NativeProviderHarnessSelectionTests: XCTestCase {
         XCTAssertEqual(
             LoopForgeReleaseCapabilityClassification.unavailableFailClosed.title,
             "Execution unavailable"
+        )
+        XCTAssertFalse(
+            LoopForgeReleaseMutationCapabilityClassification
+                .unavailableFailClosed.workspaceMutationAvailable
         )
     }
 
@@ -163,6 +207,9 @@ final class NativeProviderHarnessSelectionTests: XCTestCase {
             productiveProviderBackends: [],
             releaseCapabilityClassification: .nonProductiveTransportVeto,
             productiveExecutionAvailable: false,
+            releaseMutationCapabilityClassification:
+                .nonMutatingContainmentVeto,
+            workspaceMutationAvailable: false,
             selfTestSHA256:
                 NativeProviderHarnessSelectionLoader.expectedSelfTestSHA256
         )

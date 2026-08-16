@@ -116,6 +116,15 @@ final class AppModel: ObservableObject {
             .manifest.releaseCapabilityClassification
             ?? .unavailableFailClosed
     }
+    /// Visible mutation policy, derived from the same exact package-owned
+    /// manifest as provider capability. Missing or inconsistent metadata
+    /// denies canonical workspace mutation.
+    var releaseMutationCapabilityClassification:
+        LoopForgeReleaseMutationCapabilityClassification {
+        NativeProviderHarnessSelectionLoader.bundled()?
+            .manifest.releaseMutationCapabilityClassification
+            ?? .unavailableFailClosed
+    }
     /// Explicit new-kernel enrollment capability. No legacy task or Graph
     /// path calls this service; a future native confirmation flow must supply
     /// a sealed `RatifiedTaskContract` before enrollment is possible.

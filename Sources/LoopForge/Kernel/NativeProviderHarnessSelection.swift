@@ -33,6 +33,39 @@ enum LoopForgeReleaseCapabilityClassification: String, Codable, Equatable,
     }
 }
 
+/// Product-level mutation capability for this ordinary macOS bundle.
+///
+/// There is deliberately no mutation-capable case. Canonical workspace
+/// mutation requires a separately isolated privileged helper or container
+/// that can issue the non-serializable, contract-exact containment authority
+/// consumed by `KernelProductionExecutionCoordinator`. A manifest Boolean or
+/// relabeled in-process executable can never enable that authority.
+enum LoopForgeReleaseMutationCapabilityClassification: String, Codable,
+    Equatable, Sendable {
+    case nonMutatingContainmentVeto
+    case unavailableFailClosed
+
+    var workspaceMutationAvailable: Bool { false }
+
+    var title: String {
+        switch self {
+        case .nonMutatingContainmentVeto:
+            return "Workspace mutation vetoed"
+        case .unavailableFailClosed:
+            return "Mutation capability unavailable"
+        }
+    }
+
+    var detail: String {
+        switch self {
+        case .nonMutatingContainmentVeto:
+            return "No privileged or container containment issuer is packaged; canonical workspace writes are denied."
+        case .unavailableFailClosed:
+            return "No ratified mutation-isolation identity is available; canonical workspace writes are denied."
+        }
+    }
+}
+
 struct NativeProviderHarnessManifest: Codable, Equatable, Sendable {
     var schemaVersion: Int
     var protocolVersion: Int
@@ -44,6 +77,9 @@ struct NativeProviderHarnessManifest: Codable, Equatable, Sendable {
     var releaseCapabilityClassification:
         LoopForgeReleaseCapabilityClassification
     var productiveExecutionAvailable: Bool
+    var releaseMutationCapabilityClassification:
+        LoopForgeReleaseMutationCapabilityClassification
+    var workspaceMutationAvailable: Bool
     var selfTestSHA256: ContentDigest
 }
 
@@ -107,7 +143,8 @@ enum NativeProviderHarnessSelectionLoader {
                 "executableSHA256", "operationalMode",
                 "productiveExecutionAvailable", "productiveProviderBackends",
                 "protocolVersion", "releaseCapabilityClassification",
-                "schemaVersion", "selfTestSHA256",
+                "releaseMutationCapabilityClassification", "schemaVersion",
+                "selfTestSHA256", "workspaceMutationAvailable",
               ],
               let decoded = try? JSONDecoder().decode(
                 NativeProviderHarnessManifest.self,
@@ -123,7 +160,12 @@ enum NativeProviderHarnessSelectionLoader {
                 .nonProductiveTransportVeto,
               decoded.productiveExecutionAvailable == false,
               decoded.releaseCapabilityClassification
-                .productiveExecutionAvailable == false else {
+                .productiveExecutionAvailable == false,
+              decoded.releaseMutationCapabilityClassification ==
+                .nonMutatingContainmentVeto,
+              decoded.workspaceMutationAvailable == false,
+              decoded.releaseMutationCapabilityClassification
+                .workspaceMutationAvailable == false else {
             throw NativeProviderHarnessSelectionError.manifestInvalid
         }
 

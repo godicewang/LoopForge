@@ -89,6 +89,22 @@ struct RootView: View {
             .background(Color.red.opacity(0.09))
             .overlay(alignment: .bottom) { Divider() }
             .accessibilityIdentifier("release-capability-classification")
+            HStack(spacing: 8) {
+                Image(systemName: "externaldrive.badge.xmark")
+                Text(model.releaseMutationCapabilityClassification.title)
+                    .fontWeight(.semibold)
+                Text(model.releaseMutationCapabilityClassification.detail)
+                    .foregroundStyle(.secondary)
+                Spacer()
+            }
+            .font(.caption)
+            .padding(.horizontal, 14)
+            .frame(minHeight: 32)
+            .background(Color.red.opacity(0.09))
+            .overlay(alignment: .bottom) { Divider() }
+            .accessibilityIdentifier(
+                "release-mutation-capability-classification"
+            )
             if model.launchProfile.isIsolatedInspection {
                 HStack(spacing: 8) {
                     Image(systemName: "eye.circle.fill")
