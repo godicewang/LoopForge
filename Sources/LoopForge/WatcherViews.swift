@@ -7,6 +7,7 @@ enum WatcherGuideStep: Int, CaseIterable {
     case cadence
     case continuity
     case model
+    case safeguards
     case build
 
     var title: String {
@@ -16,6 +17,7 @@ enum WatcherGuideStep: Int, CaseIterable {
         case .cadence: return "Set the cadence"
         case .continuity: return "Keep it continuous"
         case .model: return "Choose the Agent"
+        case .safeguards: return "Verify authority"
         case .build: return "Build the Watcher"
         }
     }
@@ -27,6 +29,7 @@ enum WatcherGuideStep: Int, CaseIterable {
         case .cadence: return "clock"
         case .continuity: return "arrow.triangle.2.circlepath"
         case .model: return "cpu"
+        case .safeguards: return "checkmark.shield"
         case .build: return "sparkles"
         }
     }
@@ -43,6 +46,8 @@ enum WatcherGuideStep: Int, CaseIterable {
             return "Notifications surface meaningful changes. Launch at login restores active watchers after a restart from their saved checkpoint."
         case .model:
             return "Choose one Codex, configured API, or downloaded local model. That exact selection is retained for building, reviews, and recovery."
+        case .safeguards:
+            return "A fresh read-only reviewer must approve the exact candidate artifacts. Completion also requires deterministic telemetry, checkpoint, verification, and goal-evidence receipts."
         case .build:
             return "LoopForge asks the Agent to create and verify a bounded local pipeline, then schedules it. You can pause, resume, inspect, or stop it at any time."
         }
@@ -76,6 +81,13 @@ enum WatcherGuideStep: Int, CaseIterable {
                 "Codex uses your authenticated ChatGPT account.",
                 "API uses a tested provider connection; Local uses a verified download.",
                 "Workspace Only keeps generated work inside the chosen project."
+            ]
+        case .safeguards:
+            return [
+                "The author and reviewer must have distinct conversation lineages.",
+                "The reviewer is read-only and cannot repair or mutate the workspace.",
+                "A COMPLETE marker alone has no completion authority.",
+                "Telemetry, checkpoint bytes, verification results, goal coverage, and independent approval must remain digest-bound."
             ]
         case .build:
             return [
@@ -474,6 +486,40 @@ struct ContinuumNewWatcherView: View {
                     }
                 }
 
+                WatcherCard {
+                    VStack(alignment: .leading, spacing: 14) {
+                        HStack {
+                            Label("Authority & completion", systemImage: "checkmark.shield")
+                                .font(.headline)
+                            Spacer()
+                            Text("Fail closed")
+                                .font(.caption)
+                                .padding(.horizontal, 9)
+                                .padding(.vertical, 5)
+                                .background(Color.green.opacity(0.13), in: Capsule())
+                                .foregroundStyle(.green)
+                        }
+
+                        HStack(alignment: .top, spacing: 22) {
+                            watcherSafetyControl(
+                                title: "Independent approval",
+                                symbol: "person.2.badge.gearshape",
+                                detail: "A fresh read-only reviewer with a distinct conversation lineage checks the exact pipeline and assessment digests."
+                            )
+                            watcherSafetyControl(
+                                title: "Deterministic completion",
+                                symbol: "checkmark.seal",
+                                detail: "Telemetry, checkpoint bytes, verification results, goal evidence, and independent approval must form one valid receipt chain."
+                            )
+                        }
+
+                        Text("An Agent's COMPLETE marker is only a proposal. Missing, stale, altered, self-approved, or rejected evidence cannot complete the Watcher.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+
                 HStack {
                     Spacer()
                     Button {
@@ -515,6 +561,28 @@ struct ContinuumNewWatcherView: View {
             content()
                 .pickerStyle(.menu)
                 .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func watcherSafetyControl(
+        title: String,
+        symbol: String,
+        detail: String
+    ) -> some View {
+        HStack(alignment: .top, spacing: 10) {
+            Image(systemName: symbol)
+                .foregroundStyle(Color.accentColor)
+                .frame(width: 22)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.callout)
+                    .fontWeight(.semibold)
+                Text(detail)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }

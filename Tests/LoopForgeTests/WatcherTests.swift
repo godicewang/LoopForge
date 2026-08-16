@@ -18,6 +18,7 @@ final class WatcherTests: XCTestCase {
                 "Set the cadence",
                 "Keep it continuous",
                 "Choose the Agent",
+                "Verify authority",
                 "Build the Watcher"
             ]
         )
@@ -34,6 +35,21 @@ final class WatcherTests: XCTestCase {
         XCTAssertTrue(
             WatcherGuideStep.continuity.notes.contains {
                 $0.contains("checkpoint")
+            }
+        )
+        XCTAssertTrue(
+            WatcherGuideStep.safeguards.notes.contains {
+                $0.contains("distinct conversation lineages")
+            }
+        )
+        XCTAssertTrue(
+            WatcherGuideStep.safeguards.notes.contains {
+                $0.contains("COMPLETE marker alone")
+            }
+        )
+        XCTAssertTrue(
+            WatcherGuideStep.safeguards.notes.contains {
+                $0.contains("digest-bound")
             }
         )
     }
