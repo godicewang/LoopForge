@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-08-16T10:31:38Z",
-  "status": "clean-source-native-matrix-independent-review-and-package-confirmation-pass-push-pending",
+  "recordedAt": "2026-08-16T10:40:41Z",
+  "status": "clean-source-native-matrix-independent-review-package-and-integration-pass-global-cutover-pending",
   "baselineRevision": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
   "candidateSourceSnapshotSHA256": "3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845",
   "nativeCapture": {
@@ -87,6 +87,12 @@
   },
   "currentMatrixComplete": true,
   "cleanRevisionBound": true,
+  "gitIntegration": {
+    "implementationCommit": "65d050f7300ae62073ed8ac36eeeda5f30f9e5ec",
+    "cleanPackageEvidenceCommit": "5cf32293304130d353025774e5d0996d4a06777d",
+    "bothCommitsObservedOnOriginMain": true,
+    "closureReceipt": "the commit containing this scorecard must equal origin/main after publication"
+  },
   "finalRelease": false,
   "easyBusinessMutated": false
 }

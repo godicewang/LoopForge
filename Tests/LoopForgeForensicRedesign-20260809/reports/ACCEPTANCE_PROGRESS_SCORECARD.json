@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-08-16T10:31:38Z",
+  "recordedAt": "2026-08-16T10:40:41Z",
   "contract": "REDESIGN_ACCEPTANCE_MATRIX.md",
   "totalMandatoryGates": 81,
   "finalAcceptedGates": 0,
   "finalAcceptanceBlocked": true,
-  "reasonFinalAcceptedIsZero": "the exact implementation is committed and its clean-source package, full suite, signing, hashes, and native confirmation pass; the reporting commit and remote push are still pending, while the ordinary-macOS physical-footprint issuer and ordinary-app productive-provider install/cutover strategies remain retired typed vetoes that cannot be mislabeled productive execution",
+  "reasonFinalAcceptedIsZero": "package, native matrix, terminal quiescence, clean source binding, and remote integration pass, but mandatory native production-controller cutover and full unlocked runtime walkthrough gates remain explicitly pending; this all-or-nothing metric must not convert strong partial evidence into final acceptance",
   "latestCrossCuttingUpdate": {
-    "status": "clean-source-implementation-commit-package-and-native-confirmation-pass",
-    "result": "A preserved independent red-to-red-to-green chain closed the four-cell native matrix. The reviewed source snapshot is now bound to clean implementation commit 65d050f7300ae62073ed8ac36eeeda5f30f9e5ec. Its package-owned suite passed 874/8/0, embedded sourceDirty false, strict signing and hashes passed, and Computer Use relaunched the exact clean package for native confirmation with zero residual packaged processes.",
-    "remaining": "report commit and push",
+    "status": "clean-source-implementation-package-native-and-remote-integration-pass-global-cutover-pending",
+    "result": "A preserved independent red-to-red-to-green chain closed the four-cell native matrix. The reviewed source snapshot is bound to clean implementation commit 65d050f7300ae62073ed8ac36eeeda5f30f9e5ec. Its package-owned suite passed 874/8/0, embedded sourceDirty false, strict signing and hashes passed, Computer Use relaunched the exact clean package for native confirmation with zero residual packaged processes, and implementation plus clean-package evidence commits were observed on origin/main.",
+    "remaining": "complete the mandatory native production-controller cutover and full unlocked runtime walkthroughs already enumerated by the gate-specific receipts",
     "evidence": "NATIVE_BASELINE_CANDIDATE_MATRIX_SCORECARD.json"
   },
   "newlyAdvanced": [
@@ -17,7 +17,7 @@
       "id": "J-05",
       "status": "clean-source-four-cell-native-matrix-independent-review-and-native-confirmation-pass",
       "result": "Exact baseline commit 6e9b99d and candidate snapshot 3870639 were captured in standard/accessibility and expanded/narrow native configurations. Two independent veto receipts remain preserved; after bounded hierarchy, whole-column, and whole-row corrections, the final distinct review passed all H-04/H-05/H-06/H-07/H-09 gates at confidence 0.94. The same snapshot is now bound to clean commit 65d050f and the exact signed clean package received a final Computer Use confirmation screenshot; display restoration and zero residual processes passed.",
-      "remaining": "report commit and push"
+      "remaining": "none"
     },
     {
       "id": "A-01",
@@ -125,13 +125,13 @@
       "id": "J-06",
       "status": "clean-source-package-sign-hash-smoke-and-native-confirmation-pass",
       "result": "the current package is exactly bound to clean implementation commit 65d050f7300ae62073ed8ac36eeeda5f30f9e5ec, source snapshot 3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845, and package-owned 874-test log digest 1daa3cbd9781f49e8732fd7e7acdb0efe8d707c9ebd4838798c774d4b79e7717; sourceDirty false, deep-strict signature, checksum, ZIP integrity, DMG verification, bounded exact-Mach-O startup, four-cell native matrix, independent visual pass, final clean-package native confirmation, display restoration, and zero residual packaged processes passed",
-      "remaining": "report commit and push"
+      "remaining": "none"
     },
     {
       "id": "J-07",
       "status": "clean-package-native-matrix-and-prior-read-only-runtime-receipts-valid-push-pending",
       "result": "the snapshot-4dad397 package survived bounded startup and cleanup. Computer Use opened the exact signed package and proved the Journaled Auto Graph composer exposes Allow worker network access off by default, with exact kernel.network-access, worker-only, independent-reviewer-offline, and no-harness-ratification copy. No toggle escalation, contract confirmation, enrollment, activation, prompt, provider, verifier, worker, mutation, or legacy execution occurred, and zero packaged processes remained after quit. The package separately binds provider launches to a one-process, 16 MiB/file native ceiling proven by the sandboxed fixture. Earlier provider-diagnostics and read-only activation/relaunch receipts remain prior-package evidence.",
-      "remaining": "trusted Release containment or retained verifier/provider launch vetoes remain intentional product boundaries; report commit and pushed revision receipt remain for this audit"
+      "remaining": "none; trusted Release containment and productive-provider architecture remain intentionally retired boundaries, enforced through typed vetoes rather than mislabeled execution"
     },
     {
       "id": "E-01",
@@ -201,14 +201,11 @@
     }
   ],
   "knownUnresolvedContradictions": [
-    "Confirmation-to-activation verifier continuity, all-mode legacy retirement, ready-enrollment restart continuity, role-specific native authority, read-only explicit activation, default-off worker-network authority, typed ordinary-macOS containment strategy retirement, ordinary-app productive-provider architecture-scope retirement, and the pre-admission/pre-effect vetoes are enforced. Clean implementation commit 65d050f7300ae62073ed8ac36eeeda5f30f9e5ec has an exact 874/8/0 signed, checksummed, direct- and mounted-smoke-tested package plus a completed red-to-red-to-green native matrix and final clean-package native confirmation. The physical-footprint issuer and productive-provider install/cutover strategies are disproven for the ordinary app rather than pending; mutation-backed execution requires a separately scoped privileged or virtualized isolation product. Only the reporting commit and push receipt remain before this audit can claim final integration."
+    "The clean package, remote integration, terminal quiescence, and native visual matrix pass, but gate-specific receipts still describe legacy/source-controller or pure-compiler evidence awaiting native production invocation. Final acceptance therefore remains zero under the all-or-nothing metric until Journaled Auto Graph authoring/planning/execution, native visual/final-completion authorities, Watcher flows, and repository-generation telemetry are exercised through the real production controller. Ordinary-macOS hard physical-footprint containment and ordinary-app productive-provider installation remain explicitly retired strategies; mutation-backed execution requires separately scoped privileged or virtualized isolation rather than relabeling the current transport-veto package."
   ],
   "historicalKnownUnresolvedContradictionsBeforeConfirmationFreshness": [
     "Executable recipe, candidate attestation/materialization, descriptor-atomic handoff, canonical retained-byte parsing, deterministic exit/result mapping, containment schema-v4 evidence, live-result-derived ordinary v2 verification, full batch-digest replay checking, latest-red revocation, separately activated independent review, exact integration reliance, deterministic hash-journal-bound final-completion authorization, external-dependency replay validation, a mandatory executable external-dependency probe contract, strict nonce-bound canonical result parsing, journal-bound inert dependency activation, a deterministic pre-admission external-observer containment veto, activation-bound journal-first admission and real native sandbox spawn, an atomic process-binding/launch receipt, exact request-stdin and retained-output transport, descriptor-resolved physical path identity, exact transport-policy validation, self-validating canonical parse evidence, inert native-exit/result-row mapping, process-runtime-only release-bound result authority, journal-owned observation issuance with exact launch/result/release provenance, complete native launch-through-observation composition with exact retry and recovered-journal replay, production external-observer invocation with default Release veto, production native-visual invocation with a code-owned evaluator and session-retained execution proof, production final-completion invocation over the session-retained exact journal, explicit native read-only production-session activation reconstructed from unchanged journal authority, exact journal-derived single-use provider prompt preparation, a typed provider-harness protocol gate, kernel-owned canonical V2 invocation context transport on fixed descriptor 196, exact profile-ratified Keychain credential resolution into the one-shot fixed descriptor 197, a native user-visible typed source-revision exclusion policy with pre-capture validation, digest binding, display, and exact confirmation recapture, and native exact verifier selection with no-follow executable hashing and code-fixed transport/input/environment/capture/parser/network/child/resource authority are present. The complete native observer chain is proven only with a DEBUG test capability; ordinary-macOS Release still has no trusted physical resident-memory issuer and therefore retains the pre-admission veto. Future apply similarly fails before mutation authority unless one non-serializable capability covers every exact ratified verifier/reviewer recipe. Historical or crash-recovered applied journals use the typed terminal launch veto to derive a deterministic fresh-lease rollback from the completed source apply envelope, restore the retained preimage, reach rolledBack, release authority, and replay with zero effects. No verification fact is invented. Native protected-artifact baseline capture-source selection, contract binding, confirmation, Release freezing, live candidate-capture authority, live deterministic per-cell measurement authority, distinct ratified independent visual-review authority, and the exact hash-journaled visual and completion production issuers are present. The remaining authority gaps are production verifier confirmation/activation/execution, a separately packaged and ratified V2 provider harness, exact network authority, native mutation isolation/preparation, a trusted external-observer Release containment issuer or the retained veto, and the full unlocked native visual matrix. Publication remains structurally impossible. Snapshot 96cdde now has an exact 827-test signed/checksummed/smoke-tested dirty-source package and two targeted current native verifier-selection screenshots. Earlier walkthroughs remain valid prior-package evidence only. Legacy cutover, the full native matrix, clean-commit package rebuild, commit, and push remain vetoed."
   ],
-  "nativeBlocked": [
-    "G-03",
-    "J-08"
-  ],
+  "nativeBlocked": [],
   "easyBusinessMutated": false
 }

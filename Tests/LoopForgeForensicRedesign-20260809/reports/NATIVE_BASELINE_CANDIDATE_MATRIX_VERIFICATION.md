@@ -1,6 +1,6 @@
 # Native Baseline/Candidate Matrix Verification
 
-Status: **candidate matrix passed independent adversarial review and the exact clean-revision package passed native confirmation; push remains pending**
+Status: **candidate matrix, exact clean-revision package, native confirmation, and remote integration passed; global production cutover remains pending**
 
 Recorded: `2026-08-16T10:31:38Z`
 
@@ -34,4 +34,4 @@ The reviewed package passed the package-owned suite with **874 executed, 8 skipp
 - DMG: `85f89b3e8b1598ae966de98f1ec91ce99f4b5ce48d34e91233ab46ae4f0efd91`;
 - package test log: `1daa3cbd9781f49e8732fd7e7acdb0efe8d707c9ebd4838798c774d4b79e7717`.
 
-The clean package embeds `sourceDirty: false`, the exact implementation commit, the reviewed source snapshot, and the accepted test-log digest. [The final clean-package screenshot](../screenshots/packaged-loopforge-clean-65d050f-native-confirmation-20260816T102827Z.jpeg), SHA-256 `46b0b08c6de2c7f839933ea579e80cb8007e3db7a848b9f83eec8467b358797a`, confirms the stopped legacy task, primary task hierarchy, Running node loops summary, graph cards, and explicit continuation labels in the signed application. Final release remains false only until the reporting commit and push complete.
+The clean package embeds `sourceDirty: false`, the exact implementation commit, the reviewed source snapshot, and the accepted test-log digest. [The final clean-package screenshot](../screenshots/packaged-loopforge-clean-65d050f-native-confirmation-20260816T102827Z.jpeg), SHA-256 `46b0b08c6de2c7f839933ea579e80cb8007e3db7a848b9f83eec8467b358797a`, confirms the stopped legacy task, primary task hierarchy, Running node loops summary, graph cards, and explicit continuation labels in the signed application. Commits `65d050f` and `5cf3229` were observed on `origin/main`. This closes the matrix/package/integration proof, not the remaining mandatory native production-controller cutover and unlocked runtime walkthrough gates; global final release remains false.

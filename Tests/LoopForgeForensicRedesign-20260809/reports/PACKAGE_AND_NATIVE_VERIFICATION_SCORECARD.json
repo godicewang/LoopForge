@@ -1,7 +1,7 @@
 {
   "schemaVersion": 34,
-  "status": "clean-source-commit-package-and-native-confirmation-pass-report-commit-and-push-pending",
-  "recordedAt": "2026-08-16T10:31:38Z",
+  "status": "clean-source-package-native-and-remote-integration-pass-production-cutover-pending",
+  "recordedAt": "2026-08-16T10:40:41Z",
   "currentSourcePackage": true,
   "currentSourceSnapshotSHA256": "3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845",
   "currentSourceVerification": {
@@ -370,8 +370,19 @@
     "postQuitPackagedProcessCount": 0,
     "evidence": "PRODUCTIVE_PROVIDER_ARCHITECTURE_SCOPE_RETIREMENT_SCORECARD.json"
   },
+  "gitIntegration": {
+    "branch": "main",
+    "remote": "origin",
+    "implementationCommit": "65d050f7300ae62073ed8ac36eeeda5f30f9e5ec",
+    "cleanPackageEvidenceCommit": "5cf32293304130d353025774e5d0996d4a06777d",
+    "bothCommitsObservedOnRemote": true,
+    "closureReceipt": "the commit containing this scorecard must equal origin/main after publication"
+  },
   "remainingGaps": [
-    "report commit and push"
+    "production native controller cutover to the journaled kernel for authoring, planning, compilation, visual evaluation, and final completion",
+    "full unlocked native authoring, activation, Watcher, and repository-generation telemetry walkthrough",
+    "a separately ratified productive-provider isolation architecture or an explicitly non-productive release classification",
+    "trusted Release containment and mutation isolation remain typed vetoes, so mutation-backed execution is intentionally unavailable"
   ],
   "finalRelease": false,
   "easyBusinessMutated": false,

@@ -3,7 +3,7 @@
   "project": "LoopForge Forensic Redesign 20h",
   "startedAt": "2026-08-09T13:13:58Z",
   "requiredActiveSeconds": 72000,
-  "coveredActiveSeconds": 197550,
+  "coveredActiveSeconds": 198093,
   "remainingActiveSeconds": 0,
   "requiredForensicAnalysisBeforeImplementationSeconds": 36000,
   "coveredForensicAnalysisSeconds": 39370,
@@ -5526,7 +5526,24 @@
         "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
         "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
       ]
+    },
+    {
+      "id": "remote-integration-and-honest-gate-audit-262",
+      "startedAt": "2026-08-16T10:31:38Z",
+      "endedAt": "2026-08-16T10:40:41Z",
+      "coveredSeconds": 543,
+      "status": "accepted",
+      "excludedFailures": [
+        "remote push network wait and polling count zero",
+        "no test, packaging, Computer Use, or shell wait duration is counted"
+      ],
+      "activity": "Committed the clean-package scorecards, native screenshot, and interval ledger as 5cf32293304130d353025774e5d0996d4a06777d, pushed implementation commit 65d050f7300ae62073ed8ac36eeeda5f30f9e5ec and evidence commit 5cf3229 to origin/main, and verified local HEAD equaled origin/main. A final adversarial audit rejected the tempting but misleading 81/81 completion claim: G-03/J-08 terminal quiescence are green, yet numerous gate-specific receipts still name mandatory native production-controller cutover and unlocked authoring/activation/Watcher/repository-telemetry walkthrough gaps. Scorecards were corrected to preserve the successful package/integration milestone while retaining global finalRelease false and finalAcceptedGates zero. The commit containing this receipt is publication-valid only when it equals origin/main. EasyBusiness remained read-only.",
+      "evidence": [
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/ACCEPTANCE_PROGRESS_SCORECARD.json",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/PACKAGE_AND_NATIVE_VERIFICATION_SCORECARD.json",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NATIVE_BASELINE_CANDIDATE_MATRIX_SCORECARD.json"
+      ]
     }
   ],
-  "lastUpdatedAt": "2026-08-16T10:31:38Z"
+  "lastUpdatedAt": "2026-08-16T10:40:41Z"
 }
