@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-08-16T11:25:09Z",
+  "recordedAt": "2026-08-16T11:38:18Z",
   "contract": "REDESIGN_ACCEPTANCE_MATRIX.md",
   "totalMandatoryGates": 81,
   "finalAcceptedGates": 0,
   "finalAcceptanceBlocked": true,
-  "reasonFinalAcceptedIsZero": "current package, native matrix, exact-implementation confirmation, terminal quiescence, clean source binding, and remote integration pass, but unrelated mandatory native production-controller, Watcher, repository-telemetry, provider, containment, mutation-isolation, and full unlocked runtime walkthrough gates remain explicitly pending; this all-or-nothing metric must not convert strong partial evidence into final acceptance",
+  "reasonFinalAcceptedIsZero": "current package, native activation, native matrix, exact-implementation confirmation, terminal quiescence, clean source binding, and remote integration pass, but mandatory downstream live visual/final-completion authority, Watcher, repository telemetry, typed authoring, productive-provider, containment, mutation-isolation, and unlocked runtime walkthrough gates remain explicitly pending; this all-or-nothing metric must not convert strong partial evidence into final acceptance",
   "latestCrossCuttingUpdate": {
-    "status": "native-exact-implementation-authority-clean-package-and-real-native-confirmation-pass",
-    "result": "Forensic tracing corrected an overbroad cutover claim: the Release app already constructs and invokes the journaled production coordinator for explicit native activation. Commit c8dd03edcc8ba33d1b9e1ad5bec5c57ec97c5dd4 closes the genuine native exact-implementation population gap. Clean revision 4bd9bf90272e575fa5d86fd80c4bbfc9cccb6610 passed the package-owned 875/8/0 suite, signing, archive integrity, hashes, startup, and smoke. In the real packaged UI, the immutable sheet displayed the sorted exact IDs, read-only worker/reviewer authority, network off, the exact verifier digest, and a zero-file/zero-byte mutation ceiling. Cancellation before enrollment preserved the same two sidebar tasks and created no task or ready run.",
-    "remaining": "continue the unrelated mandatory Watcher, visual/final-completion, repository-telemetry, productive-provider, containment, mutation-isolation, and unlocked production-runtime gates",
-    "evidence": "NATIVE_EXACT_IMPLEMENTATION_AUTHORITY_SCORECARD.json"
+    "status": "broad-native-start-cutover-blocker-superseded-downstream-authority-gaps-retained",
+    "result": "Commit 65d050f7300ae62073ed8ac36eeeda5f30f9e5ec is the exact native cutover: Release constructs the production execution coordinator, the real diagnostics UI exposes Activate Native Attempt, AppModel rechecks journal-owned readiness and calls activateNativeEnrolledRun, and the non-Codable session is retained by run identity without a legacy task or Graph worker. The current NativeKernelEnrollmentFlowTests passed 14/0, and a prior signed native receipt reached executing with mutation delta 0, verification delta 1, external effects 0, and no provider launch. Older no-start reports remain valid historical receipts but are superseded as current status.",
+    "remaining": "supply downstream live visual/review and final-completion authority through the retained app session, complete current Watcher and repository-telemetry walkthroughs, retain or replace the productive-provider/containment vetoes with separately ratified authority, and finish outstanding typed authoring surfaces",
+    "evidence": "NATIVE_CUTOVER_CLAIM_RECONCILIATION_SCORECARD.json"
   },
   "newlyAdvanced": [
     {
@@ -21,15 +21,15 @@
     },
     {
       "id": "A-01",
-      "status": "all-legacy-controller-execution-ingress-retired-ready-enrollment-relaunch-recovery-native-proof-present-journal-kernel-cutover-partial",
+      "status": "all-legacy-controller-execution-ingress-retired-native-enrollment-activation-relaunch-recovery-and-quiescence-present",
       "result": "all decoded historical execution modes fail closed through one idempotent production blocker, while Journaled Auto Graph is the only new-work path. Ready kernel enrollment now survives restart only through exact registry and runCreated journal proof; changed or executing runs reject, and no live process, provider, verifier-staging, mutation, retry, or design-baseline capability is recreated. Snapshot c974a26 passed source and package-owned 837/8/0 suites, signing, hashes, smoke, and an exact packaged native enrollment/quit/relaunch walkthrough that recovered the same run, sequence, phase, blockers, and activation control.",
-      "remaining": "invoke the ratified production execution session from the native Journaled Auto Graph start flow under trusted Release containment or retained vetoes, complete the full native matrix, rebuild from an exact clean commit, commit, and push"
+      "remaining": "supply the still-missing downstream live app authorities through the retained production session; preserve the provider, containment, and mutation vetoes until exact replacement authority exists"
     },
     {
       "id": "E-05",
-      "status": "journal-bound-deterministic-final-completion-production-session-invocation-present-native-start-cutover-pending",
+      "status": "journal-bound-deterministic-final-completion-production-session-invocation-and-native-activation-present-app-control-pending",
       "result": "final completion requires one exact hash-journal head and a reducer-recomputed evidence digest over mandatory requirement closure, ratified duration, terminal runtime quiescence, exclusively available authorized external-dependency observations, latest native green visual authority, safe integration state, mutation-backed independent integration acceptance, and distinct actor lineages. The production execution session now retains and invokes this exact journal-owned coordinator without accepting a caller completion claim, journal, command ID, timestamp, or evidence digest. A live active-attempt veto preserved the exact journal head, phase, and absence of authorization; tampered replay, stale heads, missing dependency evidence, missing quiescence, unsafe integration, and legacy completion remain untrusted.",
-      "remaining": "invoke the production execution session itself from the native Journaled Auto Graph start flow, provide trusted Release containment or retain both typed pre-admission vetoes, complete unlocked native proof, rebuild from a clean commit, commit, and push"
+      "remaining": "expose and prove journal-owned final-completion control through the retained native session only after every mandatory prerequisite is accepted; retain both typed pre-admission vetoes unless exact replacement authority exists"
     },
     {
       "id": "F-02",
@@ -111,9 +111,9 @@
     },
     {
       "id": "B-04",
-      "status": "typed-contract-compiler-authority-reducer-and-package-receipts-present-native-authoring-cutover-pending",
+      "status": "typed-contract-compiler-authority-reducer-and-package-receipts-present-native-cardinality-authoring-pending",
       "result": "an explicitly user-bound requirement can declare an exact opaque collection count; accepted verification must enumerate one digest-backed stable identity per member, while missing, substituted, duplicate-identity, under-count, and over-count observations reject with typed reasons without artifact or product keyword policy",
-      "remaining": "native cardinality authoring/user confirmation, production enrollment/controller cutover, current native walkthrough, clean commit, and push"
+      "remaining": "native cardinality authoring/user confirmation and a current native walkthrough"
     },
     {
       "id": "C-01",
@@ -147,15 +147,15 @@
     },
     {
       "id": "B-03",
-      "status": "journal-bound-live-native-visual-evaluation-production-session-invocation-present-native-start-cutover-pending",
+      "status": "journal-bound-live-native-visual-evaluation-production-session-invocation-and-native-activation-present-app-authority-supply-pending",
       "result": "the real native UI selects and freezes a protected baseline through exact capture receipts. Candidate capture and deterministic measurement are live non-Codable adapter-owned authorities, and a distinct ratified reviewer produces the complete live review authority. The production execution session now passes only that live review to a retained compositor while supplying its exact non-Codable execution proof, journal, and code-owned deterministic evaluator. The compositor resolves the frozen baseline, completed attempt/start frame, worker and reviewer profiles, four distinct actor lineages, candidate matrix, attestation sets, and evidence times; derives command and receipt identities; appends one reducer-owned visual evaluation; re-reads the durable receipt; resolves exact retry idempotently; rejects cross-wired proof/profile substitution without journal change; and retains an independent veto as durable red evidence. A live green chain journaled through the production evaluator, while an active production session rejected before reading invalid review evidence and preserved its exact head.",
-      "remaining": "cut the native app start flow over to the production execution session and supply its live visual authorities, complete the native walkthrough, then rebuild from a clean commit and push"
+      "remaining": "supply live capture, measurement, and independent-review authorities from the real app flow through the retained production session, then complete the native walkthrough"
     },
     {
       "id": "B-02",
-      "status": "pure-reducer-and-package-receipts-present-native-planning-cutover-pending",
-      "result": "every proposed node must own known requirement IDs and every mandatory requirement must have exactly one owner; empty, unknown, omitted, and duplicate ownership reject the complete plan with exact typed node/requirement identities and deterministic ordering",
-      "remaining": "native plan authoring, production enrollment/controller cutover, current native walkthrough, clean commit, and push"
+      "status": "pure-reducer-native-confirmation-enrollment-and-activation-plan-ownership-receipts-present",
+      "result": "every proposed node must own known requirement IDs and every mandatory requirement must have exactly one owner; empty, unknown, omitted, and duplicate ownership reject the complete plan with exact typed node/requirement identities and deterministic ordering. The real native confirmation sheet displays the requirement-owned plan, enrollment retains it, and explicit production activation reconstructs it from the unchanged journal.",
+      "remaining": "none"
     },
     {
       "id": "B-01",
@@ -189,19 +189,19 @@
     },
     {
       "id": "G-08",
-      "status": "journal-issued-generation-and-recovery-cache-telemetry-package-receipts-present-native-proof-cutover-pending",
+      "status": "journal-issued-generation-and-recovery-cache-telemetry-package-receipts-present-native-diagnostics-active-run-binding-pending",
       "result": "RunJournal is the only release issuer of opaque repository-generation authority: it matches exact accepted apply/restored rollback event payloads to reducer state, lets later ambiguity veto older success, includes canonical root in the cache key, and projects typed startup cache telemetry that blocks work when authority is withheld",
-      "remaining": "complete current unlocked native diagnostics/cache-telemetry walkthrough, production run-creator/controller cutover, clean commit, and push"
+      "remaining": "complete the current unlocked native diagnostics/cache-telemetry walkthrough and bind its repository-generation projection to the exact active native run"
     },
     {
       "id": "J-04",
       "status": "receipt-native-source-policy-journal-ui-provider-resource-boundary-diagnostics-and-targeted-native-proof-present-full-matrix-pending",
       "result": "registered new-kernel runs project journal-derived strategy, budget, evidence, requirement, regression, replacement, sequence, and projection identities into native diagnostics. Snapshot 4dad397 adds the missing native worker-network decision seam without weakening the unavailable-V2-harness veto. Its provider launch receipt separately binds one process and 16 MiB/file, and the sandboxed fixture proves child creation is denied. The exact package displayed the authority toggle off by default, prepared no provider prompt, confirmed or enrolled nothing, launched nothing, and retained zero processes after quit. Earlier provider-diagnostics and read-only activation/relaunch receipts remain prior-package evidence.",
-      "remaining": "complete current unlocked diagnostics/activation and full visual-matrix walkthroughs, ratified provider-harness launch composition, clean commit, and push"
+      "remaining": "complete the current unlocked Watcher and repository-generation diagnostics walkthroughs; retain the productive-provider veto unless a separately scoped architecture is ratified"
     }
   ],
   "knownUnresolvedContradictions": [
-    "The clean package, remote integration, terminal quiescence, and native visual matrix pass, but gate-specific receipts still describe legacy/source-controller or pure-compiler evidence awaiting native production invocation. Final acceptance therefore remains zero under the all-or-nothing metric until Journaled Auto Graph authoring/planning/execution, native visual/final-completion authorities, Watcher flows, and repository-generation telemetry are exercised through the real production controller. Ordinary-macOS hard physical-footprint containment and ordinary-app productive-provider installation remain explicitly retired strategies; mutation-backed execution requires separately scoped privileged or virtualized isolation rather than relabeling the current transport-veto package."
+    "Native enrollment and explicit production-session activation are present, but historical no-start reports were still being read as current blockers. That broad contradiction is superseded by exact source, commit, tests, and the signed native activation receipt. Final acceptance remains zero under the all-or-nothing metric because downstream live visual/final-completion authority, typed authoring gaps, Watcher flows, repository-generation telemetry, productive-provider architecture, containment, and mutation isolation are not all proven through the current real app flow. Ordinary-macOS hard physical-footprint containment and ordinary-app productive-provider installation remain explicitly retired strategies; mutation-backed execution requires separately scoped privileged or virtualized isolation rather than relabeling the current transport-veto package."
   ],
   "historicalKnownUnresolvedContradictionsBeforeConfirmationFreshness": [
     "Executable recipe, candidate attestation/materialization, descriptor-atomic handoff, canonical retained-byte parsing, deterministic exit/result mapping, containment schema-v4 evidence, live-result-derived ordinary v2 verification, full batch-digest replay checking, latest-red revocation, separately activated independent review, exact integration reliance, deterministic hash-journal-bound final-completion authorization, external-dependency replay validation, a mandatory executable external-dependency probe contract, strict nonce-bound canonical result parsing, journal-bound inert dependency activation, a deterministic pre-admission external-observer containment veto, activation-bound journal-first admission and real native sandbox spawn, an atomic process-binding/launch receipt, exact request-stdin and retained-output transport, descriptor-resolved physical path identity, exact transport-policy validation, self-validating canonical parse evidence, inert native-exit/result-row mapping, process-runtime-only release-bound result authority, journal-owned observation issuance with exact launch/result/release provenance, complete native launch-through-observation composition with exact retry and recovered-journal replay, production external-observer invocation with default Release veto, production native-visual invocation with a code-owned evaluator and session-retained execution proof, production final-completion invocation over the session-retained exact journal, explicit native read-only production-session activation reconstructed from unchanged journal authority, exact journal-derived single-use provider prompt preparation, a typed provider-harness protocol gate, kernel-owned canonical V2 invocation context transport on fixed descriptor 196, exact profile-ratified Keychain credential resolution into the one-shot fixed descriptor 197, a native user-visible typed source-revision exclusion policy with pre-capture validation, digest binding, display, and exact confirmation recapture, and native exact verifier selection with no-follow executable hashing and code-fixed transport/input/environment/capture/parser/network/child/resource authority are present. The complete native observer chain is proven only with a DEBUG test capability; ordinary-macOS Release still has no trusted physical resident-memory issuer and therefore retains the pre-admission veto. Future apply similarly fails before mutation authority unless one non-serializable capability covers every exact ratified verifier/reviewer recipe. Historical or crash-recovered applied journals use the typed terminal launch veto to derive a deterministic fresh-lease rollback from the completed source apply envelope, restore the retained preimage, reach rolledBack, release authority, and replay with zero effects. No verification fact is invented. Native protected-artifact baseline capture-source selection, contract binding, confirmation, Release freezing, live candidate-capture authority, live deterministic per-cell measurement authority, distinct ratified independent visual-review authority, and the exact hash-journaled visual and completion production issuers are present. The remaining authority gaps are production verifier confirmation/activation/execution, a separately packaged and ratified V2 provider harness, exact network authority, native mutation isolation/preparation, a trusted external-observer Release containment issuer or the retained veto, and the full unlocked native visual matrix. Publication remains structurally impossible. Snapshot 96cdde now has an exact 827-test signed/checksummed/smoke-tested dirty-source package and two targeted current native verifier-selection screenshots. Earlier walkthroughs remain valid prior-package evidence only. Legacy cutover, the full native matrix, clean-commit package rebuild, commit, and push remain vetoed."

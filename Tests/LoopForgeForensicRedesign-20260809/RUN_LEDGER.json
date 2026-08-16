@@ -3,7 +3,7 @@
   "project": "LoopForge Forensic Redesign 20h",
   "startedAt": "2026-08-09T13:13:58Z",
   "requiredActiveSeconds": 72000,
-  "coveredActiveSeconds": 199293,
+  "coveredActiveSeconds": 199593,
   "remainingActiveSeconds": 0,
   "requiredForensicAnalysisBeforeImplementationSeconds": 36000,
   "coveredForensicAnalysisSeconds": 39370,
@@ -5589,7 +5589,30 @@
         "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
         "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
       ]
+    },
+    {
+      "id": "native-cutover-claim-reconciliation-265",
+      "startedAt": "2026-08-16T11:35:35Z",
+      "endedAt": "2026-08-16T11:41:10Z",
+      "coveredSeconds": 300,
+      "status": "accepted",
+      "excludedFailures": [
+        "NativeKernelEnrollmentFlowTests execution and wait duration count zero",
+        "shell, Git history, blame, and report-search wait duration count zero",
+        "35 seconds not attributable to accepted active analysis or evidence editing count zero"
+      ],
+      "activity": "Reconciled chronological native-cutover claims against the exact current Release composition, native control, AppModel call path, production coordinator, implementation commit, focused tests, and prior signed-app activation receipt. The broad native-start/controller-cutover blocker is superseded: Release constructs the coordinator, Activate Native Attempt invokes activateNativeEnrolledRun, and the non-Codable session is retained without a legacy task or Graph worker. The current NativeKernelEnrollmentFlowTests passed 14/0. Historical no-start reports remain unchanged as time-bound evidence, while current aggregate scorecards now name the genuine downstream gaps: live visual/review and final-completion app authority, typed authoring, Watcher and repository telemetry, productive-provider architecture, containment, and mutation isolation. Final release remains false and EasyBusiness remained read-only.",
+      "evidence": [
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NATIVE_CUTOVER_CLAIM_RECONCILIATION.md",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NATIVE_CUTOVER_CLAIM_RECONCILIATION_SCORECARD.json",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/ACCEPTANCE_PROGRESS_SCORECARD.json",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/PACKAGE_AND_NATIVE_VERIFICATION.md",
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/LoopForgeApp.swift",
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/AppModel.swift",
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/Views.swift",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeTests/NativeKernelEnrollmentFlowTests.swift"
+      ]
     }
   ],
-  "lastUpdatedAt": "2026-08-16T11:31:50Z"
+  "lastUpdatedAt": "2026-08-16T11:41:10Z"
 }

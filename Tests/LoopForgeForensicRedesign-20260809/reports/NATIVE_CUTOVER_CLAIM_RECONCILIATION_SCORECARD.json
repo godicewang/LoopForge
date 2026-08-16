@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T11:38:18Z",
+  "status": "broad-native-start-cutover-blocker-superseded-downstream-authority-gaps-retained",
+  "sourceAuthority": {
+    "inspectedRevision": "8f114fbcecee3d0f6ce2231301045159e472e9af",
+    "cutoverImplementationCommit": "65d050f7300ae62073ed8ac36eeeda5f30f9e5ec",
+    "releaseRuntimeConstructsExecutionCoordinator": true,
+    "nativeActivationControlPresent": true,
+    "appModelInvokesProductionCoordinator": true,
+    "nonCodableProductionSessionRetainedByRunID": true,
+    "activationReconstructsExecutableFieldsFromJournal": true,
+    "legacyLoopControllerStartInvoked": false,
+    "legacyGraphWorkerCreated": false
+  },
+  "exactSourceEvidence": [
+    {
+      "path": "/Users/godice/Coding/LoopForge/Sources/LoopForge/LoopForgeApp.swift",
+      "lines": "62-70",
+      "fact": "Release composition passes KernelProductionRuntime executionCoordinator into AppModel"
+    },
+    {
+      "path": "/Users/godice/Coding/LoopForge/Sources/LoopForge/Views.swift",
+      "lines": "663-676",
+      "fact": "the real native diagnostics surface exposes Activate Native Attempt and calls AppModel activation"
+    },
+    {
+      "path": "/Users/godice/Coding/LoopForge/Sources/LoopForge/AppModel.swift",
+      "lines": "1828-1867",
+      "fact": "AppModel checks journal-owned readiness, invokes activateNativeEnrolledRun, and retains the returned session"
+    },
+    {
+      "path": "/Users/godice/Coding/LoopForge/Sources/LoopForge/Kernel/KernelProductionExecutionCoordinator.swift",
+      "lines": "1865-2004",
+      "fact": "the production coordinator reconstructs and activates exact enrolled authority"
+    }
+  ],
+  "verification": {
+    "nativeKernelEnrollmentFlowTestsExecuted": 14,
+    "nativeKernelEnrollmentFlowTestFailures": 0,
+    "explicitReadOnlyActivationTestPassed": true,
+    "relaunchRecoveredReadyAuthorityAndActivatedTestPassed": true,
+    "invalidActivationIdentityRejectedWithoutJournalAdvanceTestPassed": true,
+    "applicationTerminationQuiescenceTestsPassed": true,
+    "priorSignedNativeActivationReceipt": {
+      "runID": "native-run-48b4997c-4d31-4c02-909f-f3d30dd71b70",
+      "phase": "executing",
+      "mutationDelta": 0,
+      "verificationDelta": 1,
+      "externalEffects": 0,
+      "providerLaunched": false,
+      "legacyTaskCreated": false
+    }
+  },
+  "supersededBroadClaims": [
+    {
+      "path": "KERNEL_PRODUCTION_EXECUTION_COMPOSITION_IMPLEMENTATION.md",
+      "historicalClaim": "native start remains vetoed",
+      "disposition": "historically accurate before 65d050f; not current status"
+    },
+    {
+      "path": "PRODUCTION_NATIVE_VISUAL_CONTROLLER_COMPOSITION_IMPLEMENTATION.md",
+      "historicalClaim": "native app start/cutover remains pending",
+      "disposition": "start is present; live visual authority supply from the app flow remains pending"
+    },
+    {
+      "path": "PRODUCTION_FINAL_COMPLETION_CONTROLLER_COMPOSITION_IMPLEMENTATION.md",
+      "historicalClaim": "native app start/cutover remains pending",
+      "disposition": "start is present; app-flow final-completion authority and control remain pending"
+    },
+    {
+      "path": "NATIVE_BASELINE_CANDIDATE_MATRIX_VERIFICATION.md",
+      "historicalClaim": "native production-controller cutover remains mandatory",
+      "disposition": "broad blocker superseded; downstream live authority walkthroughs remain mandatory"
+    },
+    {
+      "path": "ACCEPTANCE_PROGRESS_SCORECARD.json",
+      "historicalClaim": "multiple current rows still request native start or enrollment/controller cutover",
+      "disposition": "current aggregate rows reconciled; historical reports preserved as chronological evidence"
+    }
+  ],
+  "currentRemainingGaps": [
+    "supply live native capture, measurement, and independent-review authority through the retained production session from the real app flow",
+    "expose and prove journal-owned final-completion control only after every mandatory completion prerequisite is accepted",
+    "retain the productive-provider and hard-containment vetoes unless separately scoped privileged or virtualized authority is ratified",
+    "complete current native Watcher and repository-generation telemetry walkthroughs",
+    "complete any still-unconfirmed typed contract authoring surfaces such as collection cardinality"
+  ],
+  "historicalReportsRewritten": false,
+  "currentAggregateCorrected": true,
+  "finalRelease": false,
+  "easyBusinessMutated": false
+}

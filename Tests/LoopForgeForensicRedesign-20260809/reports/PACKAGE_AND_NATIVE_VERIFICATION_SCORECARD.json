@@ -1,7 +1,7 @@
 {
-  "schemaVersion": 35,
-  "status": "current-clean-package-and-native-exact-implementation-confirmation-pass-global-gates-pending",
-  "recordedAt": "2026-08-16T11:25:09Z",
+  "schemaVersion": 36,
+  "status": "current-clean-package-native-exact-implementation-and-cutover-reconciliation-pass-global-gates-pending",
+  "recordedAt": "2026-08-16T11:38:18Z",
   "currentSourcePackage": true,
   "currentSourceSnapshotSHA256": "9671afb3d2aa99990dab2163e122ac3597a0f4567f0b204318713b63f246dab1",
   "currentSourceVerification": {
@@ -333,6 +333,21 @@
     "postQuitPackagedProcessCount": 0,
     "rootCaptureAttemptsRejectedBeforeTaskCreation": 2,
     "evidence": "NATIVE_EXACT_IMPLEMENTATION_AUTHORITY_SCORECARD.json"
+  },
+  "nativeCutoverClaimReconciliation": {
+    "cutoverImplementationCommit": "65d050f7300ae62073ed8ac36eeeda5f30f9e5ec",
+    "releaseExecutionCoordinatorConstructed": true,
+    "nativeActivationControlPresent": true,
+    "appModelInvokesProductionCoordinator": true,
+    "productionSessionRetained": true,
+    "nativeEnrollmentFlowTestsExecuted": 14,
+    "nativeEnrollmentFlowTestFailures": 0,
+    "signedNativeReceiptReachedExecuting": true,
+    "legacyTaskCreated": false,
+    "providerLaunched": false,
+    "historicalNoStartReportsPreserved": true,
+    "historicalNoStartClaimsCurrent": false,
+    "evidence": "NATIVE_CUTOVER_CLAIM_RECONCILIATION_SCORECARD.json"
   },
   "priorPackageProviderProfileDiagnostics": {
     "sourceSnapshotSHA256": "c5f368373f837697f161fbc6692fc80b7f53319edf943901f80e735266730111",
