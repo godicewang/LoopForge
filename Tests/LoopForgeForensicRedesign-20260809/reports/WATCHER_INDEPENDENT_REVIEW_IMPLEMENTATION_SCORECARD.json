@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-08-10T23:42:05Z",
-  "status": "implemented-and-regression-package-verified-not-final",
+  "recordedAt": "2026-08-16T13:03:43Z",
+  "status": "implemented-current-clean-package-ui-contract-verified-not-final",
   "acceptanceRowsAdvanced": ["I-05"],
   "rootCause": {
     "sameWritableThreadCouldRepairAssessAndApprove": true,
@@ -21,28 +21,41 @@
     "reportExposesAuthorityAndDigests": true
   },
   "verification": {
-    "watcherTestsPassed": 35,
-    "fullTestsExecuted": 522,
+    "watcherTestsPassed": 42,
+    "fullTestsExecuted": 878,
     "fullTestsSkipped": 8,
     "fullTestFailures": 0,
-    "packagingOwnedTestsExecuted": 522,
+    "packagingOwnedTestsExecuted": 878,
     "packagingOwnedTestsSkipped": 8,
     "packagingOwnedFailures": 0,
     "packageSmokePassed": true,
     "residualPackagedProcessCount": 0,
-    "sourceSnapshotSHA256": "9cd1f634b2aba35f6b0f4bdbefb5628c3c77651d3c8da1ccfce4943751528263",
-    "executableSHA256": "6b32cee5ad3af5f17bb6284ed2d80b18628bd57220c761092b611fe632a1f293",
-    "zipSHA256": "0e5b5762342c8741350a1fc1291a11482311b94f22ed72473977fe6c6f845666",
-    "dmgSHA256": "3ed5f9d6f5deaf797641b3c61774b7c501f205764b74273f3f3288bf8343d51f",
-    "packageTestLogSHA256": "12faf70e1adb046387b6490c7def4e777fa157b99be286d2d9d17d18a4565640",
-    "cdHash": "eff6e18c8ebe0db6524637c6b0c9ab87a9cfe0c3"
+    "sourceSnapshotSHA256": "77ea9ecbf492a68fdc571f87dc90042fb799633d3c0f90390c026e3f970d1b46",
+    "executableSHA256": "df1f2b701a953461092a9a880be31020dedd924870a19c18c239eebd5a975e76",
+    "zipSHA256": "fd208bc602e909975e532378cd46ae8c763955ed7de2e5e53d1df13e54300776",
+    "dmgSHA256": "0097d9452d47ce016a58b9cfba2dfa54d1461b082d00049f0e880e7b86496300",
+    "packageTestLogSHA256": "a599c001d59bffbe4cb52648f2c0da5a53e65986974fec9dc6aaee24c64d22ec",
+    "cdHash": "331efd8e66642f59a891cdf598718a6d2e667bdb"
+  },
+  "nativeVerification": {
+    "sourceRevision": "0a40f5dda28b5a846fd28bb0273a4f4eee2851e3",
+    "exactPackagedApplicationInspected": true,
+    "composerAndGuideExposeDistinctReadOnlyLineage": true,
+    "exactArtifactDigestBindingVisible": true,
+    "newWatcherCreated": false,
+    "buildWatcherInvoked": false,
+    "persistedUnrelatedWatcherResumed": true,
+    "walkthroughOperationFree": false,
+    "nativeIntervalCounted": false,
+    "postQuitPackagedProcessCount": 0,
+    "evidence": "WATCHER_AUTHORITY_NATIVE_CONTRACT_SCORECARD.json"
   },
   "knownBoundary": {
     "heterogeneousProviderMandatory": false,
-    "deterministicCompletionClosurePending": true,
-    "nativeUnlockedMatrixPending": true,
-    "cleanCommitPending": true,
-    "pushPending": true
+    "deterministicCompletionClosurePending": false,
+    "operationFreeLiveFixturePending": true,
+    "cleanCommitPending": false,
+    "pushPending": false
   },
   "finalAcceptance": false,
   "easyBusinessMutated": false

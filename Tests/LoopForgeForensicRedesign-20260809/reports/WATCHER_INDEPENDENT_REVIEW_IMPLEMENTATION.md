@@ -1,6 +1,6 @@
 # Watcher Independent Review Implementation
 
-Status: **implemented and regression/package verified; final native matrix and clean revision pending**
+Status: **implemented, current clean-package UI contract verified; heterogeneous-provider option and operation-free live fixture remain pending**
 
 ## Forensic finding
 
@@ -82,3 +82,13 @@ conversation lineage using the configured model selection; heterogeneous-provide
 review is not yet a mandatory product setting. I-06 deterministic requirement
 closure, legacy kernel cutover, current unlocked native screenshots, clean commit,
 and push remain pending. EasyBusiness remained stopped and read-only.
+
+## Current native contract
+
+Clean commit `0a40f5d` adds the exact reviewer-lineage, read-only, artifact-digest,
+and fail-closed rules to the Watcher composer and guide. Source and package-owned
+suites passed 878/8/0, and the signed package displayed the contract before
+Build Watcher could be enabled. The launch also resumed a persisted unrelated
+Watcher; that incident is disclosed in `WATCHER_AUTHORITY_NATIVE_CONTRACT.md`
+and its native interval is excluded. Heterogeneous-provider review remains a
+non-mandatory product option, so final acceptance remains false.

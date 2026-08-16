@@ -96,8 +96,15 @@
     </section>
     <section class="card full">
       <span class="status green">Strict active-work floor reached</span>
-      <div class="metric">196,950 s</div>
-      <div class="label">259 accepted intervals; failed runs, tests/builds, explicit waits, lock/sleep gaps, and prior-task time excluded. This is a minimum-work gate, not completion.</div>
+      <div class="metric">201,393 s</div>
+      <div class="label">268 accepted intervals; failed runs, explicit waits, lock/sleep gaps, unintended external work, and prior-task time excluded. This is a minimum-work gate, not completion.</div>
+    </section>
+
+    <section class="card full">
+      <span class="status amber">Current Watcher contract · final release still false</span>
+      <h2>Independent authority and deterministic completion are now visible before Build</h2>
+      <p>The clean <code>0a40f5d</code> package exposes a fresh distinct-lineage read-only reviewer, exact artifact digests, the telemetry/checkpoint/verification/goal-evidence receipt chain, and the rule that an Agent <code>COMPLETE</code> marker has no authority. Source and package-owned suites passed 878/8/0.</p>
+      <p class="small" style="margin-top:10px">Native launch also resumed one persisted Watcher in an unrelated untracked fixture. That operation is disclosed, its native interval counts zero, the files remain unstaged, and quit left zero packaged or fixture-owned processes. EasyBusiness remained byte-status and mtime unchanged.</p>
     </section>
 
     <section class="card wide">
@@ -119,6 +126,8 @@
     <section class="card full">
       <h2>Implemented side-by-side</h2>
       <div class="links">
+        <a href="WATCHER_AUTHORITY_NATIVE_CONTRACT.md">Current Watcher authority/completion native contract</a>
+        <a href="WATCHER_AUTHORITY_NATIVE_CONTRACT_SCORECARD.json">Watcher authority/completion scorecard (machine-readable)</a>
         <a href="NATIVE_READY_ENROLLMENT_RELAUNCH_RECOVERY_IMPLEMENTATION.md">Ready-enrollment registry/journal recovery across native relaunch</a>
         <a href="NATIVE_READY_ENROLLMENT_RELAUNCH_RECOVERY_SCORECARD.json">Ready-enrollment relaunch recovery scorecard (machine-readable)</a>
         <a href="NATIVE_APP_EXECUTION_SESSION_CUTOVER_IMPLEMENTATION.md">Native app production-session activation cutover</a>
@@ -380,6 +389,20 @@
         <a href="KERNEL_PROVIDER_STORED_CREDENTIAL_AUTHORITY_IMPLEMENTATION.md">Exact ratified Keychain credential authority and production secret boundary</a>
         <a href="KERNEL_PROVIDER_STORED_CREDENTIAL_AUTHORITY_SCORECARD.json">Stored-credential authority scorecard (machine-readable)</a>
         <a href="ARCHITECTURE_RATIFICATION_AND_CUTOVER_PLAN.md">Eleven-gate cutover plan and stop-the-line rules</a>
+      </div>
+    </section>
+
+    <section class="card full">
+      <h2>Current signed Watcher evidence</h2>
+      <div class="grid">
+        <figure class="card wide">
+          <img src="../screenshots/packaged-loopforge-watcher-authority-completion-lower-20260816T1257Z.png" alt="Signed LoopForge Watcher composer showing independent approval and deterministic completion">
+          <figcaption>Exact clean package · Authority &amp; completion · fail closed.</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="../screenshots/packaged-loopforge-watcher-authority-guide-20260816T1258Z.png" alt="Signed LoopForge Watcher guide Verify authority step">
+          <figcaption>Guide step 6 of 7 binds the reviewer and completion receipts.</figcaption>
+        </figure>
       </div>
     </section>
 

@@ -1,6 +1,6 @@
 # Watcher Deterministic Completion Implementation
 
-Status: **implemented and regression/package verified; final native matrix and clean revision pending**
+Status: **implemented, current clean-package UI contract verified; operation-free live completion fixture remains pending**
 
 ## Forensic finding
 
@@ -75,3 +75,14 @@ This advances I-06 at source/package level and removes marker-only completion.
 It is not final acceptance: current unlocked native Watcher screenshots, legacy
 kernel cutover, G-08, J-04, clean commit, and push remain pending. EasyBusiness
 remained stopped and read-only.
+
+## Current native contract
+
+Clean commit `0a40f5d` makes the deterministic receipt chain and marker-only veto
+explicit in the Watcher composer and guide. Source and package-owned suites
+passed 878/8/0, and the signed package displayed those rules with Build Watcher
+disabled. The launch resumed a persisted unrelated Watcher, so the operational
+walkthrough is not claimed as read-only; see
+`WATCHER_AUTHORITY_NATIVE_CONTRACT.md`. A future live completion-chain exercise
+must use an explicitly disposable fixture after all persisted Watchers are
+paused. Final acceptance remains false.

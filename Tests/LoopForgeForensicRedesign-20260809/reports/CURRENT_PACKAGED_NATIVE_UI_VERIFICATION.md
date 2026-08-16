@@ -1,8 +1,28 @@
 # Latest Interactive Packaged Native UI Verification
 
-Status: **current clean package inspected while unlocked, exact-run repository status is native-bound, screenshots retained, and real UI quit reached zero packaged processes; resolved cache telemetry remains pending**
+Status: **current clean Watcher authority/completion UI and exact-run repository status are native-bound; persisted-Watcher resume is disclosed; resolved cache telemetry remains pending**
 
-Recorded: `2026-08-16T12:37:13Z`
+Recorded: `2026-08-16T13:03:43Z`
+
+## Current Watcher authority and completion contract
+
+The exact clean revision `0a40f5dda28b5a846fd28bb0273a4f4eee2851e3`
+passed source and package-owned 878-test, 8-skip, 0-failure suites and rebuilt
+the signed app, ZIP, and DMG. Computer Use proved the native composer and guide
+now expose fresh distinct-lineage read-only approval, exact artifact digests,
+the deterministic telemetry/checkpoint/verification/goal-evidence receipt
+chain, and the rule that `COMPLETE` prose has no authority. See the
+[lower composer card](../screenshots/packaged-loopforge-watcher-authority-completion-lower-20260816T1257Z.png)
+and [guide](../screenshots/packaged-loopforge-watcher-authority-guide-20260816T1258Z.png).
+
+The launch restored one pre-existing active Watcher in the unrelated untracked
+`Tests/WatcherQuantFactor-20260729` fixture. It completed an already-pending
+review and wrote fixture artifacts before Cmd-Q. No Watcher was created and no
+Build action was invoked, but this walkthrough is explicitly not classified as
+operation-free and its native duration counts zero. The files remain unstaged.
+Quit verification found zero packaged or fixture-owned processes and zero
+verification mounts. EasyBusiness retained its exact prior branch, HEAD,
+NUL-delimited status digest, and pre-walkthrough mtimes.
 
 ## Current exact-run repository diagnostics
 
