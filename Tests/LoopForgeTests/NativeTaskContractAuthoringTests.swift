@@ -43,6 +43,7 @@ final class NativeTaskContractAuthoringTests: XCTestCase {
         XCTAssertEqual(draft.displayExecutionProfile, fixture.executionProfile)
         XCTAssertTrue(draft.displayAuthorityCapabilityIDs.isEmpty)
         XCTAssertTrue(draft.displayPermittedImplementationIDs.isEmpty)
+        XCTAssertNil(draft.displayDeliverableCardinality)
         XCTAssertEqual(draft.displayExecutionBudgets, fixture.executionBudgets)
         XCTAssertEqual(
             draft.compiled.candidate.contract.executionBudgets,
@@ -502,6 +503,90 @@ final class NativeTaskContractAuthoringTests: XCTestCase {
         XCTAssertTrue(whitespaceIssues.contains {
             $0.contains("already trimmed")
         })
+    }
+
+    func testNativeDeliverableCardinalityIsUserBoundAndFailsClosed() throws {
+        XCTAssertNil(
+            NativeDeliverableCardinalityParser.parse(
+                collectionID: "",
+                exactCountText: ""
+            ).constraint
+        )
+        let parsed = NativeDeliverableCardinalityParser.parse(
+            collectionID: "opaque-collection-17",
+            exactCountText: "10"
+        )
+        XCTAssertTrue(parsed.issues.isEmpty)
+        XCTAssertEqual(
+            parsed.constraint,
+            DeliverableCardinalityConstraint(
+                collectionID: "opaque-collection-17",
+                exactCount: 10
+            )
+        )
+
+        let fixture = try Fixture()
+        defer { fixture.remove() }
+        var request = fixture.request(duration: nil)
+        request.deliverableCollectionID = "opaque-collection-17"
+        request.deliverableExactCountText = "10"
+        let draft = try prepared(request)
+        let cardinality = try XCTUnwrap(draft.displayDeliverableCardinality)
+        XCTAssertEqual(cardinality.collectionID, "opaque-collection-17")
+        XCTAssertEqual(cardinality.exactCount, 10)
+        XCTAssertEqual(
+            draft.compiled.candidate.contract.requirements.first?
+                .deliverableCardinality,
+            cardinality
+        )
+        let binding = try XCTUnwrap(
+            draft.compiled.candidate.requirementBindings.first
+        )
+        XCTAssertEqual(binding.epistemicState, .explicit)
+        XCTAssertEqual(binding.sourceSpans.count, 2)
+        let cardinalitySource = try XCTUnwrap(
+            draft.compiled.candidate.sources.first(where: {
+                $0.id.rawValue.contains("deliverable-cardinality")
+            })
+        )
+        XCTAssertEqual(cardinalitySource.authority, .user)
+        XCTAssertEqual(
+            cardinalitySource.exactUTF8,
+            Data("opaque-collection-17\u{1f}10".utf8)
+        )
+        XCTAssertTrue(binding.sourceSpans.contains(where: {
+            $0.sourceID == cardinalitySource.id
+        }))
+
+        var changed = request
+        changed.deliverableExactCountText = "11"
+        XCTAssertNotEqual(
+            try prepared(changed).compiled.candidateDigest,
+            draft.compiled.candidateDigest
+        )
+
+        let invalidInputs = [
+            ("opaque-collection-17", ""),
+            ("", "10"),
+            (" opaque-collection-17", "10"),
+            ("opaque-collection-17", "0"),
+            ("opaque-collection-17", "01"),
+            ("opaque-collection-17", "+10"),
+            ("opaque-collection-17", "10 "),
+            ("opaque-collection-17", "18446744073709551616")
+        ]
+        for (collectionID, exactCountText) in invalidInputs {
+            var invalid = fixture.request(duration: nil)
+            invalid.deliverableCollectionID = collectionID
+            invalid.deliverableExactCountText = exactCountText
+            guard case .invalidDeliverableCardinality(let issues) =
+                    authoringFailure(invalid) else {
+                return XCTFail(
+                    "invalid cardinality must fail: \(collectionID) / \(exactCountText)"
+                )
+            }
+            XCTAssertFalse(issues.isEmpty)
+        }
     }
 
     @MainActor

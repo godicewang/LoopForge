@@ -1263,6 +1263,7 @@ private struct TaskComposer: View {
                 providerAuthoritySettings
                 sourceRevisionCapturePolicy
                 exactImplementationAuthority
+                exactDeliverableCardinalityAuthority
                 verificationProbeSelection
                 projectRow
 
@@ -1450,6 +1451,41 @@ private struct TaskComposer: View {
             .accessibilityLabel("Permitted exact implementation identities")
             .accessibilityIdentifier("exact-implementation-identities-field")
             Text("Leave empty when substitution is not part of the contract. When supplied, only these user-confirmed opaque identities may satisfy the requirement; duplicates, whitespace ambiguity, model inference, and product-name matching fail closed.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+        .padding(15)
+        .background(
+            ForgeStyle.panel,
+            in: RoundedRectangle(cornerRadius: 13, style: .continuous)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 13).stroke(ForgeStyle.hairline)
+        )
+    }
+
+    private var exactDeliverableCardinalityAuthority: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label("Exact deliverable cardinality", systemImage: "number.circle")
+                .font(.headline)
+            HStack(spacing: 10) {
+                TextField(
+                    "Optional opaque collection ID",
+                    text: $model.draftDeliverableCollectionID
+                )
+                .accessibilityLabel("Opaque deliverable collection identity")
+                .accessibilityIdentifier("deliverable-collection-id-field")
+                TextField(
+                    "Exact positive count",
+                    text: $model.draftDeliverableExactCount
+                )
+                .frame(maxWidth: 190)
+                .accessibilityLabel("Exact deliverable member count")
+                .accessibilityIdentifier("deliverable-exact-count-field")
+            }
+            .textFieldStyle(.roundedBorder)
+            .font(.system(.body, design: .monospaced))
+            Text("Leave both fields empty when the requirement has no exact-set obligation. When supplied, the user-confirmed opaque collection identity and canonical positive count are bound to the mandatory requirement; partial, inferred, zero, signed, padded, or whitespace-normalized values fail closed.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -2418,6 +2454,20 @@ private struct NativeAutoGraphContractConfirmationView: View {
                                         .textSelection(.enabled)
                                 }
                                 Text("Only these opaque identities may satisfy the requirement. Confirmation binds the exact set; product names, objective prose, and verifier substitutions grant no equivalence.")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        if let cardinality =
+                                draft.displayDeliverableCardinality {
+                            contractSection("Exact deliverable cardinality") {
+                                Text(cardinality.collectionID)
+                                    .font(.system(.body, design: .monospaced))
+                                    .textSelection(.enabled)
+                                Text("Exactly \(cardinality.exactCount) independently identifiable members")
+                                    .font(.system(.body, design: .monospaced))
+                                    .textSelection(.enabled)
+                                Text("Confirmation binds this opaque collection identity and exact count to the mandatory requirement. Objective prose, filenames, repository contents, model inference, and aggregate file counts cannot widen or replace it.")
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                             }

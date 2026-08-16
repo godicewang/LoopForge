@@ -74,6 +74,8 @@ final class AppModel: ObservableObject {
         NativeTaskContractAuthoringRequest.defaultSourceRevisionCapturePolicy
             .excludedDirectoryNames.joined(separator: ", ")
     @Published var draftPermittedImplementationIDs = ""
+    @Published var draftDeliverableCollectionID = ""
+    @Published var draftDeliverableExactCount = ""
     /// Explicit native-contract authority. Off by default and reset for every
     /// new draft; it never inherits from provider selection or stored keys.
     @Published var draftWorkerNetworkAccess = false
@@ -1441,6 +1443,8 @@ final class AppModel: ObservableObject {
                     NativeExactImplementationIdentityParser.parse(
                         draftPermittedImplementationIDs
                     ),
+                deliverableCollectionID: draftDeliverableCollectionID,
+                deliverableExactCountText: draftDeliverableExactCount,
                 userActor: userActor,
                 recordedAt: now,
                 authoringNonce: TaskContractCompiler.digest(
@@ -1905,6 +1909,8 @@ final class AppModel: ObservableObject {
             return "The source-revision capture policy failed closed: \(issues.joined(separator: "; ")) Use unique directory names only; paths and traversal are not accepted. No task was created."
         case .invalidExactImplementationIDs(let issues):
             return "The exact implementation authority failed closed: \(issues.joined(separator: "; ")) No task was created."
+        case .invalidDeliverableCardinality(let issues):
+            return "The exact deliverable cardinality failed closed: \(issues.joined(separator: "; ")) No task was created."
         case .sourceRevisionCaptureFailed(let reason):
             return "The selected workspace could not be captured as an exact bounded source revision: \(reason) No task was created."
         case .unsupportedExecutionAuthority(let reason):
@@ -2105,6 +2111,8 @@ final class AppModel: ObservableObject {
             NativeTaskContractAuthoringRequest.defaultSourceRevisionCapturePolicy
                 .excludedDirectoryNames.joined(separator: ", ")
         draftPermittedImplementationIDs = ""
+        draftDeliverableCollectionID = ""
+        draftDeliverableExactCount = ""
         draftWorkerNetworkAccess = false
         nativeDesignBaselineImportInProgress = false
         nativeVerificationProbeImportInProgress = false

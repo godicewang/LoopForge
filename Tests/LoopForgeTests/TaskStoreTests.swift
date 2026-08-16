@@ -32,11 +32,15 @@ final class TaskStoreTests: XCTestCase {
             ".build, .git, .loopforge, .swiftpm, DerivedData"
         )
         XCTAssertTrue(model.draftPermittedImplementationIDs.isEmpty)
+        XCTAssertTrue(model.draftDeliverableCollectionID.isEmpty)
+        XCTAssertTrue(model.draftDeliverableExactCount.isEmpty)
 
         model.draftControlProvider = .local
         model.draftControlAccessMode = .fullAccess
         model.draftSourceRevisionExcludedDirectoryNames = "dist"
         model.draftPermittedImplementationIDs = "opaque-implementation"
+        model.draftDeliverableCollectionID = "opaque-collection"
+        model.draftDeliverableExactCount = "17"
         model.resetDraft()
         XCTAssertEqual(model.draftControlProvider, .codex)
         XCTAssertEqual(model.draftControlAccessMode, .readOnly)
@@ -47,6 +51,8 @@ final class TaskStoreTests: XCTestCase {
             ".build, .git, .loopforge, .swiftpm, DerivedData"
         )
         XCTAssertTrue(model.draftPermittedImplementationIDs.isEmpty)
+        XCTAssertTrue(model.draftDeliverableCollectionID.isEmpty)
+        XCTAssertTrue(model.draftDeliverableExactCount.isEmpty)
     }
 
     func testRetiredDraftModesRemainHistoricalSettingsOnly() throws {

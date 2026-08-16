@@ -141,6 +141,8 @@ final class NativeKernelEnrollmentFlowTests: XCTestCase {
         model.draftAccessMode = .readOnly
         model.draftPermittedImplementationIDs =
             "opaque-implementation-b, opaque-implementation-a"
+        model.draftDeliverableCollectionID = "opaque-collection-17"
+        model.draftDeliverableExactCount = "10"
 
         model.startWithOriginalPrompt()
 
@@ -158,6 +160,13 @@ final class NativeKernelEnrollmentFlowTests: XCTestCase {
         XCTAssertEqual(
             draft.displayPermittedImplementationIDs,
             ["opaque-implementation-a", "opaque-implementation-b"]
+        )
+        XCTAssertEqual(
+            draft.displayDeliverableCardinality,
+            DeliverableCardinalityConstraint(
+                collectionID: "opaque-collection-17",
+                exactCount: 10
+            )
         )
         XCTAssertEqual(
             draft.compiled.candidate.contract.constraints.first(where: {
@@ -229,6 +238,10 @@ final class NativeKernelEnrollmentFlowTests: XCTestCase {
         )
         let state = await journal.state
         XCTAssertEqual(state.phase, .executing)
+        XCTAssertEqual(
+            state.contract?.requirements.first?.deliverableCardinality,
+            draft.displayDeliverableCardinality
+        )
         XCTAssertEqual(state.sequence, activation.kernelProjection.sequence)
         XCTAssertEqual(
             state.convergenceGovernor?.admittedRequest(

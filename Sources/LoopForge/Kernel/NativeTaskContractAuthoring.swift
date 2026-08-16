@@ -32,6 +32,60 @@ enum NativeExactImplementationIdentityParser {
     }
 }
 
+enum NativeDeliverableCardinalityParser {
+    /// Parses one optional, vocabulary-neutral exact-set declaration. Empty
+    /// fields mean no cardinality claim. Partial, whitespace-normalized,
+    /// signed, zero, leading-zero, and overflowing counts fail closed instead
+    /// of being silently repaired into user authority.
+    static func parse(
+        collectionID: String,
+        exactCountText: String
+    ) -> (
+        constraint: DeliverableCardinalityConstraint?,
+        issues: [String]
+    ) {
+        if collectionID.isEmpty && exactCountText.isEmpty {
+            return (nil, [])
+        }
+        var issues: [String] = []
+        if collectionID.isEmpty || exactCountText.isEmpty {
+            issues.append(
+                "Exact deliverable cardinality requires both an opaque collection ID and a positive count."
+            )
+        }
+        if collectionID != collectionID.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        ) {
+            issues.append(
+                "The opaque collection ID must already be trimmed."
+            )
+        }
+        let decimalDigitsOnly = !exactCountText.isEmpty
+            && exactCountText.unicodeScalars.allSatisfy {
+                (48...57).contains($0.value)
+            }
+        let exactCount = decimalDigitsOnly ? UInt64(exactCountText) : nil
+        if !decimalDigitsOnly
+            || exactCount == nil
+            || exactCount == 0
+            || exactCount.map(String.init) != exactCountText {
+            issues.append(
+                "The exact deliverable count must be a canonical positive UInt64 without signs, spaces, or leading zeroes."
+            )
+        }
+        guard issues.isEmpty, let exactCount else {
+            return (nil, issues.sorted())
+        }
+        return (
+            DeliverableCardinalityConstraint(
+                collectionID: collectionID,
+                exactCount: exactCount
+            ),
+            []
+        )
+    }
+}
+
 struct NativeTaskContractAuthoringRequest: Sendable {
     static let defaultSourceRevisionCapturePolicy =
         WorkspaceCandidatePostimageCapturePolicy(
@@ -78,6 +132,11 @@ struct NativeTaskContractAuthoringRequest: Sendable {
     /// user. Empty means no substitution claim. The native path never derives
     /// these values from objective prose or repository vocabulary.
     var permittedImplementationIDs: [String] = []
+    /// Optional user-authored exact-set semantics for the mandatory outcome.
+    /// Raw text is retained until this boundary validates canonical authority;
+    /// neither objective prose nor repository vocabulary may populate it.
+    var deliverableCollectionID: String = ""
+    var deliverableExactCountText: String = ""
     var userActor: ActorIdentity
     var recordedAt: Date
     var authoringNonce: ContentDigest
@@ -96,6 +155,7 @@ enum NativeTaskContractAuthoringError: Error, Equatable {
     case invalidDesignBaselineSource([String])
     case invalidSourceRevisionCapturePolicy([String])
     case invalidExactImplementationIDs([String])
+    case invalidDeliverableCardinality([String])
     case sourceRevisionCaptureFailed(String)
     case unsupportedExecutionAuthority(String)
     case compilationFailed([TaskContractCompilationIssue])
@@ -118,6 +178,7 @@ struct NativeTaskContractConfirmationDraft: Sendable {
     let displayExecutionPlan: KernelPlanProposal
     let displayDesignBaselineSelection: NativeDesignBaselineSelection?
     let displayPermittedImplementationIDs: [String]
+    let displayDeliverableCardinality: DeliverableCardinalityConstraint?
 
     fileprivate init(
         compiled: CompiledTaskContractCandidate,
@@ -135,7 +196,8 @@ struct NativeTaskContractConfirmationDraft: Sendable {
         displayCausalStrategyAuthority: KernelCausalStrategyAuthority,
         displayExecutionPlan: KernelPlanProposal,
         displayDesignBaselineSelection: NativeDesignBaselineSelection?,
-        displayPermittedImplementationIDs: [String]
+        displayPermittedImplementationIDs: [String],
+        displayDeliverableCardinality: DeliverableCardinalityConstraint?
     ) {
         self.compiled = compiled
         self.workspaceID = workspaceID
@@ -153,6 +215,7 @@ struct NativeTaskContractConfirmationDraft: Sendable {
         self.displayExecutionPlan = displayExecutionPlan
         self.displayDesignBaselineSelection = displayDesignBaselineSelection
         self.displayPermittedImplementationIDs = displayPermittedImplementationIDs
+        self.displayDeliverableCardinality = displayDeliverableCardinality
     }
 }
 
@@ -195,6 +258,15 @@ enum NativeTaskContractAuthor {
         }
         let workspace = request.workspaceRoot.standardizedFileURL
             .resolvingSymlinksInPath()
+        let cardinality = NativeDeliverableCardinalityParser.parse(
+            collectionID: request.deliverableCollectionID,
+            exactCountText: request.deliverableExactCountText
+        )
+        guard cardinality.issues.isEmpty else {
+            return .failure(.invalidDeliverableCardinality(
+                cardinality.issues
+            ))
+        }
         let sourceRevisionPolicyIssues =
             request.sourceRevisionCapturePolicy.validationIssues()
         guard sourceRevisionPolicyIssues.isEmpty else {
@@ -367,6 +439,11 @@ enum NativeTaskContractAuthor {
                 : implementationIDs.joined(separator: "\u{1f}"))
                 .utf8
         )
+        let deliverableCardinalityData = Data(
+            cardinality.constraint.map {
+                "\($0.collectionID)\u{1f}\($0.exactCount)"
+            }?.utf8 ?? "none".utf8
+        )
         let durationSelection = request.acceptedDuration.map {
             "\($0.requiredSeconds)\u{1f}\($0.eligibleClass.rawValue)"
         }
@@ -377,6 +454,7 @@ enum NativeTaskContractAuthor {
             TaskContractCompiler.digest(workspaceData).rawValue,
             TaskContractCompiler.digest(capabilityData).rawValue,
             TaskContractCompiler.digest(implementationIdentityData).rawValue,
+            TaskContractCompiler.digest(deliverableCardinalityData).rawValue,
             durationSelection ?? "no-duration",
             executionDigest.rawValue,
             TaskContractCompiler.digest(executionBudgetData).rawValue,
@@ -531,6 +609,18 @@ enum NativeTaskContractAuthor {
         let implementationIdentitySpan = fullSpan(
             implementationIdentitySource
         )
+        let deliverableCardinalitySource = TaskContractSourceArtifact(
+            id: TaskContractSourceID(
+                "native-deliverable-cardinality-\(shortIdentity)"
+            ),
+            exactUTF8: deliverableCardinalityData,
+            authority: .user,
+            author: request.userActor,
+            recordedAt: request.recordedAt
+        )
+        let deliverableCardinalitySpan = fullSpan(
+            deliverableCardinalitySource
+        )
         let executionSource = TaskContractSourceArtifact(
             id: TaskContractSourceID("native-execution-\(shortIdentity)"),
             exactUTF8: executionData,
@@ -626,6 +716,9 @@ enum NativeTaskContractAuthor {
                 epistemicState: .explicit
             ))
         }
+        if cardinality.constraint != nil {
+            sources.append(deliverableCardinalitySource)
+        }
         if let selection = designBaselineSelection {
             let encoder = JSONEncoder()
             encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
@@ -700,7 +793,8 @@ enum NativeTaskContractAuthor {
                     id: requirementID,
                     statement: request.exactObjective,
                     mandatory: true,
-                    evidenceRecipeIDs: [recipeID]
+                    evidenceRecipeIDs: [recipeID],
+                    deliverableCardinality: cardinality.constraint
                 )],
                 constraints: constraints,
                 nonGoals: [],
@@ -732,7 +826,10 @@ enum NativeTaskContractAuthor {
             ),
             requirementBindings: [RequirementSourceBinding(
                 requirementID: requirementID,
-                sourceSpans: [objectiveSpan],
+                sourceSpans: [objectiveSpan]
+                    + (cardinality.constraint == nil
+                        ? []
+                        : [deliverableCardinalitySpan]),
                 epistemicState: .explicit
             )],
             constraintBindings: constraintBindings,
@@ -819,7 +916,8 @@ enum NativeTaskContractAuthor {
                 displayCausalStrategyAuthority: strategyAuthority,
                 displayExecutionPlan: executionPlan,
                 displayDesignBaselineSelection: designBaselineSelection,
-                displayPermittedImplementationIDs: implementationIDs
+                displayPermittedImplementationIDs: implementationIDs,
+                displayDeliverableCardinality: cardinality.constraint
             ))
         case .failure(let failure):
             return .failure(.compilationFailed(failure.issues))
