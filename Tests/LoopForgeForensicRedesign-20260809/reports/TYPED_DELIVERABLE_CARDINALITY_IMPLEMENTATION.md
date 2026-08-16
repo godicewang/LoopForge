@@ -2,6 +2,12 @@
 
 Status: **contract, compilation-authority, verification, and package receipts present; native authoring and production enrollment remain closed**
 
+> Historical boundary note (2026-08-16): this report preserves the original
+> source-level receipt. Native authoring, immutable confirmation, enrollment and
+> activation retention, the clean 876/8/0 package, and real packaged UI proof
+> are now closed by [Native Deliverable Cardinality Authoring](NATIVE_DELIVERABLE_CARDINALITY_AUTHORING_IMPLEMENTATION.md)
+> and its [machine-readable scorecard](NATIVE_DELIVERABLE_CARDINALITY_AUTHORING_SCORECARD.json).
+
 ## Root cause closed
 
 The stopped Graph could count whatever artifacts happened to be visible, or

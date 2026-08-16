@@ -3,7 +3,7 @@
   "project": "LoopForge Forensic Redesign 20h",
   "startedAt": "2026-08-09T13:13:58Z",
   "requiredActiveSeconds": 72000,
-  "coveredActiveSeconds": 199593,
+  "coveredActiveSeconds": 200193,
   "remainingActiveSeconds": 0,
   "requiredForensicAnalysisBeforeImplementationSeconds": 36000,
   "coveredForensicAnalysisSeconds": 39370,
@@ -5612,7 +5612,35 @@
         "/Users/godice/Coding/LoopForge/Sources/LoopForge/Views.swift",
         "/Users/godice/Coding/LoopForge/Tests/LoopForgeTests/NativeKernelEnrollmentFlowTests.swift"
       ]
+    },
+    {
+      "id": "native-deliverable-cardinality-authoring-266",
+      "startedAt": "2026-08-16T11:45:35Z",
+      "endedAt": "2026-08-16T12:05:43Z",
+      "coveredSeconds": 600,
+      "status": "accepted",
+      "excludedFailures": [
+        "targeted and full-suite test execution, build, package, signing, archive, smoke, and process-wait duration count zero",
+        "one transient ScreenCaptureKit capture failure and nonproductive file-picker navigation attempts count zero",
+        "all Computer Use navigation, package polling, shell inspection, Git polling, and time beyond the 600-second accepted active-work cap count zero"
+      ],
+      "activity": "Closed the native B-04 cardinality-authority gap without domain vocabulary. Implemented canonical paired opaque collection/count parsing, fail-closed partial/whitespace/sign/zero/padding/non-digit/overflow rejection, candidate digest and distinct user-source binding, exact mandatory-requirement cardinality, immutable confirmation display, AppModel state/reset handling, and enrollment/activation retention. Native authoring passed 18/0 and the enrollment/compiler/store aggregate passed 58/0. Commit 6b9ba7c captured the implementation. Its clean package passed 876/8/0, signing, hashes, ZIP/DMG/checksum validation, bounded startup, and smoke. Computer Use opened the exact package over the bounded KernelSandboxGate workspace with both agents read-only and network off; the immutable sheet displayed opaque-collection-17 and Exactly 3 independently identifiable members with a zero-file/zero-byte ceiling and the exact verifier digest. Cancellation before enrollment preserved two historical tasks and zero packaged processes or mounts. Reports, scorecards, native screenshots, and historical supersession notes were advanced while global release remained false. EasyBusiness remained read-only.",
+      "evidence": [
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/Kernel/NativeTaskContractAuthoring.swift",
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/AppModel.swift",
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/Views.swift",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeTests/NativeTaskContractAuthoringTests.swift",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeTests/NativeKernelEnrollmentFlowTests.swift",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NATIVE_DELIVERABLE_CARDINALITY_AUTHORING_IMPLEMENTATION.md",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NATIVE_DELIVERABLE_CARDINALITY_AUTHORING_SCORECARD.json",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-native-cardinality-composer-20260816T1156Z.jpg",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-native-cardinality-confirmation-20260816T1156Z.jpg",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge.app",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-macOS-arm64.zip",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
+      ]
     }
   ],
-  "lastUpdatedAt": "2026-08-16T11:41:10Z"
+  "lastUpdatedAt": "2026-08-16T12:05:43Z"
 }

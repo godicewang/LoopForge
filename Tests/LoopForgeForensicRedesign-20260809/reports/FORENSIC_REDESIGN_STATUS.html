@@ -183,6 +183,8 @@
         <a href="PLAN_REQUIREMENT_OWNERSHIP_IMPLEMENTATION.md">Exact mandatory-requirement plan ownership and deterministic typed rejection</a>
         <a href="PROTECTED_WORKSPACE_BASELINE_IMPLEMENTATION.md">Protected workspace baseline contract, plan, and transaction enforcement</a>
         <a href="TYPED_DELIVERABLE_CARDINALITY_IMPLEMENTATION.md">Typed exact deliverable cardinality, explicit source authority, and member receipts</a>
+        <a href="NATIVE_DELIVERABLE_CARDINALITY_AUTHORING_IMPLEMENTATION.md">Native exact-cardinality authoring, confirmation, enrollment, and activation retention</a>
+        <a href="NATIVE_DELIVERABLE_CARDINALITY_AUTHORING_SCORECARD.json">Native exact-cardinality authority scorecard (JSON)</a>
         <a href="TYPED_EXTERNAL_DEPENDENCY_EVIDENCE_IMPLEMENTATION.md">Typed external dependencies, independent observation, and receipt-bound blockers</a>
         <a href="EXTERNAL_DEPENDENCY_REPLAY_AUTHORITY_HARDENING.md">External-dependency decoded-event replay and duplicate-receipt authority hardening</a>
         <a href="EXTERNAL_DEPENDENCY_REPLAY_AUTHORITY_HARDENING_SCORECARD.json">External-dependency replay authority scorecard (machine-readable)</a>
@@ -510,15 +512,21 @@
     </section>
 
     <section class="card full">
+      <span class="status green">B-04 package and native proof passed</span>
+      <h2>Exact deliverable cardinality reaches the native contract</h2>
+      <p>The composer now accepts one optional opaque collection identity and canonical positive count, rejects partial, whitespace-ambiguous, signed, zero, padded, non-digit, and overflowing declarations, and binds the canonical bytes to candidate identity, a distinct user source, the mandatory requirement, immutable confirmation, enrollment, and explicit activation. Targeted suites passed 18/0 and 58/0. The clean revision <code>6b9ba7c</code> passed its package-owned 876/8/0 suite, strict signing, hashes, archive checks, startup, and smoke. In the real packaged UI, the immutable sheet displayed <code>opaque-collection-17</code> and <strong>Exactly 3 independently identifiable members</strong>, the exact verifier digest, read-only worker/reviewer authority, network off, and a zero-file/zero-byte ceiling. It was canceled before enrollment; the sidebar retained two historical tasks and Cmd-Q left zero processes. <a href="../screenshots/packaged-loopforge-native-cardinality-confirmation-20260816T1156Z.jpg">Open the native confirmation receipt.</a> This closes B-04 only; global final acceptance remains false.</p>
+    </section>
+
+    <section class="card full">
       <span class="status green">Native activation reconciled</span>
       <h2>Historical no-start claims are no longer current blockers</h2>
-      <p>Commit <code>65d050f</code> added the real <strong>Activate Native Attempt</strong> boundary. Release constructs the production execution coordinator, the native diagnostics action calls <code>AppModel.activateLatestEnrolledKernelRun()</code>, and the returned non-Codable production session is retained without creating a legacy task or Graph worker. The current focused suite passed 14/14, and a prior signed-app receipt reached <code>executing</code> with mutation delta 0, verification delta 1, external effects 0, and no provider launch. Older reports remain preserved as chronological evidence; <a href="NATIVE_CUTOVER_CLAIM_RECONCILIATION.md">the reconciliation receipt</a> supersedes their broad current-status language. Genuine remaining gaps are downstream live visual/final-completion authority, Watcher and repository telemetry, typed authoring, productive-provider architecture, containment, and mutation isolation.</p>
+      <p>Commit <code>65d050f</code> added the real <strong>Activate Native Attempt</strong> boundary. Release constructs the production execution coordinator, the native diagnostics action calls <code>AppModel.activateLatestEnrolledKernelRun()</code>, and the returned non-Codable production session is retained without creating a legacy task or Graph worker. The current focused suite passed 14/14, and a prior signed-app receipt reached <code>executing</code> with mutation delta 0, verification delta 1, external effects 0, and no provider launch. Older reports remain preserved as chronological evidence; <a href="NATIVE_CUTOVER_CLAIM_RECONCILIATION.md">the reconciliation receipt</a> supersedes their broad current-status language. Genuine remaining gaps are downstream live visual/final-completion authority, Watcher and repository telemetry, productive-provider architecture, containment, and mutation isolation.</p>
     </section>
 
     <section class="card full">
       <span class="status amber">Global cutover blocked</span>
       <h2>Remaining mandatory work</h2>
-      <p>All legacy controller execution ingress is retired, and the current implementation, clean-source 875/8/0 package, signatures, hashes, native matrix, exact-implementation confirmation, and remote integration are complete. Other gate-specific receipts still require visual and final-completion authority through the journaled production session plus current Watcher and repository-generation telemetry walkthroughs. The ordinary-macOS physical-footprint issuer and ordinary-app productive-provider install/cutover strategies remain disproven and retired; mutation-backed verifier/reviewer/observer execution requires separately scoped privileged or virtualized isolation. These are substantive release gates, not paperwork, so final acceptance remains zero under the all-or-nothing metric.</p>
+      <p>All legacy controller execution ingress is retired, and the current implementation, clean-source 876/8/0 package, signatures, hashes, native matrix, exact-implementation confirmation, exact-cardinality confirmation, and prior remote integration are complete. Other gate-specific receipts still require visual and final-completion authority through the journaled production session plus current Watcher and repository-generation telemetry walkthroughs. The ordinary-macOS physical-footprint issuer and ordinary-app productive-provider install/cutover strategies remain disproven and retired; mutation-backed verifier/reviewer/observer execution requires separately scoped privileged or virtualized isolation. These are substantive release gates, not paperwork, so final acceptance remains zero under the all-or-nothing metric.</p>
     </section>
 
     <section class="card full">
