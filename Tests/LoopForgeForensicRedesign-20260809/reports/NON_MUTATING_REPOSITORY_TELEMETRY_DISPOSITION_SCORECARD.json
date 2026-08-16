@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-08-16T15:12:16Z",
-  "status": "source-non-mutating-repository-telemetry-disposition-pass-package-native-pending",
+  "recordedAt": "2026-08-16T15:20:26Z",
+  "status": "source-package-native-non-mutating-repository-telemetry-disposition-pass-final-acceptance-true",
   "source": {
     "commit": "7a6e1d6c20c4ccfe3260803cdeef6d1bac989920",
     "commitPatchSHA256": "d40c75dc664e4cb6db40a15983950dd0b7ff9b6e6800e7a23091a4403af28bf3",
@@ -42,6 +42,51 @@
     "focusedExactRunPresentation": {"executed": 4, "failures": 0, "seconds": 0.001, "logSHA256": "7096cdecce0f700d2e61a1a980ef1603de0aaf1f8d7a0c4dc27129b70a73452a"},
     "completeSourceSuite": {"executed": 888, "skipped": 8, "failures": 0, "seconds": 87.936, "logSHA256": "6d735f9dabc7d39e6fd6b0e56236a112ed166cb78b6ccfafc20ba962d811deb4"}
   },
+  "package": {
+    "sourceRevision": "e8b245d88031c338c2ef0a883c5546fa8e3d49ad",
+    "sourceDirty": false,
+    "sourceSnapshotSHA256": "98268af60e4bd80e42a7019c73adc97261de9db00f79bff94a5318ca906617bc",
+    "builtAtUTC": "2026-08-16T15:16:42Z",
+    "buildManifestDisposition": "nonMutatingNotApplicable",
+    "providerManifestDisposition": "nonMutatingNotApplicable",
+    "buildManifestResolvedTelemetryRequired": false,
+    "providerManifestResolvedTelemetryRequired": false,
+    "packageOwnedSuite": {"executed": 888, "skipped": 8, "failures": 0, "seconds": 84.319, "logSHA256": "208f2aa4fb8b383c3571c427c460c13aee18c1947ecb7c41cbf2f60a3ac6739f"},
+    "buildManifest": {"bytes": 736, "sha256": "3ab2c60d07a3a28cfe8de2782751dec41c116b588245cf085e3867e9ebcee457"},
+    "providerManifest": {"bytes": 686, "sha256": "ec43d7d7d1c19037bc8ca908af5da4c5941ac4a5a85b899ed6040a25ed4d2b9a"},
+    "executable": {"bytes": 26687568, "sha256": "8cd9ae5615ca2ea128a8a4ff850f6385430e8a59371b753933cd98c204c2d1fc", "cdHash": "7d45bc877396330a8cb265504ff553994d778f9f"},
+    "zip": {"bytes": 253533070, "sha256": "038a3c90cf9e3b80b929508084491fac6431267cf049c775cfca977391271d5f"},
+    "dmg": {"bytes": 285755544, "sha256": "45463fd73e960caf1f26563985528a3018b360f6ce622ac58e8472625a071493"},
+    "checksumManifest": {"bytes": 278, "sha256": "ec30a234f4ccc1d889df35584108856eca43395b4a676eaf4a6a472e2f197b85"},
+    "deepStrictSignaturePassed": true,
+    "checksumValidationPassed": true,
+    "isolatedStartupSmokePassed": true
+  },
+  "nativeDisclosure": {
+    "accessibilityIdentifier": "repository-generation-telemetry-disposition",
+    "expectedTitle": "Repository telemetry not required",
+    "expectedDetail": "This package cannot create an accepted workspace transition; exact runs without one remain not applicable.",
+    "packageVerified": true,
+    "nativeVerified": true,
+    "launchArgument": "--isolated-inspection-profile",
+    "nonProductiveClassificationVisible": true,
+    "workspaceMutationVetoVisible": true,
+    "isolatedProfileVisible": true,
+    "persistedWatcherCountLoaded": 0,
+    "authorityCompletionContractVisible": true,
+    "buildWatcherEnabled": false,
+    "screenshotPath": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-nonmutating-repository-telemetry-20260816T1518Z.png",
+    "screenshotSHA256": "aa6cd6e1a20b0bd82e0b3e5285d65753b04af7894aed5802e3528f1330a58024",
+    "screenshotPixelWidth": 1052,
+    "screenshotPixelHeight": 746,
+    "userWatcherStoreChanged": false,
+    "userWatcherStoreSHA256": "a59ca5375c6ee3c78de63773df68b20e80106ef15ad1fd7b85776ba78a584d71",
+    "userWatcherStoreByteCount": 891807,
+    "userWatcherStoreMtimeEpoch": 1786885277,
+    "postQuitPackagedProcessCount": 0,
+    "postQuitHelperProcessCount": 0,
+    "postVerificationMountCount": 0
+  },
   "easyBusiness": {
     "mutated": false,
     "branch": "codex/USA_Version",
@@ -49,7 +94,8 @@
     "nulDelimitedStatusSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a"
   },
   "sourceDecisionComplete": true,
-  "packageVerificationPending": true,
-  "nativeVerificationPending": true,
-  "finalAcceptance": false
+  "packageVerificationPending": false,
+  "nativeVerificationPending": false,
+  "remainingGates": [],
+  "finalAcceptance": true
 }

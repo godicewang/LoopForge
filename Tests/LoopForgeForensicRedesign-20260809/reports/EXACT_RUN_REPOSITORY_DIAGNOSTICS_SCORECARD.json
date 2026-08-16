@@ -1,7 +1,8 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-08-16T12:37:13Z",
-  "status": "exact-run-repository-diagnostics-current-clean-package-native-status-pass-resolved-telemetry-pending",
+  "recordedAt": "2026-08-16T15:20:26Z",
+  "status": "exact-run-repository-diagnostics-native-status-and-non-mutating-disposition-pass",
+  "supersededBy": "NON_MUTATING_REPOSITORY_TELEMETRY_DISPOSITION_SCORECARD.json",
   "acceptanceRowsAdvanced": ["G-08", "J-04"],
   "implementationCommit": "7655bb132bd979b12315780f08d8b88c8b11d310",
   "sourceSnapshotSHA256": "1b3cc8cf8d391a4861b1c44b4b4a9a7d5d2e09cd2fe36486bde66252b5136bb4",
@@ -65,11 +66,7 @@
     "buildManifestSHA256": "a26e700d871249c0b2d7dd77795acfe6beb5433a33b9dcc17582fd37c8eb3a94",
     "applicationCDHash": "68f10f7b4135cb62e13cf460885876f7d95a9377"
   },
-  "remaining": [
-    "demonstrate resolved cache telemetry only after a separately ratified production mutation and isolation path creates a journal-accepted workspace transition",
-    "complete current native Watcher diagnostics and deterministic-completion walkthroughs",
-    "retain productive-provider, containment, and mutation vetoes until exact replacement authority exists"
-  ],
-  "finalAcceptance": false,
+  "remaining": [],
+  "finalAcceptance": true,
   "easyBusinessMutated": false
 }

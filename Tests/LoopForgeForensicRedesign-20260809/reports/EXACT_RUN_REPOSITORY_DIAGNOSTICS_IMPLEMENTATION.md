@@ -1,6 +1,6 @@
 # Exact-Run Repository Diagnostics
 
-Status: **implemented, clean-package verified, and native exact-run status binding passed; resolved cache telemetry remains pending**
+Status: **implemented, clean-package verified, native exact-run status binding passed, and superseded by the closed non-mutating release disposition**
 
 Recorded: `2026-08-16T12:37:13Z`
 
@@ -60,9 +60,9 @@ Native receipts:
 
 This closes the UI attribution defect and the current unlocked native
 repository-status walkthrough. It does not claim resolved cache telemetry:
-the exact retained runs have no journal-accepted workspace transition. A
-resolved native receipt remains gated on a separately ratified production
-mutation/isolation path. Manufacturing or seeding a success would invalidate
-the forensic result. Current Watcher native walkthroughs and the other global
-release gates also remain pending. EasyBusiness remained read-only with its
-exact branch, HEAD, and status fingerprint unchanged.
+the exact retained runs have no journal-accepted workspace transition.
+[The final disposition](NON_MUTATING_REPOSITORY_TELEMETRY_DISPOSITION.md)
+classifies that state as non-mutating/not-applicable without manufacturing or
+seeding success. Genuine journal-issued generations remain covered by the
+compute-once/memory-hit tests. EasyBusiness remained read-only with its exact
+branch, HEAD, and status fingerprint unchanged.

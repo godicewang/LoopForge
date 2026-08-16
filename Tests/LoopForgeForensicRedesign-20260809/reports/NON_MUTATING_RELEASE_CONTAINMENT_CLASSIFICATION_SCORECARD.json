@@ -1,7 +1,8 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-08-16T14:48:15Z",
-  "status": "source-package-native-non-mutating-containment-classification-pass-final-release-false",
+  "recordedAt": "2026-08-16T15:20:26Z",
+  "status": "source-package-native-non-mutating-containment-classification-and-repository-telemetry-disposition-pass-final-release-true",
+  "supersededBy": "NON_MUTATING_REPOSITORY_TELEMETRY_DISPOSITION_SCORECARD.json",
   "source": {
     "commit": "4c6bbf8694f4b7caaf9723e2bca6e2a96d1010ba",
     "commitPatchSHA256": "ee437699f78720af2e24734fe4f2e4d2bfe3e5b91b0be2402364e4090965873b",
@@ -91,8 +92,6 @@
     "nulDelimitedStatusSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a"
   },
   "closedGate": "release-containment-and-mutation-isolation-authority-via-explicit-retained-veto",
-  "remainingGates": [
-    "resolved repository-generation telemetry disposition for the explicit non-mutating release"
-  ],
-  "finalAcceptance": false
+  "remainingGates": [],
+  "finalAcceptance": true
 }

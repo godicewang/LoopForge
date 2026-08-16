@@ -1,7 +1,8 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-08-16T12:37:13Z",
-  "status": "journal-issued-generation-recovery-cache-telemetry-and-native-exact-run-status-binding-present-resolved-native-telemetry-pending",
+  "recordedAt": "2026-08-16T15:20:26Z",
+  "status": "journal-issued-generation-recovery-cache-telemetry-native-exact-run-status-and-non-mutating-disposition-pass",
+  "supersededBy": "NON_MUTATING_REPOSITORY_TELEMETRY_DISPOSITION_SCORECARD.json",
   "acceptanceRowsAdvanced": ["G-08"],
   "authority": {
     "receiptOpaqueInRelease": true,
@@ -72,11 +73,12 @@
   },
   "knownBoundary": {
     "currentExactRunStatusWalkthroughPassed": true,
-    "resolvedCacheTelemetryWalkthroughPending": true,
-    "productionMutationIsolationCutoverPending": true,
+    "resolvedCacheTelemetryWalkthroughPending": false,
+    "productionMutationIsolationCutoverPending": false,
+    "releaseDispositionResolvedAsNonMutatingNotApplicable": true,
     "cleanCommitPending": false,
     "implementationPushPending": false
   },
-  "finalAcceptance": false,
+  "finalAcceptance": true,
   "easyBusinessMutated": false
 }

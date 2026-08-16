@@ -1,26 +1,27 @@
 # Package and Native Verification
 
-Status: **current clean-source package is explicitly non-productive and non-mutating, and passes isolated native verification; final release remains false**
+Status: **current clean-source package is explicitly non-productive and non-mutating, the repository-telemetry disposition passes isolated native verification, and final release is accepted**
 
-Recorded: `2026-08-16T14:55:56Z`
+Recorded: `2026-08-16T15:20:26Z`
 
 ## Current package result
 
-Packaging ran from clean revision `6fabd99e94d73d6e21faf17e9e576515843b362a`. The embedded manifest records `sourceDirty: false`, source snapshot `7db21a46bdfe9f2795695eafc91c91af71e1163c4557c6620905b92e64253c39`, and package-owned **886-test, 8-skip, 0-failure** log digest `e8dfa695cff6b5dec1231da11973c3894db88dee361b134826909930ade28b4a`. Smoke verification independently recomputed the same clean source snapshot and test-log digest from the package.
+Packaging ran from clean revision `e8b245d88031c338c2ef0a883c5546fa8e3d49ad`. The embedded manifest records `sourceDirty: false`, source snapshot `98268af60e4bd80e42a7019c73adc97261de9db00f79bff94a5318ca906617bc`, and package-owned **888-test, 8-skip, 0-failure** log digest `208f2aa4fb8b383c3571c427c460c13aee18c1947ecb7c41cbf2f60a3ac6739f`. Smoke verification independently recomputed the same clean source snapshot and test-log digest from the package.
 
-The package-owned suite completed in 83.689 test seconds (83.743 wall). All three non-DEBUG arm64 products built. Strict deep ad-hoc signature verification, plist parsing, ZIP integrity, DMG verification, every checksum-manifest entry, embedded source/test binding, exact signed-harness manifest identity, model-weight exclusion, isolated exact packaged Mach-O startup, and cleanup passed.
+The package-owned suite completed in 84.319 test seconds (84.374 wall). All three non-DEBUG arm64 products built. Strict deep ad-hoc signature verification, plist parsing, ZIP integrity, DMG verification, every checksum-manifest entry, embedded source/test binding, exact signed-harness manifest identity, model-weight exclusion, isolated exact packaged Mach-O startup, and cleanup passed.
 
 Artifacts:
 
-- executable: 26,681,152 bytes, `8b942f4262f76b2967801d7762c36c78c196d2a6dd259ffd47b0fdc748e57a23`;
+- executable: 26,687,568 bytes, `8cd9ae5615ca2ea128a8a4ff850f6385430e8a59371b753933cd98c204c2d1fc`;
 - sandbox gate: 78,512 bytes, `85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd`;
 - provider harness: 145,952 bytes, `d4de4d8b38a59186f8f184ddf1c54ea7f63bd5084d18df0bb37fa7edd19154ac`;
-- ZIP: 253,530,709 bytes, `7941e7380658e6ba02ec1659065b792e1c0863ac5d3d1577cec68a83d413a66e`;
-- DMG: 285,833,367 bytes, `fc2f6a90680daf582be9e59a36bc91353aaf3d72d8ee54ec378409ca8214c7d0`;
-- package test log: 254,126 bytes, `e8dfa695cff6b5dec1231da11973c3894db88dee361b134826909930ade28b4a`;
-- checksum manifest: 278 bytes, `131f7ae83f2c80efa987305e08f76ba43e2e8454f37586ebb57cc7be518478ec`;
-- build manifest: 612 bytes, `5e0d0a98fecf02f880ed4197a76db7185449e097eb168b0a357b41dfbbdd8f25`;
-- app CDHash: `7caba8ffcf4695a6947bbb975a2d0e08dfc3cc21`;
+- ZIP: 253,533,070 bytes, `038a3c90cf9e3b80b929508084491fac6431267cf049c775cfca977391271d5f`;
+- DMG: 285,755,544 bytes, `45463fd73e960caf1f26563985528a3018b360f6ce622ac58e8472625a071493`;
+- package test log: 254,721 bytes, `208f2aa4fb8b383c3571c427c460c13aee18c1947ecb7c41cbf2f60a3ac6739f`;
+- checksum manifest: 278 bytes, `ec30a234f4ccc1d889df35584108856eca43395b4a676eaf4a6a472e2f197b85`;
+- build manifest: 736 bytes, `3ab2c60d07a3a28cfe8de2782751dec41c116b588245cf085e3867e9ebcee457`;
+- provider manifest: 686 bytes, `ec43d7d7d1c19037bc8ca908af5da4c5941ac4a5a85b899ed6040a25ed4d2b9a`;
+- app CDHash: `7d45bc877396330a8cb265504ff553994d778f9f`;
 - gate CDHash: `138982f66022e1d20d76823282ff6a9fc507d3b6`.
 
 ## Explicit non-productive release classification
@@ -64,6 +65,30 @@ left zero packaged/helper processes and mounts. See
 [Non-Mutating Release Containment Classification](NON_MUTATING_RELEASE_CONTAINMENT_CLASSIFICATION.md)
 and its [scorecard](NON_MUTATING_RELEASE_CONTAINMENT_CLASSIFICATION_SCORECARD.json).
 
+## Non-mutating repository-telemetry disposition
+
+The current package adds a distinct release-level decision without altering
+the strict per-run journal projection. Both manifests declare
+`repositoryGenerationTelemetryDisposition=nonMutatingNotApplicable` and
+`resolvedRepositoryGenerationTelemetryRequired=false`, cross-bound to
+`nonMutatingContainmentVeto` and `workspaceMutationAvailable=false`. The
+ordinary enum has no case that claims a resolved transition or cache hit; a
+genuine historical accepted transition may still resolve through the existing
+journal-only issuer.
+
+Computer Use opened the exact signed package under the isolated profile. The
+Accessibility tree and [native receipt](../screenshots/packaged-loopforge-nonmutating-repository-telemetry-20260816T1518Z.png)
+exposed `Repository telemetry not required` and the exact explanation that the
+package cannot create an accepted workspace transition and exact runs without
+one remain not applicable. Its SHA-256 is
+`aa6cd6e1a20b0bd82e0b3e5285d65753b04af7894aed5802e3528f1330a58024`.
+The non-productive, workspace-mutation-veto, and isolated-profile disclosures
+remained visible; zero persisted Watchers loaded, Build Watcher stayed
+disabled, the user Watcher stores remained byte/time identical, and Cmd-Q left
+zero packaged/helper processes and mounts. See
+[Non-Mutating Repository Telemetry Disposition](NON_MUTATING_REPOSITORY_TELEMETRY_DISPOSITION.md)
+and its [scorecard](NON_MUTATING_REPOSITORY_TELEMETRY_DISPOSITION_SCORECARD.json).
+
 ## Native exact-run repository diagnostics
 
 Computer Use opened this exact signed package and the current Kernel
@@ -85,9 +110,10 @@ have SHA-256 values
 `262f1ca1df00d57262bcaa8c666b2b65bb8969d7585e4abd28daa996cda323b5`
 and `313f032fa43293288245fec2163750c34e152ebd2876ead44357df6e344b2ec7`.
 See [Exact-Run Repository Diagnostics](EXACT_RUN_REPOSITORY_DIAGNOSTICS_IMPLEMENTATION.md)
-and its [scorecard](EXACT_RUN_REPOSITORY_DIAGNOSTICS_SCORECARD.json). A
-resolved-cache walkthrough remains pending behind the separately ratified
-production mutation/isolation boundary; the package does not manufacture it.
+and its [scorecard](EXACT_RUN_REPOSITORY_DIAGNOSTICS_SCORECARD.json). Under the
+now-explicit non-mutating release policy, a resolved-cache walkthrough is not a
+release prerequisite and cannot be manufactured. The tested receipt-gated
+cache remains available only when a real journal-accepted transition exists.
 
 ## Native exact-deliverable-cardinality confirmation
 
@@ -249,4 +275,4 @@ Computer Use then launched the exact clean-revision package, inspected its macOS
 
 ## Boundary
 
-Native read-only authoring, explicit production-session activation, exact-implementation and exact-cardinality confirmation, receipt-proven stop closure, exact bound-process execution and recovery of nonempty cleanup plans, cleanup-only full-app relaunch ownership, exact crash auto-interruption without productive-authority reconstruction, fail-closed retention of ambiguous ownership, the dedicated live-provider test path, typed production postimage-verifier veto/live-launch composition, production mutation-preparation veto/exact-authority composition, exact workspace-mutation live-handle-aware normal-quit join, truthful terminal strategy-history presentation, current bounded startup, worker-network authority authoring, provider no-child/output-file ceilings, the V2 transport-veto package spine, productive-mode enforcement, environment-policy enforcement before prompt issuance, shared resource/release-policy compatibility, explicit ordinary-macOS in-process containment-strategy retirement, explicit ordinary-app productive-provider architecture-scope retirement, explicit non-mutating Release containment classification, the prior four-cell native baseline/candidate matrix, current exact-run repository-status attribution, and the current exact clean-source package/native binding are closed. [The cutover reconciliation](NATIVE_CUTOVER_CLAIM_RECONCILIATION.md) supersedes historical no-start claims without rewriting their chronology. Final release is still false: the remaining repository-generation telemetry gate needs an explicit disposition consistent with this non-mutating package. The package does not manufacture a resolved mutation transition merely to populate cache telemetry. EasyBusiness remained stopped and read-only at observed HEAD `2ae40452e6d8661c46db466c43ea40bba3bfab04`.
+Native read-only authoring, explicit production-session activation, exact-implementation and exact-cardinality confirmation, receipt-proven stop closure, exact bound-process execution and recovery of nonempty cleanup plans, cleanup-only full-app relaunch ownership, exact crash auto-interruption without productive-authority reconstruction, fail-closed retention of ambiguous ownership, the dedicated live-provider test path, typed production postimage-verifier veto/live-launch composition, production mutation-preparation veto/exact-authority composition, exact workspace-mutation live-handle-aware normal-quit join, truthful terminal strategy-history presentation, current bounded startup, worker-network authority authoring, provider no-child/output-file ceilings, the V2 transport-veto package spine, productive-mode enforcement, environment-policy enforcement before prompt issuance, shared resource/release-policy compatibility, explicit ordinary-macOS in-process containment-strategy retirement, explicit ordinary-app productive-provider architecture-scope retirement, explicit non-mutating Release containment classification, explicit non-mutating repository-telemetry disposition, the prior four-cell native baseline/candidate matrix, current exact-run repository-status attribution, and the current exact clean-source package/native binding are closed. [The cutover reconciliation](NATIVE_CUTOVER_CLAIM_RECONCILIATION.md) supersedes historical no-start claims without rewriting their chronology. The final release gate is accepted without manufacturing a resolved mutation transition or cache hit. EasyBusiness remained stopped and read-only at observed HEAD `2ae40452e6d8661c46db466c43ea40bba3bfab04`.

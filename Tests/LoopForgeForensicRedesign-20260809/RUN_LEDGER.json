@@ -3,7 +3,7 @@
   "project": "LoopForge Forensic Redesign 20h",
   "startedAt": "2026-08-09T13:13:58Z",
   "requiredActiveSeconds": 72000,
-  "coveredActiveSeconds": 203793,
+  "coveredActiveSeconds": 204393,
   "remainingActiveSeconds": 0,
   "requiredForensicAnalysisBeforeImplementationSeconds": 36000,
   "coveredForensicAnalysisSeconds": 39370,
@@ -5801,7 +5801,35 @@
         "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
         "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
       ]
+    },
+    {
+      "id": "nonmutating-repository-telemetry-disposition-273",
+      "startedAt": "2026-08-16T15:04:36Z",
+      "endedAt": "2026-08-16T15:20:26Z",
+      "coveredSeconds": 600,
+      "status": "accepted",
+      "excludedFailures": [
+        "focused, complete-source, and package-owned test execution and polling time count zero",
+        "Release compilation, signing, hashing, archive generation, startup smoke, Computer Use inspection, screenshot capture, quit, process/mount polling, and shell/Git inspection count zero",
+        "the 350 seconds beyond the 600-second accepted active-work cap count zero"
+      ],
+      "activity": "Closed the final repository-generation telemetry disposition without manufacturing an accepted transition or cache hit. Commit 7a6e1d6 adds a product-level nonMutatingNotApplicable classification with no resolved-success enum case, binds resolvedRepositoryGenerationTelemetryRequired=false into both exact package manifests, rejects forged requirements and relabeled dispositions, and preserves runtime compute-once then memory-hit coverage for any genuine journal-issued opaque generation. Focused tests passed, the complete source suite passed 888/8/0, and clean evidence revision e8b245d passed package-owned 888/8/0, Release build, deep-strict signing, ZIP/DMG/checksum validation, source/test binding, provider self-test, and isolated smoke. Computer Use inspected the exact signed package and observed the non-productive, workspace-mutation-veto, repository-telemetry-not-required, and isolated banners, zero persisted Watchers, the authority/completion contract, and disabled Build. The Watcher store retained its exact digest, size, and mtime; quit left zero packaged/helper processes and mounts. EasyBusiness retained its exact branch, HEAD, and status digest. All 81 mandatory gates are accepted and final release is true.",
+      "evidence": [
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/Kernel/NativeProviderHarnessSelection.swift",
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/AppModel.swift",
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/Views.swift",
+        "/Users/godice/Coding/LoopForge/Scripts/package_app.sh",
+        "/Users/godice/Coding/LoopForge/Scripts/smoke_test.sh",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeTests/NativeProviderHarnessSelectionTests.swift",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NON_MUTATING_REPOSITORY_TELEMETRY_DISPOSITION.md",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NON_MUTATING_REPOSITORY_TELEMETRY_DISPOSITION_SCORECARD.json",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-nonmutating-repository-telemetry-20260816T1518Z.png",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge.app",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-macOS-arm64.zip",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
+      ]
     }
   ],
-  "lastUpdatedAt": "2026-08-16T14:55:56Z"
+  "lastUpdatedAt": "2026-08-16T15:20:26Z"
 }

@@ -1,6 +1,6 @@
 # Explicit Non-Productive Release Classification
 
-Status: **current clean package is explicitly non-productive; final release remains false**
+Status: **the clean package is explicitly non-productive and that classification is included in the final accepted release**
 
 Recorded: `2026-08-16T14:06:46Z`
 
@@ -81,7 +81,7 @@ digest `2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a`.
 
 This closes the alternative release gate that required either a separately
 ratified productive-provider isolation architecture or an explicit
-non-productive classification. It does not make the current package a final or
-mutation-capable release. Live Watcher completion-chain evidence, resolved
-repository-generation telemetry, and Release containment/mutation-isolation
-authority remain pending.
+non-productive classification. It does not make the current package
+mutation-capable. Later receipts close the disposable Watcher chain, explicitly
+retain the non-mutation containment veto, and classify repository telemetry as
+non-mutating/not-applicable; see the current package verification report.

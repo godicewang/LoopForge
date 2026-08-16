@@ -1,7 +1,8 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-08-16T14:06:46Z",
-  "status": "explicit-non-productive-release-classification-pass-final-release-false",
+  "recordedAt": "2026-08-16T15:20:26Z",
+  "status": "explicit-non-productive-release-classification-included-in-final-release-pass",
+  "supersededBy": "PACKAGE_AND_NATIVE_VERIFICATION_SCORECARD.json",
   "classification": {
     "rawValue": "nonProductiveTransportVeto",
     "productiveExecutionAvailable": false,
@@ -72,10 +73,6 @@
     "nulDelimitedStatusSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a"
   },
   "closedGate": "productive-provider-isolation-or-explicit-non-productive-classification",
-  "remainingGates": [
-    "operation-free live Watcher completion-chain fixture",
-    "resolved repository-generation telemetry after separately ratified mutation/isolation authority",
-    "Release containment and mutation isolation authority"
-  ],
-  "finalAcceptance": false
+  "remainingGates": [],
+  "finalAcceptance": true
 }

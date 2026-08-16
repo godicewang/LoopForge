@@ -1,6 +1,6 @@
 # Non-Mutating Release Containment Classification
 
-Status: **the ordinary macOS package is explicitly non-mutating, retains the exact pre-effect containment veto, and passes package/native verification; final release remains false**
+Status: **the ordinary macOS package is explicitly non-mutating, retains the exact pre-effect containment veto, passes package/native verification, and is included in the final accepted release**
 
 Recorded: `2026-08-16T14:48:15Z`
 
@@ -100,6 +100,7 @@ status SHA-256
 
 This closes the Release-containment/mutation-isolation alternative across
 source, exact package manifests, smoke policy, and the real native UI by
-retaining and explicitly classifying the non-mutation veto. Final release
-remains false. Resolved repository-generation telemetry still requires a
-separate explicit disposition for this non-mutating product classification.
+retaining and explicitly classifying the non-mutation veto. The formerly
+remaining repository-generation question is closed by the
+[non-mutating repository-telemetry disposition](NON_MUTATING_REPOSITORY_TELEMETRY_DISPOSITION.md),
+which does not invent an accepted transition or cache hit.

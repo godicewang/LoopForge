@@ -1,6 +1,8 @@
 # Journal-Issued Repository Generation Authority
 
-Status: **implemented, source/package verified, and native exact-run status binding passed; resolved cache telemetry and production mutation cutover remain pending**
+Status: **implemented, source/package verified, native exact-run status binding passed, and the non-mutating release disposition is closed**
+
+Current disposition: [Non-Mutating Repository Telemetry](NON_MUTATING_REPOSITORY_TELEMETRY_DISPOSITION.md) supersedes the former pending language. The ordinary package cannot create an accepted workspace transition, so resolved telemetry is not required; genuine historical journal-issued generations remain resolvable and cacheable.
 
 ## Authority defect
 
@@ -107,7 +109,7 @@ detached from its run. The exact package, screenshots, and test receipts are in
 This closes receipt issuance, startup recovery/cache telemetry, native status
 attribution, clean packaging, commit, and push at the new-kernel boundary. It
 does not relabel the three honest `notApplicable` states as resolved cache
-telemetry. A current resolved native receipt requires a journal-accepted
-workspace transition through a separately ratified production mutation and
-isolation path; that path remains vetoed. EasyBusiness remained permanently
-stopped and read-only.
+telemetry. The final package now explicitly binds those semantics as
+`nonMutatingNotApplicable`; any future resolved native receipt still requires a
+genuine journal-accepted transition. EasyBusiness remained permanently stopped
+and read-only.
