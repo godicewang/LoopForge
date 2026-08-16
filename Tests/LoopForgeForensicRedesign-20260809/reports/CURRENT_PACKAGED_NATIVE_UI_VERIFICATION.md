@@ -1,10 +1,37 @@
 # Latest Interactive Packaged Native UI Verification
 
-Status: **latest interactive package inspected while unlocked, terminal strategy history is named truthfully, two native screenshots retained, and real UI quit reached zero packaged processes; newer source-only policy package has no visible change and no relabeled screenshots**
+Status: **current clean package inspected while unlocked, exact-run repository status is native-bound, screenshots retained, and real UI quit reached zero packaged processes; resolved cache telemetry remains pending**
 
-Recorded: `2026-08-16T06:49:06Z`
+Recorded: `2026-08-16T12:37:13Z`
 
-Package-classification note: a newer dirty-source package now exists for
+## Current exact-run repository diagnostics
+
+The exact clean revision `7655bb132bd979b12315780f08d8b88c8b11d310`
+passed its package-owned 878-test, 8-skip, 0-failure suite, Release builds,
+deep signature verification, source/test manifest binding, ZIP/DMG/checksum
+validation, startup probes, smoke, and cleanup. Its source snapshot is
+`1b3cc8cf8d391a4861b1c44b4b4a9a7d5d2e09cd2fe36486bde66252b5136bb4`.
+
+Computer Use opened this exact package and its real Kernel diagnostics sheet.
+Three `Exact native run` groups appeared, each containing the matching reducer
+projection and repository-generation status. All three statuses were
+`No accepted workspace transition`, so the app explicitly withheld generation
+and cache-reuse authority. The upper and lower native receipts are
+[here](../screenshots/packaged-loopforge-exact-run-repository-diagnostics-20260816T1235Z.png)
+and [here](../screenshots/packaged-loopforge-exact-run-repository-diagnostics-lower-20260816T1235Z.png),
+with SHA-256 values
+`262f1ca1df00d57262bcaa8c666b2b65bb8969d7585e4abd28daa996cda323b5`
+and `313f032fa43293288245fec2163750c34e152ebd2876ead44357df6e344b2ec7`.
+
+No native attempt, provider, verifier, worker, legacy execution, or mutation was
+launched. Cmd-Q left zero packaged processes and verification mounts. This
+closes current native repository-status attribution, not resolved cache
+telemetry; the latter still requires a journal-accepted workspace transition
+through a separately ratified production mutation/isolation path.
+
+## Earlier terminal-strategy proof
+
+The earlier package-classification note recorded a newer dirty-source package for
 snapshot `610338f003c251ef943a8b32c084776437d95ab91064a5403031bbb5d8a33178`.
 Its runtime release-policy change has no visible UI effect, and it passed direct
 and mounted startup without interactive capture. The screenshots below remain

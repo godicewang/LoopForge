@@ -1,31 +1,56 @@
 # Package and Native Verification
 
-Status: **current clean-source package and native exact-cardinality confirmation passed; global production cutover remains blocked**
+Status: **current clean-source package and native exact-run repository-status binding passed; global production cutover remains blocked**
 
-Recorded: `2026-08-16T12:05:43Z`
+Recorded: `2026-08-16T12:37:13Z`
 
 ## Current package result
 
-Packaging ran from clean exact-cardinality implementation revision `6b9ba7c13f3e024ed7f49d5109c8201ba09e661e`. The embedded manifest records `sourceDirty: false`, source snapshot `c71248ad494c199f9fcf8032332903b349b9278fefa8c9f8c7069f57a34f45e9`, and package-owned **876-test, 8-skip, 0-failure** log digest `bc95120917dc2728f988d4d1d8bba195abdf2eb7b7f3f7944dc53f1105ba50f6`. Smoke verification independently recomputed the same clean source snapshot and test-log digest from the package.
+Packaging ran from clean exact-run diagnostics implementation revision `7655bb132bd979b12315780f08d8b88c8b11d310`. The embedded manifest records `sourceDirty: false`, source snapshot `1b3cc8cf8d391a4861b1c44b4b4a9a7d5d2e09cd2fe36486bde66252b5136bb4`, and package-owned **878-test, 8-skip, 0-failure** log digest `a8c439f815a043e03318738c1a0c07694584aa457b6c9e394cd52b9081da1446`. Smoke verification independently recomputed the same clean source snapshot and test-log digest from the package.
 
-The accepted package-owned suite completed in 77.338 test seconds (77.393 wall). All three non-DEBUG arm64 products built. Strict deep ad-hoc signature verification, plist parsing, ZIP integrity, DMG verification, every checksum-manifest entry, embedded source/test binding, exact signed-harness manifest identity, model-weight exclusion, bounded exact packaged Mach-O startup, and cleanup passed.
+The accepted package-owned suite completed in 84.564 test seconds (84.614 wall). All three non-DEBUG arm64 products built. Strict deep ad-hoc signature verification, plist parsing, ZIP integrity, DMG verification, every checksum-manifest entry, embedded source/test binding, exact signed-harness manifest identity, model-weight exclusion, bounded exact packaged Mach-O startup, and cleanup passed.
 
 Artifacts:
 
-- executable: 26,500,800 bytes, `42c260b59997c6ed6fed4943a65855f3cc23fd76ddcec32aad2c16596bbd792d`;
+- executable: 26,568,192 bytes, `932b60fee705eb70521d013d2021867979f35f701a3f0bf17e847365ef101504`;
 - sandbox gate: 78,512 bytes, `85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd`;
 - provider harness: 145,952 bytes, `d4de4d8b38a59186f8f184ddf1c54ea7f63bd5084d18df0bb37fa7edd19154ac`;
-- ZIP: 253,494,161 bytes, `080be863281646418dc1b68e903f7c70320541100dac7c12f52e52cda6133641`;
-- DMG: 285,812,693 bytes, `df9fd6fc2a7bef76226c886b395fed972ad036c6607a4ad959f4128a0f514c27`;
-- package test log: 251,422 bytes, `bc95120917dc2728f988d4d1d8bba195abdf2eb7b7f3f7944dc53f1105ba50f6`;
-- checksum manifest: 278 bytes, `f403c7c9433afb9528aadb004462e6c83a95350b42b284d7369f6732d7871f04`;
-- build manifest: 353 bytes, `af1a8f9d019e79802fd4d9f61c57340416530b9af5ce93aadc23a663cd37604f`;
-- app CDHash: `8502243e8b2afd808b6313b0afa14eb04cb9c8cd`;
+- ZIP: 253,502,404 bytes, `5e55b53b50930965c8dae5cb13749d1cf0da97d4de8038dde07d94351400c7e2`;
+- DMG: 285,827,235 bytes, `8b39d09b80c2e65e886e5e0eb72b40325c5a6cadae85f585e03799d99ea75db0`;
+- package test log: 252,018 bytes, `a8c439f815a043e03318738c1a0c07694584aa457b6c9e394cd52b9081da1446`;
+- checksum manifest: 278 bytes, `319a13433f4643cf6d4ce174754018a3d3f0e2863b6a7db7fc304d964a8a2c00`;
+- build manifest: 353 bytes, `a26e700d871249c0b2d7dd77795acfe6beb5433a33b9dcc17582fd37c8eb3a94`;
+- app CDHash: `68f10f7b4135cb62e13cf460885876f7d95a9377`;
 - gate CDHash: `138982f66022e1d20d76823282ff6a9fc507d3b6`.
+
+## Native exact-run repository diagnostics
+
+Computer Use opened this exact signed package and the current Kernel
+diagnostics sheet. The UI now forms one deterministic union of kernel and
+recovery run IDs and renders one `Exact native run` group per identity. All
+three retained runs appeared once, and each run card was immediately followed
+by its matching `Repository generation` card.
+
+All three typed statuses were `No accepted workspace transition`. This is the
+honest native projection: no journal-accepted apply or restored rollback exists
+for those runs, so neither repository-generation nor cache-reuse authority was
+claimed. The app did not activate an attempt, launch a provider or verifier,
+run a legacy worker, or mutate a workspace. Cmd-Q left zero packaged processes
+and mounts.
+
+The [upper exact-run binding](../screenshots/packaged-loopforge-exact-run-repository-diagnostics-20260816T1235Z.png)
+and [lower exact-run binding](../screenshots/packaged-loopforge-exact-run-repository-diagnostics-lower-20260816T1235Z.png)
+have SHA-256 values
+`262f1ca1df00d57262bcaa8c666b2b65bb8969d7585e4abd28daa996cda323b5`
+and `313f032fa43293288245fec2163750c34e152ebd2876ead44357df6e344b2ec7`.
+See [Exact-Run Repository Diagnostics](EXACT_RUN_REPOSITORY_DIAGNOSTICS_IMPLEMENTATION.md)
+and its [scorecard](EXACT_RUN_REPOSITORY_DIAGNOSTICS_SCORECARD.json). A
+resolved-cache walkthrough remains pending behind the separately ratified
+production mutation/isolation boundary; the package does not manufacture it.
 
 ## Native exact-deliverable-cardinality confirmation
 
-Computer Use opened this exact signed package and populated the real Journaled
+Computer Use opened the preceding exact clean cardinality package and populated the real Journaled
 Auto Graph composer with opaque collection identity `opaque-collection-17` and
 canonical count `3`. Both worker and reviewer remained read-only, worker
 networking remained off, the selected workspace was the bounded
@@ -50,7 +75,7 @@ and its [scorecard](NATIVE_DELIVERABLE_CARDINALITY_AUTHORING_SCORECARD.json).
 
 ## Native exact-implementation confirmation
 
-Computer Use opened the exact current package and populated the real Journaled
+Computer Use opened the preceding exact clean implementation package and populated the real Journaled
 Auto Graph composer with two opaque IDs. The immutable confirmation sheet sorted
 and displayed `kernel-contract-v2` and `loopforge-native-authority-v1`, bound the
 exact verifier digest
@@ -183,4 +208,4 @@ Computer Use then launched the exact clean-revision package, inspected its macOS
 
 ## Boundary
 
-Native read-only authoring, explicit production-session activation, exact-implementation and exact-cardinality confirmation, receipt-proven stop closure, exact bound-process execution and recovery of nonempty cleanup plans, cleanup-only full-app relaunch ownership, exact crash auto-interruption without productive-authority reconstruction, fail-closed retention of ambiguous ownership, the dedicated live-provider test path, typed production postimage-verifier veto/live-launch composition, production mutation-preparation veto/exact-authority composition, exact workspace-mutation live-handle-aware normal-quit join, truthful terminal strategy-history presentation, current bounded startup, worker-network authority authoring, provider no-child/output-file ceilings, the V2 transport-veto package spine, productive-mode enforcement, environment-policy enforcement before prompt issuance, shared resource/release-policy compatibility, explicit ordinary-macOS in-process containment-strategy retirement, explicit ordinary-app productive-provider architecture-scope retirement, the prior four-cell native baseline/candidate matrix, and the current exact clean-source package/native binding are closed. [The cutover reconciliation](NATIVE_CUTOVER_CLAIM_RECONCILIATION.md) supersedes historical no-start claims without rewriting their chronology. Final release is still false: downstream live visual/final-completion authority, current Watcher/repository-telemetry walkthroughs, productive-provider architecture, containment, and mutation isolation are not all proven through the current real app flow. The current product retains typed containment/provider vetoes; mutation-backed execution requires a separately scoped privileged or virtualized isolation product. EasyBusiness remained stopped and read-only at observed HEAD `2ae40452e6d8661c46db466c43ea40bba3bfab04`.
+Native read-only authoring, explicit production-session activation, exact-implementation and exact-cardinality confirmation, receipt-proven stop closure, exact bound-process execution and recovery of nonempty cleanup plans, cleanup-only full-app relaunch ownership, exact crash auto-interruption without productive-authority reconstruction, fail-closed retention of ambiguous ownership, the dedicated live-provider test path, typed production postimage-verifier veto/live-launch composition, production mutation-preparation veto/exact-authority composition, exact workspace-mutation live-handle-aware normal-quit join, truthful terminal strategy-history presentation, current bounded startup, worker-network authority authoring, provider no-child/output-file ceilings, the V2 transport-veto package spine, productive-mode enforcement, environment-policy enforcement before prompt issuance, shared resource/release-policy compatibility, explicit ordinary-macOS in-process containment-strategy retirement, explicit ordinary-app productive-provider architecture-scope retirement, the prior four-cell native baseline/candidate matrix, current exact-run repository-status attribution, and the current exact clean-source package/native binding are closed. [The cutover reconciliation](NATIVE_CUTOVER_CLAIM_RECONCILIATION.md) supersedes historical no-start claims without rewriting their chronology. Final release is still false: downstream live visual/final-completion authority, current Watcher walkthroughs, resolved repository telemetry, productive-provider architecture, containment, and mutation isolation are not all proven through the current real app flow. The current product retains typed containment/provider vetoes; mutation-backed execution requires a separately scoped privileged or virtualized isolation product. EasyBusiness remained stopped and read-only at observed HEAD `2ae40452e6d8661c46db466c43ea40bba3bfab04`.

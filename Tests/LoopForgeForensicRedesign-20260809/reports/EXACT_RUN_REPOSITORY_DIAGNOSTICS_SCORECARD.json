@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T12:37:13Z",
+  "status": "exact-run-repository-diagnostics-current-clean-package-native-status-pass-resolved-telemetry-pending",
+  "acceptanceRowsAdvanced": ["G-08", "J-04"],
+  "implementationCommit": "7655bb132bd979b12315780f08d8b88c8b11d310",
+  "sourceSnapshotSHA256": "1b3cc8cf8d391a4861b1c44b4b4a9a7d5d2e09cd2fe36486bde66252b5136bb4",
+  "projection": {
+    "orderedExactRunUnion": true,
+    "duplicateRunGroups": false,
+    "notApplicableVisible": true,
+    "missingRecoveryReportFailsClosed": true,
+    "resolvedTelemetryRequiresTypedReport": true,
+    "manufacturedCacheAuthority": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 4,
+    "focusedFailures": 0,
+    "fullTestsExecuted": 878,
+    "fullTestsSkipped": 8,
+    "fullTestFailures": 0,
+    "packagingOwnedTestsExecuted": 878,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "packageTestSeconds": 84.564,
+    "packageWallSeconds": 84.614,
+    "packageTestLogSHA256": "a8c439f815a043e03318738c1a0c07694584aa457b6c9e394cd52b9081da1446",
+    "packageSmokePassed": true,
+    "deepStrictSignaturePassed": true,
+    "postQuitPackagedProcessCount": 0,
+    "postVerificationMountCount": 0
+  },
+  "nativeVerification": {
+    "exactPackagedApplicationInspected": true,
+    "unlockedNativeUI": true,
+    "exactRunGroupCount": 3,
+    "runBindings": [
+      {
+        "runID": "native-run-3c15bddb-74b7-43a4-97cf-acf9949db83e",
+        "repositoryStatus": "notApplicable"
+      },
+      {
+        "runID": "native-run-48b4997c-4d31-4c02-909f-f3d30dd71b70",
+        "repositoryStatus": "notApplicable"
+      },
+      {
+        "runID": "native-run-c2070190-a24a-42bf-a9f5-fee696aea42c",
+        "repositoryStatus": "notApplicable"
+      }
+    ],
+    "resolvedCacheTelemetryObserved": false,
+    "attemptActivated": false,
+    "providerLaunched": false,
+    "workspaceMutated": false,
+    "upperScreenshotPath": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-exact-run-repository-diagnostics-20260816T1235Z.png",
+    "upperScreenshotSHA256": "262f1ca1df00d57262bcaa8c666b2b65bb8969d7585e4abd28daa996cda323b5",
+    "lowerScreenshotPath": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-exact-run-repository-diagnostics-lower-20260816T1235Z.png",
+    "lowerScreenshotSHA256": "313f032fa43293288245fec2163750c34e152ebd2876ead44357df6e344b2ec7"
+  },
+  "artifacts": {
+    "executableSHA256": "932b60fee705eb70521d013d2021867979f35f701a3f0bf17e847365ef101504",
+    "zipSHA256": "5e55b53b50930965c8dae5cb13749d1cf0da97d4de8038dde07d94351400c7e2",
+    "dmgSHA256": "8b39d09b80c2e65e886e5e0eb72b40325c5a6cadae85f585e03799d99ea75db0",
+    "checksumManifestSHA256": "319a13433f4643cf6d4ce174754018a3d3f0e2863b6a7db7fc304d964a8a2c00",
+    "buildManifestSHA256": "a26e700d871249c0b2d7dd77795acfe6beb5433a33b9dcc17582fd37c8eb3a94",
+    "applicationCDHash": "68f10f7b4135cb62e13cf460885876f7d95a9377"
+  },
+  "remaining": [
+    "demonstrate resolved cache telemetry only after a separately ratified production mutation and isolation path creates a journal-accepted workspace transition",
+    "complete current native Watcher diagnostics and deterministic-completion walkthroughs",
+    "retain productive-provider, containment, and mutation vetoes until exact replacement authority exists"
+  ],
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

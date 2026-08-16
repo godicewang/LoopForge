@@ -3,7 +3,7 @@
   "project": "LoopForge Forensic Redesign 20h",
   "startedAt": "2026-08-09T13:13:58Z",
   "requiredActiveSeconds": 72000,
-  "coveredActiveSeconds": 200193,
+  "coveredActiveSeconds": 200793,
   "remainingActiveSeconds": 0,
   "requiredForensicAnalysisBeforeImplementationSeconds": 36000,
   "coveredForensicAnalysisSeconds": 39370,
@@ -5640,7 +5640,32 @@
         "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
         "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
       ]
+    },
+    {
+      "id": "exact-run-repository-diagnostics-267",
+      "startedAt": "2026-08-16T12:21:05Z",
+      "endedAt": "2026-08-16T12:37:13Z",
+      "coveredSeconds": 600,
+      "status": "accepted",
+      "excludedFailures": [
+        "targeted and complete-suite execution, clean packaging, Release compilation, signing, hashing, archive generation, smoke, and polling duration count zero",
+        "one lower-screenshot filesystem-binding error after a successful native scroll counts zero; the screenshot was saved on the immediate corrected call",
+        "all Computer Use navigation, app-launch/quit wait, shell/Git inspection, report-generation time beyond the accepted cap, and the 368 seconds beyond the 600-second active-work cap count zero"
+      ],
+      "activity": "Closed the native repository-status attribution defect without manufacturing cache authority. The prior diagnostics rendered reducer runs and recovery reports as separate lists and filtered notApplicable. Commit 7655bb1 now forms one ordered exact run-ID union, groups each reducer projection with its matching repository status, exposes No accepted workspace transition, and fails closed when a current-session report is absent. Focused presentation tests passed 4/0; the complete source and clean package-owned suites passed 878/8/0. The clean package passed signing, hashes, ZIP/DMG/checksum validation, bounded startup, smoke, and zero-process cleanup. Computer Use opened the exact package and proved all three retained run IDs each carried their own notApplicable repository status; it activated no attempt, provider, verifier, worker, legacy execution, or mutation. Two native screenshots, machine-readable scorecards, clickable reports, and acceptance status were advanced. Resolved cache telemetry remains honestly blocked on a separately ratified production mutation/isolation path. EasyBusiness remained read-only with its exact branch, HEAD, and status fingerprint unchanged.",
+      "evidence": [
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/Views.swift",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeTests/KernelConvergenceDiagnosticPresentationTests.swift",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/EXACT_RUN_REPOSITORY_DIAGNOSTICS_IMPLEMENTATION.md",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/EXACT_RUN_REPOSITORY_DIAGNOSTICS_SCORECARD.json",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-exact-run-repository-diagnostics-20260816T1235Z.png",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-exact-run-repository-diagnostics-lower-20260816T1235Z.png",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge.app",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-macOS-arm64.zip",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
+      ]
     }
   ],
-  "lastUpdatedAt": "2026-08-16T12:05:43Z"
+  "lastUpdatedAt": "2026-08-16T12:37:13Z"
 }

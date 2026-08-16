@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-08-11T02:00:01Z",
-  "status": "journal-issued-generation-and-recovery-cache-telemetry-package-receipts-present-native-proof-cutover-pending",
+  "recordedAt": "2026-08-16T12:37:13Z",
+  "status": "journal-issued-generation-recovery-cache-telemetry-and-native-exact-run-status-binding-present-resolved-native-telemetry-pending",
   "acceptanceRowsAdvanced": ["G-08"],
   "authority": {
     "receiptOpaqueInRelease": true,
@@ -39,25 +39,31 @@
     "readOnlyNativeTelemetryImplemented": true
   },
   "verification": {
-    "focusedTestsExecuted": 23,
+    "focusedTestsExecuted": 27,
     "focusedFailures": 0,
-    "fullTestsExecuted": 547,
+    "fullTestsExecuted": 878,
     "fullTestsSkipped": 8,
     "fullTestFailures": 0,
-    "packagingOwnedTestsExecuted": 547,
+    "packagingOwnedTestsExecuted": 878,
     "packagingOwnedTestsSkipped": 8,
     "packagingOwnedFailures": 0,
     "packageSmokePassed": true,
     "residualPackagedProcessCount": 0,
-    "sourceSnapshotSHA256": "8e498043e1e087aa635ba20bdc52e9ad06402ad6eb60a8b16a7fe3ff3046d47d",
-    "executableSHA256": "00bd3257e09bb835757a8247704bc66c7b3c7aa30c91a8ebed2b2d104480dd74",
-    "zipSHA256": "318ec54203dbdf3b636fae080c4f36bba2a00f73bec8345bd87dd972cc1bec20",
-    "dmgSHA256": "08583fbdd1354b7f69cd07281d8984ef55ba2da1b9928e897e4b82cbff67b635",
-    "packageTestLogSHA256": "35582b32391c7e8babeac6faf683284e5d817345d0fa6077a5bc492bad0c04a7",
+    "sourceSnapshotSHA256": "1b3cc8cf8d391a4861b1c44b4b4a9a7d5d2e09cd2fe36486bde66252b5136bb4",
+    "executableSHA256": "932b60fee705eb70521d013d2021867979f35f701a3f0bf17e847365ef101504",
+    "zipSHA256": "5e55b53b50930965c8dae5cb13749d1cf0da97d4de8038dde07d94351400c7e2",
+    "dmgSHA256": "8b39d09b80c2e65e886e5e0eb72b40325c5a6cadae85f585e03799d99ea75db0",
+    "packageTestLogSHA256": "a8c439f815a043e03318738c1a0c07694584aa457b6c9e394cd52b9081da1446",
     "sourceFullTestLogSHA256": "f126d103e8a5e2b23cea121fda8d6e36ddd3e5e75277f723a86858925a5e8091",
     "focusedTestLogSHA256": "086f41bfc6313eedb06dae9dc98e1e12ea50d291bcdd59f86558621bd0aac6b6",
     "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
-    "cdHash": "f51babfdc5a83fec7b862323e9ac8070ea868a5e"
+    "cdHash": "68f10f7b4135cb62e13cf460885876f7d95a9377",
+    "exactRunNativeStatusBindingPassed": true,
+    "nativeRunGroupCount": 3,
+    "nativeRunStatuses": ["notApplicable", "notApplicable", "notApplicable"],
+    "resolvedCacheTelemetryObserved": false,
+    "upperNativeScreenshotSHA256": "262f1ca1df00d57262bcaa8c666b2b65bb8969d7585e4abd28daa996cda323b5",
+    "lowerNativeScreenshotSHA256": "313f032fa43293288245fec2163750c34e152ebd2876ead44357df6e344b2ec7"
   },
   "excluded": {
     "failedRuns": 3,
@@ -65,10 +71,11 @@
     "failedRunTimeCounted": false
   },
   "knownBoundary": {
-    "currentNativeTelemetryWalkthroughPending": true,
-    "productionRunCreatorCutoverPending": true,
-    "cleanCommitPending": true,
-    "pushPending": true
+    "currentExactRunStatusWalkthroughPassed": true,
+    "resolvedCacheTelemetryWalkthroughPending": true,
+    "productionMutationIsolationCutoverPending": true,
+    "cleanCommitPending": false,
+    "implementationPushPending": false
   },
   "finalAcceptance": false,
   "easyBusinessMutated": false

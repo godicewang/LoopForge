@@ -1,6 +1,6 @@
 # Journal-Issued Repository Generation Authority
 
-Status: **implemented and source/package verified; current unlocked native walkthrough and production run-creator cutover remain pending**
+Status: **implemented, source/package verified, and native exact-run status binding passed; resolved cache telemetry and production mutation cutover remain pending**
 
 ## Authority defect
 
@@ -97,9 +97,17 @@ runs and their time are excluded from verification and the strict ledger.
 
 ## Boundary
 
-This closes receipt issuance and startup recovery/cache telemetry at the
-new-kernel boundary. The currently locked macOS session prevents a current
-native accessibility/screenshot walkthrough of the telemetry sheet. No
-production run creator yet enrolls ordinary Loop/Graph execution into this
-kernel, so full controller cutover, native proof, clean commit, and push remain
-mandatory. EasyBusiness remained permanently stopped and read-only.
+The current unlocked package now renders one deterministic diagnostic group per
+exact run ID and places the matching repository-generation status inside that
+group. All three retained runs displayed `No accepted workspace transition`;
+the UI no longer drops `notApplicable` or leaves recovery evidence visually
+detached from its run. The exact package, screenshots, and test receipts are in
+[Exact-Run Repository Diagnostics](EXACT_RUN_REPOSITORY_DIAGNOSTICS_IMPLEMENTATION.md).
+
+This closes receipt issuance, startup recovery/cache telemetry, native status
+attribution, clean packaging, commit, and push at the new-kernel boundary. It
+does not relabel the three honest `notApplicable` states as resolved cache
+telemetry. A current resolved native receipt requires a journal-accepted
+workspace transition through a separately ratified production mutation and
+isolation path; that path remains vetoed. EasyBusiness remained permanently
+stopped and read-only.
