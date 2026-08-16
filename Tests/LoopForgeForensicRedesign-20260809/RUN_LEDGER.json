@@ -3,7 +3,7 @@
   "project": "LoopForge Forensic Redesign 20h",
   "startedAt": "2026-08-09T13:13:58Z",
   "requiredActiveSeconds": 72000,
-  "coveredActiveSeconds": 202593,
+  "coveredActiveSeconds": 203193,
   "remainingActiveSeconds": 0,
   "requiredForensicAnalysisBeforeImplementationSeconds": 36000,
   "coveredForensicAnalysisSeconds": 39370,
@@ -5749,7 +5749,26 @@
         "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
         "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
       ]
+    },
+    {
+      "id": "disposable-watcher-completion-chain-271",
+      "startedAt": "2026-08-16T14:15:05Z",
+      "endedAt": "2026-08-16T14:27:18Z",
+      "coveredSeconds": 600,
+      "status": "accepted",
+      "excludedFailures": [
+        "the first focused run completed the chain but failed two sub-millisecond Date round-trip equality assertions; that failed-run time counts zero",
+        "focused, Watcher-suite, and complete-suite execution and polling time count zero",
+        "shell and Git inspection plus the 133 seconds beyond the 600-second accepted active-work cap count zero"
+      ],
+      "activity": "Closed the operation-free live Watcher completion-chain fixture gap at source commit 39ebb2a. WatcherController now has an injectable Agent-turn boundary whose ordinary default preserves exact provider readiness and the Continuum Watcher Codex watchdog. The disposable integration fixture runs the real controller, subprocess pipeline, fresh telemetry loader, JSON checkpoint digest, verification subprocess, adaptive assessment, distinct read-only independent reviewer lineage, completion and independent-review receipt validation, HTML report generation, WatcherStore persistence reload, and current-checkpoint revalidation entirely inside a temporary workspace with no live provider or persisted user Watcher. The focused test passed 1/0, all 45 Watcher tests passed, and the complete source suite passed 884/8/0 in 84.077 seconds. The exact current source is not yet repackaged, and final release remains false because resolved repository telemetry and Release containment/mutation-isolation authority remain pending.",
+      "evidence": [
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/WatcherController.swift",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeTests/WatcherTests.swift",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/WATCHER_DISPOSABLE_COMPLETION_CHAIN.md",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/WATCHER_DISPOSABLE_COMPLETION_CHAIN_SCORECARD.json"
+      ]
     }
   ],
-  "lastUpdatedAt": "2026-08-16T14:06:46Z"
+  "lastUpdatedAt": "2026-08-16T14:27:18Z"
 }
