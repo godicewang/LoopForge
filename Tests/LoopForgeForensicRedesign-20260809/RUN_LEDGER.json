@@ -3,7 +3,7 @@
   "project": "LoopForge Forensic Redesign 20h",
   "startedAt": "2026-08-09T13:13:58Z",
   "requiredActiveSeconds": 72000,
-  "coveredActiveSeconds": 201393,
+  "coveredActiveSeconds": 201993,
   "remainingActiveSeconds": 0,
   "requiredForensicAnalysisBeforeImplementationSeconds": 36000,
   "coveredForensicAnalysisSeconds": 39370,
@@ -5691,7 +5691,35 @@
         "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
         "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
       ]
+    },
+    {
+      "id": "isolated-native-inspection-profile-269",
+      "startedAt": "2026-08-16T13:18:35Z",
+      "endedAt": "2026-08-16T13:39:36Z",
+      "coveredSeconds": 600,
+      "status": "accepted",
+      "excludedFailures": [
+        "focused and complete source tests, clean package-owned tests, Release compilation, signing, hashing, archive generation, and package polling count zero",
+        "Computer Use launch, navigation, capture, quit, process polling, shell inspection, and isolated-root creation count zero",
+        "the 661 seconds beyond the 600-second accepted active-work cap count zero"
+      ],
+      "activity": "Converted the persisted-Watcher resume incident into an explicit operation-free native inspection boundary. Commit edb3a96 adds an opt-in process-specific Application Support profile shared by task, Watcher, model, host-resource, and kernel-recovery storage; skips permission, Codex, and Watcher startup; blocks Watcher build, task enrollment, and native activation; and displays the boundary in the real UI. Two focused tests passed 2/0, and complete source and clean package-owned suites passed 880/8/0. The exact signed package, ZIP, and DMG were rebuilt from edb3a96. Computer Use launched that package with the exact isolation flag and observed an empty Watcher list, Scheduler ready, disabled Build, and the visible banner. The user's Watcher store and the prior QuantFactor fixture retained exact hashes and mtimes; Cmd-Q left zero packaged/helper processes and mounts. EasyBusiness retained its exact branch, HEAD, and status digest. This closes operation-free package inspection, not the disposable live Watcher completion chain or other release gates.",
+      "evidence": [
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/LoopForgeLaunchProfile.swift",
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/AppModel.swift",
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/Views.swift",
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/TaskStore.swift",
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/Kernel/WorkspaceMutationRecoveryRegistry.swift",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeTests/WatcherTests.swift",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/ISOLATED_NATIVE_INSPECTION_PROFILE.md",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/ISOLATED_NATIVE_INSPECTION_PROFILE_SCORECARD.json",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-isolated-inspection-profile-20260816T1335Z.png",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge.app",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-macOS-arm64.zip",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
+      ]
     }
   ],
-  "lastUpdatedAt": "2026-08-16T13:03:43Z"
+  "lastUpdatedAt": "2026-08-16T13:39:36Z"
 }

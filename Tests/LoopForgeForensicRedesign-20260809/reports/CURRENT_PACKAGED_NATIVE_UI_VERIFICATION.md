@@ -1,8 +1,34 @@
 # Latest Interactive Packaged Native UI Verification
 
-Status: **current clean Watcher authority/completion UI and exact-run repository status are native-bound; persisted-Watcher resume is disclosed; resolved cache telemetry remains pending**
+Status: **current clean package now supports operation-free isolated native inspection; Watcher live-chain and resolved cache telemetry remain pending**
 
-Recorded: `2026-08-16T13:03:43Z`
+Recorded: `2026-08-16T13:39:36Z`
+
+## Current isolated inspection profile
+
+Clean revision `edb3a96c9bdd406b30636d190359b10e7c45e4b2` turns the
+prior persisted-Watcher resume incident into a deterministic package-inspection
+boundary. The explicit `--isolated-inspection-profile` argument redirects all
+LoopForge-owned Application Support state, including kernel recovery and host
+resource leases, to a process-specific temporary root; skips permission,
+connection, and Watcher startup work; and blocks Watcher build, task enrollment,
+and native activation. The standard profile remains the default.
+
+Source and clean package-owned suites passed 880/8/0. Computer Use launched the
+exact signed package with the explicit flag and observed the visible isolation
+banner, an empty Watcher list, `Scheduler ready`, the current authority contract,
+and disabled Build Watcher. The
+[1060×752 native receipt](../screenshots/packaged-loopforge-isolated-inspection-profile-20260816T1335Z.png)
+has SHA-256
+`5ce9c28cb06acbc9ff6e63fb5108029fc7e581d79fb12cd1beea2a66beb58a76`.
+
+The user's primary and backup Watcher stores retained identical SHA-256, byte
+count, and mtime before, during, and after inspection. The previously affected
+QuantFactor fixture retained its exact aggregate hash. Cmd-Q left zero packaged
+or helper processes and zero verification mounts. This walkthrough is
+operation-free; it does not claim a live Watcher completion-chain exercise.
+See the [full implementation receipt](ISOLATED_NATIVE_INSPECTION_PROFILE.md)
+and [machine-readable scorecard](ISOLATED_NATIVE_INSPECTION_PROFILE_SCORECARD.json).
 
 ## Current Watcher authority and completion contract
 
