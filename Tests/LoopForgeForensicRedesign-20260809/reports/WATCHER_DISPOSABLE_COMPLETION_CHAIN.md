@@ -1,8 +1,8 @@
 # Disposable Watcher Completion Chain
 
-Status: **source integration proof passes; final release remains false**
+Status: **source, package, and isolated native proof pass; final release remains false**
 
-Recorded: `2026-08-16T14:27:18Z`
+Recorded: `2026-08-16T14:36:57Z`
 
 ## Closed gap
 
@@ -67,17 +67,50 @@ The new integration test performs one complete controller run:
 - Commit patch SHA-256:
   `22a7fedc9e3cd3d1f005d3a0a45a0a3e778251764eb813c6a6c76422a34fa2d3`.
 
+## Current package and native verification
+
+The exact signed package was rebuilt from clean source revision
+`253e1c0028312fbc7df4bc6aa6b6b1053b5ee741`; that revision includes the
+implementation commit and its first evidence commit. Its source snapshot is
+`76068cdad1486a5eb4ad038d058b0db0d8c7a5e818911c5d5af2d38680b7c6b4`.
+The package-owned complete suite passed 884/8/0 in 81.975 seconds. Release
+compilation, deep-strict ad-hoc signing, canonical provider self-test,
+ZIP/DMG/checksum verification, exact source and package-test binding, and the
+isolated executable startup probe passed.
+
+The app executable SHA-256 is
+`eb7b39651445e8444fc78911b79da8dd46cf9e802e74a9499fea46d1f2daf91e`
+and its CDHash is `626f380880e45fd2d91443a622294ae774dba16f`. The ZIP SHA-256 is
+`f687fe7122b558685465483c7d56e53fc15edf5d6402168e8159656502a8b86a`;
+the DMG SHA-256 is
+`28e6904adea2c48a5dbea02e69892cd0f9871cbfd391bc400d6eb1bec11a6f11`.
+
+Computer Use inspected that exact app under `--isolated-inspection-profile`.
+The accessibility tree exposed both the explicit non-productive release
+classification and isolated-profile banner, an empty Watcher list, the
+Authority & completion contract, and a disabled Build Watcher control. The
+[1060×752 native screenshot](../screenshots/packaged-loopforge-disposable-watcher-chain-current-20260816T1435Z.png)
+has SHA-256
+`b4822488c205aebe491a531b02f9f44811705acac31102d428989a8c71214380`.
+
+The persisted user Watcher store retained SHA-256
+`a59ca5375c6ee3c78de63773df68b20e80106ef15ad1fd7b85776ba78a584d71`,
+891807 bytes, and mtime epoch 1786885277 before and after inspection. Cmd-Q
+left zero LoopForge, provider-harness, or sandbox-gate processes and zero
+verification mounts. EasyBusiness retained branch `codex/USA_Version`, HEAD
+`2ae40452e6d8661c46db466c43ea40bba3bfab04`, and NUL-delimited status
+digest `2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a`.
+
 ## Boundary
 
 This is a source-level integration fixture, not a claim that a live external
 reviewer exercised semantic judgment and not a productive-provider
-authorization. It also does not update the previously packaged application;
-the exact current source must still be packaged, signed, hashed, and inspected
-after the remaining Release authority work.
+authorization. The current signed package remains explicitly non-productive;
+packaging and native inspection do not manufacture the two missing Release
+authorities below.
 
 Two global gates remain:
 
 1. resolved repository-generation telemetry after separately ratified
    mutation/isolation authority; and
 2. Release containment and mutation-isolation authority.
-

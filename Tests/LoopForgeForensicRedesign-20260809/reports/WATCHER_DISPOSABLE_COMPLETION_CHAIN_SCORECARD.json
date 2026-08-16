@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-08-16T14:27:18Z",
-  "status": "disposable-controller-completion-chain-pass-final-release-false",
+  "recordedAt": "2026-08-16T14:36:57Z",
+  "status": "disposable-controller-completion-chain-package-native-pass-final-release-false",
   "source": {
     "commit": "39ebb2ab6c9222afef79a3721982277560983ba3",
     "commitPatchSHA256": "22a7fedc9e3cd3d1f005d3a0a45a0a3e778251764eb813c6a6c76422a34fa2d3",
@@ -56,14 +56,76 @@
       "seconds": 84.077
     }
   },
+  "package": {
+    "sourceRevision": "253e1c0028312fbc7df4bc6aa6b6b1053b5ee741",
+    "sourceDirty": false,
+    "sourceSnapshotSHA256": "76068cdad1486a5eb4ad038d058b0db0d8c7a5e818911c5d5af2d38680b7c6b4",
+    "builtAtUTC": "2026-08-16T14:33:07Z",
+    "releaseCapabilityClassification": "nonProductiveTransportVeto",
+    "productiveExecutionAvailable": false,
+    "packageOwnedTests": {
+      "executed": 884,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 81.975,
+      "logSHA256": "268fa9e034b3af5a5abae765054b1810a2bb0774f1d2aabf314bbfcb827adc1a"
+    },
+    "executable": {
+      "bytes": 26674288,
+      "sha256": "eb7b39651445e8444fc78911b79da8dd46cf9e802e74a9499fea46d1f2daf91e",
+      "cdHash": "626f380880e45fd2d91443a622294ae774dba16f"
+    },
+    "zip": {
+      "bytes": 253529014,
+      "sha256": "f687fe7122b558685465483c7d56e53fc15edf5d6402168e8159656502a8b86a"
+    },
+    "dmg": {
+      "bytes": 285828491,
+      "sha256": "28e6904adea2c48a5dbea02e69892cd0f9871cbfd391bc400d6eb1bec11a6f11"
+    },
+    "checksumManifest": {
+      "bytes": 278,
+      "sha256": "9fc2cc08a9d9184e25e117387204bfea4da20109da3d711b147e49c3b246e252"
+    },
+    "buildManifestSHA256": "258d75789d3c836790bca703bee0aef4ecb667a59e8a122c4e2827acde737601",
+    "providerManifestSHA256": "9f3c8174c7f59f4a705b8c4b143ed489fedcb688af4ce59e89f04e573b258b6c",
+    "deepStrictSignaturePassed": true,
+    "checksumValidationPassed": true,
+    "isolatedStartupSmokePassed": true
+  },
+  "nativeVerification": {
+    "exactPackagedApplicationInspected": true,
+    "launchArgument": "--isolated-inspection-profile",
+    "classificationVisible": true,
+    "isolatedProfileVisible": true,
+    "persistedWatcherCountLoaded": 0,
+    "authorityCompletionContractVisible": true,
+    "buildWatcherEnabled": false,
+    "userWatcherStoreChanged": false,
+    "userWatcherStoreSHA256": "a59ca5375c6ee3c78de63773df68b20e80106ef15ad1fd7b85776ba78a584d71",
+    "userWatcherStoreByteCount": 891807,
+    "userWatcherStoreMtimeEpoch": 1786885277,
+    "screenshotPath": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-disposable-watcher-chain-current-20260816T1435Z.png",
+    "screenshotSHA256": "b4822488c205aebe491a531b02f9f44811705acac31102d428989a8c71214380",
+    "screenshotPixelWidth": 1060,
+    "screenshotPixelHeight": 752,
+    "postQuitPackagedProcessCount": 0,
+    "postQuitHelperProcessCount": 0,
+    "postVerificationMountCount": 0
+  },
+  "easyBusiness": {
+    "mutated": false,
+    "branch": "codex/USA_Version",
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "nulDelimitedStatusSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a"
+  },
   "closedGate": "operation-free-live-watcher-completion-chain-fixture",
   "remainingGates": [
     "resolved repository-generation telemetry after separately ratified mutation/isolation authority",
     "Release containment and mutation isolation authority"
   ],
   "limitations": [
-    "the adaptive and independent Agent responses are scripted, so this proves controller orchestration and authority binding rather than live semantic-review quality",
-    "the current source commit has not yet replaced the previously signed package"
+    "the adaptive and independent Agent responses are scripted, so this proves controller orchestration and authority binding rather than live semantic-review quality"
   ],
   "finalAcceptance": false
 }

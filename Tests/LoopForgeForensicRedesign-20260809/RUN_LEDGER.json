@@ -5753,22 +5753,27 @@
     {
       "id": "disposable-watcher-completion-chain-271",
       "startedAt": "2026-08-16T14:15:05Z",
-      "endedAt": "2026-08-16T14:27:18Z",
+      "endedAt": "2026-08-16T14:36:57Z",
       "coveredSeconds": 600,
       "status": "accepted",
       "excludedFailures": [
         "the first focused run completed the chain but failed two sub-millisecond Date round-trip equality assertions; that failed-run time counts zero",
         "focused, Watcher-suite, and complete-suite execution and polling time count zero",
-        "shell and Git inspection plus the 133 seconds beyond the 600-second accepted active-work cap count zero"
+        "package-owned tests, Release compilation, signing, archive generation, startup smoke, Computer Use inspection, screenshot capture, quit, process/mount polling, shell/Git inspection, and all time beyond the 600-second accepted active-work cap count zero"
       ],
-      "activity": "Closed the operation-free live Watcher completion-chain fixture gap at source commit 39ebb2a. WatcherController now has an injectable Agent-turn boundary whose ordinary default preserves exact provider readiness and the Continuum Watcher Codex watchdog. The disposable integration fixture runs the real controller, subprocess pipeline, fresh telemetry loader, JSON checkpoint digest, verification subprocess, adaptive assessment, distinct read-only independent reviewer lineage, completion and independent-review receipt validation, HTML report generation, WatcherStore persistence reload, and current-checkpoint revalidation entirely inside a temporary workspace with no live provider or persisted user Watcher. The focused test passed 1/0, all 45 Watcher tests passed, and the complete source suite passed 884/8/0 in 84.077 seconds. The exact current source is not yet repackaged, and final release remains false because resolved repository telemetry and Release containment/mutation-isolation authority remain pending.",
+      "activity": "Closed the operation-free live Watcher completion-chain fixture gap at source commit 39ebb2a. WatcherController now has an injectable Agent-turn boundary whose ordinary default preserves exact provider readiness and the Continuum Watcher Codex watchdog. The disposable integration fixture runs the real controller, subprocess pipeline, fresh telemetry loader, JSON checkpoint digest, verification subprocess, adaptive assessment, distinct read-only independent reviewer lineage, completion and independent-review receipt validation, HTML report generation, WatcherStore persistence reload, and current-checkpoint revalidation entirely inside a temporary workspace with no live provider or persisted user Watcher. The focused test passed 1/0, all 45 Watcher tests passed, and the complete source suite passed 884/8/0 in 84.077 seconds. The exact current signed package was rebuilt from clean evidence revision 253e1c0; its package-owned suite passed 884/8/0, and Release build, deep-strict signing, ZIP/DMG/checksum validation, source/test binding, provider self-test, and isolated smoke passed. Computer Use inspected the exact package and observed both safety banners, zero persisted Watchers, the authority/completion contract, and disabled Build. The user Watcher store remained byte/time identical; quit left zero packaged/helper processes and mounts. EasyBusiness retained its exact branch, HEAD, and status digest. Final release remains false because resolved repository telemetry and Release containment/mutation-isolation authority remain pending.",
       "evidence": [
         "/Users/godice/Coding/LoopForge/Sources/LoopForge/WatcherController.swift",
         "/Users/godice/Coding/LoopForge/Tests/LoopForgeTests/WatcherTests.swift",
         "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/WATCHER_DISPOSABLE_COMPLETION_CHAIN.md",
-        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/WATCHER_DISPOSABLE_COMPLETION_CHAIN_SCORECARD.json"
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/WATCHER_DISPOSABLE_COMPLETION_CHAIN_SCORECARD.json",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-disposable-watcher-chain-current-20260816T1435Z.png",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge.app",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-macOS-arm64.zip",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
       ]
     }
   ],
-  "lastUpdatedAt": "2026-08-16T14:27:18Z"
+  "lastUpdatedAt": "2026-08-16T14:36:57Z"
 }
