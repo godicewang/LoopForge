@@ -3,7 +3,7 @@
   "project": "LoopForge Forensic Redesign 20h",
   "startedAt": "2026-08-09T13:13:58Z",
   "requiredActiveSeconds": 72000,
-  "coveredActiveSeconds": 196950,
+  "coveredActiveSeconds": 197550,
   "remainingActiveSeconds": 0,
   "requiredForensicAnalysisBeforeImplementationSeconds": 36000,
   "coveredForensicAnalysisSeconds": 39370,
@@ -5502,7 +5502,31 @@
         "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
         "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
       ]
+    },
+    {
+      "id": "clean-source-package-native-confirmation-261",
+      "startedAt": "2026-08-16T10:12:34Z",
+      "endedAt": "2026-08-16T10:31:38Z",
+      "coveredSeconds": 600,
+      "status": "accepted",
+      "excludedFailures": [
+        "two clean-worktree package attempts each reported one unexpected test failure without retaining a complete diagnostic log and count zero",
+        "the successful isolated full-suite rerun is corroboration but its execution and wait duration count zero",
+        "build, test, package, signing, artifact-copy, Computer Use launch, screenshot, quit, process polling, and all wait time count zero",
+        "all time beyond the 600-second accepted active-work cap counts zero"
+      ],
+      "activity": "Scoped and committed the cumulative LoopForge implementation and forensic evidence as 65d050f7300ae62073ed8ac36eeeda5f30f9e5ec while preserving unrelated untracked evidence directories. A detached clean worktree built the exact source snapshot 3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845. The accepted package-owned suite passed 874/8/0 in 79.956 test seconds, the embedded manifest records sourceDirty false and the exact implementation revision, strict signing passed, and the canonical ZIP/DMG/executable/test-log/checksum hashes were independently rechecked. Computer Use launched the exact clean package, inspected the macOS accessibility tree, confirmed the stopped legacy task, primary task hierarchy, Running node loops summary, graph cards, and labeled continuation affordances, captured a hash-bound native screenshot, and quit with zero residual packaged processes. Reports and machine-readable scorecards were advanced to clean-package truth. EasyBusiness remained read-only. The report commit and push remain pending, so final release is still false.",
+      "evidence": [
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/PACKAGE_AND_NATIVE_VERIFICATION_SCORECARD.json",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NATIVE_BASELINE_CANDIDATE_MATRIX_SCORECARD.json",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/ACCEPTANCE_PROGRESS_SCORECARD.json",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-clean-65d050f-native-confirmation-20260816T102827Z.jpeg",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge.app",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-macOS-arm64.zip",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
+      ]
     }
   ],
-  "lastUpdatedAt": "2026-08-16T10:05:20Z"
+  "lastUpdatedAt": "2026-08-16T10:31:38Z"
 }

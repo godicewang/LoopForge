@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-08-16T10:05:20Z",
-  "status": "current-dirty-source-native-matrix-independent-review-pass-clean-revision-pending",
+  "recordedAt": "2026-08-16T10:31:38Z",
+  "status": "clean-source-native-matrix-independent-review-and-package-confirmation-pass-push-pending",
   "baselineRevision": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
   "candidateSourceSnapshotSHA256": "3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845",
   "nativeCapture": {
@@ -9,7 +9,9 @@
     "standardAndAccessibility": true,
     "expandedAndNarrow": true,
     "displayRestoredToOriginal": true,
-    "originalDisplaySize": "1168x755"
+    "originalDisplaySize": "1168x755",
+    "cleanPackageConfirmationPath": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-clean-65d050f-native-confirmation-20260816T102827Z.jpeg",
+    "cleanPackageConfirmationSHA256": "46b0b08c6de2c7f839933ea579e80cb8007e3db7a848b9f83eec8467b358797a"
   },
   "reviewChain": [
     {
@@ -71,17 +73,20 @@
   },
   "metrics": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/loopforge-native-matrix-whole-row-20260816T100000Z-metrics.json",
   "package": {
+    "sourceRevision": "65d050f7300ae62073ed8ac36eeeda5f30f9e5ec",
+    "sourceDirty": false,
+    "sourceSnapshotSHA256": "3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845",
     "executed": 874,
     "skipped": 8,
     "failures": 0,
-    "executableSHA256": "530a0eaeb39fb68f97becc8a8157b0ca6805a0b950f3280ed43da459dd427c36",
-    "zipSHA256": "7e5af93ea939e96a9ae2530f8106498396353df9027fccfd5b8108b43a29eb58",
-    "dmgSHA256": "128d41d4d034b34c874ac1a3ce93227dbb5b177e6ddd5970244eb469cf42e184",
-    "testLogSHA256": "9c16fe6f7a10f94c2a71a472c813ef291011dc7c19e15c1001325115c24edf45",
+    "executableSHA256": "bf857623a683aed3da556148e0548d63f39227c2e7516a7f13881a04ea83447b",
+    "zipSHA256": "7a51e174cdb8df4db96bf7e21c3ffdcbf1b65ab42a63bbe2465b5f5292fc3443",
+    "dmgSHA256": "85f89b3e8b1598ae966de98f1ec91ce99f4b5ce48d34e91233ab46ae4f0efd91",
+    "testLogSHA256": "1daa3cbd9781f49e8732fd7e7acdb0efe8d707c9ebd4838798c774d4b79e7717",
     "signedDeepStrict": true
   },
   "currentMatrixComplete": true,
-  "cleanRevisionBound": false,
+  "cleanRevisionBound": true,
   "finalRelease": false,
   "easyBusinessMutated": false
 }

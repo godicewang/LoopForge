@@ -1,10 +1,10 @@
 # Native Baseline/Candidate Matrix Verification
 
-Status: **current dirty-source candidate matrix passed independent adversarial review; clean-revision rebuild remains pending**
+Status: **candidate matrix passed independent adversarial review and the exact clean-revision package passed native confirmation; push remains pending**
 
-Recorded: `2026-08-16T10:05:20Z`
+Recorded: `2026-08-16T10:31:38Z`
 
-The baseline is the exact recoverable LoopForge commit `6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0`. The candidate is the signed package built from dirty-source snapshot `3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845`. All captures came from the real native application at the matched standard/accessibility and expanded/narrow configurations. The user display was restored to its original `1168×755` scaled setting after capture.
+The baseline is the exact recoverable LoopForge commit `6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0`. The candidate source snapshot is `3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845`, now bound to clean implementation commit `65d050f7300ae62073ed8ac36eeeda5f30f9e5ec`. All matrix captures came from the real native application at the matched standard/accessibility and expanded/narrow configurations. The user display was restored to its original `1168×755` scaled setting after capture. The exact clean-commit package was then relaunched through Computer Use for final native confirmation.
 
 ## Red → red → green review chain
 
@@ -29,9 +29,9 @@ The reproducible native-pixel metrics and diff harness produced [the final conta
 
 The reviewed package passed the package-owned suite with **874 executed, 8 skipped, and 0 failures**, strict deep signing, and bounded native startup. Its primary artifacts are:
 
-- executable: `530a0eaeb39fb68f97becc8a8157b0ca6805a0b950f3280ed43da459dd427c36`;
-- ZIP: `7e5af93ea939e96a9ae2530f8106498396353df9027fccfd5b8108b43a29eb58`;
-- DMG: `128d41d4d034b34c874ac1a3ce93227dbb5b177e6ddd5970244eb469cf42e184`;
-- package test log: `9c16fe6f7a10f94c2a71a472c813ef291011dc7c19e15c1001325115c24edf45`.
+- executable: `bf857623a683aed3da556148e0548d63f39227c2e7516a7f13881a04ea83447b`;
+- ZIP: `7a51e174cdb8df4db96bf7e21c3ffdcbf1b65ab42a63bbe2465b5f5292fc3443`;
+- DMG: `85f89b3e8b1598ae966de98f1ec91ce99f4b5ce48d34e91233ab46ae4f0efd91`;
+- package test log: `1daa3cbd9781f49e8732fd7e7acdb0efe8d707c9ebd4838798c774d4b79e7717`.
 
-This closes the current native baseline/candidate matrix only. The package is still dirty-source, and the review/report receipts necessarily postdate its source snapshot. Clean-revision rebuild, final clean-package verification, commit, and push remain required. Final release is false.
+The clean package embeds `sourceDirty: false`, the exact implementation commit, the reviewed source snapshot, and the accepted test-log digest. [The final clean-package screenshot](../screenshots/packaged-loopforge-clean-65d050f-native-confirmation-20260816T102827Z.jpeg), SHA-256 `46b0b08c6de2c7f839933ea579e80cb8007e3db7a848b9f83eec8467b358797a`, confirms the stopped legacy task, primary task hierarchy, Running node loops summary, graph cards, and explicit continuation labels in the signed application. Final release remains false only until the reporting commit and push complete.

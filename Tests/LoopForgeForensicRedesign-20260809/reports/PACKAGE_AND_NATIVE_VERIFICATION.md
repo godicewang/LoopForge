@@ -1,27 +1,27 @@
 # Package and Native Verification
 
-Status: **current dirty-source package and four-cell native matrix passed independent review; clean-commit rebuild remains pending**
+Status: **clean-source commit package and native confirmation passed; report commit and push remain pending**
 
-Recorded: `2026-08-16T10:05:20Z`
+Recorded: `2026-08-16T10:31:38Z`
 
 ## Current package result
 
-Packaging bound Git revision `6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0`, dirty-source snapshot `3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845`, and the package-owned **874-test, 8-skip, 0-failure** log digest `9c16fe6f7a10f94c2a71a472c813ef291011dc7c19e15c1001325115c24edf45` inside `LoopForgeBuildManifest.json` before signing. Smoke verification independently recomputed the same source snapshot and test-log digest from the package.
+Packaging ran in a detached clean worktree at implementation commit `65d050f7300ae62073ed8ac36eeeda5f30f9e5ec`. The embedded manifest records `sourceDirty: false`, source snapshot `3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845`, and package-owned **874-test, 8-skip, 0-failure** log digest `1daa3cbd9781f49e8732fd7e7acdb0efe8d707c9ebd4838798c774d4b79e7717`. Smoke verification independently recomputed the same clean source snapshot and test-log digest from the package. Two preceding package attempts each reported one unexpected failure but did not retain a complete diagnostic log; they count zero and are not acceptance evidence. The isolated full-suite rerun and the final package-owned suite were green.
 
-The package-owned suite completed in 78.937 test seconds (78.992 wall). All three non-DEBUG arm64 products built. Strict deep ad-hoc signature verification, plist parsing, ZIP integrity, DMG verification, every checksum-manifest entry, embedded source/test binding, exact signed-harness manifest identity, model-weight exclusion, direct and mounted exact packaged Mach-O bounded startup, mounted-DMG byte identity for all three Mach-O files, detach, and cleanup passed.
+The accepted package-owned suite completed in 79.956 test seconds (80.010 wall). All three non-DEBUG arm64 products built. Strict deep ad-hoc signature verification, plist parsing, ZIP integrity, DMG verification, every checksum-manifest entry, embedded source/test binding, exact signed-harness manifest identity, model-weight exclusion, direct and mounted exact packaged Mach-O bounded startup, mounted-DMG byte identity for all three Mach-O files, detach, and cleanup passed.
 
 Artifacts:
 
-- executable: 26,401,120 bytes, `530a0eaeb39fb68f97becc8a8157b0ca6805a0b950f3280ed43da459dd427c36`;
-- sandbox gate: 78,512 bytes, `85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd`;
-- provider harness: 145,952 bytes, `d4de4d8b38a59186f8f184ddf1c54ea7f63bd5084d18df0bb37fa7edd19154ac`;
-- ZIP: 253,473,698 bytes, `7e5af93ea939e96a9ae2530f8106498396353df9027fccfd5b8108b43a29eb58`;
-- DMG: 285,780,239 bytes, `128d41d4d034b34c874ac1a3ce93227dbb5b177e6ddd5970244eb469cf42e184`;
-- package test log: 250,860 bytes, `9c16fe6f7a10f94c2a71a472c813ef291011dc7c19e15c1001325115c24edf45`;
-- checksum manifest: 278 bytes, `c898eb9346c0b39ef1ec8d5369f0ffd21449b7fe3f85fae57add87c694d5ac49`;
-- build manifest: 352 bytes, `af592316528d7b21a601acd70d4b54002b0edbd1fa415babb24f139ef1a05667`;
-- app CDHash: `c8bab45483ba49959d16bd4aeef86e5b40d5b60a`;
-- gate CDHash: `138982f66022e1d20d76823282ff6a9fc507d3b6`.
+- executable: 26,402,864 bytes, `bf857623a683aed3da556148e0548d63f39227c2e7516a7f13881a04ea83447b`;
+- sandbox gate: 78,528 bytes, `908a44d3f1383504aa42c104652749e665569f0872870fb7b0f366d1f36ad272`;
+- provider harness: 145,968 bytes, `cd646318d35786098ab7b4170c4f21e6041d9079be0f023913a45bd5b3044ffb`;
+- ZIP: 253,473,443 bytes, `7a51e174cdb8df4db96bf7e21c3ffdcbf1b65ab42a63bbe2465b5f5292fc3443`;
+- DMG: 285,775,478 bytes, `85f89b3e8b1598ae966de98f1ec91ce99f4b5ce48d34e91233ab46ae4f0efd91`;
+- package test log: 250,903 bytes, `1daa3cbd9781f49e8732fd7e7acdb0efe8d707c9ebd4838798c774d4b79e7717`;
+- checksum manifest: 278 bytes, `414ab2336ce336651c4a8d53c19b55f16df5d7260a5f5cb9ee818534d3cc0df9`;
+- build manifest: 353 bytes, `5f0848a067a58c0b9bbb02439c1ccd96fdff5e1c976a5034850ad8adfc2e9148`;
+- app CDHash: `d94a4b674e02a2247ae2eef8cbdf7238089a279c`;
+- gate CDHash: `4b3adb6a0857dddc3f323f853cc24a1f8ceab563`.
 
 ## Provider Harness V2 transport-veto package
 
@@ -134,6 +134,8 @@ See [Native Baseline/Candidate Matrix Verification](NATIVE_BASELINE_CANDIDATE_MA
 [the machine-readable scorecard](NATIVE_BASELINE_CANDIDATE_MATRIX_SCORECARD.json),
 and [the final contact sheet](../screenshots/loopforge-native-matrix-whole-row-20260816T100000Z-contact-sheet.jpg).
 
+Computer Use then launched the exact clean-revision package, inspected its macOS accessibility tree, and captured [the clean-package native confirmation](../screenshots/packaged-loopforge-clean-65d050f-native-confirmation-20260816T102827Z.jpeg), SHA-256 `46b0b08c6de2c7f839933ea579e80cb8007e3db7a848b9f83eec8467b358797a`. The preserved EasyBusiness task remained stopped; the Running node loops summary, task hierarchy, graph cards, and explicit continuation labels were visible. Cmd-Q left zero packaged processes.
+
 ## Boundary
 
-Native read-only authoring, explicit activation, receipt-proven stop closure, exact bound-process execution and recovery of nonempty cleanup plans, cleanup-only full-app relaunch ownership, exact crash auto-interruption without productive-authority reconstruction, fail-closed retention of ambiguous ownership, the dedicated live-provider test path, typed production postimage-verifier veto/live-launch composition, production mutation-preparation veto/exact-authority composition, exact workspace-mutation live-handle-aware normal-quit join, truthful terminal strategy-history presentation, current packaged architecture-veto inspection/quit, current direct and mounted startup, worker-network authority authoring, provider no-child/output-file ceilings, the V2 transport-veto package spine, productive-mode enforcement, environment-policy enforcement before prompt issuance, shared resource/release-policy compatibility, explicit ordinary-macOS in-process containment-strategy retirement, explicit ordinary-app productive-provider architecture-scope retirement, and the current four-cell native baseline/candidate matrix are closed. The current product retains both typed vetoes; mutation-backed execution requires a separately scoped privileged or virtualized isolation product. A rebuild from an exact clean committed revision, final clean-package verification, commit, and push remain required. Final release is false. EasyBusiness remained stopped and read-only at observed HEAD `2ae40452e6d8661c46db466c43ea40bba3bfab04`.
+Native read-only authoring, explicit activation, receipt-proven stop closure, exact bound-process execution and recovery of nonempty cleanup plans, cleanup-only full-app relaunch ownership, exact crash auto-interruption without productive-authority reconstruction, fail-closed retention of ambiguous ownership, the dedicated live-provider test path, typed production postimage-verifier veto/live-launch composition, production mutation-preparation veto/exact-authority composition, exact workspace-mutation live-handle-aware normal-quit join, truthful terminal strategy-history presentation, current packaged architecture-veto inspection/quit, current direct and mounted startup, worker-network authority authoring, provider no-child/output-file ceilings, the V2 transport-veto package spine, productive-mode enforcement, environment-policy enforcement before prompt issuance, shared resource/release-policy compatibility, explicit ordinary-macOS in-process containment-strategy retirement, explicit ordinary-app productive-provider architecture-scope retirement, the current four-cell native baseline/candidate matrix, and the exact clean-commit package/native binding are closed. The current product retains both typed vetoes; mutation-backed execution requires a separately scoped privileged or virtualized isolation product. Only the report commit and push remain. Final release is false until that integration completes. EasyBusiness remained stopped and read-only at observed HEAD `2ae40452e6d8661c46db466c43ea40bba3bfab04`.
