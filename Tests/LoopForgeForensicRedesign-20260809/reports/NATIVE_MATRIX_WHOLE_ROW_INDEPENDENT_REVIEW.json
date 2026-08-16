@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "verdict": "pass",
+  "confidence": 0.94,
+  "summary": "All four candidate cells preserve the initial-view task hierarchy and Running node loops summary without visible card clipping. The redesigned execution graph uses complete cards and explicit continuation boundaries, reflows consistently in narrow and accessibility configurations, and is not materially worse than the baseline.",
+  "cells": [
+    {
+      "id": "standard-expanded",
+      "candidatePreservesPrimaryTask": true,
+      "candidateHasVisibleClipping": false,
+      "candidateHierarchyPasses": true,
+      "finding": "The task title remains dominant, the Running node loops summary is fully visible, and all three displayed graph cards are complete. “Next levels” and “More nodes below” clearly disclose omitted topology; the lower activity content simply continues beyond the scrollable viewport."
+    },
+    {
+      "id": "standard-narrow",
+      "candidatePreservesPrimaryTask": true,
+      "candidateHasVisibleClipping": false,
+      "candidateHierarchyPasses": true,
+      "finding": "The candidate preserves the title, task status, summary metrics, execution graph, and Main Graph Agent hierarchy at the narrower width. Graph cards remain complete and readable, with labeled continuation boundaries rather than bisected nodes."
+    },
+    {
+      "id": "accessibility-expanded",
+      "candidatePreservesPrimaryTask": true,
+      "candidateHasVisibleClipping": false,
+      "candidateHierarchyPasses": true,
+      "finding": "The accessibility presentation retains readable primary typography, compact metadata, a complete summary, and three complete graph cards. Content below Main Graph Agent continues past the viewport normally; no required primary content is clipped."
+    },
+    {
+      "id": "accessibility-narrow",
+      "candidatePreservesPrimaryTask": true,
+      "candidateHasVisibleClipping": false,
+      "candidateHierarchyPasses": true,
+      "finding": "The narrow accessibility cell reflows consistently with the other candidate cells. The title and Running node loops summary remain immediately available, card text and metadata remain legible, and continuation controls explain the undisplayed graph content."
+    }
+  ],
+  "visualGates": [
+    {
+      "id": "H-04",
+      "verdict": "pass",
+      "reason": "No candidate cell contains a clipped or bisected displayed graph card. The horizontal and vertical graph continuations are explicitly labeled, and ordinary below-viewport document continuation is visually coherent."
+    },
+    {
+      "id": "H-05",
+      "verdict": "pass",
+      "reason": "The Running node loops summary remains fully visible near the top of the initial viewport in every candidate cell."
+    },
+    {
+      "id": "H-06",
+      "verdict": "pass",
+      "reason": "The concrete task title is the dominant header and the task summary is the dominant content card. Auto Graph, repository/path metadata, and the migration-required diagnostic are visibly secondary."
+    },
+    {
+      "id": "H-07",
+      "verdict": "pass",
+      "reason": "Both accessibility cells maintain readable typography, compact metrics, complete graph cards, and all required primary content without collision or truncation."
+    },
+    {
+      "id": "H-09",
+      "verdict": "pass",
+      "reason": "The candidate is visually coherent across all cells: spacing, alignment, card geometry, typography, color, and hierarchy remain consistent. Its denser whole-row graph presentation is cleaner than displaying partially visible nodes, while labeled continuations preserve discoverability."
+    }
+  ],
+  "materialFindings": [
+    "The candidate deliberately presents one complete graph row and exposes additional topology through “Next levels” and “More nodes below.”",
+    "The migration-required safety notice is subdued beneath the task metadata and does not compete with the task identity or Running node loops summary.",
+    "The pixel deltas reflect substantial graph reflow and downstream vertical movement, but the native screenshots do not show corresponding clipping, collision, or hierarchy failure."
+  ],
+  "requiredChanges": []
+}

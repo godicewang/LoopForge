@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "status": "production-mutation-preparation-controller-and-durable-pre-effect-veto-passed",
+  "recordedAt": "2026-08-16T05:18:00Z",
+  "sourceSnapshotSHA256": "15e1eef4ddd0bbdd473d337c338845573d8b8be8290e7165822ded0b22ceb9eb",
+  "ordinaryMacOSResidentMemoryIssuerAvailable": false,
+  "productionBoundary": {
+    "typedRequestAndOutcome": true,
+    "innerCallerSuppliedContainmentRejected": true,
+    "liveNonCodableResolverRequired": true,
+    "exactRunTransactionContractAndRequirementsRevalidated": true,
+    "receiptCollisionRejected": true,
+    "crossWiredReadinessRejected": true,
+    "exactChangedAuthorityCanProceed": true
+  },
+  "durableVeto": {
+    "schemaVersion": 1,
+    "reason": "containmentReadinessUnavailable",
+    "journaledBeforeWorkspaceLease": true,
+    "journaledBeforeApplyIntent": true,
+    "journaledBeforeOutboxPersistence": true,
+    "journaledBeforeWorkspaceMutation": true,
+    "integrationPhaseAfterVeto": "rollbackPrepared",
+    "exactReceiptAndTransactionReplay": true,
+    "substitutedReplayIdentityRejected": true,
+    "completeSortedContainmentRequirementSetBound": true,
+    "workspaceLeaseCountAfterVeto": 0,
+    "outboxEntryCountAfterVeto": 0,
+    "canonicalWorkspaceChangedAfterVeto": false
+  },
+  "tests": {
+    "focused": {"executed": 1, "failures": 0, "seconds": 1.289},
+    "enrollmentAndReducer": {"executed": 89, "failures": 0, "seconds": 8.376},
+    "packageOwned": {"executed": 861, "skipped": 8, "failures": 0, "seconds": 76.002},
+    "realCodexChildBridgeSeconds": 12.900,
+    "releaseBuildPassed": true,
+    "releaseBuildSeconds": 97.90
+  },
+  "package": {
+    "builtAtUTC": "2026-08-16T05:13:16Z",
+    "executableBytes": 26201040,
+    "executableSHA256": "13e10ad5d193fa63732bf867f979f5cce87839ce7963fd4a59149931b3f7e1df",
+    "applicationCDHash": "fd8fa5fcbd4cd4b41bafa5b0a99159dcde7eb939",
+    "testLogSHA256": "4bab4a94d01eec75093c80089f053c44204f5fd3d425ea4f6d932d6160dae37f",
+    "deepStrictSignaturePassed": true,
+    "directStartupPassed": true,
+    "mountedDMGAllMachOByteIdentityPassed": true,
+    "mountedStartupPassed": true,
+    "detachPassed": true,
+    "postVerificationProcessCount": 0,
+    "postVerificationMountCount": 0
+  },
+  "sourceFileSHA256": {
+    "KernelResidentMemoryEnforcement.swift": "72924b03659ec2dbcd0ee00ee21a1fb9bd8a6e06ddbf7f06ac43dfd2dd119cfa",
+    "WorkspaceCompletedCandidateMutationApplyPreparation.swift": "04d391de3637265f75bd593e0721bfdce519774f39bdace2521699ab0afc56aa",
+    "KernelProductionExecutionCoordinator.swift": "b819df72d8274bea22b7c607c62912094fcd47a316bcfc80da62a5a147a96cdc",
+    "RunReducer.swift": "307dcb0dce9fbbe9378e3cdd4c7b914cf734b0a887b9761d205700a2a7535853",
+    "RunJournal.swift": "e0431aca93f06025455d9f87e42263beed9c1d55bff9b3789241fc37e34ef3fc",
+    "KernelRunEnrollmentCoordinatorTests.swift": "f3322e562f62d1ba5b476ae1638df7e27d498417ac43a25f8c9c5a25ead5b6b1"
+  },
+  "remainingGaps": [
+    "trusted privileged or container Release resident-memory containment issuer",
+    "productive provider backend ratification and native launch cutover",
+    "complete current native trait window baseline and candidate matrix",
+    "clean-commit package rebuild",
+    "commit and push"
+  ],
+  "easyBusinessMutated": false,
+  "finalRelease": false
+}

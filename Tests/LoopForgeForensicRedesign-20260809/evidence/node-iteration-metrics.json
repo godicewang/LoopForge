@@ -1,0 +1,483 @@
+[
+  {
+    "id": "inventory-prior-us-evidence",
+    "title": "盘点既有美国版证据",
+    "status": "completed",
+    "storedIteration": 6,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 1596.1617920398712,
+    "accumulatedBlockedSeconds": 0,
+    "historyCount": 6,
+    "decisionCounts": [
+      {
+        "decision": "approved",
+        "count": 1
+      },
+      {
+        "decision": "continueWork",
+        "count": 5
+      }
+    ],
+    "blockedSummaries": 5,
+    "uniqueThreads": 1,
+    "instructionCount": 6,
+    "uniqueInstructions": 6,
+    "repeatedInstructionCount": 0,
+    "strategyDecision": null,
+    "replacesNodeIDs": null
+  },
+  {
+    "id": "reproduce-ios-us-baseline",
+    "title": "复现 iPhone 真实基线",
+    "status": "completed",
+    "storedIteration": 5,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 2586.8889820575714,
+    "accumulatedBlockedSeconds": 0,
+    "historyCount": 5,
+    "decisionCounts": [
+      {
+        "decision": "approved",
+        "count": 1
+      },
+      {
+        "decision": "continueWork",
+        "count": 4
+      }
+    ],
+    "blockedSummaries": 5,
+    "uniqueThreads": 1,
+    "instructionCount": 5,
+    "uniqueInstructions": 5,
+    "repeatedInstructionCount": 0,
+    "strategyDecision": null,
+    "replacesNodeIDs": null
+  },
+  {
+    "id": "reproduce-backend-us-baseline",
+    "title": "复现后端测试与契约",
+    "status": "completed",
+    "storedIteration": 2,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 1382.251275062561,
+    "accumulatedBlockedSeconds": 0,
+    "historyCount": 2,
+    "decisionCounts": [
+      {
+        "decision": "approved",
+        "count": 1
+      },
+      {
+        "decision": "continueWork",
+        "count": 1
+      }
+    ],
+    "blockedSummaries": 2,
+    "uniqueThreads": 1,
+    "instructionCount": 2,
+    "uniqueInstructions": 2,
+    "repeatedInstructionCount": 0,
+    "strategyDecision": null,
+    "replacesNodeIDs": null
+  },
+  {
+    "id": "implement-bailian-json-contract",
+    "title": "实现百炼 JSON 契约",
+    "status": "completed",
+    "storedIteration": 11,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 143.2375010251999,
+    "accumulatedBlockedSeconds": 0,
+    "historyCount": 11,
+    "decisionCounts": [
+      {
+        "decision": "approved",
+        "count": 1
+      },
+      {
+        "decision": "continueWork",
+        "count": 10
+      }
+    ],
+    "blockedSummaries": 11,
+    "uniqueThreads": 1,
+    "instructionCount": 11,
+    "uniqueInstructions": 11,
+    "repeatedInstructionCount": 0,
+    "strategyDecision": null,
+    "replacesNodeIDs": null
+  },
+  {
+    "id": "repair-us-financial-report-contracts",
+    "title": "修复美国财务与报告契约",
+    "status": "completed",
+    "storedIteration": 2,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 1259.616949081421,
+    "accumulatedBlockedSeconds": 0,
+    "historyCount": 2,
+    "decisionCounts": [
+      {
+        "decision": "approved",
+        "count": 1
+      },
+      {
+        "decision": "continueWork",
+        "count": 1
+      }
+    ],
+    "blockedSummaries": 2,
+    "uniqueThreads": 1,
+    "instructionCount": 2,
+    "uniqueInstructions": 2,
+    "repeatedInstructionCount": 0,
+    "strategyDecision": null,
+    "replacesNodeIDs": null
+  },
+  {
+    "id": "retain-ios-baseline-screenshots",
+    "title": "发布原生截图证据",
+    "status": "superseded",
+    "storedIteration": 7,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 0,
+    "accumulatedBlockedSeconds": 12297.890971183777,
+    "historyCount": 7,
+    "decisionCounts": [
+      {
+        "decision": "continueWork",
+        "count": 6
+      },
+      {
+        "decision": "superseded",
+        "count": 1
+      }
+    ],
+    "blockedSummaries": 5,
+    "uniqueThreads": 2,
+    "instructionCount": 7,
+    "uniqueInstructions": 6,
+    "repeatedInstructionCount": 1,
+    "strategyDecision": "abandon",
+    "replacesNodeIDs": null
+  },
+  {
+    "id": "commit-integrated-bailian-contract",
+    "title": "提交已集成百炼契约",
+    "status": "completed",
+    "storedIteration": 2,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 39.91665995121002,
+    "accumulatedBlockedSeconds": 0,
+    "historyCount": 2,
+    "decisionCounts": [
+      {
+        "decision": "approved",
+        "count": 1
+      },
+      {
+        "decision": "continueWork",
+        "count": 1
+      }
+    ],
+    "blockedSummaries": 0,
+    "uniqueThreads": 1,
+    "instructionCount": 2,
+    "uniqueInstructions": 2,
+    "repeatedInstructionCount": 0,
+    "strategyDecision": null,
+    "replacesNodeIDs": []
+  },
+  {
+    "id": "verify-us-ios-xcuitest-runtime-evidence-v1",
+    "title": "以 XCUITest 轨迹验收美国版运行证据",
+    "status": "completed",
+    "storedIteration": 1,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 2275.8385639190674,
+    "accumulatedBlockedSeconds": 0,
+    "historyCount": 1,
+    "decisionCounts": [
+      {
+        "decision": "approved",
+        "count": 1
+      }
+    ],
+    "blockedSummaries": 1,
+    "uniqueThreads": 1,
+    "instructionCount": 1,
+    "uniqueInstructions": 1,
+    "repeatedInstructionCount": 0,
+    "strategyDecision": "replacement-for-retain-ios-baseline-screenshots",
+    "replacesNodeIDs": [
+      "retain-ios-baseline-screenshots"
+    ]
+  },
+  {
+    "id": "integrate-xcuitest-evidence-current-main",
+    "title": "集成并复验运行证据",
+    "status": "superseded",
+    "storedIteration": 2,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 0,
+    "accumulatedBlockedSeconds": 238.70321702957153,
+    "historyCount": 2,
+    "decisionCounts": [
+      {
+        "decision": "continueWork",
+        "count": 1
+      },
+      {
+        "decision": "superseded",
+        "count": 1
+      }
+    ],
+    "blockedSummaries": 0,
+    "uniqueThreads": 1,
+    "instructionCount": 2,
+    "uniqueInstructions": 1,
+    "repeatedInstructionCount": 1,
+    "strategyDecision": "replace",
+    "replacesNodeIDs": []
+  },
+  {
+    "id": "repair-community-entry-responsiveness-v1",
+    "title": "修复社区入口阻塞并建立响应时限回归",
+    "status": "superseded",
+    "storedIteration": 1,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 0,
+    "accumulatedBlockedSeconds": 0,
+    "historyCount": 1,
+    "decisionCounts": [
+      {
+        "decision": "superseded",
+        "count": 1
+      }
+    ],
+    "blockedSummaries": 0,
+    "uniqueThreads": 1,
+    "instructionCount": 1,
+    "uniqueInstructions": 1,
+    "repeatedInstructionCount": 0,
+    "strategyDecision": "reframe",
+    "replacesNodeIDs": [
+      "integrate-xcuitest-evidence-current-main"
+    ]
+  },
+  {
+    "id": "community-entry-external-watchdog-v1",
+    "title": "建立社区入口进程外响应看门狗",
+    "status": "completed",
+    "storedIteration": 1,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 2154.768618941307,
+    "accumulatedBlockedSeconds": 0,
+    "historyCount": 1,
+    "decisionCounts": [
+      {
+        "decision": "approved",
+        "count": 1
+      }
+    ],
+    "blockedSummaries": 1,
+    "uniqueThreads": 1,
+    "instructionCount": 1,
+    "uniqueInstructions": 1,
+    "repeatedInstructionCount": 0,
+    "strategyDecision": "replacement-for-repair-community-entry-responsiveness-v1",
+    "replacesNodeIDs": [
+      "repair-community-entry-responsiveness-v1"
+    ]
+  },
+  {
+    "id": "integrate-community-watchdog-main-v1",
+    "title": "集成并复验社区看门狗",
+    "status": "completed",
+    "storedIteration": 1,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 1470.8913980722427,
+    "accumulatedBlockedSeconds": 0,
+    "historyCount": 1,
+    "decisionCounts": [
+      {
+        "decision": "approved",
+        "count": 1
+      }
+    ],
+    "blockedSummaries": 0,
+    "uniqueThreads": 1,
+    "instructionCount": 1,
+    "uniqueInstructions": 1,
+    "repeatedInstructionCount": 0,
+    "strategyDecision": null,
+    "replacesNodeIDs": []
+  },
+  {
+    "id": "repair-maximum-dynamic-type-safe-areas-v1",
+    "title": "修复最大动态字体安全区遮挡",
+    "status": "completed",
+    "storedIteration": 1,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 2888.655881047249,
+    "accumulatedBlockedSeconds": 0,
+    "historyCount": 1,
+    "decisionCounts": [
+      {
+        "decision": "approved",
+        "count": 1
+      }
+    ],
+    "blockedSummaries": 0,
+    "uniqueThreads": 1,
+    "instructionCount": 1,
+    "uniqueInstructions": 1,
+    "repeatedInstructionCount": 0,
+    "strategyDecision": null,
+    "replacesNodeIDs": []
+  },
+  {
+    "id": "repair-1",
+    "title": "Close final audit gaps",
+    "status": "superseded",
+    "storedIteration": 4,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 0,
+    "accumulatedBlockedSeconds": 0,
+    "historyCount": 4,
+    "decisionCounts": [
+      {
+        "decision": "continueWork",
+        "count": 3
+      },
+      {
+        "decision": "superseded",
+        "count": 1
+      }
+    ],
+    "blockedSummaries": 3,
+    "uniqueThreads": 1,
+    "instructionCount": 4,
+    "uniqueInstructions": 4,
+    "repeatedInstructionCount": 0,
+    "strategyDecision": "abandon",
+    "replacesNodeIDs": null
+  },
+  {
+    "id": "repair-integrated-analysis-runtime-contrac",
+    "title": "修复单一研判通道、就绪与日志契约漂移",
+    "status": "completed",
+    "storedIteration": 1,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 1316.008584022522,
+    "accumulatedBlockedSeconds": 0,
+    "historyCount": 1,
+    "decisionCounts": [
+      {
+        "decision": "approved",
+        "count": 1
+      }
+    ],
+    "blockedSummaries": 0,
+    "uniqueThreads": 1,
+    "instructionCount": 1,
+    "uniqueInstructions": 1,
+    "repeatedInstructionCount": 0,
+    "strategyDecision": null,
+    "replacesNodeIDs": null
+  },
+  {
+    "id": "repair-us-category-direct-substitute-ontol",
+    "title": "修复美国品类与直竞/替代关系契约",
+    "status": "completed",
+    "storedIteration": 1,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 1731.1263140439987,
+    "accumulatedBlockedSeconds": 73.07508599758148,
+    "historyCount": 1,
+    "decisionCounts": [
+      {
+        "decision": "approved",
+        "count": 1
+      }
+    ],
+    "blockedSummaries": 1,
+    "uniqueThreads": 1,
+    "instructionCount": 1,
+    "uniqueInstructions": 1,
+    "repeatedInstructionCount": 0,
+    "strategyDecision": null,
+    "replacesNodeIDs": null
+  },
+  {
+    "id": "repair-operations-us-financial-language-v1",
+    "title": "统一 Operations 美国财务术语与提示词",
+    "status": "superseded",
+    "storedIteration": 1,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 0,
+    "accumulatedBlockedSeconds": 0,
+    "historyCount": 1,
+    "decisionCounts": [
+      {
+        "decision": "superseded",
+        "count": 1
+      }
+    ],
+    "blockedSummaries": 1,
+    "uniqueThreads": 1,
+    "instructionCount": 1,
+    "uniqueInstructions": 1,
+    "repeatedInstructionCount": 0,
+    "strategyDecision": "replace",
+    "replacesNodeIDs": null
+  },
+  {
+    "id": "repair-primary-action-bars-max-dynamic-typ",
+    "title": "修复两个核心操作栏的最大辅助功能字号",
+    "status": "waiting",
+    "storedIteration": 1,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 0,
+    "accumulatedBlockedSeconds": 183.43596196174622,
+    "historyCount": 1,
+    "decisionCounts": [
+      {
+        "decision": "pending",
+        "count": 1
+      }
+    ],
+    "blockedSummaries": 0,
+    "uniqueThreads": 1,
+    "instructionCount": 1,
+    "uniqueInstructions": 1,
+    "repeatedInstructionCount": 0,
+    "strategyDecision": null,
+    "replacesNodeIDs": null
+  },
+  {
+    "id": "integrate-operations-regression-v1",
+    "title": "集成 Operations 补丁并收口旧断言",
+    "status": "waiting",
+    "storedIteration": 1,
+    "storedConsecutiveFailures": 0,
+    "accumulatedActiveSeconds": 0,
+    "accumulatedBlockedSeconds": 25.06084895133972,
+    "historyCount": 1,
+    "decisionCounts": [
+      {
+        "decision": "pending",
+        "count": 1
+      }
+    ],
+    "blockedSummaries": 0,
+    "uniqueThreads": 1,
+    "instructionCount": 1,
+    "uniqueInstructions": 1,
+    "repeatedInstructionCount": 0,
+    "strategyDecision": "replacement-for-repair-operations-us-financial-language-v1",
+    "replacesNodeIDs": [
+      "repair-operations-us-financial-language-v1"
+    ]
+  }
+]

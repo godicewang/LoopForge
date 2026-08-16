@@ -339,6 +339,45 @@ final class AuditorTests: XCTestCase {
         XCTAssertTrue(evidence.text.contains("primary.png"))
     }
 
+    @MainActor
+    func testEvidenceCollectorReusesDigestAddressedImageInspection() async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let cacheDirectory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer {
+            try? FileManager.default.removeItem(at: directory)
+            try? FileManager.default.removeItem(at: cacheDirectory)
+        }
+        var task = makeTask(path: directory.path, quality: .medium, category: .nativeApp)
+        task.visualAuditRequired = true
+        let cache = HeavyEvidenceCache(rootDirectory: cacheDirectory)
+        let collector = WorkspaceEvidenceCollector(heavyEvidenceCache: cache)
+        let before = collector.fingerprint(workspacePath: directory.path)
+        let evidenceDirectory = directory.appendingPathComponent(".loopforge/evidence/iteration-1")
+        try FileManager.default.createDirectory(at: evidenceDirectory, withIntermediateDirectories: true)
+        try makeTestScreenshot().write(to: evidenceDirectory.appendingPathComponent("primary.png"))
+        let audit = AuditResult(score: 40, passed: false, summary: "Pending", findings: [], nextActions: [])
+
+        let first = await collector.collect(
+            task: task,
+            workerFeedback: "Rendered current UI",
+            audit: audit,
+            before: before
+        )
+        let second = await collector.collect(
+            task: task,
+            workerFeedback: "Rendered current UI",
+            audit: audit,
+            before: before
+        )
+        let metrics = await cache.snapshotMetrics()
+
+        XCTAssertTrue(first.visualInspection?.summary.contains("cache computed") == true)
+        XCTAssertTrue(second.visualInspection?.summary.contains("cache memoryHit") == true)
+        XCTAssertEqual(metrics.computationCount, 1)
+        XCTAssertEqual(metrics.memoryHitCount, 1)
+    }
+
     func testEvidenceCollectorReportsDeletedCodePaths() async throws {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
@@ -353,6 +392,50 @@ final class AuditorTests: XCTestCase {
 
         let evidence = await collector.collect(task: task, workerFeedback: "Removed obsolete code", audit: audit, before: before)
         XCTAssertTrue(evidence.text.contains("Deleted files: Removed.swift"))
+    }
+
+    @MainActor
+    func testAuditorAndCollectorShareOneObservationWithoutRescanningNewBytes() async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        try "struct Initial {}".write(
+            to: directory.appendingPathComponent("Initial.swift"),
+            atomically: true,
+            encoding: .utf8
+        )
+        let task = makeTask(path: directory.path, quality: .low)
+        let auditor = WorkspaceAuditor()
+        let observation = auditor.observe(task: task)
+        XCTAssertEqual(observation.snapshot.sourceFiles, 1)
+        XCTAssertNil(observation.repositoryIndexError)
+
+        try "struct CreatedAfterObservation {}".write(
+            to: directory.appendingPathComponent("CreatedAfterObservation.swift"),
+            atomically: true,
+            encoding: .utf8
+        )
+        let audit = auditor.audit(task: task, snapshot: observation.snapshot)
+        let collector = WorkspaceEvidenceCollector()
+        let shared = await collector.collect(
+            task: task,
+            workerFeedback: "Review the observed tree",
+            audit: audit,
+            before: [:],
+            repositoryIndex: observation.repositoryIndex
+        )
+        let fresh = await collector.collect(
+            task: task,
+            workerFeedback: "Review a fresh tree",
+            audit: audit,
+            before: [:]
+        )
+
+        XCTAssertTrue(shared.text.contains("Repository index: sharedObservation"))
+        XCTAssertTrue(shared.text.contains("Initial.swift"))
+        XCTAssertFalse(shared.text.contains("CreatedAfterObservation.swift"))
+        XCTAssertTrue(fresh.text.contains("Repository index: uncachedObservation"))
+        XCTAssertTrue(fresh.text.contains("CreatedAfterObservation.swift"))
     }
 
     func testCommandEvidenceLedgerRetainsEarlySetupAndLateExitEvidence() {

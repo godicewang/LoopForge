@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T05:58:19Z",
+  "status": "equivalent-strategy-budget-identity-package-verified-production-cutover-pending",
+  "acceptanceRowsAdvanced": [
+    "F-01"
+  ],
+  "priorDefect": {
+    "actorAndAttemptIdentityExcluded": true,
+    "expectedObservationIDsMintedStrategyIdentity": true,
+    "falsificationPredicateIDsMintedStrategyIdentity": true,
+    "inheritedLessonDigestsMintedStrategyIdentity": true,
+    "equivalentMetadataRenameConsumedNewStrategySlot": true
+  },
+  "enforcementBoundary": {
+    "requirementSetInIdentity": true,
+    "declaredCausalAxesInIdentity": 9,
+    "expectedObservationIDsInIdentity": false,
+    "falsificationPredicateIDsInIdentity": false,
+    "inheritedLessonDigestsInIdentity": false,
+    "attemptConstraintsStillValidated": true,
+    "replacementReceiptsStillBindMetadata": true,
+    "concurrentEquivalentAttemptRejected": true,
+    "journalReplaySharesStrategyBudget": true,
+    "legacyControllerEnrolledInKernel": false
+  },
+  "verification": {
+    "convergenceTestsExecuted": 16,
+    "convergenceFailures": 0,
+    "journalTestsExecuted": 15,
+    "journalFailures": 0,
+    "fullTestsExecuted": 598,
+    "fullTestsSkipped": 8,
+    "fullFailures": 0,
+    "packagingOwnedTestsExecuted": 598,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "sourceSnapshotSHA256": "f296d15a2513b0abb97885c62af2a32ad82e0fffcd00b857eab1a2420d8bac21",
+    "convergenceSourceSHA256": "03058e1875526c6d5c2244ab47df2619796d0a2f3c72ff72f60d1c3a68e48f0a",
+    "convergenceTestsSHA256": "e11120427679b67a8c527f7b61ac06b67c397bd97263810de40e057946dec4d9",
+    "journalTestsSHA256": "0e8ab6e57d85fe45bd400b8a6a55dc3c3af4ec2c3c469a9dfd5c19200ceb2b19",
+    "convergenceLogSHA256": "ae247b4fb5b14b4158803273b99a67c56f83b986bcf1d9e38297eef29115b3af",
+    "journalLogSHA256": "4bffbdab4532bb5712c05ded4d58e3e5d283b671b96a165a71080c4e9f887582",
+    "packageTestLogSHA256": "e149c31cd8f67390eafc82ee48676652072d773114930d4c2bfe7bd5c83af5ed",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "buildManifestSHA256": "205c3d0c49383fb32b1b4ade482359b31cee31dd4abd98f8a0d1fd8c21d6409d",
+    "executableSHA256": "373d06b855d4d8dc93b0898a1dac571ff944dd52734488f1b3b4c931eb3dffd7",
+    "zipSHA256": "664cc425d9232230350129d2dd00ad1a7e06d1fb1d28fa965657ef675aee9575",
+    "dmgSHA256": "fdc05d5159ceb9f34d68364d9e375383854c73efe7af50133322a651e64dec37",
+    "cdHash": "12ff77a4fefdf3cb74257c1d7a915b1a8c035245",
+    "residualPackagedProcessCount": 0
+  },
+  "knownBoundary": {
+    "productionKernelEnrollmentPending": true,
+    "legacyControllerCutoverPending": true,
+    "currentNativeUICapturePending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

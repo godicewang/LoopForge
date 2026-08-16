@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-09T14:29:48Z",
+  "verdict": "fail",
+  "easyBusinessMutatedByForensicTask": false,
+  "attribution": {
+    "directCodexRounds": [
+      {
+        "round": 1,
+        "commit": "ac7b02cbe08eedd331cad678f7f1c138a67367d0",
+        "provenance": "direct-codex-desktop-session",
+        "requestedMinimumSeconds": 72000,
+        "wallClockUpperBoundSeconds": 15978,
+        "maximumThresholdRatio": 0.2219,
+        "toolCalls": 513,
+        "toolOutputs": 513,
+        "imageViews": 1,
+        "imageViewScope": "app-icon-only",
+        "product": {"files": 59, "insertions": 8732, "deletions": 8746},
+        "tests": {"files": 28, "insertions": 2965, "deletions": 5616}
+      },
+      {
+        "round": 2,
+        "commit": "ceb075201bffcf09c1efa3ac9a7b9c6ebf0c8d4e",
+        "provenance": "direct-codex-desktop-session",
+        "requestedMinimumSeconds": 36000,
+        "wallClockUpperBoundSeconds": 3899,
+        "maximumThresholdRatio": 0.1083,
+        "toolCalls": 216,
+        "toolOutputs": 216,
+        "imageViews": 6,
+        "product": {"files": 35, "insertions": 686, "deletions": 403},
+        "tests": {"files": 10, "insertions": 426, "deletions": 19}
+      },
+      {
+        "round": 3,
+        "commit": "88a2bdf9c5af4ac0ef97a6814d894fe58b50ba0b",
+        "provenance": "direct-codex-desktop-session",
+        "requestedMinimumSeconds": null,
+        "wallClockUpperBoundSeconds": 4370,
+        "toolCalls": 280,
+        "toolOutputs": 280,
+        "imageViews": 50,
+        "product": {"files": 27, "insertions": 552, "deletions": 430},
+        "tests": {"files": 2, "insertions": 242, "deletions": 20}
+      }
+    ],
+    "loopForgeGraphRange": {
+      "taskID": "1ED2180F-FBE1-4BCA-9E79-701F40CC3483",
+      "status": "stopped",
+      "startingCommittedState": "88a2bdf9c5af4ac0ef97a6814d894fe58b50ba0b",
+      "endingCommittedState": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+      "netMutation": {
+        "product": {"files": 22, "insertions": 2695, "deletions": 602},
+        "tests": {"files": 16, "insertions": 2659, "deletions": 152},
+        "evidence": {"files": 57, "insertions": 36083, "deletions": 0},
+        "documents": {"files": 4, "insertions": 758, "deletions": 39},
+        "toolingOther": {"files": 6, "insertions": 1237, "deletions": 8}
+      }
+    }
+  },
+  "visualMutationIndicators": {
+    "initialRewriteSwiftFiles": 45,
+    "initialRewriteSwiftInsertions": 3746,
+    "initialRewriteSwiftDeletions": 5097,
+    "matchedVisualModifierAdditions": 43,
+    "matchedVisualModifierDeletions": 41,
+    "immutableChineseBaselineCapturedBeforeOriginalMutation": false,
+    "historicalExportedPNGsRetained": false,
+    "historicalXCResultPayloadRetained": false,
+    "independentVisualReviewer": false
+  },
+  "systemicFailures": [
+    "untrusted-starting-baseline",
+    "missing-ui-preservation-contract",
+    "unbounded-product-mutation",
+    "same-author-code-test-screenshot-review",
+    "test-and-artifact-count-substituted-for-product-judgment",
+    "requested-time-not-enforced",
+    "ephemeral-visual-evidence",
+    "evidence-volume-rewarded-without-marginal-information",
+    "rejected-or-degraded-candidate-became-next-baseline"
+  ],
+  "requiredHardGates": [
+    "trusted-immutable-product-baseline",
+    "typed-visual-preservation-contract",
+    "bounded-mutation-budget",
+    "normalized-before-after-native-diff",
+    "independent-adversarial-visual-review",
+    "non-compensatory-acceptance",
+    "strict-active-time-ledger",
+    "safe-reversible-integration",
+    "causal-strategy-retirement"
+  ],
+  "sources": [
+    {
+      "path": "/Users/godice/.codex/sessions/2026/07/29/rollout-2026-07-29T00-36-14-019fa995-7d40-72a0-ba7a-0027c1fca906.jsonl",
+      "bytes": 131944752,
+      "sha256": "fefb8951c15de21a907568b1ddfe04c529607030cd95556920ec6cdc6a360ec4"
+    },
+    {
+      "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/evidence/task-snapshot-20260809T131753Z.json",
+      "sha256": "bfc2a0749c1ba15ca17aed226df7d98c854ee6817f096fe192b10a7e1ba0ac29"
+    }
+  ]
+}

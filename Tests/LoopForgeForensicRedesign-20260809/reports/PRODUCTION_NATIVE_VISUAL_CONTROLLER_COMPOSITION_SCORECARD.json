@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "status": "production-execution-session-native-visual-invocation-present-native-start-cutover-pending",
+  "recordedAt": "2026-08-15T15:39:58Z",
+  "acceptanceRowsAdvanced": [
+    "B-03"
+  ],
+  "controller": {
+    "singleProductionSessionMethod": true,
+    "consumesLiveNonCodableIndependentReview": true,
+    "usesExactRetainedExecutionProof": true,
+    "usesExactRetainedJournal": true,
+    "callerSuppliesAttempt": false,
+    "callerSuppliesStartFrame": false,
+    "callerSuppliesEvaluator": false,
+    "callerSuppliesCommandID": false,
+    "callerSuppliesRequirementSet": false,
+    "callerSuppliesAggregateVerdict": false,
+    "callerSuppliesEvaluationTime": false,
+    "productionEvaluatorIdentityCodeOwned": true,
+    "productionEvaluatorRole": "deterministicVisualGate",
+    "productionEvaluatorLineageSHA256": "a4e3ee3f9a4ef2ae565b82d3dad4c69ffb260d45ccf28f8a8122322dcd4c092b"
+  },
+  "proof": {
+    "liveCaptureMeasurementReviewChainUsed": true,
+    "productionEvaluatorJournaledGreenReceipt": true,
+    "realProductionSessionInvoked": true,
+    "activeAttemptRejectedBeforeReviewEvidence": true,
+    "journalAdvancedOnVeto": false,
+    "phaseAfterVeto": "executing",
+    "visualEvaluationCountAfterVeto": 0,
+    "debugInvalidReviewFactoryAvailableInRelease": false
+  },
+  "verification": {
+    "newControllerTests": {
+      "executed": 2,
+      "failures": 0,
+      "seconds": 0.049
+    },
+    "nativeReviewAndProductionEnrollmentSuites": {
+      "executed": 52,
+      "failures": 0,
+      "seconds": 7.851
+    },
+    "fullSuite": {
+      "executed": 814,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 62.884
+    },
+    "packageOwnedFullSuite": {
+      "executed": 814,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 63.390,
+      "realCodexChildBridgeSeconds": 16.860,
+      "logSHA256": "71340ba1e6196645947f09f0d60bd29fe49e08c0f34a1e284470d52da5e42c2f"
+    },
+    "releaseBuild": {
+      "passed": true,
+      "seconds": 96.44,
+      "architecture": "arm64"
+    },
+    "sourceSnapshotSHA256": "05dff1927e0e60f03779f5f2d3325a9831298760e63c79c6e6bb0ce483b93f66",
+    "packagedLoopForgeSHA256": "1081f30e866527857ebe66d05b1530df47db41fd60eb21cdee6aee3ca743bf99",
+    "packagedKernelSandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "signatureVerifiedDeepStrict": true,
+    "exactPackagedMachOStartupPassed": true,
+    "postSmokePackagedProcessCount": 0,
+    "thermalWarning": false
+  },
+  "sourceDigests": {
+    "visualEvaluationCoordinator": "2e7db0b2f48e8bc05059510c8e8663191768cb3f57b4fb3a7e41273730de5775",
+    "productionExecutionCoordinator": "c279004080e1e2dce2741cbf4bc74783d796c39be57e6f3b46b43fa8c01a2cf8",
+    "independentReviewAdapter": "4ff4d96bed3f027b5f0205c40d0406a314859599106ed688588fa385c1f99d41",
+    "nativeReviewTests": "baa5a09bb3010efe711e32f83b89066a2b18b9b0d64ee23e658c268e29162f77",
+    "productionTests": "1f93ff4f47f6dfc858f98c5850cac1946b48c68a5351266bd5efab458756280f"
+  },
+  "easyBusiness": {
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "statusFingerprintSHA256": "a640615bfb23f0d3a9fefe222294663302b40cca54e23b2f4ae0029f5e4bcfd7",
+    "mutated": false
+  },
+  "remaining": [
+    "native app execution-session start cutover",
+    "trusted Release containment issuers or retained vetoes",
+    "legacy Single and Parallel retirement",
+    "unlocked native screenshots",
+    "clean-commit rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false
+}

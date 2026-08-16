@@ -1,0 +1,128 @@
+{
+  "observations" : [
+    {
+      "confidence" : 1,
+      "height" : 0.01830506924906361,
+      "pixelHeight" : 47.99589157104479,
+      "pixelWidth" : 141.4849853515625,
+      "pixelX" : 148.011449933474,
+      "pixelYFromTop" : 75.08926388814773,
+      "text" : "09:41",
+      "width" : 0.1173175666265029,
+      "x" : 0.12272922880055888,
+      "yFromTop" : 0.028638163191513244
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.02631578947368407,
+      "pixelHeight" : 68.99999999999963,
+      "pixelWidth" : 859.7980957031251,
+      "pixelX" : 175.00316248080333,
+      "pixelYFromTop" : 1227.0000004672922,
+      "text" : "Join the Community to Chat",
+      "width" : 0.712933744364117,
+      "x" : 0.14511041665074903,
+      "yFromTop" : 0.46796338690590855
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.020348836228103684,
+      "pixelHeight" : 53.35464859008786,
+      "pixelWidth" : 878.8201904296875,
+      "pixelX" : 163.58991144288487,
+      "pixelYFromTop" : 1314.8110483315259,
+      "text" : "Create a profile to message founders, start",
+      "width" : 0.7287066255635883,
+      "x" : 0.1356466927387105,
+      "yFromTop" : 0.5014534890661807
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.018895347822176167,
+      "pixelHeight" : 49.54360198974591,
+      "pixelWidth" : 570.6624755859376,
+      "pixelX" : 319.5709775422047,
+      "pixelYFromTop" : 1375.7877920760207,
+      "text" : "groups, and invite advisors.",
+      "width" : 0.4731861323266481,
+      "x" : 0.26498422681774847,
+      "yFromTop" : 0.5247093028512665
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.017580446262199567,
+      "pixelHeight" : 46.09593009948726,
+      "pixelWidth" : 334.78863525390625,
+      "pixelX" : 433.70347816579124,
+      "pixelYFromTop" : 1504.9999993296626,
+      "text" : "Join Community",
+      "width" : 0.27760251679428377,
+      "x" : 0.3596214578489148,
+      "yFromTop" : 0.5739893208732504
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.009693737160968552,
+      "pixelHeight" : 25.416978836059542,
+      "pixelWidth" : 88.13566589355469,
+      "pixelX" : 144.2507804946373,
+      "pixelYFromTop" : 2494.960115063478,
+      "text" : "Home",
+      "width" : 0.07308098332798896,
+      "x" : 0.11961092910003093,
+      "yFromTop" : 0.9515484801920207
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.010174418114051842,
+      "pixelHeight" : 26.67732429504393,
+      "pixelWidth" : 178.80757141113278,
+      "pixelX" : 300.5488956190393,
+      "pixelYFromTop" : 2492.424418803205,
+      "text" : "Storefronts",
+      "width" : 0.1482649845863456,
+      "x" : 0.24921135623469262,
+      "yFromTop" : 0.9505813954245632
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.011627906519979248,
+      "pixelHeight" : 30.488370895385586,
+      "pixelWidth" : 167.39431762695307,
+      "pixelX" : 540.2271334046623,
+      "pixelYFromTop" : 2496.235466096203,
+      "text" : "Community",
+      "width" : 0.13880125839714186,
+      "x" : 0.44794953018628714,
+      "yFromTop" : 0.9520348840946616
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.01038277812989763,
+      "pixelHeight" : 27.223644256591584,
+      "pixelWidth" : 114.25939178466793,
+      "pixelX" : 772.2330787073997,
+      "pixelYFromTop" : 2492.1512595120735,
+      "text" : "Friends",
+      "width" : 0.09474244758264339,
+      "x" : 0.64032593590995,
+      "yFromTop" : 0.9504772156796619
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.010174418114051842,
+      "pixelHeight" : 26.67732429504393,
+      "pixelWidth" : 49.457412719726634,
+      "pixelX" : 992.9526821473291,
+      "pixelYFromTop" : 2496.2354656451234,
+      "text" : "Me",
+      "width" : 0.04100946328335542,
+      "x" : 0.8233438492100573,
+      "yFromTop" : 0.9520348839226253
+    }
+  ],
+  "path" : "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/evidence/runtime-baselines/english-primary-flows-light-attachments/9780985E-B9A5-4D74-8E22-2BC89FF5978D.png",
+  "pixelHeight" : 2622,
+  "pixelWidth" : 1206,
+  "schemaVersion" : 1
+}

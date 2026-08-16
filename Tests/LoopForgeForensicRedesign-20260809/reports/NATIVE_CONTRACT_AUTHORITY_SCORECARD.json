@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T09:26:27Z",
+  "status": "native-contract-authority-invoked-ready-enrollment-only-execution-cutover-pending",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "authority": {
+    "verbatimObjectiveHasExactUserSourceSpan": true,
+    "acceptedAmendmentHasExplicitUserAcceptanceAuthority": true,
+    "modelProposalCanCreateExplicitAuthority": false,
+    "workspaceSelectionHasExactUserSourceSpan": true,
+    "relativeScopesHaveExactUserSourceSpan": true,
+    "durationAcceptanceHasExactUserSourceSpanWhenDeclared": true,
+    "workspaceIdentifierBound": true,
+    "canonicalWorkspaceRootDigestBound": true,
+    "workspaceSwapRejectedBeforeJournal": true,
+    "canonicalRelativeScopeRequired": true
+  },
+  "confirmation": {
+    "swiftUISheetPresent": true,
+    "exactObjectiveWorkspaceScopesAndRulesDisplayed": true,
+    "completeCandidateDigestDisplayed": true,
+    "exactDisplayedCandidateDigestRequired": true,
+    "exactUserIdentityRequired": true,
+    "compilerSealedRatificationRequired": true,
+    "ratificationReceiptPersistentlySingleUse": true,
+    "cancelCreatesJournalOrRegistration": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 13,
+    "focusedFailures": 0,
+    "packagingOwnedTestsExecuted": 619,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "sourceSnapshotSHA256": "1303cb7ec1a7f343cf2537825939771a7b0eb70d076f191ace601e0601a99734",
+    "nativeAuthoringSourceSHA256": "c0169b7e8d5b0cf5b7e169a0eefb0a34f81f088342d1e0df062b8cd1cce58423",
+    "compilerSourceSHA256": "7d040f3df3c82fa8362ebd8b3c0aec71c329c4d3ab83602dd804d5d1bb44dd3d",
+    "contractSourceSHA256": "62dab0a980b2c11f60e16fa43e0c6abaa00a7ceb638c9cccbf6aff51563fdb40",
+    "enrollmentSourceSHA256": "8645f5e7351c25cb9b6fbde0d30ab94cd4386274fe37fdf00a5d5b3adbf041bb",
+    "registrySourceSHA256": "d6422bf54e154113bf7e5202d3d41b499945b1ff36cbdbb76488c5e35b098b86",
+    "focusedLogSHA256": "ecae694b70ffa054d72e5116aeafbd22ecd71c942bb7f2cce5887f7e632a9fc8",
+    "packageTestLogSHA256": "afbaf096e4dc6f140ed1c81c567c117346e08fb05307d1fe426c4cd62cbd5448",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "buildManifestSHA256": "5651eaa4ceabac2460b41f74ce14a8492239b30c5f9935937dd4ed3acd640933",
+    "executableSHA256": "3aa6db2cb2e0b938beec26b911dea2f77716cb3375457d28ea25443971f55dc5",
+    "zipSHA256": "b33307733b800612b960dad49e677f24b2a76cd46147d9c5fceb2fad31a8ef03",
+    "dmgSHA256": "a3181075e461c87a8bd23dae15e8f3b2c7ecdf7b0ac73537eb75d3c444d75b23",
+    "cdHash": "f2c50cea69e67c4eecde5fb7187c3cc26292d8f2",
+    "residualPackagedProcessCount": 0
+  },
+  "knownBoundary": {
+    "nativeContractAuthoringPending": false,
+    "nativeUserConfirmationIssuerPending": false,
+    "nativeAuthoringInvocationPresent": true,
+    "readyEnrollmentStartsLegacyWorker": false,
+    "legacyAutoGraphExecutionRetired": true,
+    "nativeKernelExecutionReplacementPending": true,
+    "currentNativeUICapturePending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false
+}

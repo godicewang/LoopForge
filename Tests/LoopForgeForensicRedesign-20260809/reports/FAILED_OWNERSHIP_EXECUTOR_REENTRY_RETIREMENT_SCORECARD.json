@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "status": "passed-current-source",
+  "recordedAt": "2026-08-10T21:53:16Z",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "defect": {
+    "cleanupFailurePreviouslyBlockedQuiescence": true,
+    "cleanupFailurePreviouslyBlockedExecutorReentry": false,
+    "pendingEntryPreviouslyRetiredFromOrdinaryDispatch": false
+  },
+  "implementation": {
+    "journalFailedOwnershipCheckedBeforeExecutor": true,
+    "typedRepairRequiredError": true,
+    "errorBindsCanonicalResourceID": true,
+    "outboxSchemaVersion": 5,
+    "quarantineIsDurable": true,
+    "quarantineIsNotCompletion": true,
+    "quarantinedEntriesExcludedFromPending": true,
+    "schemaVersion3DigestVerifiedBeforeNormalization": true,
+    "schemaVersion3PersistedMigrationTested": true,
+    "schemaVersionAfterSuccessfulRewrite": 5,
+    "secondOrdinaryRecoveryScannedCount": 0,
+    "automaticRepairAttempted": false,
+    "leaseRenewed": false,
+    "workspaceTouchedByQuarantine": false
+  },
+  "verification": {
+    "focusedTests": 21,
+    "fullTests": 506,
+    "skipped": 8,
+    "failures": 0,
+    "fullLog": "/tmp/loopforge-full-tests-dispatch-retirement.log",
+    "fullLogSHA256": "4ddf34a741b69b5a04270907f5b08f0575fb21bc32cd27706aa3f924dfc4ac4d"
+  },
+  "sourceSHA256": {
+    "JournaledWorkspaceMutationRuntime.swift": "6f3481c3876e1f324012913eb056fc327d82fdeae1c5ea2bfc1d9ec60e45e9dc",
+    "WorkspaceMutationEffectOutbox.swift": "27c1c58ded2a8810b9e6a4be33d603ecf658af14c90c775b0b1c5b17e49da699",
+    "IntegrationTransactionStateMachineTests.swift": "d3c7fe2a6658c38e2b9faf58c85e90bf977b2fd43edcc116fd6be1650b8685e1",
+    "WorkspaceMutationFilesystemExecutorTests.swift": "c398d92e06d7b155c70dc6a43a92b5f7de0f953e544b484804ef0d7aaba9e2de"
+  },
+  "remainingVetoes": [
+    "explicit evidence-bound repair and renewal",
+    "non-expiry pre-effect rejection reconciliation",
+    "production run registry and lifecycle invocation",
+    "receipt-native UI",
+    "legacy controller cutover",
+    "current native UI capture",
+    "revision-bound commit and push"
+  ],
+  "finalRelease": false
+}

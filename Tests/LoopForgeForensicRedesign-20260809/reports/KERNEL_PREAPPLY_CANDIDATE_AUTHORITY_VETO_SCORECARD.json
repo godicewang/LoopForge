@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T11:01:58Z",
+  "status": "mutation-readiness-and-activation-fail-closed-before-isolated-candidate-and-acyclic-preflight-authority",
+  "finalAcceptance": false,
+  "structuralDefect": {
+    "candidateContentAuthorityIsPostApply": true,
+    "integrationApplyRequiresPreflight": true,
+    "postApplyCandidateCannotAuthorizePreflight": true,
+    "priorMutationReadinessCouldReportZeroBlockers": true,
+    "priorWorkerWorkspaceWasCanonicalWorkspace": true
+  },
+  "controls": {
+    "typedMutationCapabilityProjection": true,
+    "objectiveProseUsedForDowngrade": false,
+    "preApplyCandidateIsolationBlocker": true,
+    "journaledMutationPreparationBlocker": true,
+    "productionCompositionRejectsBeforePreparation": true,
+    "activationRejectsBeforeStartAttempt": true,
+    "rejectedMutationAppendsJournalFrames": false,
+    "strictReadOnlyExecutionStillEligible": true,
+    "issuesCandidateIsolationAuthority": false,
+    "issuesManifestOrPreflightAuthority": false,
+    "mutatesWorkspace": false,
+    "permitsPublication": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 31,
+    "focusedFailures": 0,
+    "suiteTestsExecutedExcludingIndependentlyRunCase": 752,
+    "independentlyRunProcessGroupCase": 1,
+    "combinedTestsCovered": 753,
+    "intentionalEnvironmentSkips": 8,
+    "testFailures": 0,
+    "releaseLoopForgeSHA256": "df8f527a26cdde6e2c3bb20d42a2098d2b0ce61fa35fd933a2261359c78d05fa",
+    "releaseKernelSandboxGateSHA256": "1b7ba433fe915b0dd916aceafe62342d246bcf6bbddcfc5425b0d09fba0fbeaa",
+    "sourceSnapshotSHA256": "03bbefcab0cc8469d4f4642799cfed0ce32a5ee07b4a6121aa21124c42e75325",
+    "taskContractSourceSHA256": "7af30a1c0c92d932d4c4d452c8b7ab349ebc04c76cb9978b7405eb804a8572ce",
+    "productionExecutionCoordinatorSHA256": "eaedb96dd2575c9b91ae749e9de279d935da9bf54c05a910e6609613060dd588",
+    "executionPreparationCoordinatorSHA256": "dfd1a88f4a4a0609c6934169bea51c1683340c30f955b9be45dcc620c4590750",
+    "nativeEnrollmentFlowTestsSHA256": "64a54206008f816b3ab348473c9903b21a2cd4d450d67b5b2b5cf8856478a8de",
+    "enrollmentCoordinatorTestsSHA256": "47e56751ce22d3631e46caebb8188820fdf59dba1c0a44c9d168f1248a9089a1"
+  },
+  "remainingPrerequisites": [
+    "journal-owned pre-apply isolated candidate workspace and content-complete revision authority",
+    "acyclic delta content-store manifest preparation rollback proposal and preflight issuance",
+    "tested resident-memory enforcement issuer or retained verifier and reviewer veto",
+    "native immutable design baseline complete visual evidence final authorization and native start",
+    "current-source package sign unlocked native walkthrough clean commit and push"
+  ]
+}

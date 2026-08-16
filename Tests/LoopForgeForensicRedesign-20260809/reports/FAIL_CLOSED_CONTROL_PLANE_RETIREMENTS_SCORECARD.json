@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-10T23:24:13Z",
+  "status": "implemented-and-regression-verified-not-final",
+  "acceptanceRowsAdvanced": ["E-01", "I-04", "J-07"],
+  "watcherCadence": {
+    "immediatePostReviewRecursionPossible": false,
+    "minimumCadenceSeconds": 60,
+    "preservesLaterBackoff": true,
+    "completedWatcherSchedulesNextRun": false,
+    "focusedTestsPassed": 30
+  },
+  "graphDecisionEnvelope": {
+    "requiresExactlyOneWholeTopLevelObject": true,
+    "acceptsNoisyProse": false,
+    "acceptsMarkdownFence": false,
+    "acceptsMultipleObjects": false,
+    "acceptsTrailingSemanticText": false,
+    "legacyOptionalSchemaCompatibilityStillPresent": true,
+    "focusedTestsPassed": 2
+  },
+  "executableStartupProbe": {
+    "deliberateExitStatus": 7,
+    "deliberateCrashRejected": true,
+    "liveFixtureAccepted": true,
+    "liveFixtureReaped": true,
+    "focusedTestsPassed": 1,
+    "packagedMachOSurvived": true,
+    "residualPackagedProcessCount": 0
+  },
+  "verification": {
+    "fullTestsExecuted": 517,
+    "fullTestsSkipped": 8,
+    "fullTestFailures": 0,
+    "packagingOwnedTestsExecuted": 517,
+    "packageSmokePassed": true,
+    "sourceSnapshotSHA256": "7146c8abddaa1a8ddfc36bd4aea46acda699a9f58bc06c239c113e7e949d8750"
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

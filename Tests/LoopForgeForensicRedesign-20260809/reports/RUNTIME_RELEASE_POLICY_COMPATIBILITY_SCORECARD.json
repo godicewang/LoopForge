@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T06:49:06Z",
+  "status": "shared-admission-queue-and-recovery-release-policy-compatibility-passed-exact-workspace-mutation-join-composition-and-final-release-pending",
+  "defect": {
+    "releasePolicyPreviouslyCallerSelectableAcrossResourceKinds": true,
+    "processTreeJoinCouldReachSharedSupervisor": true,
+    "nonProcessGracefulTerminationCouldReachSharedSupervisor": true,
+    "queueAndRecoveryUsedSameSemanticPolicyPreviously": false
+  },
+  "policy": {
+    "borrowed": "detachOnly-with-stable-external-identity",
+    "ownedProcessTree": "gracefulThenTerminate",
+    "otherOwnedResource": "join-by-exact-typed-owner",
+    "checkedBeforeBudgetAdmission": true,
+    "checkedBeforeLiveLeaseCreation": true,
+    "checkedForQueueInsertion": true,
+    "checkedForRecoverySnapshot": true,
+    "historicalIncompatibleSnapshotRejected": true
+  },
+  "productionIssuerAudit": {
+    "ownedProcessIssuer": "JournaledProcessRuntime",
+    "ownedProcessReleasePolicy": "gracefulThenTerminate",
+    "nonProcessJoinIssuer": "JournaledWorkspaceMutationLeaseAuthority",
+    "nonProcessJoinKind": "workspaceMutation",
+    "workspaceMutationStartupRecoveryRegistered": true,
+    "workspaceMutationExactLiveHandleAwareNormalQuitCompositionComplete": false
+  },
+  "verification": {
+    "combinedFocused": {
+      "executed": 39,
+      "failures": 0,
+      "seconds": 0.024
+    },
+    "runtimeSupervisor": {
+      "executed": 39,
+      "failures": 0,
+      "seconds": 0.008
+    },
+    "broaderLifecycleRecovery": {
+      "executed": 90,
+      "failures": 0,
+      "seconds": 12.716
+    },
+    "packageOwnedFullSuite": {
+      "executed": 867,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 80.552,
+      "wallSeconds": 80.605
+    },
+    "failedFixtureRunCountedSeconds": 0,
+    "deepStrictSignature": true,
+    "checksumManifestPassed": true,
+    "directStartupPassed": true,
+    "mountedDMGStartupPassed": true,
+    "postVerificationProcessCount": 0,
+    "postVerificationMountCount": 0
+  },
+  "package": {
+    "sourceRevision": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
+    "sourceDirty": true,
+    "sourceSnapshotSHA256": "610338f003c251ef943a8b32c084776437d95ab91064a5403031bbb5d8a33178",
+    "builtAtUTC": "2026-08-16T06:44:37Z",
+    "testLogSHA256": "7a4c5e712d47d40637b4cdf70ce91b62f4212e3d9c987196ce9ff6f95b978b4a",
+    "executable": {
+      "bytes": 26214928,
+      "sha256": "3f85d0393e566a6050e8dc291c7a8caa7627dd1ef589ea80262279fccce8102a",
+      "cdHash": "1c08d57f8927bc8c6212d5d63c991d7aa02d8873"
+    },
+    "zip": {
+      "bytes": 253435200,
+      "sha256": "7bbe4d81d758cf08e363fd419d6e7edbf57240e8a69134f1beaa24bd474073d0"
+    },
+    "dmg": {
+      "bytes": 285736032,
+      "sha256": "6f62ffc31ce38eb7ad9ddafe16a0cd5f0965127b73a22f19c4ae71d30ec4cd09"
+    },
+    "packageTestLog": {
+      "bytes": 248579,
+      "sha256": "7a4c5e712d47d40637b4cdf70ce91b62f4212e3d9c987196ce9ff6f95b978b4a"
+    },
+    "checksumManifest": {
+      "bytes": 278,
+      "sha256": "ec2db82e32bf3d4d33e8d045fab0420013b27fc563207af248a5f96f0f8511a2"
+    },
+    "buildManifest": {
+      "bytes": 352,
+      "sha256": "66effa79fa22b7fa5014dac7e110a06811bc7adae25e081aef355a550fd36c7d"
+    }
+  },
+  "nativeUI": {
+    "visibleChange": false,
+    "currentPackageScreenshotCaptured": false,
+    "priorPackageScreenshotsRelabeledAsCurrent": false,
+    "latestInteractiveEvidenceSourceSnapshotSHA256": "0e42de365702528200d97a174537d1b05d0aaf3d1a99b5a6854dce87a5821da7"
+  },
+  "easyBusiness": {
+    "mutated": false,
+    "branch": "codex/USA_Version",
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "nulDelimitedStatusSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a"
+  },
+  "remainingGaps": [
+    "exact workspace-mutation live-handle-aware normal-quit composition after Release containment permits admission",
+    "trusted Release resident-memory containment issuer",
+    "productive provider backend ratification and native launch cutover",
+    "complete native trait window baseline and candidate matrix",
+    "clean-commit package rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false
+}

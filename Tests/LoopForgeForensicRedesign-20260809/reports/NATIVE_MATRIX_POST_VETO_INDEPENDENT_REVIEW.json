@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "verdict": "veto",
+  "confidence": 0.97,
+  "summary": "The candidate preserves the primary task hierarchy and keeps the Running node loops summary visible in all four cells. Its labeled “Next levels” continuation is acceptable, but three cells show an unlabeled bottom viewport boundary bisecting graph cards, so H-04 cannot pass.",
+  "cells": [
+    {
+      "id": "standard-expanded",
+      "candidatePreservesPrimaryTask": true,
+      "candidateHasVisibleClipping": false,
+      "candidateHierarchyPasses": true,
+      "finding": "The task title and Running node loops summary remain prominent. All displayed graph cards are complete; the right-side “Next levels” marker clearly explains horizontal continuation."
+    },
+    {
+      "id": "standard-narrow",
+      "candidatePreservesPrimaryTask": true,
+      "candidateHasVisibleClipping": true,
+      "candidateHierarchyPasses": true,
+      "finding": "The primary summary remains visible and readable, but the viewport bottom cuts through the next row of graph content without a labeled vertical continuation boundary."
+    },
+    {
+      "id": "accessibility-expanded",
+      "candidatePreservesPrimaryTask": true,
+      "candidateHasVisibleClipping": true,
+      "candidateHierarchyPasses": true,
+      "finding": "Typography, summary metrics, and task identity remain readable, but a lower graph card is visibly bisected at the bottom edge."
+    },
+    {
+      "id": "accessibility-narrow",
+      "candidatePreservesPrimaryTask": true,
+      "candidateHasVisibleClipping": true,
+      "candidateHierarchyPasses": true,
+      "finding": "The accessibility layout retains the required primary content and readable hierarchy, but the bottom edge cuts through a graph card with no explicit vertical continuation treatment."
+    }
+  ],
+  "visualGates": [
+    {
+      "id": "H-04",
+      "verdict": "veto",
+      "reason": "Standard-narrow and both accessibility cells visibly bisect lower graph cards at the viewport bottom. Unlike the permitted “Next levels” boundary, these vertical crops are unlabeled."
+    },
+    {
+      "id": "H-05",
+      "verdict": "pass",
+      "reason": "The Running node loops summary is fully visible in the initial viewport in every cell."
+    },
+    {
+      "id": "H-06",
+      "verdict": "pass",
+      "reason": "The concrete task title and operational summary retain primary hierarchy; mode, path, and migration-required detail remain visually secondary."
+    },
+    {
+      "id": "H-07",
+      "verdict": "pass",
+      "reason": "Both accessibility cells retain readable typography, compact metadata, the task identity, and the complete primary summary without damaging reflow."
+    },
+    {
+      "id": "H-09",
+      "verdict": "pass",
+      "reason": "The candidate remains visually coherent and is not materially worse than baseline in hierarchy, typography, spacing, density, tone, or information architecture."
+    }
+  ],
+  "materialFindings": [
+    "Three candidate cells expose partially displayed graph cards at the bottom viewport boundary.",
+    "The migration-required safety message is presented as secondary status information and does not displace the primary summary from view.",
+    "The labeled horizontal “Next levels” continuation does not constitute clipping."
+  ],
+  "requiredChanges": [
+    "Prevent graph cards from being bisected at the initial viewport bottom in standard-narrow, accessibility-expanded, and accessibility-narrow, either by fitting only complete cards or by introducing a clear vertical continuation treatment."
+  ]
+}

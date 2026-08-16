@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T19:26:20Z",
+  "status": "direct-integration-and-completion-injection-closed-production-issuers-pending",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "finding": {
+    "integrationPreviouslyAcceptedCodableTransition": true,
+    "integrationActorAndReceiptValuesCallerConstructible": true,
+    "stateMachinePreviouslyProvedConsistencyNotRuntimeProvenance": true,
+    "completionPreviouslyUnparameterized": true,
+    "completionPreviouslyHadIndependentFinalAuthority": false
+  },
+  "integrationAuthority": {
+    "commandRequiresNonCodableAuthority": true,
+    "decodedTransitionCanRecreateCommandAuthority": false,
+    "productionFactoryFilePrivateToJournaledWorkspaceRuntime": true,
+    "startApplyRequiresValidatedLiveLease": true,
+    "recordApplyComesFromBoundedExecutor": true,
+    "requestRollbackRequiresValidatedLiveLease": true,
+    "recordRollbackComesFromBoundedExecutor": true,
+    "proposalIssuerPresent": false,
+    "preflightIssuerPresent": false,
+    "postimageVerifierIssuerPresent": false,
+    "independentAcceptanceIssuerPresent": false,
+    "durableReplaySchemaChanged": false
+  },
+  "completionAuthority": {
+    "commandRequiresNonCodableAuthority": true,
+    "boundToRunID": true,
+    "boundToSourceSequence": true,
+    "boundToAuthorizer": true,
+    "requirementsDurationAndQuiescenceRechecked": true,
+    "productionFinalAuthorizerPresent": false,
+    "decodedEvidenceCanAuthorizeCompletion": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 58,
+    "focusedFailures": 0,
+    "developmentTestsExecuted": 684,
+    "developmentTestsSkipped": 8,
+    "developmentFailures": 0,
+    "releaseBuildPassed": true,
+    "diffCheckPassed": true,
+    "residualExactExecutableCount": 0,
+    "runReducerSHA256": "1163c200b7b6b24953723109d6ba0e2b85ef216d7ddeb64767b340ca454c8ae8",
+    "journaledWorkspaceRuntimeSHA256": "2a11dc8fcf6a031d60359ef9faf3604a94cfa63e6f2c313ffb8dcf71ae2c21d2",
+    "integrationStateMachineSHA256": "53dff2b0c35bf3079ea8de1f5c38adbccf97b1d4c5115426555f57a55242157f",
+    "kernelRunReducerTestsSHA256": "c232c60606063a8f805cfa929f00b42e9b9f7fabe7547b8309559570ba236140",
+    "integrationTestsSHA256": "03937116dc2432d5a23ceb43f7e2e9d3a6c65bf372cc00e224a78abc40303692",
+    "filesystemTestsSHA256": "c398d92e06d7b155c70dc6a43a92b5f7de0f953e544b484804ef0d7aaba9e2de"
+  },
+  "remainingVetoes": {
+    "integrationProposalIssuer": false,
+    "integrationPreflightIssuer": false,
+    "postimageVerifierIssuer": false,
+    "independentIntegrationAcceptanceIssuer": false,
+    "productionFinalAuthorizer": false,
+    "occurrenceAuthority": true,
+    "externalDependencyDrainAndQuiescenceAuthority": false,
+    "nativePlanAndStart": false,
+    "legacySingleAndParallelMigrated": false,
+    "currentSourcePackagedSignedHashed": false,
+    "currentNativeScreenshots": false,
+    "cleanCommitAndPush": false
+  },
+  "finalAcceptance": false
+}

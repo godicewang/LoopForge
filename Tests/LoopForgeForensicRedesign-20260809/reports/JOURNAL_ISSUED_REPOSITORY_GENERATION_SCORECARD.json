@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T02:00:01Z",
+  "status": "journal-issued-generation-and-recovery-cache-telemetry-package-receipts-present-native-proof-cutover-pending",
+  "acceptanceRowsAdvanced": ["G-08"],
+  "authority": {
+    "receiptOpaqueInRelease": true,
+    "receiptDecodableFromUntrustedBytes": false,
+    "issuer": "RunJournal recovered event payload plus reducer projection",
+    "mutationAuthorityEvent": "integrationAdvanced.applyRecorded.exactPostimage",
+    "recoveryAuthorityEvent": "integrationAdvanced.rollbackRecorded.restored",
+    "realSequenceArithmetic": "ending-starting=eventCount-1",
+    "canonicalRootIncludedInCacheKey": true,
+    "olderSuccessReusableAfterNewerAmbiguousEffect": false,
+    "legacyNonSHAIdentityCanGainCacheAuthority": false
+  },
+  "withheldLatestTransitions": [
+    "applyStarted",
+    "rollbackStarted",
+    "applyFailed",
+    "applyInDoubt",
+    "rollbackFailedQuarantined",
+    "journalProjectionMismatch"
+  ],
+  "productionRecovery": {
+    "opaqueReceiptPropagatedByMutationRuntime": true,
+    "opaqueReceiptPropagatedByBoundedDispatcher": true,
+    "remainingExecutableEffectsBlockReuse": true,
+    "dispatchFailureOrQuarantineBlocksReuse": true,
+    "liveOrFailedReleaseOwnershipBlocksReuse": true,
+    "typedStatuses": [
+      "notApplicable",
+      "resolved",
+      "withheldAmbiguousGeneration",
+      "withheldPendingEffects",
+      "resolutionFailed"
+    ],
+    "unsafeStatusBlocksAgentAndLegacyGraphAdmission": true,
+    "readOnlyNativeTelemetryImplemented": true
+  },
+  "verification": {
+    "focusedTestsExecuted": 23,
+    "focusedFailures": 0,
+    "fullTestsExecuted": 547,
+    "fullTestsSkipped": 8,
+    "fullTestFailures": 0,
+    "packagingOwnedTestsExecuted": 547,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "packageSmokePassed": true,
+    "residualPackagedProcessCount": 0,
+    "sourceSnapshotSHA256": "8e498043e1e087aa635ba20bdc52e9ad06402ad6eb60a8b16a7fe3ff3046d47d",
+    "executableSHA256": "00bd3257e09bb835757a8247704bc66c7b3c7aa30c91a8ebed2b2d104480dd74",
+    "zipSHA256": "318ec54203dbdf3b636fae080c4f36bba2a00f73bec8345bd87dd972cc1bec20",
+    "dmgSHA256": "08583fbdd1354b7f69cd07281d8984ef55ba2da1b9928e897e4b82cbff67b635",
+    "packageTestLogSHA256": "35582b32391c7e8babeac6faf683284e5d817345d0fa6077a5bc492bad0c04a7",
+    "sourceFullTestLogSHA256": "f126d103e8a5e2b23cea121fda8d6e36ddd3e5e75277f723a86858925a5e8091",
+    "focusedTestLogSHA256": "086f41bfc6313eedb06dae9dc98e1e12ea50d291bcdd59f86558621bd0aac6b6",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "cdHash": "f51babfdc5a83fec7b862323e9ac8070ea868a5e"
+  },
+  "excluded": {
+    "failedRuns": 3,
+    "failedRunsCountedAsVerification": false,
+    "failedRunTimeCounted": false
+  },
+  "knownBoundary": {
+    "currentNativeTelemetryWalkthroughPending": true,
+    "productionRunCreatorCutoverPending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

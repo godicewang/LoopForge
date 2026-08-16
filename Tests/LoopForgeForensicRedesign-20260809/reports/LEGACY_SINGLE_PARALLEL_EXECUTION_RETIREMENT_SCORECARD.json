@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-15T20:44:36Z",
+  "status": "source-controller-ui-release-package-and-native-retirement-receipts-passed-final-release-pending",
+  "sourceRevision": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
+  "sourceDirty": true,
+  "sourceSnapshotSHA256": "8372af66fb258d45f50e42c8d00daa76bec261bcb4df2cc141232b16891c2b9b",
+  "assertions": {
+    "allStoredModesFailClosed": true,
+    "productionStartHasLegacyBypass": false,
+    "candidateSelectionCanIntegrate": false,
+    "startupRecoveryCanResume": false,
+    "newAuthoringModes": [
+      "journaledAutoGraph"
+    ],
+    "historicalEvidenceInspectable": true,
+    "historicalResumeControlVisible": false,
+    "historicalCandidateSelectionVisible": false,
+    "debugCharacterizationOnly": true,
+    "debugHookPresentInRelease": false
+  },
+  "tests": {
+    "focusedController": {"executed": 7, "failures": 0},
+    "focusedTaskStore": {"executed": 20, "failures": 0},
+    "sourceFullSuite": {"executed": 835, "skipped": 8, "failures": 0, "seconds": 57.354},
+    "packageOwnedFullSuite": {"executed": 835, "skipped": 8, "failures": 0, "seconds": 60.796},
+    "realCodexBridgeSeconds": 11.346,
+    "releaseBuildPassed": true,
+    "packageSmokePassed": true
+  },
+  "package": {
+    "builtAtUTC": "2026-08-15T20:38:16Z",
+    "applicationExecutableSHA256": "99af7c3e1ba287b6e607598cdc04a5b689f54df3e1210a0d2191cc872cd83cab",
+    "applicationCDHash": "6feaa681be4bc5461700fa82d82ef0545e8db992",
+    "sandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "sandboxGateCDHash": "138982f66022e1d20d76823282ff6a9fc507d3b6",
+    "zipSHA256": "16c9d5555c4b011cdc0327b8e172b290713c7da1ffc7118592059c0d5cb6a470",
+    "dmgSHA256": "428cad8149662b1660a6fd0c84374cd196c0a4d58effde887ba22bb99e4134ba",
+    "packageLogSHA256": "dd1ac7c3f400519f4d2a1df16d69ae1dc22bd47493eeccb1ecbbbc34847a767d",
+    "buildManifestSHA256": "dcc5a3a1328fd0913a95b22cb8a304f8d798bb6270ffa93e27de79ebbf7cc73f",
+    "postSmokeProcessCount": 0
+  },
+  "native": {
+    "exactPackageInspected": true,
+    "unlockedUI": true,
+    "noTaskCreated": true,
+    "postInspectionProcessCount": 0,
+    "screenshots": [
+      {
+        "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-journaled-auto-graph-retirement-current-20260815T203935Z.png",
+        "width": 1160,
+        "height": 768,
+        "sha256": "49c63b78891f7288ed4e110501846f483510bd8514c1a933af07bf0975562b53",
+        "observation": "new authoring exposes only Journaled Auto Graph; Single and Parallel are explicitly read-only historical evidence"
+      },
+      {
+        "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-retired-historical-task-current-20260815T204020Z.png",
+        "width": 1160,
+        "height": 768,
+        "sha256": "f66835153120e363d2b65398d1b04ddc291ba6537eed8f78f57b6cff4b049bb3",
+        "observation": "historical task remains inspectable with migration-required status and no Resume control"
+      }
+    ]
+  },
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "finalRelease": false,
+  "remainingGaps": [
+    "complete native trait window baseline and candidate matrix",
+    "trusted Release containment or retained launch veto",
+    "packaged ratified provider harness and exact network authority",
+    "mutation authority or retained vetoes",
+    "clean-commit package rebuild",
+    "commit and push"
+  ]
+}

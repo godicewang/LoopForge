@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "status": "implemented-side-by-side",
+  "legacyExecutionCutover": false,
+  "easyBusinessMutated": false,
+  "journalFormat": "hash-chained-ndjson-command-transactions",
+  "crossActorHeadFence": true,
+  "trailingFragmentAppendFence": true,
+  "duplicateCommandReplayFence": true,
+  "duplicateEventReplayFence": true,
+  "legacyAcceptedSecondsMinted": 0,
+  "legacyReceiptIDsMinted": 0,
+  "legacyMayAutoResume": false,
+  "targetedTests": {
+    "executed": 10,
+    "failed": 0
+  },
+  "latestFullSwiftTests": {
+    "executed": 377,
+    "skipped": 6,
+    "failed": 0
+  },
+  "productionHashes": {
+    "RunJournal.swift": "fbd51a473cedbca77a312f343c3eb6cd97d710c65b2e9ebce692c693ca4c6f54",
+    "LegacyTaskImporter.swift": "b3e8d6b71f903c8d93afdc2a906f7ab7cd70acdb16b2688a88bd0496d2a0853a"
+  },
+  "testHash": "118b7594b041df12e04715230fe1f54e1edc79b2762148f3e374867f26bfdd8d",
+  "remainingGates": [
+    "snapshot-compaction",
+    "durable-launch-broker-for-unbound-crash-window",
+    "typed-journaled-runtime-queue",
+    "remaining-runtime-adapters",
+    "legacy-controller-cutover"
+  ]
+}

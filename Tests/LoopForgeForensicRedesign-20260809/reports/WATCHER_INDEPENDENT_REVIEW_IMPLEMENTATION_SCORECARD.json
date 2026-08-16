@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-10T23:42:05Z",
+  "status": "implemented-and-regression-package-verified-not-final",
+  "acceptanceRowsAdvanced": ["I-05"],
+  "rootCause": {
+    "sameWritableThreadCouldRepairAssessAndApprove": true,
+    "deterministicCommandsEstablishedSemanticTruth": false,
+    "persistedUnreviewedAssessmentWasPreviouslyAuthoritative": true
+  },
+  "productionEnforcement": {
+    "freshReviewerThreadRequired": true,
+    "reviewerAccess": "readOnly",
+    "sameThreadRejected": true,
+    "sameLineageRejected": true,
+    "pipelineSHA256Bound": true,
+    "assessmentSHA256Bound": true,
+    "rejectionFailsClosed": true,
+    "ambiguousMarkerFailsClosed": true,
+    "legacyUnreviewedAssessmentAuthority": "advisory-only",
+    "reportExposesAuthorityAndDigests": true
+  },
+  "verification": {
+    "watcherTestsPassed": 35,
+    "fullTestsExecuted": 522,
+    "fullTestsSkipped": 8,
+    "fullTestFailures": 0,
+    "packagingOwnedTestsExecuted": 522,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "packageSmokePassed": true,
+    "residualPackagedProcessCount": 0,
+    "sourceSnapshotSHA256": "9cd1f634b2aba35f6b0f4bdbefb5628c3c77651d3c8da1ccfce4943751528263",
+    "executableSHA256": "6b32cee5ad3af5f17bb6284ed2d80b18628bd57220c761092b611fe632a1f293",
+    "zipSHA256": "0e5b5762342c8741350a1fc1291a11482311b94f22ed72473977fe6c6f845666",
+    "dmgSHA256": "3ed5f9d6f5deaf797641b3c61774b7c501f205764b74273f3f3288bf8343d51f",
+    "packageTestLogSHA256": "12faf70e1adb046387b6490c7def4e777fa157b99be286d2d9d17d18a4565640",
+    "cdHash": "eff6e18c8ebe0db6524637c6b0c9ab87a9cfe0c3"
+  },
+  "knownBoundary": {
+    "heterogeneousProviderMandatory": false,
+    "deterministicCompletionClosurePending": true,
+    "nativeUnlockedMatrixPending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

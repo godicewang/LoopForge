@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-14T13:27:19Z",
+  "status": "preapply-verifier-reviewer-containment-readiness-gate-enforced",
+  "finalAcceptance": false,
+  "easyBusinessMutated": false,
+  "controls": {
+    "checkedBeforeSupervisorConstruction": true,
+    "checkedBeforeLeaseAdmission": true,
+    "checkedBeforeApplyIntent": true,
+    "checkedBeforeOutboxPersistence": true,
+    "nonCodableCapability": true,
+    "noPublicInitializer": true,
+    "releaseIssuerAvailable": false,
+    "exactRunBinding": true,
+    "exactTransactionBinding": true,
+    "exactContractBinding": true,
+    "completeSortedRecipeCoverage": true,
+    "fullProbeDigestBinding": true,
+    "executableDigestBinding": true,
+    "residentMemoryCeilingBinding": true,
+    "zeroChildProcessBinding": true,
+    "missingReadinessLeavesRollbackPrepared": true,
+    "missingReadinessCreatesLease": false,
+    "missingReadinessCreatesOutboxEntry": false,
+    "crossWiredReadinessRejected": true
+  },
+  "verification": {
+    "swiftTestsExecuted": 767,
+    "swiftTestsSkipped": 8,
+    "swiftTestFailures": 0,
+    "swiftTestSeconds": 67.228,
+    "releaseBuildSeconds": 89.60,
+    "releaseExecutableSHA256": "71cef336bde555b2a5ec4fbd18d60bdef45a883af5a0a9ebc724e5707966edf5",
+    "failedRunsCounted": 0,
+    "excludedCompilationDiagnostics": 1,
+    "ownedProcessesRemaining": 0
+  },
+  "sourceHashes": {
+    "KernelResidentMemoryEnforcement.swift": "b96872b80349db4d3f37270d9e9b3b20ecfc21737b83a8624ced2e66bf4fb4c9",
+    "WorkspaceCompletedCandidateMutationApplyPreparation.swift": "6b4a676106c67c7701464532397c194788cf41b0898033226bf904a406fcc1ed",
+    "KernelRunEnrollmentCoordinatorTests.swift": "ed0999924bfb37e706b50b694d0890a912c9646c78b698ebd978617fbe2e8132"
+  },
+  "easyBusinessReadOnlyHead": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+  "remaining": [
+    "trusted privileged or container Release containment issuer",
+    "native immutable design baseline and complete current visual authority",
+    "production kernel cutover and legacy retirement",
+    "current-source package sign hash native UI clean commit and push"
+  ]
+}

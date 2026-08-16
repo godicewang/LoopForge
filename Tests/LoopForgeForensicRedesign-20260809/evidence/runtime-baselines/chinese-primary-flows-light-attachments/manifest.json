@@ -1,0 +1,80 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A03E785D-8E88-4B54-BCA1-B609824B1FF6",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "5B2A7BF9-E875-435D-8BF4-26403435BDEB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "发布审计-补充经营细节_0_CCA13492-EA4E-435C-AA36-0CAD46E4F774.png",
+        "timestamp" : 1786290505
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A03E785D-8E88-4B54-BCA1-B609824B1FF6",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "46F3606F-218B-4E2D-8094-143234B73C33.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "发布审计-选择具体业态_0_ECB6DAAA-8706-4676-BBEA-0B72483B20CA.png",
+        "timestamp" : 1786290502.037
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A03E785D-8E88-4B54-BCA1-B609824B1FF6",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "E0F9E0B2-ABCB-49D6-81C4-DCE92DC1DFB6.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "发布审计-选择行业_0_3E452ADD-B345-4922-AAF1-2757EFA78EBF.png",
+        "timestamp" : 1786290499.281
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A03E785D-8E88-4B54-BCA1-B609824B1FF6",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "95B64219-F9C5-4259-A1C7-92A694B31E9A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "发布审计-我的决策台_0_D61FE713-C93F-4B97-AEC7-E96C482C55F6.png",
+        "timestamp" : 1786290488.152
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A03E785D-8E88-4B54-BCA1-B609824B1FF6",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "2F8559A7-C586-4737-B6AA-C132A1A0C17B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "发布审计-好友消息_0_28380601-07C3-4A74-8492-C2E1B39CB2B3.png",
+        "timestamp" : 1786290486.822
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A03E785D-8E88-4B54-BCA1-B609824B1FF6",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "FAF9EFF4-DAE8-4CFD-B82D-3A4B4BBBD1F0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "发布审计-创业圈_0_04B7F16A-D311-4140-9881-48B3FA3644F3.png",
+        "timestamp" : 1786290484.968
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A03E785D-8E88-4B54-BCA1-B609824B1FF6",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "EE154930-E2C7-4D52-AAA9-477F685AE461.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "发布审计-找旺铺_0_64E58009-A092-417A-B22F-B49089288AEA.png",
+        "timestamp" : 1786290483.148
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "A03E785D-8E88-4B54-BCA1-B609824B1FF6",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "FF0DE084-D32F-45E3-9D67-5635C94486A1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "发布审计-评估首页_0_0755CFFF-19CB-4C87-9302-4DC26FEEB63F.png",
+        "timestamp" : 1786290481.235
+      }
+    ],
+    "testIdentifier" : "EasyBusinessUITests/testReleaseVisualAuditAcrossPrimaryFlows()",
+    "testIdentifierURL" : "test://com.apple.xcode/EasyBusiness/EasyBusinessUITests/EasyBusinessUITests/testReleaseVisualAuditAcrossPrimaryFlows"
+  }
+]

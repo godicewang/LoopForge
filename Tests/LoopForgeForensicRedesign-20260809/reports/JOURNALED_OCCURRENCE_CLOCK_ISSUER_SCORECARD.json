@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T07:08:08Z",
+  "status": "journaled-occurrence-clock-issuer-package-verified-owned-execution-integration-pending",
+  "acceptanceRowsAdvanced": ["F-02"],
+  "priorDefect": {
+    "controllerCouldInventClockBounds": true,
+    "controllerCouldDeclareAcceptedDisposition": true,
+    "bootAndSleepEvidenceCallerSupplied": true
+  },
+  "enforcementBoundary": {
+    "nonCodableStartCapability": true,
+    "singleUseToken": true,
+    "issuerOwnedMonotonicClock": true,
+    "issuerOwnedBootIdentity": true,
+    "derivedDisposition": true,
+    "sleepGapDetected": true,
+    "crashOpenIntervalCountsZero": true,
+    "journalCommitRequired": true,
+    "ownedProcessExecutionBound": false
+  },
+  "verification": {
+    "recorderTestsExecuted": 1,
+    "recorderFailures": 0,
+    "fullTestsExecuted": 602,
+    "fullTestsSkipped": 8,
+    "fullFailures": 0,
+    "packagingOwnedTestsExecuted": 602,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "sourceSnapshotSHA256": "239329f16c7bdf63a3f3f0caeb9819e0791950898ec1bae47838caf6a5605856",
+    "recorderSourceSHA256": "f25a71c7f0f37c1ad3beb236cbced593f7446a8e5e2f3f6f10d1a0c39070d15e",
+    "recorderTestsSHA256": "d7ae39ffe801876451f90eb7e1637202c1fd4c4551bf456e0ce50778695f28c7",
+    "fullTestLogSHA256": "63ee3c307835c03f145cfdf5698561f22d1b06a04cae5f44e8845b5b372e14b2",
+    "packageTestLogSHA256": "e783c0280cd4b4b1d904dd9b2828a7ccbc35742fdb716b4f857c8e0ff2e94b3f",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "buildManifestSHA256": "386e6d8e2ce8ffd99beaaf957255fe0d6d2bd2e3ea654888687a2276d5bc4b4a",
+    "executableSHA256": "4f19fc26a537b0bfdf469ad0796e31f4d33bbf1ad9fb84452a3eda2ea129de11",
+    "zipSHA256": "5d3d0f1d2fb7af228582bbd387ad8e705151f1dd3469baef6cb3083feb77aee4",
+    "dmgSHA256": "60a56250afcc7900f66e5b18c4b9fe0c660eef8a4d7d45f9cf93f03411482e01",
+    "cdHash": "f87c75d59488a0e4512579e66d4e6b35ae6f9900",
+    "residualPackagedProcessCount": 0
+  },
+  "knownBoundary": {
+    "productionKernelEnrollmentPending": true,
+    "ownedProcessExecutionBridgePending": true,
+    "legacyControllerCutoverPending": true,
+    "currentNativeUICapturePending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

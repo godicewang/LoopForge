@@ -6,6 +6,20 @@ final class TaskStore: ObservableObject {
     @Published private(set) var tasks: [LoopTask] = []
     @Published var selectedTaskID: UUID?
 
+    /// Streaming Codex events can arrive several times per second. Publishing
+    /// and atomically rewriting the complete task checkpoint for every event
+    /// makes SwiftUI rebuild a large Graph/detail tree and repeatedly encodes
+    /// megabytes of historical evidence on the main actor. Retain those events
+    /// immediately in memory, expose them to reviewers through `task(id:)`,
+    /// then publish/persist them as one bounded checkpoint.
+    static let graphLogPublicationInterval: TimeInterval = 30
+    private struct GraphLogKey: Hashable {
+        let taskID: UUID
+        let nodeID: String
+    }
+    private var pendingGraphLogs: [GraphLogKey: [TaskLogEntry]] = [:]
+    private var pendingGraphLogFlushJobs: [UUID: Task<Void, Never>] = [:]
+
     let storageURL: URL
 
     init(storageURL: URL? = nil) {
@@ -24,7 +38,20 @@ final class TaskStore: ObservableObject {
         save()
     }
 
-    func task(id: UUID) -> LoopTask? { tasks.first { $0.id == id } }
+    func task(id: UUID) -> LoopTask? {
+        guard var task = tasks.first(where: { $0.id == id }),
+              var graph = task.graphState else {
+            return tasks.first { $0.id == id }
+        }
+        for (key, entries) in pendingGraphLogs where key.taskID == id {
+            guard let index = graph.nodes.firstIndex(where: { $0.id == key.nodeID }) else {
+                continue
+            }
+            Self.appendBounded(entries, to: &graph.nodes[index].logs)
+        }
+        task.graphState = graph
+        return task
+    }
 
     func select(id: UUID, markCompletionViewed: Bool = true) {
         selectedTaskID = id
@@ -58,9 +85,11 @@ final class TaskStore: ObservableObject {
         nodeID: String,
         _ mutation: (inout GraphLoopNode) -> Void
     ) {
+        let pending = takePendingGraphLogs(taskID: taskID, nodeID: nodeID)
         update(id: taskID) { task in
             guard var graph = task.graphState,
                   let index = graph.nodes.firstIndex(where: { $0.id == nodeID }) else { return }
+            Self.appendBounded(pending, to: &graph.nodes[index].logs)
             mutation(&graph.nodes[index])
             task.graphState = graph
             task.accumulatedCodexSeconds = graph.nodes.reduce(0) {
@@ -77,11 +106,85 @@ final class TaskStore: ObservableObject {
     ) {
         let clean = message.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !clean.isEmpty else { return }
+        if kind == .agent || kind == .command || kind == .system {
+            let key = GraphLogKey(taskID: taskID, nodeID: nodeID)
+            pendingGraphLogs[key, default: []].append(
+                TaskLogEntry(kind: kind, message: clean)
+            )
+            scheduleGraphLogFlush(taskID: taskID)
+            return
+        }
         updateGraphNode(taskID: taskID, nodeID: nodeID) { node in
             node.logs.append(TaskLogEntry(kind: kind, message: clean))
             if node.logs.count > AppConstants.maxStoredLogs {
                 node.logs.removeFirst(node.logs.count - AppConstants.maxStoredLogs)
             }
+        }
+    }
+
+    func flushPendingGraphLogs(taskID: UUID? = nil) {
+        let taskIDs = Set(pendingGraphLogs.keys.compactMap { key in
+            taskID == nil || key.taskID == taskID ? key.taskID : nil
+        })
+        for id in taskIDs {
+            let entriesByNode = pendingGraphLogs.reduce(into: [String: [TaskLogEntry]]()) {
+                guard $1.key.taskID == id else { return }
+                $0[$1.key.nodeID, default: []].append(contentsOf: $1.value)
+            }
+            guard !entriesByNode.isEmpty else { continue }
+            pendingGraphLogs = pendingGraphLogs.filter { $0.key.taskID != id }
+            pendingGraphLogFlushJobs[id]?.cancel()
+            pendingGraphLogFlushJobs[id] = nil
+            update(id: id) { task in
+                guard var graph = task.graphState else { return }
+                for (nodeID, entries) in entriesByNode {
+                    guard let index = graph.nodes.firstIndex(where: { $0.id == nodeID }) else {
+                        continue
+                    }
+                    Self.appendBounded(entries, to: &graph.nodes[index].logs)
+                }
+                task.graphState = graph
+            }
+        }
+    }
+
+    var pendingGraphLogCount: Int {
+        pendingGraphLogs.values.reduce(0) { $0 + $1.count }
+    }
+
+    private func scheduleGraphLogFlush(taskID: UUID) {
+        guard pendingGraphLogFlushJobs[taskID] == nil else { return }
+        pendingGraphLogFlushJobs[taskID] = Task { [weak self] in
+            do {
+                try await Task.sleep(
+                    nanoseconds: UInt64(Self.graphLogPublicationInterval * 1_000_000_000)
+                )
+            } catch {
+                return
+            }
+            guard !Task.isCancelled else { return }
+            self?.flushPendingGraphLogs(taskID: taskID)
+        }
+    }
+
+    private func takePendingGraphLogs(taskID: UUID, nodeID: String) -> [TaskLogEntry] {
+        let key = GraphLogKey(taskID: taskID, nodeID: nodeID)
+        let entries = pendingGraphLogs.removeValue(forKey: key) ?? []
+        if !pendingGraphLogs.keys.contains(where: { $0.taskID == taskID }) {
+            pendingGraphLogFlushJobs[taskID]?.cancel()
+            pendingGraphLogFlushJobs[taskID] = nil
+        }
+        return entries
+    }
+
+    private static func appendBounded(
+        _ entries: [TaskLogEntry],
+        to logs: inout [TaskLogEntry]
+    ) {
+        guard !entries.isEmpty else { return }
+        logs.append(contentsOf: entries)
+        if logs.count > AppConstants.maxStoredLogs {
+            logs.removeFirst(logs.count - AppConstants.maxStoredLogs)
         }
     }
 

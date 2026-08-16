@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "status": "implemented-side-by-side",
+  "legacyExecutionCutover": false,
+  "easyBusinessMutated": false,
+  "exactPIDRequired": true,
+  "osProcessStartTimestampRequired": true,
+  "processGroupLeaderIdentityRequired": true,
+  "executableNameScanUsed": false,
+  "identityMismatchCanSignal": false,
+  "legacyIdentityWithoutOSStartAutoRecovered": false,
+  "unboundAdmissionAutoReleased": false,
+  "exactBoundProcessRecovery": true,
+  "exactBoundAbsenceJournalRelease": true,
+  "freshSupervisorHydrationImplemented": true,
+  "spawnBindingAtomicityImplemented": false,
+  "processAdapterTests": {
+    "executed": 9,
+    "failed": 0
+  },
+  "journaledProcessRuntimeTests": {
+    "executed": 12,
+    "failed": 0
+  },
+  "fullSwiftTests": {
+    "executed": 377,
+    "skipped": 6,
+    "failed": 0
+  },
+  "lineCounts": {
+    "RuntimeSupervisor.swift": 1174,
+    "JournaledProcessRuntime.swift": 431,
+    "ProcessGroupRuntimeAdapter.swift": 558,
+    "JournaledProcessRuntimeTests.swift": 662,
+    "ProcessGroupRuntimeAdapterTests.swift": 326
+  },
+  "productionHashes": {
+    "RuntimeSupervisor.swift": "0dce671b2f8538fe853bb8ab0eb280428dba17f1de65da1c512752b958376058",
+    "JournaledProcessRuntime.swift": "98b54bbd8cbd4e75539a18075f1d7cf2a93ea318cc1fc2f25ddcf8c775343664",
+    "ProcessGroupRuntimeAdapter.swift": "652fc135756dcf83db1ff932f28748eb05ea00b1cd3fdeee9dbf00e493e6bb18"
+  },
+  "testHashes": {
+    "JournaledProcessRuntimeTests.swift": "aaa61677df5bdd58c026eaccd3bf78a48283cbf48018d505c7c06d7980be3c0a",
+    "ProcessGroupRuntimeAdapterTests.swift": "e73e84dfe352bd104603f6a41dc60671e6761bbea57790b853370989672e7de3"
+  },
+  "remainingGates": [
+    "durable-launch-broker-for-unbound-crash-window",
+    "typed-journaled-runtime-queue",
+    "remaining-runtime-adapters",
+    "legacy-controller-shadow-and-cutover",
+    "revision-bound-final-package"
+  ]
+}

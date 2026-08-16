@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "findingId": "F-011",
+  "title": "Generic workspace evidence produces 100/100 without requirement or visual satisfaction",
+  "status": "confirmed",
+  "sourceTaskId": "1ED2180F-FBE1-4BCA-9E79-701F40CC3483",
+  "persistedContradiction": {
+    "auditScore": 100,
+    "auditSummary": "All required Ultra evidence gates passed.",
+    "visualAuditRequired": true,
+    "visualAuditPassed": false,
+    "supervisorCompletionApproved": false,
+    "coverageRowCount": 7,
+    "notObservedCoverageRows": 2
+  },
+  "genericScoreWeights": {
+    "preexistingPrimaryDeliverable": 20,
+    "preexistingDocumentation": 15,
+    "preexistingEntryPoint": 10,
+    "preexistingRegressionFiles": 15,
+    "anyRecognizedSuccessfulVerification": 20,
+    "noTrackedUnresolvedFailure": 10,
+    "anyGraphCompleteMarker": 10,
+    "visualEvidence": 0,
+    "visualApproval": 0
+  },
+  "rootCauses": [
+    "whole-workspace existence is scored instead of task-specific baseline delta",
+    "visual gates do not affect the scalar score",
+    "pre-visual audit score and summary are persisted instead of final audit result",
+    "later unrelated success can reset prior verification failures",
+    "coverage inventory is a fixed category template rather than atomized user requirements",
+    "evidence collector labels task.request as the original goal",
+    "Graph plan review and final schemas have no requirement IDs or per-requirement verdicts",
+    "prompt preservation checks literals but not unquoted semantic constraints"
+  ],
+  "historicalGenericCoverage": [
+    "Workspace implementation or primary deliverable: candidate evidence attached",
+    "Reproducible verification: candidate evidence attached",
+    "Documentation and handoff: not observed in attached evidence",
+    "Regression or recovery coverage: candidate evidence attached",
+    "Running-product primary visual state: candidate evidence attached",
+    "Failure, empty, offline, or recovery visual state: candidate evidence attached",
+    "Accessibility or layout-pressure visual state: not observed in attached evidence"
+  ],
+  "acceptanceRequirements": [
+    "immutable typed requirement registry with exact source spans",
+    "immutable product and design baseline requirements",
+    "requirement IDs declared by every node repair and review",
+    "typed per-requirement verdicts with independent evidence",
+    "completion conjunction across requirements runtime integration cleanup and visual gates",
+    "separate labelled evidence dimensions instead of an unlabeled scalar",
+    "persist and display the same final audit result",
+    "command and failure identity for successful rerun reconciliation",
+    "candidate evidence remains unverified until linked by an independent checker",
+    "adversarial regression tests for semantic drift and false-green scoring"
+  ],
+  "evidence": [
+    "../evidence/task-snapshot-20260809T131753Z.json",
+    "COMPLETION_SCORE_AND_REQUIREMENT_COVERAGE.md",
+    "../../../Sources/LoopForge/WorkspaceAuditor.swift",
+    "../../../Sources/LoopForge/AuditEvidence.swift",
+    "../../../Sources/LoopForge/GraphLoopEngine.swift",
+    "../../../Sources/LoopForge/Models.swift",
+    "../../../Sources/LoopForge/AuxiliaryModelRouter.swift",
+    "../../../Tests/LoopForgeTests/AuditorTests.swift"
+  ]
+}

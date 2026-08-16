@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "report": "RESOURCE_THERMAL_AND_QUIESCENCE_BUDGET_SPECIFICATION.md",
+  "status": "pre-implementation-normative-design",
+  "productionRefactorAuthorized": false,
+  "currentMechanisms": {
+    "nonLocalAutoGraphConcurrency": 3,
+    "localAutoGraphConcurrency": 1,
+    "parallelCandidateMaximum": 8,
+    "perNodeBrokerPollingHertz": 20,
+    "permissionScanIntervalSeconds": 4,
+    "permissionWindowsPerApplication": 2,
+    "permissionMaximumNodesPerWindow": 64,
+    "loopTimerSeconds": 5,
+    "runtimeCheckpointSeconds": 15,
+    "wholeTaskIdleSleepDisabled": true,
+    "quitMaximumGraceSeconds": 4,
+    "quitPollingMilliseconds": 50,
+    "ollamaKeepAliveSeconds": 300,
+    "productionThermalGovernorPresent": false
+  },
+  "resourceVectorDimensions": 9,
+  "genericResourceFamilyCount": 10,
+  "thermalStates": ["nominal", "fair", "serious", "critical", "unavailable/unknown"],
+  "defaultHeavyPhaseWeights": {
+    "localLargeModelInference": 70,
+    "compilerBuildTest": 60,
+    "nativeRuntimeGUICapture": 25,
+    "imageDecodeOCR": 25,
+    "repositoryScanHash": 15,
+    "integrationRollback": 20,
+    "journalSnapshotReport": 10,
+    "remoteAgentNetworkWait": 5
+  },
+  "hostRelativeRules": {
+    "reservedCores": 2,
+    "maximumHeavyCoreFraction": 0.50,
+    "maximumOwnedPhysicalMemoryFraction": 0.70,
+    "minimumHostMemoryReserveBytes": 8589934592,
+    "lowPowerMinimumPolicy": "fair"
+  },
+  "acceptanceBudgets": {
+    "idleStoppedCPUPercentP95": 0.5,
+    "idleStoppedSampleSeconds": 600,
+    "minimumIdleTimerSeconds": 30,
+    "networkWaitCoordinatorCPUPercentP95": 2.0,
+    "maximumConcurrentHeavyPhasesAtWeight50": 1,
+    "criticalCleanupOnlyResponseSeconds": 5,
+    "stopDrainStartMilliseconds": 250,
+    "cooperativeQuiescenceSeconds": 5,
+    "minimumFallbackPollMilliseconds": 250,
+    "maximumIdleFallbackPollSeconds": 30,
+    "permissionPromptLeaseSeconds": 30,
+    "powerLeaseRenewalSeconds": 60
+  },
+  "quiescenceRequiresZero": [
+    "unjoined tasks",
+    "owned live processes",
+    "active resource leases",
+    "active timers and observers",
+    "active outbox effects",
+    "active power assertions"
+  ],
+  "requiredTestCount": 30,
+  "sourceEvidence": [
+    "Sources/LoopForge/LoopController.swift:84",
+    "Sources/LoopForge/LoopController.swift:130",
+    "Sources/LoopForge/LoopController.swift:262",
+    "Sources/LoopForge/LoopController.swift:291",
+    "Sources/LoopForge/LoopController.swift:313",
+    "Sources/LoopForge/SystemPermissionAutomator.swift:56",
+    "Sources/LoopForge/SystemPermissionAutomator.swift:80",
+    "Sources/LoopForge/HostResourceLeases.swift:375",
+    "Sources/LoopForge/OllamaManager.swift:327",
+    "Sources/LoopForge/OllamaManager.swift:342",
+    "Sources/LoopForge/AuditEvidence.swift:65",
+    "Sources/LoopForge/AuditEvidence.swift:391",
+    "Sources/LoopForge/GraphLoopEngine.swift:3101",
+    "Sources/LoopForge/GraphLoopEngine.swift:3554"
+  ]
+}

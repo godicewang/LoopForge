@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "status": "production-execution-session-external-dependency-composition-present-release-containment-and-native-start-cutover-pending",
+  "recordedAt": "2026-08-15T15:05:54Z",
+  "acceptanceRowsAdvanced": [
+    "B-06"
+  ],
+  "controller": {
+    "singleProductionSessionMethod": true,
+    "activationInvoked": true,
+    "containmentReadinessInvoked": true,
+    "nativeLaunchInvokedWhenReady": true,
+    "nativeCompletionInvokedWhenReady": true,
+    "observationAppendInvokedWhenReady": true,
+    "partialLiveProcessHandleReturned": false,
+    "residentMemoryResolverConsumesLiveActivation": true,
+    "decodedReceiptCanSatisfyResolver": false,
+    "defaultReleaseResolverAvailable": false,
+    "defaultReleasePathJournalsVeto": true
+  },
+  "vetoProof": {
+    "reason": "residentMemoryEnforcementUnavailable",
+    "admissionCreated": false,
+    "leaseCreated": false,
+    "sandboxCreated": false,
+    "processStarted": false,
+    "runtimeLaunchCreated": false,
+    "resultCreated": false,
+    "observationCreated": false,
+    "exactRetryReturnsRetainedVeto": true
+  },
+  "debugNativeProof": {
+    "actualNativeSandboxGateUsed": true,
+    "immutableCanonicalRequestConsumed": true,
+    "canonicalResultEmitted": true,
+    "naturalReleaseCompleted": true,
+    "releaseBoundResultIssued": true,
+    "journalOwnedObservationAppended": true,
+    "exactControllerRetryReplayed": true,
+    "substitutedLaunchIdentityRejected": true,
+    "substitutionAdvancedJournal": false,
+    "postCompletionLiveLeaseCount": 0,
+    "debugTestOnlyResidentMemoryCapability": true,
+    "productionNativeObserverSpawnExecuted": false
+  },
+  "verification": {
+    "newControllerTests": {
+      "executed": 2,
+      "failures": 0,
+      "seconds": 0.410
+    },
+    "productionEnrollmentSuite": {
+      "executed": 40,
+      "failures": 0,
+      "seconds": 5.070
+    },
+    "fullSuite": {
+      "executed": 811,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 60.075,
+      "logSHA256": null
+    },
+    "packageOwnedFullSuite": {
+      "executed": 811,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 59.388,
+      "realCodexChildBridgeSeconds": 16.571,
+      "logSHA256": "467c93874c42c897cd22d80fe113e9a9afb03cd22487a8a7c6e205a94a1ba195"
+    },
+    "releaseBuild": {
+      "passed": true,
+      "seconds": 101.53,
+      "architecture": "arm64"
+    },
+    "sourceSnapshotSHA256": "9a749dd8152f96b495ca222b1bfa172831220603af586e174908dd130136ade5",
+    "packagedLoopForgeSHA256": "2422ba105e343a813ae8c5e30492b6711104a1b5ba4ea86582c8e58eb72a8663",
+    "packagedKernelSandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "signatureVerifiedDeepStrict": true,
+    "exactPackagedMachOStartupPassed": true,
+    "postSmokePackagedProcessCount": 0,
+    "thermalWarning": false,
+    "failedPackagingShellInvocationsCountedAsActiveTime": false
+  },
+  "sourceDigests": {
+    "productionExecutionCoordinator": "80c69405f17825628f657aa10ce7acd3d31f99115c3319a1c0684dc5822d5b8d",
+    "journaledRuntime": "a0423f0701ee08af5f3f5834a46cb2b57cdace38fa9528ce343b288504843081",
+    "productionTests": "43072d91557a693b5980a86163c6c3d7056a8729dba8e2b30bbdd6e6bfedcd86"
+  },
+  "easyBusiness": {
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "statusFingerprintSHA256": "a640615bfb23f0d3a9fefe222294663302b40cca54e23b2f4ae0029f5e4bcfd7",
+    "mutated": false
+  },
+  "remaining": [
+    "trusted Release resident-memory containment issuer or retained veto",
+    "native app execution-session start cutover",
+    "final-completion controller invocation",
+    "legacy Single and Parallel retirement",
+    "unlocked native screenshots",
+    "clean-commit rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false
+}

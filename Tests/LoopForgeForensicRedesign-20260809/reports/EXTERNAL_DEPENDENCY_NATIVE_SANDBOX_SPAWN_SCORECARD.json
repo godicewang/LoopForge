@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "status": "external-dependency-native-sandbox-spawn-debug-proven-production-resident-memory-veto-retained",
+  "recordedAt": "2026-08-15T14:14:08Z",
+  "acceptanceRowsAdvanced": [
+    "B-06"
+  ],
+  "runtime": {
+    "activationReadinessRequired": true,
+    "requestArtifactRevalidatedBeforeAndAfterAdmission": true,
+    "stagedExecutableRevalidatedBeforeAndAfterAdmission": true,
+    "minimalEnvironmentDerivedByRuntime": true,
+    "privateRequestStandardInput": true,
+    "privateBoundedStandardOutputAndError": true,
+    "readOnlySandboxDerivedByRuntime": true,
+    "networkPolicyBound": true,
+    "oneProcessKernelLimitBound": true,
+    "outputFileKernelLimitBound": true,
+    "wallDeadlineAndReservationDerived": true,
+    "admissionJournaledBeforeSpawn": true,
+    "bindingAndLaunchJournaledAtomicallyAfterAttestation": true
+  },
+  "nativeProof": {
+    "actualNativeProcessSpawned": true,
+    "actualNativeSandboxGateUsed": true,
+    "stoppedGateObserved": true,
+    "targetExecHandshakeSucceeded": true,
+    "candidateWorkingDirectoryWasNil": true,
+    "immutableRequestConsumedFromStandardInput": true,
+    "exactRetainedOutputVerified": true,
+    "emptyStandardErrorVerified": true,
+    "naturalExitCode": 0,
+    "journalLaunchReadbackExact": true,
+    "postReleaseRuntimeHandleCount": 0,
+    "postReleaseSupervisorLeaseCount": 0,
+    "debugTestOnlyResidentMemoryCapability": true,
+    "productionNativeObserverSpawnExecuted": false
+  },
+  "adversarialFindings": {
+    "descriptorResolvedPhysicalPathIdentityAdded": true,
+    "varPrivateVarAliasMismatchClosed": true,
+    "separateStandardErrorDigestDomainEnforced": true,
+    "failedDiagnosticRunsCountedAsActiveTime": false
+  },
+  "verification": {
+    "focusedSuite": {
+      "executed": 15,
+      "failures": 0
+    },
+    "fullSuite": {
+      "executed": 808,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 57.480,
+      "logSHA256": null
+    },
+    "packageOwnedFullSuite": {
+      "executed": 808,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 61.394,
+      "realCodexChildBridgeSeconds": 17.538,
+      "logSHA256": "f05670a1197d2a65201fa44ecc59113fd7d907ae2c6a7eb52fee37a25f21cb0c"
+    },
+    "releaseBuild": {
+      "passed": true,
+      "seconds": 104.23,
+      "architecture": "arm64"
+    },
+    "sourceSnapshotSHA256": "adb6c28701fb72e6f93a4f62cd8a59eebffb5b778dedcab20f1a45f303ac9972",
+    "packagedLoopForgeSHA256": "6af8d949007ac7d5e08774ab64fb6aec4a8396cf9953e9d864a18cfc5e711bc1",
+    "packagedKernelSandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "signatureVerifiedDeepStrict": true,
+    "exactPackagedMachOStartupPassed": true,
+    "postSmokePackagedProcessCount": 0,
+    "thermalWarning": false
+  },
+  "sourceDigests": {
+    "processAdapter": "168ddeda2fc20b8a75729dad29413e0442594eebae6a7827b80ef7ef1ca4cdb0",
+    "journaledRuntime": "393436c5cd06d3ebc84dccd040c6795d38b419f404716ef0b2c564d4cfd9ab09",
+    "runtimeLaunch": "3cc3d356e1b250276cd8dde9b57b47e81f1b659b1b7ec8b065ad602b34fbefe2",
+    "activation": "e0b31faf7d13e3593af264a1d1b7449904fc38d290e5b6fe2cfee06f96eda307",
+    "nativeSandbox": "0583733aa33297c86a4b556b1b0bca52ec23f9a51d1cc66fce9f97719e6e74a8",
+    "nativeFixture": "564f511b9490e792d86b424fbc5b4f0556b2d23bbd74db348fc28a98e335d080",
+    "integrationTests": "137aa76463847091aa14ef046976fbaa95ae6a844d24a0f22b2d3b2daef0a916"
+  },
+  "easyBusiness": {
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "statusFingerprintSHA256": "a640615bfb23f0d3a9fefe222294663302b40cca54e23b2f4ae0029f5e4bcfd7",
+    "mutated": false
+  },
+  "remaining": [
+    "trusted Release resident-memory containment issuer or retained veto",
+    "production parse/result/observation composition and controller invocation",
+    "legacy Single and Parallel retirement",
+    "unlocked native screenshots",
+    "clean-commit rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false
+}

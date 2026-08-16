@@ -6,6 +6,9 @@ dist/
 *.xcresult
 .swiftpm/
 DerivedData/
+Tests/LoopForgeForensicRedesign-*/evidence/runtime-baselines/derived-*/
+Tests/LoopForgeForensicRedesign-*/evidence/runtime-baselines/chinese-301ef23/
+Tests/LoopForgeForensicRedesign-*/evidence/runtime-baselines/english-2ae4045/
 *.xcodeproj/xcuserdata/
 *.xcworkspace/xcuserdata/
 *.xccheckout

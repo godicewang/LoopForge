@@ -1,6 +1,7 @@
 import AppKit
 import Combine
 import Foundation
+import UniformTypeIdentifiers
 
 enum ProjectEntryMode: String, Equatable {
     case existing
@@ -19,7 +20,7 @@ final class AppModel: ObservableObject {
     @Published var draftRequest = "" {
         didSet { if draftRequest != oldValue, estimate != nil { estimate = nil } }
     }
-    @Published var draftExecutionMode: LoopExecutionMode = .singleLoop {
+    @Published var draftExecutionMode: LoopExecutionMode = .autoGraph {
         didSet { if draftExecutionMode != oldValue, estimate != nil { estimate = nil } }
     }
     @Published var draftParallelCandidateCount = 3
@@ -35,12 +36,12 @@ final class AppModel: ObservableObject {
     @Published var alertMessage: String?
     @Published var draftOfficialModel = AppConstants.officialWorkerModel
     @Published var draftReasoningEffort = "ultra"
-    @Published var draftAccessMode: CodexAccessMode = .fullAccess
+    @Published var draftAccessMode: CodexAccessMode = .workspaceOnly
     @Published var draftLocalModelID = ModelProfile.advancedVisualAuditor.id
     @Published var draftControlProvider: AgentProviderKind = .codex
     @Published var draftControlModelReference = AppConstants.officialWorkerModel
     @Published var draftControlReasoningEffort = "ultra"
-    @Published var draftControlAccessMode: CodexAccessMode = .fullAccess
+    @Published var draftControlAccessMode: CodexAccessMode = .readOnly
     @Published var draftSubProvider: AgentProviderKind = .codex
     @Published var draftSubModelReference = AppConstants.officialWorkerModel
     @Published var showingModelManager = false
@@ -52,6 +53,34 @@ final class AppModel: ObservableObject {
     @Published var promptOptimizationPhase: PromptOptimizationPhase = .idle
     @Published var promptOptimizationCandidates: [PromptOptimizationCandidate] = []
     @Published var promptOptimizationProvider = ""
+    @Published private(set) var pendingNativeContractConfirmation:
+        NativeTaskContractConfirmationDraft?
+    @Published private(set) var kernelEnrollmentInProgress = false
+    @Published private(set) var latestKernelEnrollmentReceipt:
+        KernelRunEnrollmentReceipt?
+    @Published private(set) var latestKernelExecutionReadiness:
+        KernelNativeExecutionReadinessAssessment?
+    @Published private(set) var kernelExecutionStartInProgress = false
+    @Published private(set) var latestKernelExecutionSessionReceipt:
+        KernelProductionExecutionSessionReceipt?
+    @Published private(set) var draftNativeVerificationProbe:
+        RequirementVerificationExecutableProbe?
+    @Published private(set) var draftNativeVerificationProbeSelection:
+        NativeVerificationProbeSelection?
+    @Published private(set) var nativeVerificationProbeImportInProgress = false
+    @Published private(set) var draftNativeDesignBaselineSource:
+        NativeDesignBaselineCaptureSource?
+    @Published var draftSourceRevisionExcludedDirectoryNames =
+        NativeTaskContractAuthoringRequest.defaultSourceRevisionCapturePolicy
+            .excludedDirectoryNames.joined(separator: ", ")
+    /// Explicit native-contract authority. Off by default and reset for every
+    /// new draft; it never inherits from provider selection or stored keys.
+    @Published var draftWorkerNetworkAccess = false
+    @Published private(set) var nativeDesignBaselineImportInProgress = false
+    @Published private(set) var pendingNativeDesignBaselineConfirmation:
+        NativeDesignBaselineConfirmationDraft?
+    @Published private(set) var latestAuthorizedKernelDesignBaseline:
+        AuthorizedKernelDesignBaseline?
     @Published var watcherDraftRequest = ""
     @Published var watcherDraftWorkspacePath: String?
     @Published var watcherDraftProjectMode: ProjectEntryMode?
@@ -65,6 +94,8 @@ final class AppModel: ObservableObject {
     @Published var showingWatcherGuide = false
     @Published var watcherGuideStartIndex = 0
     @Published var showingNewWatcher = true
+    @Published private(set) var kernelRecoveryReport:
+        WorkspaceMutationRecoveryStartupReport?
 
     let store: TaskStore
     let controller: LoopController
@@ -73,18 +104,62 @@ final class AppModel: ObservableObject {
     let codexConnection: CodexConnectionManager
     let permissionCenter: PermissionCenter
     let agentCatalog: AgentCatalog
+    /// Explicit new-kernel enrollment capability. No legacy task or Graph
+    /// path calls this service; a future native confirmation flow must supply
+    /// a sealed `RatifiedTaskContract` before enrollment is possible.
+    let kernelRunEnrollmentCoordinator: KernelRunEnrollmentCoordinator?
+    /// Separate new-kernel execution composition. It accepts only a retained
+    /// enrollment plus reducer-checked plan/admission authority and never
+    /// routes through the legacy LoopController, CodexRunner, or Graph engine.
+    let kernelExecutionCoordinator: KernelProductionExecutionCoordinator?
+    private let nativeContractConfirmationIssuer =
+        NativeTaskContractConfirmationIssuer()
+    private let nativeDesignBaselineConfirmationIssuer =
+        NativeDesignBaselineConfirmationIssuer()
     private let estimator = TaskEstimator()
     private let promptOptimizer = PromptOptimizer()
     private var cancellables = Set<AnyCancellable>()
     private var pendingOriginalPromptForTask: String?
     private var pendingPromptOptimizationSource: String?
+    private var pendingNativeContractUserActor: ActorIdentity?
+    private var pendingRatifiedNativeContract: RatifiedTaskContract?
+    private var pendingNativeEnrollmentRequestIdentity: (
+        runID: KernelRunID,
+        commandID: RunCommandID,
+        enrolledAt: Date
+    )?
+    /// Live, non-Codable execution authority. Only the explicit native
+    /// activation action can populate productive authority. Relaunch may add
+    /// only the narrow cleanup capability for an exact executing journal.
+    private var kernelExecutionSessions:
+        [KernelRunID: any KernelApplicationTerminationSession]
+    /// Normal quit must not race the one startup pass that owns durable
+    /// workspace-mutation recovery. Retaining the task lets termination await
+    /// the same bounded pass instead of observing an empty in-memory handle
+    /// table while a registered live lease still exists on disk.
+    private let workspaceMutationRecoveryTask: Task<
+        WorkspaceMutationRecoveryStartupReport,
+        Never
+    >?
+    private var kernelRecoveryReportConsumed = false
+    /// A journal proven to require cleanup must never disappear merely because
+    /// exact cleanup ownership could not be reconstructed. Such runs veto
+    /// normal termination until a later launch can recover them.
+    private var kernelApplicationTerminationRecoveryFailures: Set<KernelRunID>
+    private var newlyEnrolledKernelRunProjections: [KernelRunProjection] = []
     private var watcherAgentWasCustomized = false
 
     init(
         store: TaskStore? = nil,
         codexConnection: CodexConnectionManager? = nil,
         permissionCenter: PermissionCenter? = nil,
-        agentCatalog: AgentCatalog? = nil
+        agentCatalog: AgentCatalog? = nil,
+        workspaceMutationRecoveryTask: Task<
+            WorkspaceMutationRecoveryStartupReport,
+            Never
+        >? = nil,
+        kernelRunEnrollmentCoordinator: KernelRunEnrollmentCoordinator? = nil,
+        kernelExecutionCoordinator: KernelProductionExecutionCoordinator? = nil
     ) {
         let actualStore = store ?? TaskStore()
         let actualPermissionCenter = permissionCenter ?? PermissionCenter()
@@ -98,7 +173,8 @@ final class AppModel: ObservableObject {
         self.controller = LoopController(
             store: actualStore,
             permissionCenter: actualPermissionCenter,
-            agentCatalog: actualAgentCatalog
+            agentCatalog: actualAgentCatalog,
+            workspaceMutationRecoveryTask: workspaceMutationRecoveryTask
         )
         self.watcherStore = actualWatcherStore
         self.watcherController = WatcherController(
@@ -109,6 +185,21 @@ final class AppModel: ObservableObject {
         self.codexConnection = actualCodexConnection
         self.permissionCenter = actualPermissionCenter
         self.agentCatalog = actualAgentCatalog
+        self.kernelRunEnrollmentCoordinator = kernelRunEnrollmentCoordinator
+        self.kernelExecutionCoordinator = kernelExecutionCoordinator
+        self.workspaceMutationRecoveryTask = workspaceMutationRecoveryTask
+        self.kernelRecoveryReport = nil
+        self.pendingNativeContractConfirmation = nil
+        self.latestKernelEnrollmentReceipt = nil
+        self.latestKernelExecutionReadiness = nil
+        self.latestKernelExecutionSessionReceipt = nil
+        self.kernelExecutionSessions = [:]
+        self.kernelApplicationTerminationRecoveryFailures = []
+        self.draftNativeVerificationProbe = nil
+        self.draftNativeVerificationProbeSelection = nil
+        self.draftNativeDesignBaselineSource = nil
+        self.pendingNativeDesignBaselineConfirmation = nil
+        self.latestAuthorizedKernelDesignBaseline = nil
         if !actualStore.tasks.isEmpty { showingNewTask = false }
         if !actualWatcherStore.watchers.isEmpty { showingNewWatcher = false }
         self.codexConnection.objectWillChange
@@ -126,49 +217,169 @@ final class AppModel: ObservableObject {
         self.watcherController.objectWillChange
             .sink { [weak self] _ in self?.objectWillChange.send() }
             .store(in: &cancellables)
-        refreshIncompleteGraphReportsIfNeeded()
+        if let workspaceMutationRecoveryTask {
+            Task { [weak self] in
+                let report = await workspaceMutationRecoveryTask.value
+                guard let self else { return }
+                await self.consumeKernelRecoveryReport(report)
+            }
+        }
+        blockRetiredTaskRecoveryCandidates()
     }
 
-    private func refreshIncompleteGraphReportsIfNeeded() {
-        let auditor = WorkspaceAuditor()
-        let generator = CompletionReportGenerator()
-        for task in store.tasks where task.status == .completed
-            && task.resolvedExecutionMode == .autoGraph {
-            guard let path = task.completionReportPath,
-                  let document = try? String(contentsOfFile: path, encoding: .utf8),
-                  !document.contains("data-loopforge-report-schema=\"2\""),
-                  !document.contains("data-loopforge-report-schema=\"3\""),
-                  document.contains(
-                    "<h2>Verification runs</h2><ul><li>No verified item is available yet.</li>"
-                  ) else { continue }
-            let graphLogs = task.graphState?.nodes.flatMap(\.logs) ?? []
-            guard graphLogs.contains(where: { $0.kind == .command }) else { continue }
+    var kernelRunProjections: [KernelRunProjection] {
+        let recovered = (kernelRecoveryReport?.runReports ?? [])
+            .compactMap(\.kernelProjection)
+        return Dictionary(
+            (recovered + newlyEnrolledKernelRunProjections).map {
+                ($0.runID, $0)
+            },
+            uniquingKeysWith: { _, newest in newest }
+        ).values.sorted { $0.runID.rawValue < $1.runID.rawValue }
+    }
 
-            var reportTask = task
-            reportTask.reportGenerationProvider =
-                "Deterministic evidence fallback · refreshed from retained graph evidence"
-            let reportLogs = (task.logs + graphLogs).sorted { $0.timestamp < $1.timestamp }
-            let audit = auditor.audit(task: reportTask)
-            let snapshot = auditor.snapshot(
-                workspacePath: reportTask.workspacePath,
-                logs: reportLogs
+    var kernelRecoveryRunReports: [WorkspaceMutationRecoveryRunReport] {
+        (kernelRecoveryReport?.runReports ?? [])
+            .sorted { $0.runID.rawValue < $1.runID.rawValue }
+    }
+
+    var kernelExecutionReadinessByRunID:
+        [KernelRunID: KernelNativeExecutionReadinessAssessment] {
+        guard let readiness = latestKernelExecutionReadiness else { return [:] }
+        return [readiness.runID: readiness]
+    }
+
+    var kernelProviderInvocationReadinessByRunID:
+        [KernelRunID: KernelProviderInvocationProfileReadinessAssessment] {
+        if let session = latestKernelExecutionSessionReceipt {
+            return [
+                session.kernelProjection.runID:
+                    session.providerInvocationProfileReadiness
+            ]
+        }
+        guard let readiness = latestKernelExecutionReadiness else { return [:] }
+        return [
+            readiness.runID: readiness.providerInvocationProfileReadiness
+        ]
+    }
+
+    var hasActiveKernelExecutionSessions: Bool {
+        !kernelExecutionSessions.isEmpty ||
+            !kernelApplicationTerminationRecoveryFailures.isEmpty
+    }
+
+    #if DEBUG
+    /// Installs one already activated production session so the application
+    /// termination boundary can be exercised against a genuinely live native
+    /// provider or verifier process without exposing mutable session storage
+    /// in release builds.
+    func testOnlyRetainKernelExecutionSession(
+        _ session: KernelProductionExecutionSession
+    ) async {
+        let projection = await session.kernelProjection()
+        kernelExecutionSessions[projection.runID] = session
+    }
+    #endif
+
+    /// Normal app termination consumes every retained native session through
+    /// the same journal/supervisor lifecycle boundary as an explicit stop.
+    /// A nonempty cleanup plan may proceed only when every action has exact,
+    /// receipt-backed runtime ownership. Otherwise termination is cancelled
+    /// before any retained session crosses its lifecycle boundary.
+    func prepareKernelSessionsForApplicationTermination() async -> Bool {
+        if let workspaceMutationRecoveryTask {
+            await consumeKernelRecoveryReport(
+                workspaceMutationRecoveryTask.value
             )
-            guard let refreshedPath = try? generator.generate(
-                task: reportTask,
-                audit: audit,
-                snapshot: snapshot,
-                narrative: nil,
-                isFinal: true
-            ) else { continue }
-            store.update(id: task.id) {
-                $0.completionReportPath = refreshedPath
-                $0.reportGeneratedAt = Date()
-                $0.reportGenerationProvider = reportTask.reportGenerationProvider
+        }
+        if let report = kernelRecoveryReport,
+           !report.applicationTerminationCleanupIsSafe {
+            alertMessage = "LoopForge cannot quit yet: startup workspace recovery retains unresolved runtime ownership or a failed effect."
+            return false
+        }
+        if let runID = kernelApplicationTerminationRecoveryFailures.sorted(
+            by: { $0.rawValue < $1.rawValue }
+        ).first {
+            alertMessage = "LoopForge cannot quit yet: native run \(runID.rawValue) requires lifecycle cleanup, but exact receipt-bound cleanup ownership could not be reconstructed."
+            return false
+        }
+        let ordered = kernelExecutionSessions.sorted {
+            $0.key.rawValue < $1.key.rawValue
+        }
+        let workspaceMutationPlans:
+            [WorkspaceMutationApplicationTerminationPlan]
+        do {
+            workspaceMutationPlans = try await kernelExecutionCoordinator?
+                .workspaceMutationApplicationTerminationPlans() ?? []
+        } catch {
+            alertMessage = "LoopForge cannot quit yet: an exact workspace-mutation join handle no longer matches its journaled lease and outbox."
+            return false
+        }
+        for (runID, session) in ordered {
+            let preflight = await session.runtimeCleanupPlan()
+            guard await session.applicationTerminationCleanupIsExecutable() else {
+                alertMessage = "LoopForge cannot quit yet: native run \(runID.rawValue) has \(preflight.count) retained cleanup actions without complete receipt-backed runtime ownership."
+                return false
             }
-            store.appendLog(
-                id: task.id,
-                kind: .audit,
-                "Refreshed the graph delivery report so node-level commands and verification evidence are visible."
+        }
+
+        do {
+            let receipts = try await kernelExecutionCoordinator?
+                .joinWorkspaceMutationsForApplicationTermination(
+                    expectedPlans: workspaceMutationPlans
+                ) ?? []
+            guard receipts.map(\.plan) == workspaceMutationPlans else {
+                alertMessage = "LoopForge cannot quit: workspace-mutation join receipts did not cover the exact preflight plan."
+                return false
+            }
+        } catch {
+            alertMessage = "LoopForge cannot quit because an authorized pending workspace mutation failed closed while joining: \(error)."
+            return false
+        }
+
+        for (runID, session) in ordered {
+            let nonce = UUID().uuidString.lowercased()
+            do {
+                let projection = try await session
+                    .prepareForApplicationTermination(
+                        requestNonce: nonce
+                    )
+                guard projection.phase.isTerminal, projection.quiescent else {
+                    alertMessage = "LoopForge cannot quit: native run \(runID.rawValue) did not reach receipt-proven stopped quiescence."
+                    return false
+                }
+                newlyEnrolledKernelRunProjections.removeAll {
+                    $0.runID == runID
+                }
+                newlyEnrolledKernelRunProjections.append(projection)
+                kernelExecutionSessions[runID] = nil
+                if latestKernelExecutionSessionReceipt?
+                    .kernelProjection.runID == runID
+                {
+                    latestKernelExecutionSessionReceipt = nil
+                }
+            } catch {
+                alertMessage = "LoopForge cannot quit because native run \(runID.rawValue) failed closed during lifecycle cleanup: \(error)."
+                return false
+            }
+        }
+        return true
+    }
+
+    private func consumeKernelRecoveryReport(
+        _ report: WorkspaceMutationRecoveryStartupReport
+    ) async {
+        kernelRecoveryReport = report
+        guard !kernelRecoveryReportConsumed else { return }
+        kernelRecoveryReportConsumed = true
+        await recoverKernelExecutionState(from: report)
+    }
+
+    private func blockRetiredTaskRecoveryCandidates() {
+        for task in store.tasks where task.resumeOnNextLaunch == true {
+            controller.blockRetiredTaskExecution(
+                taskID: task.id,
+                source: "startup recovery"
             )
         }
     }
@@ -202,19 +413,133 @@ final class AppModel: ObservableObject {
     }
 
     func resumeInterruptedTaskIfNeeded() {
-        guard permissionCenter.isReady, controller.runningTaskID == nil,
-              let recovered = store.tasks.first(where: {
-                  $0.resumeOnNextLaunch == true
-                      && $0.canResume
-                      && ($0.externalBlockerKind != .automationPermission || permissionCenter.requirementsSatisfied(for: $0))
-              }) else { return }
-        let needsCodex = recovered.resolvedControlAgent.provider == .codex
-            || recovered.resolvedSubAgent.provider == .codex
-        guard !needsCodex || codexConnection.isConnected else { return }
-        store.selectedTaskID = recovered.id
-        showingNewTask = false
-        store.appendLog(id: recovered.id, kind: .system, "Permissions and official Codex are ready. LoopForge is automatically continuing from the last durable checkpoint.")
-        controller.start(taskID: recovered.id)
+        blockRetiredTaskRecoveryCandidates()
+    }
+
+    /// Restores only a durable, journal-proven enrollment receipt for the
+    /// newest ready kernel run. Live baseline, process, provider, mutation,
+    /// and retry capabilities are deliberately not reconstructed on launch.
+    private func recoverLatestReadyKernelEnrollment(
+        from report: WorkspaceMutationRecoveryStartupReport
+    ) async {
+        guard latestKernelEnrollmentReceipt == nil,
+              let coordinator = kernelExecutionCoordinator,
+              report.ownershipAcquired,
+              report.startupFailure == nil else { return }
+
+        var recovered: [KernelRunEnrollmentReceipt] = []
+        for run in report.runReports where
+            run.failure == nil &&
+            run.requiresAttention == false &&
+            run.kernelProjection?.phase == .ready {
+            if let receipt = try? await coordinator.recoverReadyEnrollment(
+                runID: run.runID
+            ) {
+                recovered.append(receipt)
+            }
+        }
+        guard let latest = recovered.max(by: {
+            if $0.registration.registeredAt == $1.registration.registeredAt {
+                return $0.runID.rawValue < $1.runID.rawValue
+            }
+            return $0.registration.registeredAt < $1.registration.registeredAt
+        }) else { return }
+
+        latestKernelEnrollmentReceipt = latest
+        latestKernelExecutionSessionReceipt = nil
+        do {
+            latestKernelExecutionReadiness = try await coordinator
+                .nativeExecutionReadiness(
+                    for: latest,
+                    designBaseline: nil
+                )
+        } catch {
+            latestKernelExecutionReadiness = nil
+        }
+    }
+
+    /// Startup recovery keeps productive authority non-recoverable. Exact
+    /// durable workspace effects finish through the retained recovery task;
+    /// an abandoned process is interrupted only when its complete cleanup
+    /// plan has receipt-backed ownership. Ambiguous ownership remains a
+    /// visible quit blocker without crossing the lifecycle boundary.
+    private func recoverKernelExecutionState(
+        from report: WorkspaceMutationRecoveryStartupReport
+    ) async {
+        guard let coordinator = kernelExecutionCoordinator,
+              report.ownershipAcquired,
+              report.startupFailure == nil else {
+            await recoverLatestReadyKernelEnrollment(from: report)
+            return
+        }
+
+        for run in report.runReports {
+            guard let phase = run.kernelProjection?.phase,
+                  phase == .executing || phase == .stopRequested else {
+                continue
+            }
+            let session: KernelRecoveredApplicationTerminationSession
+            do {
+                session = try await coordinator
+                    .recoverApplicationTerminationSession(runID: run.runID)
+            } catch {
+                kernelExecutionSessions[run.runID] = nil
+                kernelApplicationTerminationRecoveryFailures.insert(run.runID)
+                continue
+            }
+            kernelExecutionSessions[run.runID] = session
+            guard await session
+                .applicationTerminationCleanupIsExecutable() else {
+                kernelApplicationTerminationRecoveryFailures.insert(
+                    run.runID
+                )
+                continue
+            }
+            do {
+                let projection = try await session
+                    .reconcileAfterApplicationCrash(
+                        requestNonce: UUID().uuidString.lowercased()
+                    )
+                let remainingPlan = await session.runtimeCleanupPlan()
+                guard projection.phase == .stopped,
+                      projection.quiescent,
+                      projection.activeAttemptID == nil,
+                      remainingPlan.isEmpty else {
+                    kernelExecutionSessions[run.runID] = session
+                    kernelApplicationTerminationRecoveryFailures.insert(
+                        run.runID
+                    )
+                    continue
+                }
+                newlyEnrolledKernelRunProjections.removeAll {
+                    $0.runID == run.runID
+                }
+                newlyEnrolledKernelRunProjections.append(projection)
+                kernelExecutionSessions[run.runID] = nil
+                kernelApplicationTerminationRecoveryFailures.remove(run.runID)
+            } catch {
+                // Retain the exact recovered runtime and every native handle it
+                // may have reacquired. The failure blocks normal quit and may
+                // be retried through the same cleanup-only capability; it must
+                // never disappear merely because reconciliation failed.
+                kernelApplicationTerminationRecoveryFailures.insert(run.runID)
+            }
+        }
+        await recoverLatestReadyKernelEnrollment(from: report)
+    }
+
+    private func refreshLatestKernelExecutionReadiness() async {
+        guard let enrollment = latestKernelEnrollmentReceipt,
+              let coordinator = kernelExecutionCoordinator else { return }
+        do {
+            latestKernelExecutionReadiness = try await coordinator
+                .nativeExecutionReadiness(
+                    for: enrollment,
+                    designBaseline: latestAuthorizedKernelDesignBaseline
+                )
+        } catch {
+            latestKernelExecutionReadiness = nil
+        }
     }
 
     var selectedCodexModel: CodexModelOption {
@@ -277,6 +602,19 @@ final class AppModel: ObservableObject {
         role == .control ? draftControlAccessMode : draftAccessMode
     }
 
+    /// Native Journaled Auto Graph authoring exposes the mutation-free worker
+    /// path directly. The independent reviewer has one truthful authority:
+    /// read-only. This prevents the picker from advertising access that the
+    /// ratified execution profile would discard or silently narrow later.
+    func accessModes(for role: AgentRole) -> [CodexAccessMode] {
+        switch role {
+        case .control:
+            return CodexAccessMode.independentReviewerSelectableCases
+        case .subAgent:
+            return CodexAccessMode.nativeWorkerSelectableCases
+        }
+    }
+
     func setProvider(_ provider: AgentProviderKind, role: AgentRole) {
         if role == .control { draftControlProvider = provider }
         else { draftSubProvider = provider }
@@ -318,6 +656,7 @@ final class AppModel: ObservableObject {
     }
 
     func setAccessMode(_ access: CodexAccessMode, role: AgentRole) {
+        guard accessModes(for: role).contains(access) else { return }
         if role == .control { draftControlAccessMode = access }
         else { draftAccessMode = access }
     }
@@ -358,11 +697,9 @@ final class AppModel: ObservableObject {
         draftControlProvider = .codex
         draftControlModelReference = recommended.slug
         draftControlReasoningEffort = CodexCatalog.strongestReasoning(for: recommended)
-        draftControlAccessMode = .fullAccess
         draftSubProvider = .codex
         draftSubModelReference = recommended.slug
         draftReasoningEffort = CodexCatalog.strongestReasoning(for: recommended)
-        draftAccessMode = .fullAccess
     }
 
     func codexModelChanged() {
@@ -379,6 +716,117 @@ final class AppModel: ObservableObject {
         }
         resetDraft()
         showingNewTask = true
+    }
+
+    /// Test/internal typed draft boundary. Production selection must enter
+    /// through the native manifest picker below; AppModel never infers a
+    /// command from objective prose or reuses a worker/reviewer executable.
+    func setNativeVerificationProbe(
+        _ probe: RequirementVerificationExecutableProbe?
+    ) {
+        draftNativeVerificationProbeSelection = nil
+        draftNativeVerificationProbe = probe
+    }
+
+    /// Test/internal equivalent of one successful native file-panel import.
+    /// Production still enters through `chooseNativeVerificationProbeManifest`.
+    func setNativeVerificationProbeSelection(
+        _ selection: NativeVerificationProbeSelection?
+    ) {
+        draftNativeVerificationProbeSelection = selection
+        draftNativeVerificationProbe = selection?.probe
+    }
+
+    /// Selects one schema-constrained deterministic verifier manifest. The
+    /// loader opens both manifest and executable no-follow, hashes exact bytes,
+    /// and fixes environment, parser, capture, network, and child-process
+    /// policy rather than accepting those authorities from JSON.
+    func chooseNativeVerificationProbeManifest() {
+        guard !nativeVerificationProbeImportInProgress else { return }
+        let panel = NSOpenPanel()
+        panel.title = "Select an exact verification manifest"
+        panel.message = "Choose JSON that names one direct-process verifier executable, exact argv, result mappings, and bounded resources. LoopForge will open and hash the executable before contract review."
+        panel.prompt = "Select Verifier"
+        panel.canChooseDirectories = false
+        panel.canChooseFiles = true
+        panel.canCreateDirectories = false
+        panel.allowsMultipleSelection = false
+        panel.allowedContentTypes = [.json]
+        present(panel) { [weak self] url in
+            guard let self else { return }
+            self.nativeVerificationProbeImportInProgress = true
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                let result = await Task.detached {
+                    try NativeVerificationProbeSelectionLoader.load(
+                        manifestURL: url
+                    )
+                }.result
+                self.nativeVerificationProbeImportInProgress = false
+                switch result {
+                case .success(let selection):
+                    self.draftNativeVerificationProbeSelection = selection
+                    self.draftNativeVerificationProbe = selection.probe
+                    self.estimate = nil
+                case .failure(let error):
+                    self.draftNativeVerificationProbeSelection = nil
+                    self.draftNativeVerificationProbe = nil
+                    self.alertMessage = error.localizedDescription
+                }
+            }
+        }
+    }
+
+    func clearNativeVerificationProbeSelection() {
+        guard !nativeVerificationProbeImportInProgress else { return }
+        draftNativeVerificationProbeSelection = nil
+        draftNativeVerificationProbe = nil
+        estimate = nil
+    }
+
+    /// Selects one schema-constrained capture-source manifest through the
+    /// native file panel. File paths from JSON are never accepted as digests:
+    /// the loader opens them no-follow, hashes protected artifacts, and routes
+    /// raw capture bytes through the allow-listed native adapter first.
+    func chooseNativeDesignBaselineCaptureSource() {
+        guard !nativeDesignBaselineImportInProgress else { return }
+        let panel = NSOpenPanel()
+        panel.title = "Select a native design-baseline capture manifest"
+        panel.message = "Choose the JSON manifest that names the protected source/artifact archives and native capture evidence. LoopForge will rehash every selected file before contract review."
+        panel.prompt = "Import Baseline"
+        panel.canChooseDirectories = false
+        panel.canChooseFiles = true
+        panel.canCreateDirectories = false
+        panel.allowsMultipleSelection = false
+        panel.allowedContentTypes = [.json]
+        present(panel) { [weak self] url in
+            guard let self else { return }
+            self.nativeDesignBaselineImportInProgress = true
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                let result = await Task.detached {
+                    try await NativeDesignBaselineCaptureSourceLoader.load(
+                        manifestURL: url,
+                        importedAt: Date()
+                    )
+                }.result
+                self.nativeDesignBaselineImportInProgress = false
+                switch result {
+                case .success(let source):
+                    self.draftNativeDesignBaselineSource = source
+                    self.estimate = nil
+                case .failure(let error):
+                    self.draftNativeDesignBaselineSource = nil
+                    self.alertMessage = error.localizedDescription
+                }
+            }
+        }
+    }
+
+    func clearNativeDesignBaselineCaptureSource() {
+        guard !nativeDesignBaselineImportInProgress else { return }
+        draftNativeDesignBaselineSource = nil
+        estimate = nil
     }
 
     func selectModule(_ module: LoopForgeModule) {
@@ -498,7 +946,7 @@ final class AppModel: ObservableObject {
                 model: choice.id,
                 displayName: choice.displayName,
                 reasoning: reasoning.isEmpty ? nil : reasoning,
-                access: .fullAccess
+                access: .workspaceOnly
             )
         case .api:
             guard let id = UUID(uuidString: watcherDraftModelReference),
@@ -509,7 +957,7 @@ final class AppModel: ObservableObject {
             return .api(
                 connection: connection,
                 reasoning: reasoning.isEmpty ? nil : reasoning,
-                access: .fullAccess
+                access: .workspaceOnly
             )
         case .local:
             guard let profile = agentCatalog.localProfile(
@@ -518,7 +966,7 @@ final class AppModel: ObservableObject {
             return .local(
                 profile: profile,
                 reasoning: reasoning.isEmpty ? nil : reasoning,
-                access: .fullAccess
+                access: .workspaceOnly
             )
         }
     }
@@ -629,9 +1077,28 @@ final class AppModel: ObservableObject {
         panel.canChooseFiles = false
         panel.canCreateDirectories = false
         panel.allowsMultipleSelection = false
-        present(panel) { [weak self] url in
-            self?.draftWorkspacePath = url.path
-            self?.draftProjectMode = .existing
+        // Keep the workspace chooser independent from the SwiftUI scene. On
+        // current macOS releases, replacing ProjectEntryChooser with
+        // TaskComposer while a sheet is being dismissed can tear down the
+        // only app window even though the process remains alive. An app-modal
+        // open panel avoids that scene/sheet lifetime race and returns focus
+        // to the existing LoopForge window after selection.
+        panel.begin { [weak self] response in
+            guard response == .OK, let url = panel.url else { return }
+            Task { @MainActor in
+                self?.draftWorkspacePath = url.path
+                self?.draftProjectMode = .existing
+                // The panel completion may run before AppKit has restored the
+                // ordering of the owning scene. Defer one main-actor turn, then
+                // explicitly return the existing workspace window to the front
+                // so the process cannot remain alive with no visible window.
+                await Task.yield()
+                NSApp.activate(ignoringOtherApps: true)
+                (NSApp.keyWindow
+                    ?? NSApp.mainWindow
+                    ?? NSApp.windows.first(where: { $0.canBecomeMain }))?
+                    .makeKeyAndOrderFront(nil)
+            }
         }
     }
 
@@ -708,19 +1175,15 @@ final class AppModel: ObservableObject {
             draftControlProvider = .codex
             draftControlModelReference = recommended.slug
             draftControlReasoningEffort = CodexCatalog.strongestReasoning(for: recommended)
-            draftControlAccessMode = .fullAccess
             draftSubProvider = .codex
             draftSubModelReference = recommended.slug
             draftOfficialModel = recommended.slug
             draftReasoningEffort = CodexCatalog.strongestReasoning(for: recommended)
-            draftAccessMode = .fullAccess
         }
     }
 
     func qualityChanged() {
-        if draftExecutionMode == .autoGraph {
-            draftExecutionMode = .singleLoop
-        }
+        draftExecutionMode = .autoGraph
         if estimate != nil { calculateEstimate() }
         else { draftTargetMinutes = max(draftTargetMinutes, draftQuality.defaultRuntimeMinutes) }
     }
@@ -731,13 +1194,15 @@ final class AppModel: ObservableObject {
     }
 
     func selectSingleLoop() {
-        draftExecutionMode = .singleLoop
-        if estimate != nil { calculateEstimate() }
+        rejectRetiredLegacyAuthoring(.singleLoop)
     }
 
     func setParallelCandidatesEnabled(_ enabled: Bool) {
-        draftExecutionMode = enabled ? .parallelCandidates : .singleLoop
-        if estimate != nil { calculateEstimate() }
+        if enabled {
+            rejectRetiredLegacyAuthoring(.parallelCandidates)
+        } else {
+            draftExecutionMode = .autoGraph
+        }
     }
 
     func setParallelCandidateCount(_ count: Int) {
@@ -760,6 +1225,10 @@ final class AppModel: ObservableObject {
     }
 
     func requestStartLoop() {
+        guard draftExecutionMode == .autoGraph else {
+            rejectRetiredLegacyAuthoring(draftExecutionMode)
+            return
+        }
         let trimmed = draftRequest.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else {
             alertMessage = "Describe the outcome you want first."
@@ -774,13 +1243,24 @@ final class AppModel: ObservableObject {
 
     func startWithOriginalPrompt() {
         showingPromptOptimizationOffer = false
+        guard draftExecutionMode == .autoGraph else {
+            rejectRetiredLegacyAuthoring(draftExecutionMode)
+            return
+        }
         pendingOriginalPromptForTask = draftRequest.trimmingCharacters(in: .whitespacesAndNewlines)
         pendingPromptOptimizationSource = "Original prompt selected by user"
-        createAndStart()
+        prepareNativeAutoGraphContract(
+            objective: pendingOriginalPromptForTask ?? draftRequest,
+            sourceAuthority: .user
+        )
     }
 
     func beginPromptOptimization() {
         showingPromptOptimizationOffer = false
+        guard draftExecutionMode == .autoGraph else {
+            rejectRetiredLegacyAuthoring(draftExecutionMode)
+            return
+        }
         guard let task = promptOptimizationTask() else { return }
         showingPromptOptimization = true
         promptOptimizationCandidates = []
@@ -825,6 +1305,10 @@ final class AppModel: ObservableObject {
     }
 
     func startWithOptimizedPrompt(_ candidate: PromptOptimizationCandidate) {
+        guard draftExecutionMode == .autoGraph else {
+            rejectRetiredLegacyAuthoring(draftExecutionMode)
+            return
+        }
         let original = pendingOriginalPromptForTask
             ?? draftRequest.trimmingCharacters(in: .whitespacesAndNewlines)
         pendingOriginalPromptForTask = original
@@ -834,7 +1318,10 @@ final class AppModel: ObservableObject {
         draftRequest = candidate.prompt
         calculateEstimate()
         draftTargetMinutes = confirmedMinutes
-        createAndStart()
+        prepareNativeAutoGraphContract(
+            objective: candidate.prompt,
+            sourceAuthority: .acceptedUserAmendment
+        )
     }
 
     func cancelPromptOptimization() {
@@ -845,7 +1332,8 @@ final class AppModel: ObservableObject {
     }
 
     private func promptOptimizationTask() -> LoopTask? {
-        guard let estimate,
+        guard draftExecutionMode == .autoGraph,
+              let estimate,
               let workspace = try? preparedWorkspace() else {
             alertMessage = "Estimate the task and choose a valid project before optimizing its prompt."
             return nil
@@ -879,129 +1367,602 @@ final class AppModel: ObservableObject {
         )
     }
 
-    func createAndStart() {
-        let needsCodex = selectedAgent(for: .control)?.provider == .codex
-            || selectedAgent(for: .subAgent)?.provider == .codex
-        guard !needsCodex || codexConnection.isConnected else {
-            codexConnection.presentStatus()
-            alertMessage = "Reconnect Codex before starting this loop."
+    private func rejectRetiredLegacyAuthoring(_ mode: LoopExecutionMode) {
+        draftExecutionMode = .autoGraph
+        estimate = nil
+        showingPromptOptimizationOffer = false
+        showingPromptOptimization = false
+        alertMessage = LegacyTaskExecutionRetirementPolicy.authoringMessage(
+            for: mode
+        )
+    }
+
+    private func prepareNativeAutoGraphContract(
+        objective: String,
+        sourceAuthority: TaskContractSourceAuthority
+    ) {
+        guard draftExecutionMode == .autoGraph else {
+            alertMessage = "Native contract enrollment is currently limited to Auto Graph."
             return
         }
-        guard controller.runningTaskID == nil else {
-            alertMessage = "Pause the active task before starting another so local model memory does not stack."
+        guard kernelRunEnrollmentCoordinator != nil else {
+            alertMessage = "The journaled kernel registry is unavailable. No task was created."
             return
         }
-        if estimate == nil { calculateEstimate() }
-        guard let estimate else { return }
-        guard let controlAgent = selectedAgent(for: .control),
-              let subAgent = selectedAgent(for: .subAgent) else {
-            alertMessage = "Choose a configured model for both agents."
-            return
-        }
-        for (role, agent) in [(AgentRole.control, controlAgent), (.subAgent, subAgent)]
-        where agent.provider == .local {
-            guard let profile = agent.localProfile, agentCatalog.isLocalModelReady(profile) else {
-                modelManagerRequestedRole = role
-                showingModelManager = true
+        do {
+            let workspace = try preparedWorkspace().standardizedFileURL
+                .resolvingSymlinksInPath()
+            guard let worker = selectedAgent(for: .subAgent),
+                  let reviewer = selectedAgent(for: .control) else {
+                alertMessage = "Choose a configured model for both the worker and independent reviewer."
                 return
             }
-        }
-        guard !estimate.visualAuditRequired || controlAgent.supportsVision else {
-            draftControlProvider = .local
-            draftControlModelReference = ModelProfile.advancedVisualAuditor.id
-            draftLocalModelID = ModelProfile.advancedVisualAuditor.id
-            modelManagerRequestedRole = .control
-            showingModelManager = true
-            return
-        }
-        if draftExecutionMode == .parallelCandidates,
-           estimate.category == .desktopAutomation {
-            alertMessage = "Parallel Candidates cannot safely share one signed-in browser or desktop-app session. Use Auto Graph Loop or Single Loop for this interactive task."
-            return
-        }
-        guard draftExecutionMode == .autoGraph
-            || draftTargetMinutes >= AppConstants.minimumCustomRuntimeMinutes else {
-            draftTargetMinutes = AppConstants.minimumCustomRuntimeMinutes
-            alertMessage = "Choose at least \(TimeInterval(AppConstants.minimumCustomRuntimeMinutes * 60).compactDuration) of active Sub Agent work."
-            return
-        }
-        let request = draftRequest.trimmingCharacters(in: .whitespacesAndNewlines)
-        do {
-            let workspace = try preparedWorkspace()
             let now = Date()
-            let task = LoopTask(
-                id: UUID(), title: safeProjectName(from: request), request: request,
-                quality: draftQuality, category: estimate.category, workspacePath: workspace.path,
-                targetSeconds: draftExecutionMode == .autoGraph ? 0 : TimeInterval(draftTargetMinutes * 60),
-                accumulatedCodexSeconds: 0,
-                model: selectedLocalModel, status: .preparing, stage: "Waiting to start", iteration: 0,
-                threadID: nil, auditScore: 0, auditSummary: "Not audited yet", lastAgentMessage: "",
-                consecutiveFailures: 0, createdAt: now, updatedAt: now, completedAt: nil,
-                logs: [
-                    TaskLogEntry(kind: .system, message: "Confirmed: \(estimate.explanation)"),
-                    TaskLogEntry(kind: .system, message: "Project mode: \(draftProjectMode?.title ?? "Unknown"). Workspace: \(workspace.path)"),
-                    TaskLogEntry(kind: .system, message: {
-                        switch draftExecutionMode {
-                        case .autoGraph:
-                            return "Execution mode: Auto Graph Loop. Node loops have no artificial minimum runtime; completion requires node-level and whole-graph evidence audits."
-                        case .parallelCandidates:
-                            return "Execution mode: \(draftParallelCandidateCount) isolated parallel candidates. Each candidate must complete \(TimeInterval(draftTargetMinutes * 60).compactDuration) of successful active work and pass an independent review; \(draftParallelSelectionMode.title.lowercased()) the one result retained."
-                        case .singleLoop:
-                            return "User-confirmed hard active Sub Agent runtime: \(TimeInterval(draftTargetMinutes * 60).compactDuration)."
-                        }
-                    }()),
-                    TaskLogEntry(
-                        kind: .system,
-                        message: estimate.category == .desktopAutomation
-                            ? "Interactive-surface contract: use the user's named, already signed-in browser or desktop app directly. Never replace it with an API, Selenium/WebDriver, a different model, or a generated automation project unless the user explicitly requests that substitution."
-                            : "Execution contract confirmed for the selected project category."
-                    )
-                ],
-                visualAuditRequired: estimate.visualAuditRequired,
-                officialModel: draftOfficialModel,
-                officialReasoningEffort: draftReasoningEffort,
-                codexAccessMode: draftAccessMode,
-                resumeOnNextLaunch: true,
-                checkpointedAt: now,
-                controlInteractionCount: 0
+            let userActor = nativeContractUserActor()
+            let workspaceDigest = TaskContractCompiler.digest(
+                Data(workspace.path.precomposedStringWithCanonicalMapping.utf8)
             )
-            var configuredTask = task
-            configuredTask.executionMode = draftExecutionMode
-            if draftExecutionMode == .parallelCandidates {
-                configuredTask.parallelCandidateCount = ParallelCandidatePolicy.normalizedCount(
-                    draftParallelCandidateCount
+            let mutationAuthorized = worker.accessMode != .readOnly
+            let sourceRevisionCapturePolicy =
+                WorkspaceCandidatePostimageCapturePolicy(
+                    excludedDirectoryNames:
+                        NativeSourceRevisionCapturePolicyParser
+                            .parseExcludedDirectoryNames(
+                                draftSourceRevisionExcludedDirectoryNames
+                            ),
+                    limits: NativeTaskContractAuthoringRequest
+                        .defaultSourceRevisionCapturePolicy.limits
                 )
-                configuredTask.parallelSelectionMode = draftParallelSelectionMode
+            let request = NativeTaskContractAuthoringRequest(
+                exactObjective: objective,
+                objectiveSourceAuthority: sourceAuthority,
+                workspaceID: WorkspaceID(
+                    "native-workspace-\(workspaceDigest.rawValue)"
+                ),
+                workspaceRoot: workspace,
+                readableScopes: ["."],
+                writableScopes: mutationAuthorized ? ["."] : [],
+                authorityCapabilityIDs: draftWorkerNetworkAccess
+                    ? [KernelExecutionProfile.networkCapabilityID]
+                    : [],
+                acceptedDuration: nil,
+                executionProfile: try nativeKernelExecutionProfile(
+                    worker: worker,
+                    reviewer: reviewer
+                ),
+                verificationProbe: draftNativeVerificationProbe,
+                executionBudgets: nativeKernelExecutionBudgets(
+                    mutationAuthorized: mutationAuthorized
+                ),
+                designBaselineSource: draftNativeDesignBaselineSource,
+                sourceRevisionCapturePolicy: sourceRevisionCapturePolicy,
+                userActor: userActor,
+                recordedAt: now,
+                authoringNonce: TaskContractCompiler.digest(
+                    Data(UUID().uuidString.utf8)
+                )
+            )
+            switch NativeTaskContractAuthor.prepare(request) {
+            case .success(let draft):
+                pendingNativeContractUserActor = userActor
+                pendingNativeContractConfirmation = draft
+                pendingRatifiedNativeContract = nil
+                pendingNativeEnrollmentRequestIdentity = nil
+            case .failure(let error):
+                alertMessage = nativeContractErrorMessage(error)
             }
-            configuredTask.controlAgent = controlAgent
-            configuredTask.subAgent = subAgent
-            configuredTask.originalRequest = pendingOriginalPromptForTask ?? request
-            configuredTask.promptOptimizationSource = pendingPromptOptimizationSource
-            configuredTask.shortTitle = TaskNamePolicy.descriptiveSummary(
-                request: configuredTask.originalRequest ?? request,
-                fallback: configuredTask.title
-            )
-            configuredTask.taskNamingVersion = TaskNamePolicy.currentVersion
-            configuredTask.taskNamingCompleted = false
-            let baselineSnapshot = WorkspaceAuditor().snapshot(
-                workspacePath: configuredTask.workspacePath,
-                logs: []
-            )
-            configuredTask.reportBaseline = TaskNamePolicy.baseline(from: baselineSnapshot, at: now)
-            if let local = controlAgent.localProfile { configuredTask.model = local }
-            store.add(configuredTask)
-            showingNewTask = false
-            controller.start(taskID: configuredTask.id)
-            resetDraft()
         } catch {
             alertMessage = error.localizedDescription
         }
     }
 
-    func resume(_ task: LoopTask) { controller.start(taskID: task.id) }
+    private func nativeKernelExecutionProfile(
+        worker: AgentSelection,
+        reviewer: AgentSelection
+    ) throws -> KernelExecutionProfile {
+        let executableDigest: ContentDigest
+        let providerProtocol: KernelProviderProtocol
+        let providerHarnessMode: KernelProviderHarnessMode
+        if let harness = NativeProviderHarnessSelectionLoader.bundled() {
+            executableDigest = harness.manifest.executableSHA256
+            providerProtocol = .loopForgeProviderHarnessV2
+            providerHarnessMode = harness.manifest.operationalMode
+        } else if let executable = CodexRuntime.executable?
+            .standardizedFileURL.resolvingSymlinksInPath(),
+            let digest = ProcessGroupRuntimeAdapter.executableContentDigest(
+                atPath: executable.path
+            ) {
+            // Development and recovered installations retain the direct
+            // executable identity as evidence, but never relabel it as a
+            // LoopForge provider protocol implementation.
+            executableDigest = digest
+            providerProtocol = .unavailable
+            providerHarnessMode = .unavailable
+        } else {
+            throw LoopForgeError.executableMissing("ratifiable provider executable")
+        }
+        let workerSandbox: KernelExecutionSandbox
+        switch worker.accessMode {
+        case .readOnly: workerSandbox = .readOnly
+        case .workspaceOnly: workerSandbox = .workspaceOnly
+        case .fullAccess: workerSandbox = .fullAccess
+        }
+        let workerNetworkPolicy: KernelNetworkPolicy =
+            draftWorkerNetworkAccess ? .enabled : .disabled
+        return KernelExecutionProfile(
+            schemaVersion: 1,
+            worker: nativeKernelAgentProfile(
+                worker,
+                sandbox: workerSandbox,
+                networkPolicy: workerNetworkPolicy,
+                executableContentDigest: executableDigest,
+                providerProtocol: providerProtocol,
+                providerHarnessMode: providerHarnessMode
+            ),
+            independentReviewer: nativeKernelAgentProfile(
+                reviewer,
+                sandbox: .readOnly,
+                networkPolicy: .disabled,
+                executableContentDigest: executableDigest,
+                providerProtocol: providerProtocol,
+                providerHarnessMode: providerHarnessMode
+            ),
+            requiresDistinctActorLineage: true
+        )
+    }
+
+    /// Conservative, domain-neutral authority proposed by the native app and
+    /// displayed in full before the user confirms the candidate digest.
+    /// These values authorize only ceilings; the separately displayed and
+    /// confirmed strategy/plan proposal still creates no attempt or start.
+    private func nativeKernelExecutionBudgets(
+        mutationAuthorized: Bool
+    ) -> KernelExecutionBudgetPolicy {
+        KernelExecutionBudgetPolicy(
+            mutation: KernelMutationBudget(
+                maximumChangedFiles: mutationAuthorized ? 32 : 0,
+                maximumChangedBytes: mutationAuthorized ? 1_048_576 : 0
+            ),
+            convergence: ConvergenceBudget(
+                maximumAttempts: 3,
+                maximumEquivalentFailures: 3,
+                maximumStrategies: 3,
+                maximumPlanExpansions: 1,
+                maximumMutationCost: mutationAuthorized ? 1_048_576 : 0,
+                maximumVerificationCost: 32,
+                maximumDamageEvents: 0,
+                maximumExternalEffects: 0
+            )
+        )
+    }
+
+    private func nativeKernelAgentProfile(
+        _ selection: AgentSelection,
+        sandbox: KernelExecutionSandbox,
+        networkPolicy: KernelNetworkPolicy,
+        executableContentDigest: ContentDigest,
+        providerProtocol: KernelProviderProtocol,
+        providerHarnessMode: KernelProviderHarnessMode
+    ) -> KernelAgentExecutionProfile {
+        let provider: KernelExecutionProvider
+        let providerReference: String
+        switch selection.provider {
+        case .codex:
+            provider = .codex
+            providerReference = "official-codex-session"
+        case .local:
+            provider = .local
+            providerReference = selection.localProfile?.id ?? selection.modelID
+        case .api:
+            provider = .api
+            providerReference = selection.apiConnection?.id.uuidString.lowercased()
+                ?? selection.modelID
+        }
+        let credentialMode: KernelProviderCredentialMode = provider == .api
+            ? .opaqueProviderSecret
+            : .none
+        let credentialReference = selection.apiConnection.map {
+            APIKeyVault.kernelCredentialReference(for: $0.id)
+        }
+        return KernelAgentExecutionProfile(
+            provider: provider,
+            providerReference: providerReference,
+            executableContentDigest: executableContentDigest,
+            modelID: selection.modelID,
+            reasoningEffort: selection.reasoningEffort,
+            sandbox: sandbox,
+            networkPolicy: networkPolicy,
+            pluginPolicy: .disabled,
+            environmentPolicy: .minimalKernelAllowlist,
+            // A packaged selection is a descriptor-aware transport identity,
+            // not a productive-provider claim. This ordinary-app loader can
+            // select only transport-veto mode; productive authority requires
+            // a separately isolated and ratified execution product.
+            providerProtocol: providerProtocol,
+            providerHarnessMode: providerHarnessMode,
+            credentialMode: credentialMode,
+            credentialReference: credentialReference
+        )
+    }
+
+    func cancelNativeContractConfirmation() {
+        guard !kernelEnrollmentInProgress else { return }
+        pendingNativeContractConfirmation = nil
+        draftNativeVerificationProbeSelection = nil
+        draftNativeVerificationProbe = nil
+        pendingNativeContractUserActor = nil
+        pendingRatifiedNativeContract = nil
+        pendingNativeEnrollmentRequestIdentity = nil
+    }
+
+    func cancelPendingNativeAuthorityConfirmation() {
+        if pendingNativeDesignBaselineConfirmation != nil {
+            cancelNativeDesignBaselineConfirmation()
+        } else {
+            cancelNativeContractConfirmation()
+        }
+    }
+
+    func cancelNativeDesignBaselineConfirmation() {
+        guard !kernelEnrollmentInProgress else { return }
+        pendingNativeDesignBaselineConfirmation = nil
+        pendingNativeContractUserActor = nil
+        pendingRatifiedNativeContract = nil
+        pendingNativeEnrollmentRequestIdentity = nil
+        resetDraft()
+        showingNewTask = true
+        alertMessage = "The run remains enrolled, but its protected design baseline was not frozen. No worker was started."
+    }
+
+    func confirmNativeDesignBaseline() {
+        guard let draft = pendingNativeDesignBaselineConfirmation,
+              let userActor = pendingNativeContractUserActor else { return }
+        switch nativeDesignBaselineConfirmationIssuer
+            .confirmFromNativeUserAction(
+                draft,
+                displayedSelectionDigest: draft.selectionDigest,
+                userActor: userActor,
+                confirmedAt: Date()
+            ) {
+        case .success(let authority):
+            latestAuthorizedKernelDesignBaseline = authority
+            pendingNativeDesignBaselineConfirmation = nil
+            pendingNativeContractUserActor = nil
+            pendingRatifiedNativeContract = nil
+            pendingNativeEnrollmentRequestIdentity = nil
+            resetDraft()
+            showingNewTask = true
+            alertMessage = "The enrolled run now holds the explicitly confirmed protected design baseline. No worker was started."
+            Task { await refreshLatestKernelExecutionReadiness() }
+        case .failure(let error):
+            alertMessage = nativeDesignBaselineConfirmationErrorMessage(error)
+        }
+    }
+
+    func confirmAndEnrollNativeAutoGraphContract() async {
+        guard !kernelEnrollmentInProgress,
+              let draft = pendingNativeContractConfirmation,
+              let userActor = pendingNativeContractUserActor,
+              let coordinator = kernelRunEnrollmentCoordinator else { return }
+        kernelEnrollmentInProgress = true
+        defer { kernelEnrollmentInProgress = false }
+
+#if !DEBUG
+        guard draftNativeVerificationProbeSelection != nil else {
+            alertMessage = "Select and review an exact verifier manifest before confirming. No run was enrolled."
+            return
+        }
+#endif
+        var enrollmentVerificationSelections: [
+            NativeVerificationProbeSelection
+        ] = []
+        if let selected = draftNativeVerificationProbeSelection {
+            do {
+                let refreshed = try await Task.detached {
+                    try NativeVerificationProbeSelectionLoader.revalidate(
+                        selected
+                    )
+                }.value
+                guard draftNativeVerificationProbeSelection == selected,
+                      draft.compiled.candidate.contract
+                        .requirementEvidenceRecipes?
+                        .allSatisfy({
+                            $0.executableProbe == refreshed.probe
+                        }) == true else {
+                    alertMessage = NativeVerificationProbeSelectionError
+                        .selectionChanged.localizedDescription
+                    return
+                }
+                draftNativeVerificationProbeSelection = refreshed
+                draftNativeVerificationProbe = refreshed.probe
+                enrollmentVerificationSelections = [refreshed]
+            } catch {
+                alertMessage = error.localizedDescription
+                return
+            }
+        }
+
+        let ratified: RatifiedTaskContract
+        if let existing = pendingRatifiedNativeContract {
+            ratified = existing
+        } else {
+            switch nativeContractConfirmationIssuer.confirmFromNativeUserAction(
+                draft,
+                displayedCandidateDigest: draft.compiled.candidateDigest,
+                userActor: userActor,
+                confirmedAt: Date()
+            ) {
+            case .success(let value):
+                ratified = value
+                pendingRatifiedNativeContract = value
+            case .failure(let error):
+                alertMessage = nativeConfirmationErrorMessage(error)
+                return
+            }
+        }
+
+        let identity: (
+            runID: KernelRunID,
+            commandID: RunCommandID,
+            enrolledAt: Date
+        )
+        if let existing = pendingNativeEnrollmentRequestIdentity {
+            identity = existing
+        } else {
+            let nonce = UUID().uuidString.lowercased()
+            let created = (
+                runID: KernelRunID("native-run-\(nonce)"),
+                commandID: RunCommandID("native-create-\(nonce)"),
+                enrolledAt: Date()
+            )
+            pendingNativeEnrollmentRequestIdentity = created
+            identity = created
+        }
+
+        do {
+            let receipt = try await coordinator.enroll(KernelRunEnrollmentRequest(
+                runID: identity.runID,
+                ratifiedContract: ratified,
+                actorIdentity: ActorIdentity(
+                    id: ActorID("loopforge-native-enrollment"),
+                    role: "native-enrollment",
+                    lineageDigest: TaskContractCompiler.digest(
+                        Data("loopforge-native-enrollment-v1".utf8)
+                    )
+                ),
+                workspaceID: draft.workspaceID,
+                workspaceRoot: draft.canonicalWorkspaceRoot,
+                hostBudget: HostResourceBudget(nominal: ResourceVector(
+                    cpuWeight: 1,
+                    memoryBytes: 2 * 1_024 * 1_024 * 1_024,
+                    diskIOWeight: 1,
+                    gpuWeight: 0,
+                    networkWeight: 1,
+                    guiSessionCount: 1,
+                    processCount: 8
+                )),
+                maximumDispatchBatch: 8,
+                createCommandID: identity.commandID,
+                enrolledAt: identity.enrolledAt,
+                verificationProbeSelections:
+                    enrollmentVerificationSelections
+            ))
+            latestKernelEnrollmentReceipt = receipt
+            latestKernelExecutionSessionReceipt = nil
+            latestAuthorizedKernelDesignBaseline = nil
+            newlyEnrolledKernelRunProjections.removeAll {
+                $0.runID == receipt.runID
+            }
+            newlyEnrolledKernelRunProjections.append(receipt.kernelProjection)
+            var readinessFailure: Error?
+            if let executionCoordinator = kernelExecutionCoordinator {
+                do {
+                    latestKernelExecutionReadiness = try await executionCoordinator
+                        .nativeExecutionReadiness(
+                            for: receipt,
+                            designBaseline: latestAuthorizedKernelDesignBaseline
+                        )
+                } catch {
+                    latestKernelExecutionReadiness = nil
+                    readinessFailure = error
+                }
+            } else {
+                latestKernelExecutionReadiness = nil
+            }
+            if let selection = draft.displayDesignBaselineSelection {
+                switch NativeDesignBaselineAuthor.prepare(
+                    selection: selection,
+                    ratifiedContract: ratified,
+                    enrollment: receipt,
+                    preparedAt: Date()
+                ) {
+                case .success(let designDraft):
+                    pendingNativeContractConfirmation = nil
+                    pendingNativeDesignBaselineConfirmation = designDraft
+                    pendingNativeEnrollmentRequestIdentity = nil
+                    showingNewTask = true
+                    alertMessage = "The run is enrolled. Confirm the exact protected artifact and native capture digest to freeze its design baseline. No worker was started."
+                    return
+                case .failure(let error):
+                    pendingNativeContractConfirmation = nil
+                    pendingNativeContractUserActor = nil
+                    pendingRatifiedNativeContract = nil
+                    pendingNativeEnrollmentRequestIdentity = nil
+                    resetDraft()
+                    showingNewTask = true
+                    alertMessage = "The run was enrolled, but design-baseline preparation failed closed: \(error). No worker was started."
+                    return
+                }
+            }
+            pendingNativeContractConfirmation = nil
+            pendingNativeContractUserActor = nil
+            pendingRatifiedNativeContract = nil
+            pendingNativeEnrollmentRequestIdentity = nil
+            resetDraft()
+            showingNewTask = true
+            if let readiness = latestKernelExecutionReadiness,
+               readiness.blockers.isEmpty {
+                alertMessage = "The confirmed Auto Graph contract, source revision, strategy, and requirement-owned plan are enrolled and ready. No start capability or worker was created."
+            } else if let readiness = latestKernelExecutionReadiness {
+                alertMessage = "The confirmed Auto Graph contract is enrolled and remains ready. Native execution is blocked by \(readiness.blockers.count) missing authority receipts; no legacy worker was started."
+            } else if let readinessFailure {
+                alertMessage = "The confirmed Auto Graph contract is enrolled and remains ready, but the read-only native execution preflight failed closed: \(readinessFailure). No legacy worker was started."
+            } else {
+                alertMessage = "The confirmed Auto Graph contract is enrolled in the journaled kernel and remains ready. The native execution readiness service is unavailable; no legacy worker was started."
+            }
+        } catch {
+            alertMessage = "Contract enrollment failed without starting a worker: \(error.localizedDescription)"
+        }
+    }
+
+    /// Explicit native activation. The AppModel contributes only a fresh
+    /// replay-protection nonce and timestamp; the production coordinator
+    /// reconstructs every executable field from the exact enrolled journal.
+    /// Missing mutation or design authority rejects before legacy execution
+    /// can be reached.
+    func activateLatestEnrolledKernelRun() async {
+        guard !kernelExecutionStartInProgress,
+              let enrollment = latestKernelEnrollmentReceipt,
+              let coordinator = kernelExecutionCoordinator else { return }
+        kernelExecutionStartInProgress = true
+        defer { kernelExecutionStartInProgress = false }
+
+        do {
+            let readiness = try await coordinator.nativeExecutionReadiness(
+                for: enrollment,
+                designBaseline: latestAuthorizedKernelDesignBaseline
+            )
+            latestKernelExecutionReadiness = readiness
+            guard readiness.canPrepareAndActivate else {
+                alertMessage = "Native activation remains blocked by \(readiness.blockers.count) missing authority receipts. No journal preparation, process, or legacy worker was started."
+                return
+            }
+
+            let session = try await coordinator.activateNativeEnrolledRun(
+                KernelNativeExecutionStartRequest(
+                    enrollment: enrollment,
+                    designBaseline: latestAuthorizedKernelDesignBaseline,
+                    requestNonce: UUID().uuidString.lowercased(),
+                    initiatedAt: Date()
+                )
+            )
+            let receipt = session.receipt
+            kernelExecutionSessions[receipt.kernelProjection.runID] = session
+            latestKernelExecutionSessionReceipt = receipt
+            latestKernelExecutionReadiness = nil
+            newlyEnrolledKernelRunProjections.removeAll {
+                $0.runID == receipt.kernelProjection.runID
+            }
+            newlyEnrolledKernelRunProjections.append(receipt.kernelProjection)
+            let providerBlockers = receipt
+                .providerInvocationProfileReadiness.blockers.count
+            alertMessage = "The exact enrolled authority is now an active native kernel attempt. No legacy task or Graph worker was created; provider invocation is blocked by \(providerBlockers) exact profile constraints and launch remains a separate receipt-gated step."
+        } catch {
+            alertMessage = "Native activation failed closed: \(error). No legacy worker was started."
+        }
+    }
+
+    private func nativeContractUserActor() -> ActorIdentity {
+        ActorIdentity(
+            id: ActorID("loopforge-native-user"),
+            role: "user",
+            lineageDigest: TaskContractCompiler.digest(
+                Data("loopforge-native-user-v1".utf8)
+            )
+        )
+    }
+
+    private func nativeContractErrorMessage(
+        _ error: NativeTaskContractAuthoringError
+    ) -> String {
+        switch error {
+        case .malformedUserAuthority:
+            return "The native user authority record is invalid. No task was created."
+        case .invalidObjective:
+            return "The exact objective is empty or lacks user authority."
+        case .invalidWorkspace:
+            return "The selected workspace is unavailable or cannot be bound safely."
+        case .invalidScope:
+            return "The selected workspace scope is not canonical."
+        case .invalidAuthorityCapabilities(let issues):
+            return "The selected runtime capability authority failed closed: \(issues.joined(separator: "; ")) No task was created."
+        case .invalidDuration:
+            return "The accepted duration is invalid."
+        case .invalidExecutionProfile(let issues):
+            return "The selected execution identity failed closed: \(issues.joined(separator: "; "))"
+        case .invalidVerificationProbe(let issues):
+            return "Executable verification is not yet configured: \(issues.joined(separator: "; ")) No task was created."
+        case .invalidExecutionBudgets(let issues):
+            return "The selected execution budgets failed closed: \(issues.joined(separator: "; "))"
+        case .invalidDesignBaselineSource(let issues):
+            return "The selected design baseline failed closed: \(issues.joined(separator: "; ")) No task was created."
+        case .invalidSourceRevisionCapturePolicy(let issues):
+            return "The source-revision capture policy failed closed: \(issues.joined(separator: "; ")) Use unique directory names only; paths and traversal are not accepted. No task was created."
+        case .sourceRevisionCaptureFailed(let reason):
+            return "The selected workspace could not be captured as an exact bounded source revision: \(reason) No task was created."
+        case .unsupportedExecutionAuthority(let reason):
+            return "The selected execution authority is unavailable: \(reason) No task was created."
+        case .compilationFailed(let issues):
+            return "The task contract failed closed: \(issues)"
+        }
+    }
+
+    private func nativeConfirmationErrorMessage(
+        _ error: NativeTaskContractConfirmationError
+    ) -> String {
+        switch error {
+        case .displayedCandidateChanged:
+            return "The contract changed after it was displayed. Review a fresh contract."
+        case .displayedSourceRevisionChanged:
+            return "The workspace changed after its source revision was displayed. Review a fresh capture before enrollment."
+        case .sourceRevisionRecaptureFailed(let reason):
+            return "The workspace source revision could not be rechecked at confirmation: \(reason)"
+        case .userIdentityMismatch:
+            return "The confirming user does not match the contract author."
+        case .alreadyConfirmed:
+            return "This exact contract was already confirmed."
+        case .ratificationFailed(let failure):
+            return "The native confirmation failed closed: \(failure)"
+        }
+    }
+
+    private func nativeDesignBaselineConfirmationErrorMessage(
+        _ error: NativeDesignBaselineConfirmationError
+    ) -> String {
+        switch error {
+        case .displayedSelectionChanged:
+            return "The design baseline changed after display. Review a fresh capture source."
+        case .userIdentityMismatch:
+            return "The confirming user does not match the enrolled contract author."
+        case .confirmationPredatesDisplay:
+            return "The design baseline confirmation time is invalid."
+        case .alreadyConfirmed:
+            return "This exact design baseline was already confirmed."
+        case .digestConstructionFailed:
+            return "The design-baseline authority receipt could not be constructed."
+        }
+    }
+
+    func resume(_ task: LoopTask) {
+        if controller.blockRetiredTaskExecution(
+            taskID: task.id,
+            source: "user resume request"
+        ) {
+            alertMessage = LegacyTaskExecutionRetirementPolicy.authoringMessage(
+                for: task.resolvedExecutionMode
+            )
+            return
+        }
+        controller.start(taskID: task.id)
+    }
     func chooseParallelCandidate(_ task: LoopTask, candidateID: String) {
-        guard controller.runningTaskID == nil else {
-            alertMessage = "Pause the active task before applying a parallel candidate."
+        guard !controller.blockRetiredTaskExecution(
+            taskID: task.id,
+            source: "user parallel-candidate selection"
+        ) else {
+            alertMessage = LegacyTaskExecutionRetirementPolicy.authoringMessage(
+                for: .parallelCandidates
+            )
             return
         }
         controller.chooseParallelCandidate(taskID: task.id, candidateID: candidateID)
@@ -1107,7 +2068,7 @@ final class AppModel: ObservableObject {
 
     func resetDraft(keepRequest: Bool = false) {
         if !keepRequest { draftRequest = "" }
-        draftExecutionMode = .singleLoop
+        draftExecutionMode = .autoGraph
         draftParallelCandidateCount = 3
         draftParallelSelectionMode = .agent
         draftQuality = .medium
@@ -1119,7 +2080,8 @@ final class AppModel: ObservableObject {
         draftControlProvider = .codex
         draftControlModelReference = AppConstants.officialWorkerModel
         draftControlReasoningEffort = "ultra"
-        draftControlAccessMode = .fullAccess
+        draftControlAccessMode = .readOnly
+        draftAccessMode = .workspaceOnly
         modelManagerRequestedRole = nil
         showingPromptOptimizationOffer = false
         showingPromptOptimization = false
@@ -1128,6 +2090,20 @@ final class AppModel: ObservableObject {
         promptOptimizationProvider = ""
         pendingOriginalPromptForTask = nil
         pendingPromptOptimizationSource = nil
+        pendingNativeContractConfirmation = nil
+        draftNativeVerificationProbeSelection = nil
+        draftNativeVerificationProbe = nil
+        draftNativeDesignBaselineSource = nil
+        draftSourceRevisionExcludedDirectoryNames =
+            NativeTaskContractAuthoringRequest.defaultSourceRevisionCapturePolicy
+                .excludedDirectoryNames.joined(separator: ", ")
+        draftWorkerNetworkAccess = false
+        nativeDesignBaselineImportInProgress = false
+        nativeVerificationProbeImportInProgress = false
+        pendingNativeDesignBaselineConfirmation = nil
+        pendingNativeContractUserActor = nil
+        pendingRatifiedNativeContract = nil
+        pendingNativeEnrollmentRequestIdentity = nil
         adoptRecommendedCodexDefaults()
     }
 

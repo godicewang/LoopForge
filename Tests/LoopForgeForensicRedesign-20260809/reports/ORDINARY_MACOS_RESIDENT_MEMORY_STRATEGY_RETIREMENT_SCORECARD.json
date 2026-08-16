@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T07:50:00Z",
+  "status": "ordinary-macos-in-process-physical-footprint-issuer-disproven-and-retired",
+  "platform": {
+    "product": "macOS",
+    "version": "26.5.2",
+    "build": "25F84",
+    "architecture": "arm64",
+    "xcodeVersion": "26.6",
+    "xcodeBuild": "17F113",
+    "sdk": "MacOSX26.5.sdk"
+  },
+  "contract": {
+    "resource": "physical resident footprint",
+    "hardCeilingRequired": true,
+    "installedBeforeTargetExecRequired": true,
+    "samplingAcceptedAsEnforcement": false,
+    "addressSpaceAcceptedAsPhysicalFootprint": false
+  },
+  "nativePrimitiveAssessment": [
+    {
+      "primitive": "RLIMIT_RSS",
+      "result": "rejected",
+      "reason": "SDK defines it as the RLIMIT_AS source-compatibility alias; no hard physical-footprint semantics"
+    },
+    {
+      "primitive": "RLIMIT_DATA",
+      "result": "rejected",
+      "reason": "bounds only sbrk data-segment growth"
+    },
+    {
+      "primitive": "task_set_phys_footprint_limit",
+      "result": "rejected-for-ordinary-process",
+      "observedKernReturn": 8,
+      "observedName": "(os/kern) no access"
+    },
+    {
+      "primitive": "posix_spawnattr_setjetsam_ext",
+      "result": "rejected-for-this-macos-process-class",
+      "reason": "prior native target retained 512 MiB and exited zero under accepted fatal 128 MiB attributes"
+    },
+    {
+      "primitive": "parent-side-memory-sampling",
+      "result": "rejected",
+      "reason": "post-allocation observation has a pre-sample race and is not pre-exec enforcement"
+    }
+  ],
+  "sourceCorrection": {
+    "optionalResolverRemovedFromProductionDefaults": true,
+    "typedUnavailableResolutionRequired": true,
+    "exactAuthorizedResolutionRetained": true,
+    "ordinaryMacOSDecision": "ordinaryMacOSHasNoHardPreExecPhysicalFootprintLimit",
+    "externalObserverDefaultVeto": true,
+    "postimageVerifierDefaultVeto": true,
+    "contractWidePreEffectDefaultVeto": true,
+    "schemaV1LaunchVetoRawValuePreserved": "residentMemoryEnforcementUnavailable",
+    "schemaV1MutationVetoRawValuePreserved": "containmentReadinessUnavailable",
+    "releaseIssuerClaimed": false
+  },
+  "verification": {
+    "focusedProductionControllerTests": 44,
+    "focusedResolutionSchemaTests": 5,
+    "packageOwnedTestsExecuted": 868,
+    "packageOwnedTestsSkipped": 8,
+    "packageOwnedTestFailures": 0,
+    "packageOwnedTestSeconds": 77.152,
+    "packageOwnedWallSeconds": 77.204,
+    "releaseBuildPassed": true,
+    "deepStrictSigningPassed": true,
+    "directStartupPassed": true,
+    "mountedStartupPassed": true,
+    "mountedAllMachOIdentityPassed": true,
+    "mountDetached": true,
+    "diffCheckPassed": true
+  },
+  "sourceSnapshotSHA256": "b941070c46a9547eed6233bc891a8a52756556b84a7952ab3fb0949d9c9fa549",
+  "package": {
+    "applicationExecutableSHA256": "4703466d894215ab0db2e94139bd60fbb3e2941a5ab01d31749cdeaabf25699d",
+    "applicationCDHash": "f3eb06ad41ab48f101041612d8873d25a23758ac",
+    "zipSHA256": "84a288114133ce4c9d31630c4a22406157d64a2cfffdfc5529b3dc46ab83e545",
+    "dmgSHA256": "0081498567dea7c84a48d4dd969e37f7c89f2ef8a575aae0725b0325cd5960f0",
+    "testLogSHA256": "42d3fd1de43b128db3dcfa54c2843df79a83cfe6e27eab176f2cc87b7ba61b43"
+  },
+  "strategyDisposition": {
+    "ordinaryMacOSInProcessIssuer": "retired",
+    "currentProductBehavior": "retain-typed-pre-admission-and-pre-effect-veto",
+    "futureRouteRequires": "separately-ratified-privileged-helper-or-virtualized-isolation-boundary"
+  },
+  "easyBusiness": {
+    "mutationCount": 0,
+    "branch": "codex/USA_Version",
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "statusFingerprintSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a"
+  },
+  "remaining": [
+    "productive provider backend ratification and native launch cutover",
+    "complete native trait/window/baseline/candidate matrix",
+    "clean-revision package rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false
+}

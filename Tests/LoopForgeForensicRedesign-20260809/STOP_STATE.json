@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-08-09T13:17:53Z",
+  "supersededTask": {
+    "id": "1ED2180F-FBE1-4BCA-9E79-701F40CC3483",
+    "workspace": "/Users/godice/Coding/EasyBusiness",
+    "status": "stopped",
+    "resumeOnNextLaunch": false,
+    "updatedAt": "2026-08-09T13:14:04Z",
+    "checkpointedAt": "2026-08-09T13:13:58Z",
+    "nativeUIConfirmation": "Stopped · progress and project files are saved",
+    "prohibition": "Never resume this task and never use LoopForge Loop, Auto Graph, or agents to mutate EasyBusiness."
+  },
+  "runtime": {
+    "easyBusinessGraphAgentProcesses": [],
+    "xcodebuildProcesses": [],
+    "taskResourceLeases": [],
+    "relatedSimulators": "shutdown",
+    "unrelatedProcessesPreserved": [
+      {
+        "pidAtCapture": 50060,
+        "command": "/Users/godice/Coding/EasyBusiness/backend/.venv/bin/python -m uvicorn app.main:app --env-file .env --host 127.0.0.1 --port 8000",
+        "startedAtLocal": "2026-07-28T21:20:32+08:00",
+        "parentPid": 1,
+        "classification": "pre-existing user service unrelated to the August Graph task; intentionally untouched"
+      }
+    ]
+  },
+  "easyBusinessGitEvidence": {
+    "branch": "codex/USA_Version",
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "upstream": "origin/main",
+    "upstreamHead": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "ahead": 0,
+    "behind": 0,
+    "workingTreePolicy": "read-only forensic evidence; do not add, commit, push, revert, stash, checkout, or otherwise mutate",
+    "modifiedFiles": [
+      "EasyBusiness/BusinessTaxonomy.swift",
+      "EasyBusiness/Models.swift",
+      "EasyBusinessTests/OpeningPlanValidationTests.swift",
+      "backend/app/providers.py",
+      "backend/app/research.py",
+      "backend/app/schemas.py",
+      "backend/app/service.py"
+    ],
+    "untrackedFiles": [
+      "backend/tests/test_us_category_ontology.py"
+    ],
+    "observation": "Ending the Graph left a node candidate published as uncommitted changes in the canonical workspace; this is retained as evidence of unsafe integration semantics."
+  },
+  "loopForgeGitEvidence": {
+    "branch": "main",
+    "head": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
+    "upstreamHead": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
+    "workingTree": "pre-existing dirty tree; all unrelated changes must be preserved and provenance separated before refactoring"
+  },
+  "automation": {
+    "id": "easybusiness-us-graph-10h",
+    "name": "LoopForge Forensic Redesign 20h",
+    "status": "ACTIVE",
+    "intervalMinutes": 10,
+    "minimumCoveredActiveSeconds": 72000
+  }
+}

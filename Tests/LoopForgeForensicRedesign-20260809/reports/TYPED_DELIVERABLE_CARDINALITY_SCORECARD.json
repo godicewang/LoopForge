@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T03:25:41Z",
+  "status": "typed-cardinality-contract-authority-receipt-package-verified-native-authoring-and-enrollment-pending",
+  "acceptanceRowsAdvanced": [
+    "B-04"
+  ],
+  "contract": {
+    "opaqueCollectionIdentity": true,
+    "positiveExactCountRequired": true,
+    "verticalKeywordPolicy": false,
+    "legacyContractDecodesWithoutCardinality": true
+  },
+  "compilerAuthority": {
+    "singleRequirementBindingRequired": true,
+    "explicitEpistemicStateRequired": true,
+    "userOrAcceptedAmendmentSourceRequired": true,
+    "inferenceCanMintCount": false,
+    "candidateDigestBindsCount": true
+  },
+  "verification": {
+    "exactObservationSetRequired": true,
+    "oneObservationPerRequirement": true,
+    "stableMemberIdentityRequired": true,
+    "memberContentDigestRequired": true,
+    "membershipEvidenceDigestRequired": true,
+    "underCountAccepted": false,
+    "overCountAccepted": false,
+    "substituteCollectionAccepted": false,
+    "duplicateStableIdentityAccepted": false,
+    "identicalContentWithDistinctStableIdentitiesAccepted": true,
+    "legacyReceiptDecodesWithoutObservation": true,
+    "focusedTestsExecuted": 39,
+    "focusedFailures": 0,
+    "fullTestsExecuted": 574,
+    "fullTestsSkipped": 8,
+    "fullFailures": 0,
+    "packagingOwnedTestsExecuted": 574,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "sourceSnapshotSHA256": "2aadc782217dfd601cac725b111d71feea98f7b9e92ddaa11c003449e6992c9c",
+    "focusedLogSHA256": "fda07439f3d87e6de265cbe32a23f1e99493838288be2758b6c9116c109422fd",
+    "fullLogSHA256": "2d1239d107a418266a8f9b98e405b0fa60211d9330840a383ee64ac032cfecfb",
+    "packageTestLogSHA256": "6f70e419004cebf4424b9607139a50607298dd3694e021c453c4902818ff5136",
+    "packageLogSHA256": "136cfa454faf0269cd431c493665538b9d5618bc99263e79d19136ab0e081e57",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "executableSHA256": "924afdfeecd273e931b4c061a069996542bacfaac5eebc59be21f786c005b677",
+    "zipSHA256": "73a400466a7ab74d24174d55740066cf1973d640a17480b2c7c59ecee8848077",
+    "dmgSHA256": "ecccdf54614976aab96f64175d9e988f8a526b177bf04085da1c38e959e23baa",
+    "cdHash": "0109b70ca4e1c44faf89b8fe47bf12a9f41cea34",
+    "residualPackagedProcessCount": 0
+  },
+  "knownBoundary": {
+    "nativeContractAuthoringPending": true,
+    "userConfirmationIssuerPending": true,
+    "productionEnrollmentPending": true,
+    "controllerCutoverPending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

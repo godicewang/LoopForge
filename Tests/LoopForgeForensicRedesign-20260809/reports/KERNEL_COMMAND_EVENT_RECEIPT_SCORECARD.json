@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "report": "KERNEL_COMMAND_EVENT_RECEIPT_SPECIFICATION.md",
+  "status": "pre-implementation-normative",
+  "productionRefactorAuthorized": false,
+  "commandFamilies": 26,
+  "derivedRunPhases": 15,
+  "executionDispositions": 6,
+  "rejectionKinds": 19,
+  "authoritativeSnapshotFields": 0,
+  "transactionProperties": [
+    "expected-sequence validation",
+    "idempotency-key replay",
+    "canonical JSON encoding",
+    "hash-chained event frames",
+    "atomic batch append and fsync",
+    "outbox side effects",
+    "projection after durability"
+  ],
+  "nonRepresentableContradictions": [
+    "blocked plus ordinary approval",
+    "failed plus integrated",
+    "terminal pause or stop without quiescence",
+    "completion with live resources",
+    "integration with stale receipts",
+    "authority beyond task ceiling",
+    "retired strategy reauthorization",
+    "later nonmatching success clearing failure"
+  ],
+  "legacyAutoResumeAllowed": false,
+  "governingRule": "Commands request, events establish state, receipts establish facts, and projections never mutate authority."
+}

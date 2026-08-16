@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "findingId": "F-010",
+  "title": "Auto Graph deletes the configured runtime target and can complete without a duration gate",
+  "status": "confirmed",
+  "sourceTaskId": "1ED2180F-FBE1-4BCA-9E79-701F40CC3483",
+  "historicalEvidence": {
+    "estimateLog": "The estimate starts from the Ultra default of 10h 00m",
+    "architectureLog": "Control-agent review time never counts toward the hard Sub Agent runtime",
+    "persistedTargetSeconds": 0,
+    "nominalNodeAgentSeconds": 18845.36251926422,
+    "nodeCount": 19,
+    "completedNodes": 12,
+    "supersededNodes": 5,
+    "waitingNodes": 2,
+    "auditScore": 100,
+    "supervisorCompletionApproved": false,
+    "visualAuditPassed": false
+  },
+  "committedSourceCauses": [
+    {
+      "file": "../../../Sources/LoopForge/AppModel.swift",
+      "behavior": "Auto Graph bypasses the minimum-runtime guard and persists targetSeconds as zero"
+    },
+    {
+      "file": "../../../Sources/LoopForge/Views.swift",
+      "behavior": "Auto Graph hides the editable target and advertises no artificial runtime minimum"
+    },
+    {
+      "file": "../../../Sources/LoopForge/GraphLoopEngine.swift",
+      "behavior": "Auto Graph worker tasks receive zero target and finalization has no accepted-runtime conjunction"
+    },
+    {
+      "file": "../../../Sources/LoopForge/Models.swift",
+      "behavior": "Graph progress is completed-node fraction rather than runtime-contract progress"
+    },
+    {
+      "file": "../../../Sources/LoopForge/CompletionReportGenerator.swift",
+      "behavior": "Auto Graph reports concurrency instead of target satisfaction"
+    }
+  ],
+  "causalChain": [
+    "outer multi-phase duration requirement was not retained in the persisted task request",
+    "Auto Graph task creation overwrote any configured runtime with zero",
+    "node worker tasks also received zero",
+    "final completion tested review audit and visual booleans but no duration",
+    "progress and reports omitted the missing contract",
+    "logs continued to imply a hard runtime guarantee"
+  ],
+  "accountingWarning": "The nominal 18845.36-second graph total is not accepted runtime because current live accounting includes semantically rejected and blocked records.",
+  "acceptanceRequirements": [
+    "immutable nonzero runtime contract for every execution mode",
+    "append-only typed task-level interval ledger",
+    "non-overlapping accepted wall time separated from parallel agent-seconds",
+    "runtime conjunction in final completion",
+    "no target-filling churn after useful work is exhausted",
+    "native UI and HTML expose target accepted excluded current and remaining time",
+    "legacy zero-target task quarantine",
+    "persistence relaunch finalization and report regression tests"
+  ],
+  "evidence": [
+    "../evidence/task-snapshot-20260809T131753Z.json",
+    "RUNTIME_TARGET_BYPASS.md",
+    "STATUS_ACCOUNTING_AND_CONVERGENCE.md",
+    "../../../Sources/LoopForge/AppModel.swift",
+    "../../../Sources/LoopForge/Views.swift",
+    "../../../Sources/LoopForge/GraphLoopEngine.swift",
+    "../../../Sources/LoopForge/Models.swift",
+    "../../../Sources/LoopForge/CompletionReportGenerator.swift"
+  ]
+}

@@ -116,6 +116,45 @@ final class RuntimeHealthTests: XCTestCase {
         }
     }
 
+    func testCancellingProcessRunnerReapsSpawnedDescendants() async throws {
+        let directory = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString, isDirectory: true)
+        try FileManager.default.createDirectory(
+            at: directory,
+            withIntermediateDirectories: true
+        )
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let pidFile = directory.appendingPathComponent("child.pid")
+        let running = Task {
+            try await ProcessRunner().run(
+                executable: URL(fileURLWithPath: "/bin/zsh"),
+                arguments: [
+                    "-lc",
+                    "sleep 30 & child=$!; echo $child > \"$1\"; wait $child",
+                    "zsh",
+                    pidFile.path
+                ]
+            )
+        }
+
+        for _ in 0..<100 where !FileManager.default.fileExists(atPath: pidFile.path) {
+            try await Task.sleep(nanoseconds: 20_000_000)
+        }
+        let childPID = pid_t(Int(
+            try String(contentsOf: pidFile, encoding: .utf8)
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+        )!)
+        defer { _ = Darwin.kill(childPID, SIGKILL) }
+        XCTAssertEqual(Darwin.kill(childPID, 0), 0)
+
+        running.cancel()
+        _ = try? await running.value
+        for _ in 0..<200 where processExists(childPID) {
+            try await Task.sleep(nanoseconds: 20_000_000)
+        }
+        XCTAssertFalse(processExists(childPID))
+    }
+
     func testActiveWorkTrackerExcludesTransportDowntime() async throws {
         let tracker = ActiveWorkDurationTracker()
         try await Task.sleep(nanoseconds: 30_000_000)
@@ -138,5 +177,10 @@ final class RuntimeHealthTests: XCTestCase {
             CodexRuntimeSignal.classify(message: "model metadata refreshed"),
             .diagnostic
         )
+    }
+
+    private func processExists(_ pid: pid_t) -> Bool {
+        if Darwin.kill(pid, 0) == 0 { return true }
+        return errno == EPERM
     }
 }

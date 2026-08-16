@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-10T23:24:13Z",
+  "status": "implemented-and-verified-not-final",
+  "acceptanceRowsAdvanced": ["C-01", "J-06", "J-07"],
+  "authority": {
+    "newTaskDefault": "workspaceOnly",
+    "recommendationCanEscalate": false,
+    "categoryInferenceCanEscalate": false,
+    "watcherDefault": "workspaceOnly",
+    "legacyWatcherFallback": "workspaceOnly",
+    "explicitFullAccessPreserved": true
+  },
+  "verification": {
+    "focusedTestsPassed": 19,
+    "fullTestsExecuted": 517,
+    "fullTestsSkipped": 8,
+    "fullTestFailures": 0,
+    "sourceSnapshotBound": true,
+    "packageTestLogBound": true,
+    "exactExecutableStartupPassed": true,
+    "deliberateCrashFixtureRejected": true,
+    "successfulProbeChildReaped": true,
+    "residualPackagedProcessCount": 0
+  },
+  "sourceSnapshotSHA256": "7146c8abddaa1a8ddfc36bd4aea46acda699a9f58bc06c239c113e7e949d8750",
+  "packageFinal": false,
+  "currentNativeScreenshot": false,
+  "easyBusinessMutated": false
+}

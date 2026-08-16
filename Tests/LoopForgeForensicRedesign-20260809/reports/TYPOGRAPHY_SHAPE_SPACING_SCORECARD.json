@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "findingRange": ["F-031", "F-037"],
+  "status": "fail",
+  "title": "Typography, Shape, and Spacing Forensic Scorecard",
+  "baselines": {
+    "chineseCommit": "301ef23a8698c3544c097895980248284f9189bb",
+    "preF82TestedSourceCommit": "c9046f0e7d37376d4d093411c5fe35b1ddf46a3d",
+    "preF82EvidenceCommit": "88d53bee1ca13cf36aee9b5c29d77a5903a28b26",
+    "englishCommit": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "device": "iPhone 17 Pro Simulator",
+    "os": "iOS 26.5",
+    "pixelSize": {"width": 1206, "height": 2622}
+  },
+  "standard": {
+    "chinese": {
+      "heroTitleLines": 1,
+      "heroTitleSpanPixels": 106.7,
+      "heroAndSupportSpanPixels": 240.5,
+      "workspaceHeadingTopPixels": 625.0,
+      "cardTitleLines": [1, 1],
+      "integrityTitleTopPixels": 1821.7
+    },
+    "english": {
+      "heroTitleLines": 2,
+      "heroTitleSpanPixels": 183.1,
+      "heroAndSupportSpanPixels": 327.9,
+      "workspaceHeadingTopPixels": 735.5,
+      "cardTitleLines": [1, 2],
+      "integrityTitleTopPixels": 1939.8
+    },
+    "judgments": {
+      "typographyHierarchy": "fail",
+      "symmetricCardRhythm": "fail",
+      "contentDensity": "fail",
+      "shapeLanguageFit": "fail"
+    }
+  },
+  "accessibilityXXXL": {
+    "chinese": {
+      "productNameTopPixels": 223.3,
+      "productNameBoxHeightPixels": 67.2,
+      "trustLabelBoxHeightPixels": 57.2,
+      "heroTitleLines": 2,
+      "heroTitleSpanPixels": 383.7,
+      "workspaceHeadingVisibleAboveNavigation": true,
+      "primaryWorkspaceCardVisible": false,
+      "floatingNavigationOverlap": true
+    },
+    "english": {
+      "productNameTopPixels": 449.7,
+      "productNameBoxHeightPixels": 133.4,
+      "trustLabelBoxHeightPixels": 160.5,
+      "heroTitleLines": 4,
+      "heroTitleSpanPixels": 770.2,
+      "workspaceHeadingVisibleAboveNavigation": false,
+      "primaryWorkspaceCardVisible": false,
+      "floatingNavigationOverlap": true
+    },
+    "judgments": {
+      "initialViewportTaskVisibility": "fail",
+      "responsiveComposition": "fail",
+      "navigationOcclusion": "fail",
+      "baselineHierarchyPreservation": "fail"
+    }
+  },
+  "directF82BeforeAfter": {
+    "homeProductFilesUnchangedFromTestedSourceToF82Parent": true,
+    "homeProductFilesUnchangedFromF82ToEnglishCommit": true,
+    "before": {
+      "productNameTopPixels": 221,
+      "trustLabelTopPixels": 324,
+      "heroTitleTopPixels": 452,
+      "supportCopyLines": 2,
+      "supportCopySpanPixels": 301,
+      "workspaceHeadingVisibleAboveNavigation": true,
+      "floatingNavigationOverlap": true
+    },
+    "after": {
+      "productNameTopPixels": 450,
+      "trustLabelTopPixels": 617,
+      "heroTitleTopPixels": 834,
+      "supportCopyLines": 4,
+      "supportCopySpanPixels": 659,
+      "workspaceHeadingVisibleAboveNavigation": false,
+      "floatingNavigationOverlap": true
+    },
+    "verdict": "f82ff2d caused a directly observed initial-viewport hierarchy and density regression while its UI test passed"
+  },
+  "sharedShapeConstants": {
+    "iconWellPixels": [52, 52],
+    "iconWellRadius": 17,
+    "outerCardRadius": 26,
+    "primaryButtonRadius": 15,
+    "secondaryButtonRadius": 14,
+    "normalMinimumCardHeight": 330,
+    "interpretation": "Primitive equality did not preserve relational visual fit after English copy expansion."
+  },
+  "causalCommit": {
+    "sha": "f82ff2d604e10e00de7f88e1dc6a86c50d0cc0e1",
+    "nodeID": "repair-maximum-dynamic-type-safe-areas-v1",
+    "mainApprovalAt": "2026-08-09T07:19:01Z",
+    "uiTestLinesAdded": 272,
+    "revertedDensitySafeguards": true,
+    "selfAuthoredImplementationTestsEvidenceAndAcceptance": true
+  },
+  "requiredVetoGates": [
+    "initial-viewport-task-visibility",
+    "baseline-bound-typography-hierarchy",
+    "symmetric-group-line-count-and-alignment",
+    "content-to-container-occupancy",
+    "floating-navigation-occlusion",
+    "independent-product-design-approval"
+  ],
+  "evidence": [
+    "../evidence/runtime-baselines/chinese-home-standard.png",
+    "../evidence/runtime-baselines/english-home-standard.png",
+    "../evidence/runtime-baselines/chinese-home-accessibility-xxxl.png",
+    "../evidence/runtime-baselines/english-home-accessibility-xxxl.png",
+    "../evidence/runtime-baselines/chinese-home-standard-text-geometry.json",
+    "../evidence/runtime-baselines/english-home-standard-text-geometry.json",
+    "../evidence/runtime-baselines/chinese-home-accessibility-xxxl-text-geometry.json",
+    "../evidence/runtime-baselines/english-home-accessibility-xxxl-text-geometry.json",
+    "../evidence/pre-f82-88d53be/screenshots/01-home-dashboard.png",
+    "../evidence/pre-f82-88d53be/screenshots/08-maximum-dynamic-type-home.png",
+    "../evidence/pre-f82-88d53be/attachment-source-manifest.json",
+    "../evidence/pre-f82-88d53be/01-home-dashboard-text-geometry.json",
+    "../evidence/pre-f82-88d53be/08-maximum-dynamic-type-home-text-geometry.json"
+  ]
+}

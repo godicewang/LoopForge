@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T08:19:00Z",
+  "status": "ordinary-app-productive-provider-install-and-cutover-strategy-retired-typed-architecture-veto-native-verified",
+  "sourceSnapshotSHA256": "4ec4c6aba1c46410eb322909657b84d3a68797e00e451f7575a7caee4af0fd44",
+  "decision": {
+    "ordinaryAppProductiveProviderCutoverPending": false,
+    "ordinaryAppProductiveProviderArchitectureAvailable": false,
+    "currentPackageTransportVetoOnly": true,
+    "separatePrivilegedOrVirtualizedProductRequired": true,
+    "manifestRelabelingCanMintAuthority": false,
+    "typedArchitectureVetoIsCurrentProductOutcome": true
+  },
+  "schemaCompatibility": {
+    "semanticBlocker": "productiveProviderArchitectureUnavailable",
+    "preservedRawValue": "providerHarnessProductiveBackendUnavailable",
+    "schemaV1ReadinessEvidenceCompatible": true
+  },
+  "adversarialFixture": {
+    "exactHarnessExecutableIdentity": true,
+    "declaredMode": "productive",
+    "declaredProductiveBackends": ["codex"],
+    "selfConsistentProductiveSelfTest": true,
+    "nativeSelectionResult": "manifestInvalid",
+    "authorityMinted": false
+  },
+  "tests": {
+    "focusedExecuted": 23,
+    "focusedFailures": 0,
+    "completeExecuted": 868,
+    "completeSkipped": 8,
+    "completeFailures": 0,
+    "packageExecuted": 868,
+    "packageSkipped": 8,
+    "packageFailures": 0,
+    "packageTestLogSHA256": "86bb36bcb3edc80d7b04e7b8262f11fa6ebf3abfbea02c341cb114388e344ee7"
+  },
+  "nativeUI": {
+    "exactPackagedApplicationInspected": true,
+    "newInertReadyRunEnrolled": true,
+    "runID": "native-run-3c15bddb-74b7-43a4-97cf-acf9949db83e",
+    "journalSequence": 1,
+    "nativeAttemptAdmitted": false,
+    "activationEnabled": false,
+    "architectureVetoVisible": true,
+    "providerPromptPrepared": false,
+    "providerLaunched": false,
+    "screenshotPath": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-productive-architecture-veto-20260816T081700Z.png",
+    "screenshotSHA256": "664944cc600d13cde571e1b2f3b5bf3a217a450938fd8a75de4a6c36c9d14d9e",
+    "pixelWidth": 860,
+    "pixelHeight": 760,
+    "postQuitPackagedProcessCount": 0,
+    "postVerificationMountCount": 0
+  },
+  "package": {
+    "builtAtUTC": "2026-08-16T08:13:34Z",
+    "sourceDirty": true,
+    "appExecutableSHA256": "2fe6039993b643d5907a38e0e8622c6baa301150d245bb6f5022ebafcb56ec75",
+    "appExecutableCDHash": "0ac5ef7b776e853300887b1ae41efc5647181bc0",
+    "zipSHA256": "dd1cdabfe1d08527abc1dea0cd1db859bbcd026951c86a42045bf8a6e3793bde",
+    "dmgSHA256": "76ee84729fa9a1b49081a9af68a9f6875392c6b3f16497d9da148ad73989317e",
+    "directStartupPassed": true,
+    "mountedStartupPassed": true,
+    "allMachOByteIdentityPassed": true,
+    "deepStrictSignaturePassed": true,
+    "checksumManifestPassed": true
+  },
+  "easyBusiness": {
+    "mutated": false,
+    "legacyGraphResumed": false,
+    "observedBranch": "codex/USA_Version",
+    "observedHead": "2ae40452e6d8661c46db466c43ea40bba3bfab04"
+  },
+  "remaining": [
+    "complete native trait window baseline and candidate matrix",
+    "clean-commit package rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false
+}

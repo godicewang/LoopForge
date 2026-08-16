@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "report": "CAUSAL_CONVERGENCE_AND_STRATEGY_PORTFOLIO_SPECIFICATION.md",
+  "status": "pre-implementation-normative-design",
+  "productionRefactorAuthorized": false,
+  "historicalEvidence": {
+    "totalIterations": 51,
+    "blockedWorkerSummaries": 37,
+    "blockedThenContinued": 28,
+    "blockedThenApproved": 7,
+    "maximumObservedNodeIterations": 11,
+    "unavailableScreenshotStrategyIterations": 7
+  },
+  "currentDirtyPolicy": {
+    "maximumConsecutiveBlockedTurns": 3,
+    "maximumUnapprovedDecisions": 6,
+    "materialDifferenceMethod": "punctuation-stripped lexical inequality",
+    "acceptedAsConvergent": false
+  },
+  "strategyFingerprintAxisCount": 12,
+  "failureClassCount": 9,
+  "progressVectorDimensionCount": 10,
+  "attemptAdmissionGateCount": 10,
+  "budgetDimensionCount": 9,
+  "replacementActionCount": 8,
+  "coreRules": {
+    "blockedPlusAcceptedValid": false,
+    "exitZeroMeansSuccess": false,
+    "paraphraseMeansNovelty": false,
+    "freshThreadResetsBudget": false,
+    "planExpansionMintsBudget": false,
+    "visualDamageReceivesAutomaticRetry": false,
+    "noViableStrategyRestartsLoop": false,
+    "externalWaitCountsActiveTime": false,
+    "timeProvesQuality": false,
+    "automaticTransitionCountFinite": true
+  },
+  "classSpecificRetryLimits": {
+    "structuralAuthorityScopeTopology": 0,
+    "evidenceProvenUnavailable": 0,
+    "visualProductRegression": 0,
+    "deterministicVerifierDistinctRepairs": 2,
+    "outcomeUnknownBlindRetry": 0,
+    "globalEquivalentFailureCeilingIncludingFirst": 3
+  },
+  "requiredTestCount": 30,
+  "sourceEvidence": [
+    "Sources/LoopForge/GraphLoopEngine.swift:874",
+    "Sources/LoopForge/GraphLoopEngine.swift:1009",
+    "Sources/LoopForge/GraphLoopEngine.swift:1122",
+    "Sources/LoopForge/GraphLoopEngine.swift:1492",
+    "Sources/LoopForge/LoopController.swift:825",
+    "Tests/LoopForgeForensicRedesign-20260809/reports/STRATEGY_CHURN_AND_REVIEW_CAUSAL_MODEL.md",
+    "Tests/LoopForgeForensicRedesign-20260809/reports/PROMPT_CONTRACT_AND_STRATEGY_RETIREMENT.md",
+    "Tests/LoopForgeForensicRedesign-20260809/evidence/node-iteration-metrics.json"
+  ]
+}

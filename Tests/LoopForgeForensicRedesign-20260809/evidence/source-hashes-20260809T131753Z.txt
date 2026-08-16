@@ -1,0 +1,10 @@
+7a71e56ded1c958c0e362883270e53024fcaddda545f3f803d07e9cea78986aa  /Users/godice/Library/Application Support/LoopForge/tasks.json
+489a845cfe5fe814a9051c3dd55b5be39227bb0b125f1767b4fb016900495eb9  /Users/godice/Library/Application Support/LoopForge/HostResourceLeases/leases.json
+cd572c9caf8ec8534c5a118f963329c745fc973660db7224e6587b8bfd2a8d2c  /Users/godice/.codex/automations/easybusiness-us-graph-10h/automation.toml
+be1968eea0207b9dc43901918dd5f97e717298b87e009350a40b526d638502c6  /Users/godice/Library/Application Support/LoopForge/GraphPatches/1ed2180f-fbe1-4bca-9e79-701f40cc3483/commit-integrated-bailian-contract.patch.no-changes
+72360195c8ae3d28ef235e60d930df25ca4148aabfe310676dc7772d1e569a1d  /Users/godice/Library/Application Support/LoopForge/GraphPatches/1ed2180f-fbe1-4bca-9e79-701f40cc3483/community-entry-external-watchdog-v1.patch
+4f9252f6b82ee006e5bc3e404c899c958e4263bde6ad76c9a96a8a5fbfedb1c3  /Users/godice/Library/Application Support/LoopForge/GraphPatches/1ed2180f-fbe1-4bca-9e79-701f40cc3483/implement-bailian-json-contract.patch
+dd487e42041754132f4cd416140ccacf7f74547da178b36ac3bb8a872ee61682  /Users/godice/Library/Application Support/LoopForge/GraphPatches/1ed2180f-fbe1-4bca-9e79-701f40cc3483/repair-integrated-analysis-runtime-contrac.patch
+908a645ed07f66649815b51ed3f929077a27d32e61b94c7d86e31b717506cd33  /Users/godice/Library/Application Support/LoopForge/GraphPatches/1ed2180f-fbe1-4bca-9e79-701f40cc3483/repair-maximum-dynamic-type-safe-areas-v1.patch
+69a2327550edea0e1515fb8880abfa9d80cfce91b58493eb5d96addcb1ffff5e  /Users/godice/Library/Application Support/LoopForge/GraphPatches/1ed2180f-fbe1-4bca-9e79-701f40cc3483/repair-us-category-direct-substitute-ontol.patch
+0dcc51d3efdc81140c59f24eeef285d0cb6e1c6bb383cf4891990a43711ae753  /Users/godice/Library/Application Support/LoopForge/GraphPatches/1ed2180f-fbe1-4bca-9e79-701f40cc3483/verify-us-ios-xcuitest-runtime-evidence-v1.patch

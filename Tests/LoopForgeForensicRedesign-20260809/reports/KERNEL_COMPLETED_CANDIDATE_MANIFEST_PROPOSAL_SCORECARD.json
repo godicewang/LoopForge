@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T16:52:43Z",
+  "status": "completed-candidate-manifest-proposal-exact-inert-journaled-and-crash-replayable",
+  "finalAcceptance": false,
+  "easyBusinessMutated": false,
+  "controls": {
+    "exactCompletedCandidateContentStoreTransactionRequired": true,
+    "exactCanonicalPreimageTransactionRequired": true,
+    "transactionAndCandidateIdentitiesContentDerived": true,
+    "contractAndCanonicalPlanNodeDigestsBound": true,
+    "exactRegularFileOperationTopologyBound": true,
+    "requirementOwnershipAndWritablePathsRevalidated": true,
+    "contractAndPlanMutationBudgetsRevalidated": true,
+    "commonPreparationBindingPresent": true,
+    "liveOriginsAndExternalArtifactRevalidatedBeforeAppend": true,
+    "duplicateReplayRevalidatesOrigins": true,
+    "crashReplayIsReceiptOnly": true,
+    "pathResolutionReceiptPresent": false,
+    "writeAuthorityReceiptPresent": false,
+    "mutationBudgetReceiptPresent": false,
+    "candidateVerificationReceiptPresent": false,
+    "independentReviewReceiptPresent": false,
+    "rollbackRehearsalReceiptPresent": false,
+    "candidateQuiescenceReceiptPresent": false,
+    "visualGateReceiptPresent": false,
+    "executableMutationManifestIssued": false,
+    "integrationTransactionCreated": false,
+    "canonicalWorkspaceMutationAuthorityIssued": false
+  },
+  "nativeCrashForensic": {
+    "failedDiagnosticRunsCountedSeconds": 0,
+    "nativeCrashReportsObserved": 9,
+    "crashPattern": "cooperative-thread stack overflow in Foundation validated-format SHA byte encoding",
+    "boundedLocaleFreeKernelHexImplemented": true,
+    "affectedDigestPathsConverted": [
+      "KernelPostimageVerifierActivation",
+      "KernelProviderInvocation",
+      "HeavyEvidenceCache",
+      "TaskContractCompiler",
+      "KernelPostimageVerifierResultParser",
+      "WorkspaceCompletedCandidateMutationManifestProposal"
+    ],
+    "crashReportSHA256": {
+      "xctest-2026-08-13-003621.ips": "082e64e55d4e7f7bd9e0555953d05d0bd2b20a3188a89b5220b5d2ef76d9adf6",
+      "xctest-2026-08-13-003635.ips": "f35733439d15e06e96f3353deff18b9265d9d86ad5ddae31facf6cfb1dfa6a6b",
+      "xctest-2026-08-13-003803.ips": "1e4e390b261344be8c90305eabe3939f7c02eb50aa626222bdfdedaec9f98fbb",
+      "xctest-2026-08-13-003859.ips": "75222b631109645488f8f7f7727a291c2abbc68816eac16b53d6a79577955375",
+      "xctest-2026-08-13-004012.ips": "6c755af3b6aa137fb315e4db982cea57012ba9fd5d7918c5e825e48e796e0f9c",
+      "xctest-2026-08-13-004118.ips": "2538e1189e3c26ad13074dcb1e931476c3f0c718b6e118237fb1a212044a12b5",
+      "xctest-2026-08-13-004338.ips": "fa1af5e13c9fede8c63d549ec421d9492173ffd843a606f20ab89e73d5a3d29e",
+      "xctest-2026-08-13-004340.ips": "f2223b883639143e34c3a335bcc00690d1e41be8439ea694c7a7ed075638cd00",
+      "xctest-2026-08-13-004342.ips": "68484018a73a86c08adc6bbc95b866f301555bb68be8aefcda5a50eb80a3fd7d"
+    }
+  },
+  "verification": {
+    "swiftTestsExecuted": 764,
+    "intentionalEnvironmentSkips": 8,
+    "swiftTestFailures": 0,
+    "swiftTestSeconds": 58.701,
+    "swiftTestWallSeconds": 66.25,
+    "fullTestLogSHA256": "f5b91f459a6fde88e89b6fe291cabb61b0842b508071295b1f6249b1b9102716",
+    "diffWhitespace": "passed",
+    "ownedTestProcessesRemaining": 0,
+    "thermalWarning": false,
+    "performanceWarning": false,
+    "easyBusinessFingerprintUnchanged": true,
+    "sourceHashes": {
+      "WorkspaceCompletedCandidateMutationManifestProposal.swift": "af92e9fda3f8473ec9e3f9549c0141c3795f7d333b6f492bc86d12b54c290c95",
+      "KernelHex.swift": "d579b19098544a3a7f09e4a8643c11b7dfbadc5bff276f78a351e61138c2d8aa",
+      "KernelPostimageVerifierActivation.swift": "5702118421966cf469fde701ff05b62d9b7d40d9652d428089d3659098e7856f",
+      "KernelProviderInvocation.swift": "b240f4b8afac46fe76fd7c2ee2ec5bca197717051f6f5b9b5c42394754d7c332",
+      "HeavyEvidenceCache.swift": "a0ff57c9ba7d022c8ae05677201ed337da42a44d943a096cab474fc80fbfd37d",
+      "TaskContractCompiler.swift": "6b09c42801922b8bfd4a5f81587430e8f5a1e335739a0c4bdd3d081e456cce4f",
+      "KernelPostimageVerifierResultParser.swift": "5025647dc02e3ff5d57d22f473ad27c0abc73dcfe04ae7fdbb422a7a458033ac",
+      "RunReducer.swift": "6752e8d4ec4aa2e0fc7b06cea7a51b8e9fcd643621b7519bcb57d040f105fbed",
+      "RunJournal.swift": "2e2209724dbb00816de150ff6d9921b772af804219087d98d089fd82768e1200",
+      "KernelRunEnrollmentCoordinatorTests.swift": "52b5acbf20ecf8706b9665be7f3d15a48d8976fc0fb1c4b00633bdbe5c441df7"
+    }
+  },
+  "ledger": {
+    "acceptedIntervalID": "kernel-completed-candidate-manifest-proposal-195",
+    "coveredSecondsAdded": 600,
+    "coveredActiveSeconds": 158970,
+    "acceptedIntervals": 195,
+    "failedDiagnosticsTestsBuildsWaitsAndReportsCountedSeconds": 0
+  },
+  "remainingPrerequisites": [
+    "journal exact preparation facts from the inert proposal",
+    "rehearse and journal exact rollback before executable manifest assembly",
+    "assemble executable manifest then issue proposal and preflight authority",
+    "provide tested resident-memory enforcement or retain verifier and reviewer veto",
+    "compose native immutable design baseline complete visual evidence final authorization and native UI start",
+    "retire remaining legacy Single and Parallel paths",
+    "complete current-source package sign hash unlocked native walkthrough clean commit and push"
+  ]
+}

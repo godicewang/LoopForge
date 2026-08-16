@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T22:56:45Z",
+  "status": "content-addressed-read-only-candidate-input-implemented-verifier-runtime-result-review-and-start-vetoed",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "authority": {
+    "journalAttestationRequired": true,
+    "reportReceiptIsAuthority": false,
+    "inputCapabilityCodable": false,
+    "inputCapabilityReleaseInitializerCallerAccessible": false,
+    "materializerStartsProcess": false,
+    "materializerIssuesVerificationVerdict": false
+  },
+  "filesystemBoundary": {
+    "storageWorkspaceOverlapRejected": true,
+    "workspaceCapturedBeforeCopy": true,
+    "workspaceCapturedAfterCopy": true,
+    "sourceTraversalDescriptorRelative": true,
+    "sourceSymlinksFollowed": false,
+    "destinationsExclusive": true,
+    "sourceIdentityRecheckedAfterEOF": true,
+    "streamingContentDigestRequired": true,
+    "snapshotIndependentlyRecaptured": true,
+    "snapshotContentAddressedBySourceRevision": true,
+    "snapshotWriteBitsRemoved": true,
+    "existingArtifactTrustedByNameOnly": false,
+    "existingArtifactRevalidated": true,
+    "absoluteFilesystemImmutabilityClaimed": false,
+    "ownerCanRestoreWritePermission": true,
+    "immediateCapabilityRevalidationImplemented": true,
+    "revalidationAtomicallyComposedWithVerifierSpawn": false
+  },
+  "adversarialCoverage": [
+    "workspace-drift",
+    "workspace-storage-overlap",
+    "symlinked-source",
+    "tampered-existing-snapshot",
+    "read-only-mode-normalization",
+    "content-addressed-reuse",
+    "source-mutation-does-not-change-materialized-bytes",
+    "capability-revalidation-after-tamper"
+  ],
+  "verification": {
+    "focusedTests": 3,
+    "discoveredSwiftTests": 702,
+    "completeSwiftTests": 702,
+    "environmentSkips": 8,
+    "failures": 0,
+    "releaseBuild": "passed",
+    "diffWhitespace": "passed",
+    "ownedSwiftProcessesRemaining": 0,
+    "exactSourceSnapshotSHA256": "237710714e09714a459bb602b64bdebfa08f259447e8bd17aed246aba9c19f31",
+    "releaseArtifacts": {
+      "LoopForgeSHA256": "232133ace65ee2c5634948a997aad2c920f574577421b05e9a9d60d04a0648ed",
+      "KernelSandboxGateSHA256": "0e29463be4377b4d21c463e7ddb63e6256dd76abf30ff1690f0c5a482e985227"
+    },
+    "sourceHashes": {
+      "WorkspaceCandidatePostimageMaterializer.swift": "a3e036c7ba5176adf70bcc7f7628a6323a7d0e2c51e7096783e466acc6af8629",
+      "WorkspaceSourceRevisionCollector.swift": "ec645c8ffd123e290937af4a73dbc0d7176f81aa562a02605eff69abbbd66bd0",
+      "WorkspaceRepositoryIndex.swift": "231d4dda3ead58aa2c14b1d93ecf59010a10294314553d1a2eda627e779bb365",
+      "WorkspaceCandidatePostimageMaterializerTests.swift": "dd278ab6e956846f21dcbd748916a5e3ee22032e8cc069952f56c5d719fcef9b"
+    }
+  },
+  "remainingPrerequisites": [
+    "separately activated verifier process authority and independent actor lineage",
+    "exact recipe and candidate capability substitution",
+    "candidate revalidation atomically composed with verifier admission and spawn",
+    "receipt binding to recipe executable argv inputs attestation environment capture parser output oracle runtime and transaction",
+    "verification identity and journal sequence with latest-red revocation",
+    "canonical verification evidence batch",
+    "separately activated read-only independent review of the exact batch"
+  ],
+  "finalAcceptance": false
+}

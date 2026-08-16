@@ -1,0 +1,71 @@
+#!/bin/zsh
+set -euo pipefail
+
+fail() {
+  print -u2 -- "LoopForge host-resource broker: $1"
+  exit 64
+}
+
+[[ "$#" -eq 3 ]] || fail "usage: ios-simulator boot <exact-UDID>"
+[[ "$1" == "ios-simulator" && "$2" == "boot" ]] \
+  || fail "only 'ios-simulator boot <exact-UDID>' is allowed"
+
+raw_udid="$3"
+uuid_pattern='^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$'
+[[ "$raw_udid" =~ "$uuid_pattern" ]] || fail "the Simulator identifier must be one exact UDID"
+udid="$(print -rn -- "$raw_udid" | /usr/bin/tr '[:lower:]' '[:upper:]')"
+
+broker_directory="${LOOPFORGE_HOST_RESOURCE_BROKER_DIRECTORY:-}"
+scope_id="${LOOPFORGE_HOST_RESOURCE_SCOPE_ID:-}"
+broker_token="${LOOPFORGE_HOST_RESOURCE_BROKER_TOKEN:-}"
+[[ -d "$broker_directory" ]] || fail "the broker request directory is unavailable"
+[[ "$scope_id" =~ "$uuid_pattern" ]] || fail "the Graph scope is invalid"
+[[ "$broker_token" =~ "$uuid_pattern" ]] || fail "the Graph scope token is invalid"
+
+submit_request() {
+  local operation="$1"
+  local identifier="$2"
+  local lease_id="$3"
+  local request_id="$(/usr/bin/uuidgen)"
+  local request_path="$broker_directory/$request_id.request.json"
+  local response_path="$broker_directory/$request_id.response.json"
+  local temporary_path="$(/usr/bin/mktemp "$broker_directory/.request.XXXXXX")"
+  local identifier_json="null"
+  local lease_json="null"
+  [[ -z "$identifier" ]] || identifier_json="\"$identifier\""
+  [[ -z "$lease_id" ]] || lease_json="\"$lease_id\""
+
+  /usr/bin/printf \
+    '{"schemaVersion":1,"requestID":"%s","scopeID":"%s","token":"%s","operation":"%s","identifier":%s,"leaseID":%s}\n' \
+    "$request_id" "$scope_id" "$broker_token" "$operation" "$identifier_json" "$lease_json" \
+    > "$temporary_path"
+  /bin/chmod 600 "$temporary_path"
+  /bin/mv "$temporary_path" "$request_path"
+
+  local attempt=0
+  while [[ "$attempt" -lt 200 && ! -f "$response_path" ]]; do
+    /bin/sleep 0.05
+    attempt=$((attempt + 1))
+  done
+  [[ -f "$response_path" ]] || fail "LoopForge did not acknowledge the resource request"
+
+  local success="$(/usr/bin/plutil -extract success raw -o - "$response_path" 2>/dev/null || true)"
+  if [[ "$success" != "true" ]]; then
+    local detail="$(/usr/bin/plutil -extract error raw -o - "$response_path" 2>/dev/null || true)"
+    fail "${detail:-the resource request was rejected}"
+  fi
+  BROKER_RESPONSE_PATH="$response_path"
+}
+
+submit_request "declareIOSSimulatorBoot" "$udid" ""
+lease_id="$(/usr/bin/plutil -extract leaseID raw -o - "$BROKER_RESPONSE_PATH")"
+perform_acquisition="$(/usr/bin/plutil -extract performAcquisition raw -o - "$BROKER_RESPONSE_PATH")"
+
+if [[ "$perform_acquisition" == "true" ]]; then
+  xcrun_path="${LOOPFORGE_HOST_RESOURCE_BROKER_TEST_XCRUN:-/usr/bin/xcrun}"
+  [[ "$xcrun_path" == /* && -x "$xcrun_path" ]] || fail "xcrun is unavailable"
+  "$xcrun_path" simctl boot "$udid"
+  submit_request "markAcquired" "" "$lease_id"
+fi
+
+print -- "$udid"

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T21:57:57Z",
+  "status": "confirmed-verification-recipe-and-candidate-attestation-gap-production-issuer-and-start-vetoed",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "findings": {
+    "recipeHasExecutableProbe": false,
+    "receiptBindsRecipeIDs": false,
+    "receiptBindsVerifierRuntime": false,
+    "candidateRevisionAttested": false,
+    "latestRedRevokesOlderGreen": false,
+    "reviewEvidenceBatchGrounded": false,
+    "integrationConsumesGroundedPostimage": false
+  },
+  "existingBoundary": {
+    "nonCodableVerificationAuthority": true,
+    "productionIssuerPresent": false,
+    "decodedReceiptCanIssue": false,
+    "nativeStartPresent": false
+  },
+  "requiredPrerequisites": [
+    "canonical executable recipe with content digest, fixed argv, explicit input bindings, pinned environment and capture identity, parser/schema, deterministic result mapping, resource ceilings, and shell/remote denial by default",
+    "journal-owned candidate source-tree and postimage attestation from the mutation executor boundary",
+    "separate journal-owned verifier process lease and independent actor lineage",
+    "verification identity and journal sequence with latest-red revocation and exact-identity supersession",
+    "receipt binding to exact recipe IDs, process and release identity, output, parser, candidate, environment, oracle, and transaction",
+    "canonical verification batch consumed only by a separately activated read-only independent reviewer"
+  ],
+  "verification": {
+    "exactSourceSnapshotSHA256": "4bf83237fce3658fece4df0687781f85f62e8222c43cc316c018879dade8bc47",
+    "retainedSwiftTests": 695,
+    "retainedEnvironmentSkips": 8,
+    "retainedFailures": 0,
+    "retainedReleaseBuild": "passed",
+    "sourceHashes": {
+      "TaskContractCompiler.swift": "f5efdaf1a66145be928b6d459201599b18ab66dead9288d57d9ec95054e3500f",
+      "RunReducer.swift": "777646c0d06b631f14869f740df949d94cb72aa4388f7700a2b49d610d048c3c",
+      "KernelWorkerResultParser.swift": "d7e5a0d99ecb61f2a488cf2a7df9c68ddd773c4bb61c7147cb645572674f4e62",
+      "JournaledProcessRuntime.swift": "f5938ab9c42320ad64973c300f59f1424a019b978d4b6ead6ec634708a8ad713",
+      "KernelProductionExecutionCoordinator.swift": "0eb023c5803e39c426ff549ac3f06b539ad652ebe55b6b5a254fd6d983400c94"
+    }
+  },
+  "finalAcceptance": false
+}

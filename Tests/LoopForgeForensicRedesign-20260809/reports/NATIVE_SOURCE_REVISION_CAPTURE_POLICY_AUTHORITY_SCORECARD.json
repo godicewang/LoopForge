@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "status": "native-source-revision-capture-policy-authority-packaged-and-targeted-native-ui-verified",
+  "recordedAt": "2026-08-15T18:23:09Z",
+  "currentSourceSnapshotSHA256": "ac7bcb60011f460f02721f3f6b6d692d3eb7a1c6660a375b8e5bd5658374ecf3",
+  "authority": {
+    "typedCapturePolicyRequest": true,
+    "nativeUserVisibleSelection": true,
+    "directoryNamesOnly": true,
+    "appliesAtAnyDepth": true,
+    "repositoryLayoutInference": false,
+    "gitIgnoreInference": false,
+    "modelProseInference": false,
+    "errorPathInference": false,
+    "duplicatesSilentlyDeduplicated": false,
+    "invalidPolicyRejectsBeforeCapture": true,
+    "policyDigestBoundToSourceRevision": true,
+    "canonicalPolicyDisplayedBeforeConfirmation": true,
+    "confirmationRecapturesExactPolicy": true,
+    "collectorNoFollowBehaviorChanged": false
+  },
+  "adversarialCoverage": {
+    "explicitGeneratedTreeExclusionWithInternalSymlinkPasses": true,
+    "duplicateNamesReject": true,
+    "pathShapedNameRejects": true,
+    "nonExcludedSymlinkRejects": true,
+    "symlinkOccupyingExcludedNameRejects": true,
+    "draftResetRestoresConservativeDefaults": true
+  },
+  "verification": {
+    "focusedExecuted": 19,
+    "focusedFailures": 0,
+    "focusedSeconds": 0.995,
+    "fullExecuted": 823,
+    "fullSkipped": 8,
+    "fullFailures": 0,
+    "fullSeconds": 64.329,
+    "realCodexBridgePassed": true,
+    "realCodexBridgeSeconds": 19.184,
+    "arm64ReleaseBuildPassed": true,
+    "arm64ReleaseBuildSeconds": 102.9,
+    "diffCheckPassed": true
+  },
+  "package": {
+    "currentSourcePackaged": true,
+    "lastVerifiedPackageSnapshotSHA256": "ac7bcb60011f460f02721f3f6b6d692d3eb7a1c6660a375b8e5bd5658374ecf3",
+    "lastVerifiedPackageStillIntegrityValid": true,
+    "packageOwnedExecuted": 823,
+    "packageOwnedSkipped": 8,
+    "packageOwnedFailures": 0,
+    "packageOwnedSeconds": 56.923,
+    "packageExecutableSHA256": "0af59069d8d77f4f6691004dffabba1f0a310410cbf923e06f19f12fc80d2a3b",
+    "packageCDHash": "1dab7c409391452d18eafbc63c919c519ea61cf2",
+    "signatureArchiveChecksumAndSmokePassed": true,
+    "targetedNativeSourcePolicyVisible": true,
+    "targetedNativeExplicitDistSelectionVisible": true,
+    "targetedNativeScreenshotCount": 2,
+    "lastNativeScreenshotsProveCurrentSource": true
+  },
+  "remaining": [
+    "native verifier selection",
+    "packaged ratified V2 provider harness and exact network authority",
+    "mutation preparation and containment or retained vetoes",
+    "legacy Single and Parallel retirement",
+    "full native visual matrix",
+    "clean-commit rebuild",
+    "commit and push"
+  ],
+  "easyBusinessMutated": false,
+  "finalRelease": false
+}

@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "status": "release-bound-external-dependency-result-authority-present-native-launch-and-observation-journal-pending",
+  "recordedAt": "2026-08-15T12:38:09Z",
+  "acceptanceRowsAdvanced": [
+    "B-06"
+  ],
+  "parseEvidence": {
+    "completeStandardOutputDigestBound": true,
+    "completeStandardOutputByteCountBound": true,
+    "canonicalTerminalEnvelopeDigestBound": true,
+    "requestNonceBound": true
+  },
+  "releaseComposition": {
+    "ratifiedActivationAndProbeRequired": true,
+    "retainedOutputWithinDeclaredCapRequired": true,
+    "emptyStandardErrorRequired": true,
+    "naturalExitRequired": true,
+    "terminationSignalRejected": true,
+    "exactRunResourceLeaseAndProcessIdentityRequired": true,
+    "exactReleaseReceiptRequired": true,
+    "nonDuplicateSingleEventReleaseTransactionRequired": true,
+    "releaseSequenceAndFrameBound": true,
+    "uniqueRatifiedMappingRequired": true,
+    "selfDigestedEvidenceSet": true
+  },
+  "authority": {
+    "durableReceiptCanMintLiveAuthority": false,
+    "releaseIssuerRestrictedToJournaledProcessRuntime": true,
+    "resultCanAppendObservation": false,
+    "trustedProductionResidentMemoryIssuerAvailable": false,
+    "typedPreAdmissionVetoRetained": true
+  },
+  "adversarialCoverage": {
+    "crossWiredLeaseRejected": true,
+    "duplicateReleaseTransactionRejected": true,
+    "forgedOutputDigestRejected": true,
+    "mismatchedExitAndMappingRejected": true
+  },
+  "verification": {
+    "focusedProbeTests": {
+      "executed": 6,
+      "failures": 0,
+      "seconds": 0.008,
+      "logSHA256": "16c8cfca3d150739986dde2f1d205df273074537a0b9db995e96c567e49139be"
+    },
+    "fullSuite": {
+      "executed": 805,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 61.569,
+      "logSHA256": "e40ebfa38b07aae67c9543296807bc260430ca1bf95af496a8febbdce07fda78"
+    },
+    "packageOwnedFullSuite": {
+      "executed": 805,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 62.364,
+      "logSHA256": "36374770333113fdbad1e68e7bad558e33febfdc57bf0d568d520d1bc4aaaa85"
+    },
+    "releaseBuild": {
+      "passed": true,
+      "seconds": 95.82,
+      "architecture": "arm64"
+    },
+    "sourceSnapshotSHA256": "20ebda0a6870940079d93b21bbc345636aaa8875cc970b3e2fea24685fd879be",
+    "packagedLoopForgeSHA256": "527bf19893f81e0a23ffcd1f9ed6b285ac5f6142cf8ed025e1841101e8e66970",
+    "packagedKernelSandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "signatureVerifiedDeepStrict": true,
+    "exactPackagedMachOStartupPassed": true,
+    "postSmokePackagedProcessCount": 0
+  },
+  "sourceDigests": {
+    "probe": "2275a323acc623f8144cc6979305fdc62eee79007663226f18fa802ee6074570",
+    "resultMapper": "9adaac56a15dac260e80df9c1a00dad2cdff4a4283d54255648782fffcdd76a1",
+    "resultAuthority": "5a749e4d6c5c44e3c0ad71a1391f70af20751db9798ce5085e9469496955cdcc",
+    "probeTests": "b33cde436eb2ea12908e6c6d75a177dc6643988cd9cda9bad4f1227bdbc6766d"
+  },
+  "easyBusiness": {
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "statusFingerprintSHA256": "a640615bfb23f0d3a9fefe222294663302b40cca54e23b2f4ae0029f5e4bcfd7",
+    "mutated": false
+  },
+  "remaining": [
+    "trusted Release resident-memory containment issuer or retained veto",
+    "journal-owned exact native sandbox launch and retained output/release composition",
+    "journal-owned observation issuance from the live result capability",
+    "production controller invocation",
+    "legacy Single and Parallel retirement",
+    "unlocked native screenshots",
+    "clean-commit rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false
+}

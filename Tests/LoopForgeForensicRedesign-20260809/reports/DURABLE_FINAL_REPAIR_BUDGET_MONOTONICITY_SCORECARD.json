@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T05:33:20Z",
+  "status": "durable-final-repair-budget-monotonicity-package-verified-production-reducer-cutover-pending",
+  "acceptanceRowsAdvanced": [
+    "F-07"
+  ],
+  "priorDefect": {
+    "oneBatchIncrementedOneRound": true,
+    "cleanupDecrementedByRedundantNodeCount": true,
+    "cleanupDeletedHistoricalNodes": true,
+    "roundBudgetCouldBeOverRefunded": true,
+    "nodeBudgetCouldBeRefunded": true,
+    "relaunchPersistedRefundedBudget": true
+  },
+  "enforcementBoundary": {
+    "maximumFinalRepairRounds": 8,
+    "roundBudgetMonotonic": true,
+    "historicalNodeBudgetMonotonic": true,
+    "redundantNodesRetainedAsSuperseded": true,
+    "retirementTimeAndReasonPersisted": true,
+    "activeSchedulingExcludesTombstones": true,
+    "jsonReplayRemainsExhausted": true,
+    "typedCausalCostBudgetInProduction": false,
+    "replacementLineageBudgetInProduction": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 93,
+    "focusedFailures": 0,
+    "fullTestsExecuted": 595,
+    "fullTestsSkipped": 8,
+    "fullFailures": 0,
+    "packagingOwnedTestsExecuted": 595,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "sourceSnapshotSHA256": "dda1d99d37a447ab71ee22a10f38c9c4cabbe121c28c25876299ea16c873a4ab",
+    "graphSourceSHA256": "29d84f2f9aae48cea6a618bcb072eacdf504776f1f1bb217341539615aa9b5c5",
+    "graphTestsSHA256": "a4574dad68f1795159ed9a3e697732ece559dcad20893ae2031a22a4d0511699",
+    "focusedLogSHA256": "8ddd325a0ca7bfe97f0c69c3e64ab74046c41c6d3976ad1bc2484bc255ea7862",
+    "fullLogSHA256": "693bb679c2c8241dbeb262c0a36b31e163111a8dd2efa3e104057ee300a5f9e8",
+    "packageTestLogSHA256": "f1f9a46fa6cea869cf7eb3b10b15dd8f5a3bda11694fa9aa598ef5d6921a4952",
+    "packageLogSHA256": "1eb915ab8d392015378052f629893c620f0a4274fddf1dfb11580a29a78bcdcf",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "buildManifestSHA256": "eb071a1464372d799b0a0e36ba882fc9a58388c8d97c5531476a6e08d5aed4d9",
+    "executableSHA256": "53fe51fa71cb67fec750460cd6919858dcfa041731f15f99e51ed6122bc1142d",
+    "zipSHA256": "3088b21e3280eb18fda0351ff416211c10007ba21a477daf2b65dc21fb333dd0",
+    "dmgSHA256": "4df1ecf02710f1f0cdc5d8ec20cef666c8b6bb6d29f1bf6cf36fec529397390a",
+    "cdHash": "7d4f7873eaa3db85860380a747a83cacd7f83e1a",
+    "residualPackagedProcessCount": 0
+  },
+  "knownBoundary": {
+    "productionKernelReducerCutoverPending": true,
+    "typedCausalCostAndLineageBudgetPending": true,
+    "currentNativeUICapturePending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

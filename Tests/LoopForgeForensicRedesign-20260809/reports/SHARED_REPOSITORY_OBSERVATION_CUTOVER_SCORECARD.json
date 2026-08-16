@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T01:39:01Z",
+  "status": "production-shared-observation-cutover-and-package-receipts-present-generation-population-native-pending",
+  "acceptanceRowsAdvanced": ["G-08"],
+  "rootCause": {
+    "independentTreeImplementationsBefore": 2,
+    "commonBoundaryObservationsBeforeMaximum": 3,
+    "commonBoundaryObservationsAfter": 1,
+    "promptAuditEvidenceCouldDescribeDifferentBytesBefore": true,
+    "promptAuditEvidenceShareOneObservationAfter": true
+  },
+  "implementation": {
+    "workspaceAuditorRecursiveEnumeratorRetired": true,
+    "treeAndLogProjectionSeparated": true,
+    "sharedObservationCarriesRepositoryIndex": true,
+    "sharedObservationCarriesSnapshot": true,
+    "sharedObservationCarriesScanError": true,
+    "scanFailureRetriedByEvidenceCollector": false,
+    "sharedObservationIsCrossObservationCacheHit": false,
+    "deliberateTimeBoundariesRemainSeparate": true,
+    "updatedCallSites": [
+      "loop-initial-and-resume-audit",
+      "loop-post-turn-audit-evidence-prompt-and-report",
+      "graph-candidate-and-node-review",
+      "graph-incremental-join-and-batch-transition",
+      "graph-final-audit-and-report",
+      "completed-graph-report-refresh"
+    ]
+  },
+  "verification": {
+    "auditorEvidenceTestsExecuted": 18,
+    "graphTestsExecuted": 84,
+    "loopLifecycleTestsExecuted": 5,
+    "focusedFailures": 0,
+    "fullTestsExecuted": 547,
+    "fullTestsSkipped": 8,
+    "fullTestFailures": 0,
+    "packagingOwnedTestsExecuted": 547,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "packageSmokePassed": true,
+    "residualPackagedProcessCount": 0,
+    "sourceSnapshotSHA256": "dcc244946dcdf3786be9a8e59815eb515148b8fd6ae861ba8c3175bcb9bc1b26",
+    "executableSHA256": "285a919dd61cf91e69290c7c227e3afaad092145136276228a57f71439eeeabb",
+    "zipSHA256": "19ef2fa63e33f4494df7b0841b527b43f686c9eb168f3d21cf1fed6d00950c77",
+    "dmgSHA256": "ba16838d605da32b2a2afbfc0b20a803e49286e1cb4623f9e6f226413d0099f0",
+    "packageTestLogSHA256": "fd7168c70925d56b6fc417c40c33f99a5ea33fdcc5d1117a3645dbe0ce81ceca",
+    "sourceFullTestLogSHA256": "93631f19f77a597d568dec4ec99a08a5b94ee31de3eebc903ba13cc1b95704ff",
+    "auditorEvidenceTestLogSHA256": "8ba7657cf078a807e5c33530e3d74fa42e48668a0f4b546cd1e245e1e1f1fb8c",
+    "graphTestLogSHA256": "08d59f6b28014d8f05ff4b52f8f49d5b2a22ad5efbf24143c6cedf608f0995bb",
+    "loopLifecycleTestLogSHA256": "c9f02acbd1d4b00be451896c7e4cf0beabf388ca083bf42d361d085ab6e45f97",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "cdHash": "5366742e7b840cfec53992f896fd1c60e75a899a"
+  },
+  "excluded": {
+    "failedCompileRuns": 1,
+    "failedRunsCountedAsVerification": false,
+    "failedRunTimeCounted": false
+  },
+  "knownBoundary": {
+    "newKernelMutationAndRecoveryReceiptPopulationPending": true,
+    "currentNativeCacheTelemetryPending": true,
+    "productionKernelCutoverPending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T02:22:16Z",
+  "status": "pure-source-span-compiler-and-opaque-ratification-package-receipts-present-native-issuer-cutover-pending",
+  "acceptanceRowsAdvanced": ["B-01", "B-07"],
+  "compiler": {
+    "exactUTF8Sources": true,
+    "digestBoundUTF8Spans": true,
+    "verbatimObjectiveRequired": true,
+    "modelProposalCanCreateExplicitAuthority": false,
+    "workspaceObservationCanCreateExplicitAuthority": false,
+    "exactRequirementAndConstraintBindingsRequired": true,
+    "exactMandatoryEvidenceRecipesRequired": true,
+    "authorityExpansionRequiresExplicitUserConstraint": true,
+    "duplicateInputFailsWithoutTrap": true,
+    "candidateDigestDeterministic": true,
+    "domainKeywordPolicyPresent": false
+  },
+  "ambiguity": {
+    "localReversibleCanUseBoundedAssumption": true,
+    "implementationExperimentRequiresRollback": true,
+    "protectedIdentityOrDesignRequiresAuthorityOrBaseline": true,
+    "authorityExpansionBlocks": true,
+    "mandatoryOutcomeChangeRequiresAmendment": true,
+    "missingEvidenceAllowsReadOnlyDiscoveryOnly": true,
+    "destructiveCostlyOrExternalBlocks": true
+  },
+  "ratification": {
+    "confirmationReceiptOpaqueInRelease": true,
+    "confirmationReceiptDecodableFromUntrustedBytes": false,
+    "exactCandidateDigestRequired": true,
+    "nonemptyNonceRequired": true,
+    "userActorLineageRequired": true,
+    "confirmationMustFollowCompilation": true,
+    "blockingAmbiguitiesRemainReadOnly": true,
+    "productionNativeIssuerPresent": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 13,
+    "focusedFailures": 0,
+    "fullTestsExecuted": 560,
+    "fullTestsSkipped": 8,
+    "fullFailures": 0,
+    "packagingOwnedTestsExecuted": 560,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "sourceSnapshotSHA256": "8ce8d9a2d874896d8b194f6074ec13cdc34d3f896d17e490cda16417fb3acaf0",
+    "focusedLogSHA256": "f4b4ecc6ee7bc2eb1bd00e77230753dc8906a926678c97a5090fba6c3a370f86",
+    "fullLogSHA256": "f83ebeb4a581907dcd32e6521e9cfece40e373abd66a0214ad2ea6876da8cc90",
+    "packageTestLogSHA256": "e189578be5b6bdf63a7bd85d53d834bbf57aeef5c87526139a4f17e56bebc86a",
+    "packageLogSHA256": "7c4124d351ce859ee50b75f680ead48df01a55cbaa9327f0a3482b6c271689ac",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "executableSHA256": "24d5872ff7dbd80fea46f5951f7779d99859139e243f33f782c13bd8ee8155eb",
+    "zipSHA256": "f81116032982c0436594250d8b91f818477e4614e061514c46a67a4893e80574",
+    "dmgSHA256": "32ffca2e32b2e9e47254db9e0060ef3f353d499d8939998077462e44160a69c3",
+    "cdHash": "a39066054ef4fd3a4a2e76a073dfad54aa28df04",
+    "residualPackagedProcessCount": 0
+  },
+  "excluded": {
+    "failedRuns": 1,
+    "failedRunTimeCounted": false
+  },
+  "knownBoundary": {
+    "nativeConfirmationIssuerPending": true,
+    "sourceSpanAuthoringUIPending": true,
+    "productionRunEnrollmentPending": true,
+    "controllerCutoverPending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

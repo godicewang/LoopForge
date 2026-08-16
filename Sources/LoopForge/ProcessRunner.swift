@@ -246,16 +246,104 @@ final class ProcessRunner {
 }
 
 private func stopProcessWithEscalation(_ process: Process) {
-    guard process.isRunning else { return }
     let processIdentifier = process.processIdentifier
-    process.interrupt()
+    guard processIdentifier > 0 else { return }
+    let tree = ProcessTreeStopper(rootPID: processIdentifier)
+    tree.signal(SIGINT)
     DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
-        guard process.isRunning else { return }
-        process.terminate()
+        tree.signal(SIGTERM)
         DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
-            guard process.isRunning else { return }
-            Darwin.kill(processIdentifier, SIGKILL)
+            tree.signal(SIGKILL)
         }
+    }
+}
+
+/// Foundation's `Process.interrupt()` targets only the immediate shell or
+/// Codex CLI. Agents routinely start compilers, test runners, Node hosts, and
+/// simulator helpers beneath that process; killing just the root reparents
+/// those descendants to launchd, so they can keep consuming CPU after the
+/// task or app has exited. Capture the owned tree before signalling the root,
+/// then keep that snapshot through the full escalation window.
+private final class ProcessTreeStopper: @unchecked Sendable {
+    private let rootPID: pid_t
+    private let lock = NSLock()
+    private var knownPIDs = Set<pid_t>()
+
+    init(rootPID: pid_t) {
+        self.rootPID = rootPID
+    }
+
+    func signal(_ value: Int32) {
+        let targets = snapshotTargets()
+        for pid in targets where pid != getpid() {
+            _ = Darwin.kill(pid, value)
+        }
+    }
+
+    private func snapshotTargets() -> [pid_t] {
+        lock.lock()
+        defer { lock.unlock() }
+
+        var visited = Set<pid_t>()
+        var descendants: [pid_t] = []
+        collectDescendants(
+            of: rootPID,
+            visited: &visited,
+            deepestFirst: &descendants
+        )
+        knownPIDs.formUnion(visited)
+
+        // A descendant may have been reparented after an earlier signal. Keep
+        // signalling the previously captured PID until it exits.
+        for pid in knownPIDs where pid != rootPID
+            && !descendants.contains(pid)
+            && processExists(pid) {
+            descendants.append(pid)
+        }
+        if processExists(rootPID) {
+            descendants.append(rootPID)
+            knownPIDs.insert(rootPID)
+        }
+        return descendants
+    }
+
+    private func collectDescendants(
+        of parent: pid_t,
+        visited: inout Set<pid_t>,
+        deepestFirst: inout [pid_t]
+    ) {
+        for child in childPIDs(of: parent)
+            where child > 0 && visited.insert(child).inserted {
+            collectDescendants(
+                of: child,
+                visited: &visited,
+                deepestFirst: &deepestFirst
+            )
+            deepestFirst.append(child)
+        }
+    }
+
+    private func childPIDs(of parent: pid_t) -> [pid_t] {
+        var capacity = 32
+        while capacity <= 4_096 {
+            var buffer = [pid_t](repeating: 0, count: capacity)
+            let count = Int(proc_listchildpids(
+                parent,
+                &buffer,
+                Int32(capacity * MemoryLayout<pid_t>.stride)
+            ))
+            guard count > 0 else { return [] }
+            if count < capacity {
+                return Array(buffer.prefix(count))
+            }
+            capacity *= 2
+        }
+        return []
+    }
+
+    private func processExists(_ pid: pid_t) -> Bool {
+        if Darwin.kill(pid, 0) == 0 { return true }
+        return errno == EPERM
     }
 }
 

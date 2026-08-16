@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "finding": "Graph state-machine, replay, and convergence architecture failure",
+  "status": "confirmed_refactor_required",
+  "easyBusinessHandling": "read_only",
+  "sourceMetrics": {
+    "graphLoopEngineLines": 6539,
+    "taskStoreUpdateCallSites": 39,
+    "graphNodeUpdateCallSites": 43,
+    "totalMutationCallSites": 82,
+    "directStatusAssignments": 69,
+    "directPhaseAssignments": 23,
+    "directIterationDecisionAssignments": 10,
+    "authoritativePureReducer": false
+  },
+  "stateSpace": {
+    "taskStatusCases": 12,
+    "graphPhaseCases": 6,
+    "nodeStatusCases": 9,
+    "iterationDecisionCases": 6,
+    "rawIndependentEnumTuplesPerNode": 3888,
+    "additionalOverlappingOptionalFlags": [
+      "automaticRetryDisabled",
+      "strategyEscalationRequired",
+      "replacementPlanStartedFreshThread",
+      "replacementPlanContractVersion",
+      "supersededAt",
+      "supersededReason",
+      "supersededByNodeIDs",
+      "planAdjustment",
+      "strategyLesson",
+      "strategyDecision",
+      "threadID",
+      "activeStartedAt",
+      "blockedAt"
+    ]
+  },
+  "tests": {
+    "graphLoopTests": 84,
+    "graphLoopTestFileLines": 3167,
+    "testsInstantiatingGraphLoopEngine": 0,
+    "eventReplayHarness": false,
+    "crashBoundaryReplay": false,
+    "propertyOrModelChecking": false
+  },
+  "retryPersistence": {
+    "incrementalReviewFailuresPersisted": true,
+    "batchTransitionFailuresPersisted": false,
+    "finalReviewFailuresPersisted": false,
+    "batchAndFinalCountersResetOnRun": true
+  },
+  "strategyRetirement": {
+    "maximumUnapprovedDecisions": 6,
+    "maximumReplacementNodes": 2,
+    "differenceAlgorithm": "normalized_alphanumeric_exact_equality",
+    "causalFingerprint": false,
+    "paraphraseCanResetStrategyIdentity": true
+  },
+  "legacyReplay": {
+    "decisionSource": "free_form_logs",
+    "approvalHeuristic": "normalized_contains_approved",
+    "negationAware": false,
+    "ambiguousHistoryFailsClosed": false
+  },
+  "approvalReceipt": {
+    "workspaceTreeHash": false,
+    "dirtyDiffHash": false,
+    "requirementContractVersion": false,
+    "evidenceSetHash": false,
+    "reviewerIdentity": false,
+    "reviewInputHash": false,
+    "canReuseUnboundBooleanApproval": true
+  },
+  "integrationReceipt": {
+    "schedulerPredicate": [
+      "status_completed",
+      "completedAt_non_null",
+      "lastReview_non_empty"
+    ],
+    "canonicalTreeHashRequired": false,
+    "patchHashRequired": false,
+    "changedPathManifestRequired": false,
+    "verificationReceiptRequired": false
+  },
+  "repairBudget": {
+    "maximumFinalRepairRounds": 8,
+    "maximumGraphNodes": 32,
+    "fallbackWriteScope": ".",
+    "changedFileBudget": false,
+    "lineMutationBudget": false,
+    "protectedDesignBaseline": false,
+    "rollbackDistanceBudget": false,
+    "semanticAntiRepeat": false
+  },
+  "stoppedTask": {
+    "taskID": "1ED2180F-FBE1-4BCA-9E79-701F40CC3483",
+    "nodeCount": 19,
+    "iterationCount": 51,
+    "mainInteractionCount": 77,
+    "finalRepairRounds": 3,
+    "supersededNodeCount": 5,
+    "pendingNodeCount": 2,
+    "auditScore": 100,
+    "visualAuditPassed": false,
+    "supervisorCompletionApproved": false
+  },
+  "defects": [
+    {"id": "F-022", "severity": "critical", "name": "distributed_mutation_without_reducer"},
+    {"id": "F-023", "severity": "critical", "name": "invalid_state_combinations_representable"},
+    {"id": "F-024", "severity": "high", "name": "no_engine_replay_or_interleaving_tests"},
+    {"id": "F-025", "severity": "high", "name": "retry_budgets_reset_across_runs"},
+    {"id": "F-026", "severity": "critical", "name": "lexical_strategy_identity"},
+    {"id": "F-027", "severity": "critical", "name": "negation_unsafe_legacy_approval_inference"},
+    {"id": "F-028", "severity": "critical", "name": "unbound_reusable_approval"},
+    {"id": "F-029", "severity": "critical", "name": "missing_integration_receipt"},
+    {"id": "F-030", "severity": "critical", "name": "final_repair_without_mutation_or_design_budget"}
+  ],
+  "requiredArchitecture": [
+    "versioned_event_journal",
+    "pure_revision_checked_reducer",
+    "derived_display_state",
+    "typed_worker_review_integration_resource_receipts",
+    "causal_strategy_fingerprints",
+    "immutable_requirement_and_design_baseline",
+    "revision_bound_approval_and_completion_receipts",
+    "mutation_budget_and_automatic_rollback",
+    "deterministic_crash_boundary_replay",
+    "property_and_model_checking"
+  ],
+  "evidence": [
+    "/Users/godice/Coding/LoopForge/Sources/LoopForge/GraphLoopEngine.swift",
+    "/Users/godice/Coding/LoopForge/Sources/LoopForge/Models.swift",
+    "/Users/godice/Coding/LoopForge/Tests/LoopForgeTests/GraphLoopTests.swift",
+    "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/evidence/task-snapshot-20260809T131753Z.json",
+    "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/STATE_MACHINE_REPLAY_AND_CONVERGENCE_ARCHITECTURE.md"
+  ]
+}

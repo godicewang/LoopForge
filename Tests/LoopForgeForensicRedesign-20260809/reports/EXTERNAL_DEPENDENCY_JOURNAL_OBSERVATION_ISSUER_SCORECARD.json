@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "status": "journal-owned-external-dependency-observation-issuer-present-native-launch-pending",
+  "recordedAt": "2026-08-15T12:54:37Z",
+  "acceptanceRowsAdvanced": [
+    "B-06"
+  ],
+  "authority": {
+    "acceptsOnlyLiveReleaseBoundResultCapability": true,
+    "reResolvesActiveAttemptActivationDependencyAndProbe": true,
+    "revalidatesReleaseBoundResultAuthority": true,
+    "requiresExactJournaledReleaseTransaction": true,
+    "requiresExactReleaseFrameDigest": true,
+    "observationDerivedFromStrictParseAndDeclaredMapping": true,
+    "journalCommandIssuerFileOwned": true,
+    "decodedReceiptCanMintLiveAuthority": false,
+    "productionObservationExecuted": false
+  },
+  "durableProvenance": {
+    "sourceResultID": true,
+    "sourceResultEvidenceSetDigest": true,
+    "sourceReleaseReceiptID": true,
+    "sourceReleaseFrameDigest": true,
+    "allOrNoneValidation": true,
+    "legacyOptionalForensicReplay": true,
+    "newIssuerAlwaysPopulates": true
+  },
+  "retryAndReplay": {
+    "exactCommandRetryReturnsRetainedTransaction": true,
+    "mismatchedRetryRejected": true,
+    "duplicateAttemptDependencyResolutionRejected": true,
+    "activationLaunchVetoRejectsObservation": true,
+    "closeReopenRetainsExactObservation": true,
+    "replayReconstructsLiveCapability": false
+  },
+  "adversarialCoverage": {
+    "forgedMappingRejected": true,
+    "substitutedReleaseRejected": true,
+    "partialProvenanceRejected": true,
+    "invalidDigestRejected": true,
+    "absentReleaseReferenceRejected": true
+  },
+  "verification": {
+    "focusedIntegrationTest": {
+      "executed": 1,
+      "failures": 0,
+      "seconds": 0.028
+    },
+    "fullSuite": {
+      "executed": 806,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 58.240,
+      "logSHA256": "c5590fddac27e7d9c2b7efbac64f90b28a7b590767c199ff3c90359212740f7e"
+    },
+    "packageOwnedFullSuite": {
+      "executed": 806,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 56.055,
+      "logSHA256": "369b044e3ce26be3a34f0b51e7b580ebd6ee82043222a727e691b1e23328359d"
+    },
+    "releaseBuild": {
+      "passed": true,
+      "seconds": 102.82,
+      "architecture": "arm64"
+    },
+    "sourceSnapshotSHA256": "1202013e297e0ab265cf357d94a98d25994be09a04481f5bcb2ab0ac56be8f6b",
+    "packagedLoopForgeSHA256": "d2d7a8e1bfcace15deff112f759aa34c45187b70cfe3556acb6a68c0bb93dcdc",
+    "packagedKernelSandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "signatureVerifiedDeepStrict": true,
+    "exactPackagedMachOStartupPassed": true,
+    "postSmokePackagedProcessCount": 0
+  },
+  "sourceDigests": {
+    "journalCoordinator": "b5c4fa708c74b98e8af06da703c8a75bf34e8dc0bf7dbdd302cbea1bdbae338c",
+    "runReducer": "a99e38f5121df55a54b52bfc9e09902623c1cc09b6d2d6178029783ba6ed949f",
+    "runJournal": "a0c552fa14cd0f4c063da6281bc2c473c6fbc273b68ff27618617fbf4f712860",
+    "integrationTests": "ef1ac236be4f4b2d1394b130a36e714debb80f0fd9a482a599e0da79c74c991b"
+  },
+  "easyBusiness": {
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "statusFingerprintSHA256": "a640615bfb23f0d3a9fefe222294663302b40cca54e23b2f4ae0029f5e4bcfd7",
+    "mutated": false
+  },
+  "remaining": [
+    "trusted Release resident-memory containment issuer or retained veto",
+    "journal-owned exact native sandbox launch and retained request/output/release composition",
+    "production controller invocation",
+    "legacy Single and Parallel retirement",
+    "unlocked native screenshots",
+    "clean-commit rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false
+}

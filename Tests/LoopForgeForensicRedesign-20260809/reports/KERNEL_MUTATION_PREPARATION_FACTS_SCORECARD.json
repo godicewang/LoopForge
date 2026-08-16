@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T05:20:50Z",
+  "status": "typed-exact-preparation-facts-enforced-production-issuer-absent",
+  "finalAcceptance": false,
+  "workerProtocol": {
+    "retainsProposedResultDigest": true,
+    "retainsAuthoritativeMutationOperations": false,
+    "retainsCanonicalWorkspacePreimage": false,
+    "retainsContentObjects": false,
+    "retainsPathResolutionObservations": false,
+    "retainsRollbackRehearsal": false
+  },
+  "controls": {
+    "commonTransactionCandidateContractPlanPreimagePostimageBinding": true,
+    "typedWriteAuthority": true,
+    "typedMutationBudget": true,
+    "typedRollbackRehearsal": true,
+    "typedCandidateScopedQuiescence": true,
+    "typedPerOperationPathResolution": true,
+    "legacyPreparationAcceptedIDSetsRetired": true,
+    "releasePreflightRequiresNonSerializableCapability": true,
+    "productionCapabilityIssuerAvailable": false,
+    "productionProposalIssuerAvailable": false,
+    "publicationPermitted": false,
+    "nativeStartAuthorized": false
+  },
+  "verification": {
+    "transactionalMutationTests": 18,
+    "filesystemExecutorTests": 14,
+    "suiteTestsExecutedExcludingIndependentlyRunCase": 720,
+    "independentlyRunProcessGroupCase": 1,
+    "combinedTestsCovered": 721,
+    "intentionalEnvironmentSkips": 8,
+    "testFailures": 0,
+    "releaseLoopForgeSHA256": "8268f995ce31b963e05634892cdf2f07a49adcc37756d31440c7e2d584ce1043",
+    "releaseKernelSandboxGateSHA256": "1b7ba433fe915b0dd916aceafe62342d246bcf6bbddcfc5425b0d09fba0fbeaa",
+    "sourceSnapshotSHA256": "ece66579c27aebc3a2613aca3771a376c88bb3ec6fdf377c1be72ce3da8b32c6"
+  },
+  "remainingPrerequisites": [
+    "trusted mutation operation and content-object derivation",
+    "content-complete canonical preimage capture",
+    "journal events and reducer replay for every preparation fact",
+    "journal-owned proposal and preflight capability issuer",
+    "tested production resident-memory enforcement issuer or retained verifier and reviewer veto",
+    "native immutable design baseline complete visual evidence final authorization and executable external-dependency observation",
+    "legacy Single and Parallel retirement",
+    "current-source package sign unlocked native walkthrough clean commit and push"
+  ]
+}

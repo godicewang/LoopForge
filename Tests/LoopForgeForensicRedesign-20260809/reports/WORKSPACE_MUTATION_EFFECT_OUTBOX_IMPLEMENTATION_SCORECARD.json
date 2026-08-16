@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "report": "WORKSPACE_MUTATION_EFFECT_OUTBOX_IMPLEMENTATION.md",
+  "status": "implemented-durable-outbox-not-wired-to-startup-or-legacy",
+  "focusedOutboxTestCount": 13,
+  "focusedDispatcherTestCount": 1,
+  "completeTestCount": 505,
+  "completeSkippedCount": 8,
+  "completeFailureCount": 0,
+  "implementation": {
+    "contentBearingApplyEnvelope": true,
+    "contentBearingRollbackEnvelope": true,
+    "stableCommandIdentities": true,
+    "canonicalPayloadDigest": true,
+    "canonicalSetOrdering": true,
+    "orderedMutationOperationsPreserved": true,
+    "snapshotDigest": true,
+    "crossProcessLock": true,
+    "atomicSynchronizedPersistence": true,
+    "mode0600Storage": true,
+    "entryAndByteCeilings": true,
+    "workspaceLocalStorageRejectedBeforeCreation": true,
+    "exactDuplicateIdempotency": true,
+    "conflictingIntentRejected": true,
+    "corruptionFailsClosed": true,
+    "boundedRecoveryDispatcher": true,
+    "journalReceiptBeforeAcknowledgement": true,
+    "failureRemainsPending": true,
+    "authorityRenewalOrMinting": false,
+    "authoritativeStartupInvocation": false,
+    "legacyGraphConnected": false,
+    "acceptedIntegrationReceipt": false,
+    "dependencyCompletionCutover": false,
+    "cutoverEligible": false
+  },
+  "focusedVerification": [
+    {
+      "logPath": "/tmp/loopforge-effect-outbox-tests.log",
+      "sha256": "ffa3be186d6b717776a13c9cad14f089de7bcd2e83d50bf38d42532103b43b77",
+      "testCount": 13
+    },
+    {
+      "logPath": "/tmp/loopforge-effect-dispatcher-tests.log",
+      "sha256": "3266a5efaedb32c4589044e8d68cb8bece334d52d8ad10ddbd649192c630767b",
+      "testCount": 1
+    }
+  ],
+  "completeVerification": {
+    "logPath": "/tmp/loopforge-full-tests-effect-outbox.log",
+    "sha256": "fc45fe2c3b1c96ef0f13723936f67979ad4b92ad79641dfaf38c4a8393a1da64",
+    "xctestSeconds": 32.492
+  },
+  "sourceEvidence": [
+    {
+      "path": "Sources/LoopForge/Kernel/WorkspaceMutationEffectOutbox.swift",
+      "lineCount": 436,
+      "sha256": "2325d83b368092950d6d44a5db01a2496d24012431e807af20b041818b9056d1"
+    },
+    {
+      "path": "Sources/LoopForge/Kernel/JournaledWorkspaceMutationRuntime.swift",
+      "lineCount": 313,
+      "sha256": "38ee575cc78547b76653fe69bb58a8de5a70656d465a02f5486cd79bd671ca51"
+    },
+    {
+      "path": "Sources/LoopForge/Kernel/WorkspaceMutationFilesystemExecutor.swift",
+      "lineCount": 1484,
+      "sha256": "65fff0c529f8a174178be5cba7b8652948178089c2800ec4a477020b50ee37be"
+    },
+    {
+      "path": "Tests/LoopForgeTests/WorkspaceMutationFilesystemExecutorTests.swift",
+      "lineCount": 775,
+      "sha256": "06b2dabc923b3bc566aeb6f7ca7af55538475c949f22d3518c2a319c43b2bce3"
+    },
+    {
+      "path": "Tests/LoopForgeTests/IntegrationTransactionStateMachineTests.swift",
+      "lineCount": 700,
+      "sha256": "c766274d7c644532839967666008b3abe0ecc312605286a29ea5b7b4d85901ac"
+    }
+  ],
+  "safetyClaims": {
+    "mutatesOnlySyntheticTestWorkspacesInVerification": true,
+    "changesGitState": false,
+    "contactsRemote": false,
+    "permitsPublication": false,
+    "mutatedEasyBusiness": false
+  }
+}

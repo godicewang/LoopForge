@@ -97,6 +97,24 @@ enum LoopExecutionMode: String, Codable, CaseIterable, Identifiable {
     }
 }
 
+/// Stored `LoopTask` execution belongs to the retired narrative controller.
+/// New work is enrolled as a journaled kernel run and never enters this enum.
+/// Keep the enum decodable so historical tasks remain inspectable, but bind
+/// every legacy mode to one fail-closed migration disposition.
+enum LegacyTaskExecutionRetirementPolicy {
+    static func stage(for mode: LoopExecutionMode) -> String {
+        "Legacy \(mode.title) preserved · migration required"
+    }
+
+    static func blocker(for mode: LoopExecutionMode) -> String {
+        "This historical \(mode.title) checkpoint has no ratified journal-kernel contract and cannot execute."
+    }
+
+    static func authoringMessage(for mode: LoopExecutionMode) -> String {
+        "\(mode.title) creation is retired. Existing checkpoints remain read-only; new work requires journaled Auto Graph contract review and enrollment."
+    }
+}
+
 enum ParallelCandidateSelectionMode: String, Codable, CaseIterable, Identifiable {
     case agent
     case user
@@ -176,13 +194,18 @@ enum TaskAuthorization: String, Equatable {
 enum CodexAccessMode: String, Codable, CaseIterable, Identifiable {
     case fullAccess
     case workspaceOnly
-    /// Internal graph-node isolation. This mode is intentionally omitted from
-    /// user-facing pickers because it is selected from a node's read-only
-    /// contract, never as a project-wide preference.
+    /// Inspection-only authority. Journaled native authoring exposes this as
+    /// the mutation-free worker option, and graph-node planning also derives
+    /// it for read-only nodes.
     case readOnly
 
     var id: String { rawValue }
-    static var selectableCases: [CodexAccessMode] { [.fullAccess, .workspaceOnly] }
+    static var nativeWorkerSelectableCases: [CodexAccessMode] {
+        [.readOnly, .workspaceOnly, .fullAccess]
+    }
+    static var independentReviewerSelectableCases: [CodexAccessMode] {
+        [.readOnly]
+    }
     var title: String {
         switch self {
         case .fullAccess: return "Full Access"
@@ -506,6 +529,9 @@ struct GraphNodeIterationRecord: Codable, Identifiable, Equatable {
     var mainReview: String
     var nextInstruction: String
     var decision: GraphIterationDecision
+    /// Eligible Sub Agent runtime retained for this control cycle. Optional so
+    /// checkpoints produced before build 121 continue to decode safely.
+    var activeSeconds: TimeInterval? = nil
 }
 
 struct GraphLoopNode: Codable, Identifiable, Equatable {
@@ -548,9 +574,58 @@ struct GraphLoopNode: Codable, Identifiable, Equatable {
     var planAdjustment: String? = nil
     var incrementalReviewFailures: Int? = nil
     var iterationHistory: [GraphNodeIterationRecord]? = nil
+    /// A bounded node can exhaust automatic retries without freezing an
+    /// otherwise productive join group. Persist this separately from
+    /// `blocked` so relaunch recovery does not silently restart the same
+    /// impossible turn.
+    var automaticRetryDisabled: Bool? = nil
+    /// Marks that a Main Graph replacement plan has already detached from the
+    /// rejected Codex thread. Optional for backward-compatible checkpoint
+    /// migration; build 117 checkpoints did not persist this provenance.
+    var replacementPlanStartedFreshThread: Bool? = nil
+    /// Version of the replacement-contract prompt semantics used to start the
+    /// current thread. A newer contract can detach an already-fresh but
+    /// semantically stale thread exactly once.
+    var replacementPlanContractVersion: Int? = nil
+    /// A node that consumes its bounded strategy budget may never be resumed
+    /// as the same node. It waits for an explicit Main Graph abandon/reframe/
+    /// split/replace decision instead of starting another Sub Agent turn.
+    var strategyEscalationRequired: Bool? = nil
+    /// Durable lesson extracted when an exhausted strategy is retired. Later
+    /// planning prompts treat this as a hard anti-repeat constraint.
+    var strategyLesson: String? = nil
+    var strategyDecision: String? = nil
 
     func liveActiveSeconds(at date: Date) -> TimeInterval {
-        accumulatedActiveSeconds + (activeStartedAt.map { max(0, date.timeIntervalSince($0)) } ?? 0)
+        let records = iterationHistory ?? []
+        let recordedTotal = records.compactMap(\.activeSeconds).reduce(0, +)
+        let recordedApprovedTotal = records
+            .filter { $0.decision == .approved }
+            .compactMap(\.activeSeconds)
+            .reduce(0, +)
+        // `accumulatedActiveSeconds` predates per-iteration timing and retains
+        // accepted legacy runtime. Subtract the approved records that now have
+        // exact durations so they are not counted twice, then add every known
+        // iteration (approved, rejected, blocked, superseded, or pending).
+        let legacyAcceptedBaseline = max(
+            0,
+            accumulatedActiveSeconds - recordedApprovedTotal
+        )
+        let liveSegment = activeStartedAt.map {
+            max(0, date.timeIntervalSince($0))
+        } ?? 0
+        return legacyAcceptedBaseline + recordedTotal + liveSegment
+    }
+
+    /// The current control cycle's own eligible runtime. Persisted segments
+    /// survive transport pauses and safe task resume; only the live segment
+    /// advances with the UI clock.
+    func liveCurrentIterationActiveSeconds(at date: Date) -> TimeInterval {
+        let retained = iterationHistory?
+            .first(where: { $0.number == iteration })?
+            .activeSeconds ?? 0
+        let live = activeStartedAt.map { max(0, date.timeIntervalSince($0)) } ?? 0
+        return retained + live
     }
 
     func liveBlockedSeconds(at date: Date) -> TimeInterval {

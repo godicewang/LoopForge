@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T00:07:40Z",
+  "status": "wall-output-child-containment-and-replay-implemented-memory-recovery-result-review-and-start-vetoed",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "containment": {
+    "journalOwnerDerivesWallDeadline": true,
+    "exactProcessGroupTerminatedOnTimeout": true,
+    "perStreamOutputFileLimitKernelEnforced": true,
+    "combinedOutputCeilingConservativelyPartitioned": true,
+    "zeroChildPolicyKernelEnforced": true,
+    "resourceLimitsBoundIntoExternalIdentity": true,
+    "descriptorRelativeNoFollowOutputRead": true,
+    "regularStableOutputIdentityRequired": true,
+    "exactRetainedBytesHashed": true,
+    "containmentAndReleaseAtomic": true,
+    "reducerReplayValidated": true,
+    "missingOrTamperedContainmentRejected": true,
+    "ordinaryJoinAndTerminateBypassRejected": true
+  },
+  "hardLimits": {
+    "wallClock": "enforced-by-journal-owned-deadline-and-process-group-termination",
+    "outputBytes": "kernel-enforced-per-stream-at-half-combined-recipe-ceiling",
+    "childProcesses": "kernel-enforced-zero-child-policy-with-process-count-one",
+    "residentMemory": "reservation-only-not-enforced"
+  },
+  "authority": {
+    "parserExecuted": false,
+    "oracleEvaluated": false,
+    "verificationResultIssued": false,
+    "integrationPostimageVerificationIssued": false,
+    "integrationPhaseAfterContainment": "appliedUnverified",
+    "independentReviewIssued": false,
+    "nativeStartAvailable": false
+  },
+  "recovery": {
+    "liveExactProcessCanBeReattached": true,
+    "journaledContainmentReplays": true,
+    "alreadyAbsentExactProcessCanBeReconciled": false,
+    "recoveryProcessAbsentSchemaHasProductionIssuer": false
+  },
+  "verification": {
+    "completeSwiftTests": 703,
+    "environmentSkips": 8,
+    "failures": 0,
+    "releaseLoopForgeBuild": "passed",
+    "releaseKernelSandboxGateBuild": "passed",
+    "diffWhitespace": "passed",
+    "exactSourceSnapshotSHA256": "78c2aaeec12276f5227e6b563ab739c2453bff06e4b6443772457e0c6586e37b",
+    "releaseArtifacts": {
+      "LoopForgeSHA256": "7344bdbf76daae5744fe24f8c75ae33a299a607298deff2140fd070f04fce90a",
+      "KernelSandboxGateSHA256": "21731107c0b85e03933bac526d5f0a705394579e9eb02a7665c950fe49949b99"
+    },
+    "sourceHashes": {
+      "KernelSandboxGate/main.swift": "02bc6a54b7deabc8e34bf2249616afdd8f85211b42442ead4ed5fd138b6c8c7b",
+      "KernelPostimageVerifierActivation.swift": "57756b139158a8c52b020ab3fdf61efdbf8086578214e9665572cfa820bba772",
+      "JournaledProcessRuntime.swift": "dec7f54507dbb001aa360149affe28ca18179d103ca6c28f2c1ce5d4cc7f17cc",
+      "ProcessGroupRuntimeAdapter.swift": "b9edac4f5600c7a49bb482db7f5de93d5c720d08327615666f999f0b01de5c3c",
+      "RunReducer.swift": "5415477be896c552ba85cec717440f2f5067c9e0f76ff7e35cb2dcbae0e17a42",
+      "RuntimeSupervisor.swift": "49135ef8ba93b7123404b4160c3ac7536ec4e794e371cc53cf5c7fd157892df8",
+      "KernelProcessFixture/main.swift": "367d516273a27c3dd54e56aab871f013b5d3df1d1a9e2faab72626884e830a5e",
+      "IntegrationTransactionStateMachineTests.swift": "71df6bba86d362c7e0786b5f36eb5ff1e0208b761db30b1b79f105f389158fad",
+      "JournaledProcessRuntimeTests.swift": "4258b0c27b1516655cb93a0e874972eb692bdeb0e6d0281c4fa1b269c5a9ba8b",
+      "KernelNativeSandboxTests.swift": "566a52563f5152d6d03cdcc59fc7d4fdacf73f3f8b48ee5a530891af29a4083e"
+    }
+  },
+  "remainingPrerequisites": [
+    "truthful native resident-memory enforcement",
+    "already-absent verifier crash reconciliation",
+    "candidate descriptor capability atomic at spawn",
+    "canonical parser and deterministic oracle",
+    "non-forgeable postimage result receipt",
+    "latest-red revocation and canonical evidence batch",
+    "separately activated adversarial read-only review",
+    "immutable baseline and complete visual evidence",
+    "integration acceptance and native start",
+    "current-source package sign native walkthrough commit and push"
+  ],
+  "finalAcceptance": false
+}

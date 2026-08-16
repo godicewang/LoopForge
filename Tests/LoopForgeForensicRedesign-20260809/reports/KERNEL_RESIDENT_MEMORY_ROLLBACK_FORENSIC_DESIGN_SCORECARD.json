@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-14T11:40:17Z",
+  "status": "resident-memory-veto-sequencing-defect-proven-safe-rollback-protocol-specified",
+  "finalAcceptance": false,
+  "easyBusinessMutated": false,
+  "productionResidentMemoryIssuerPresent": false,
+  "canonicalApplyCanPrecedeContainmentReadiness": true,
+  "automaticRollbackEffectPresent": false,
+  "findings": {
+    "runtimeVetoBeforeVerifierAdmission": true,
+    "vetoCreatesVerifierLease": false,
+    "vetoCreatesVerifierLaunch": false,
+    "applyEnvelopeAlreadyCompletedAtVeto": true,
+    "integrationRemainsAppliedUnverified": true,
+    "recoveryReportsAttention": true,
+    "recoveryCanDeriveRollbackFromVeto": false,
+    "systemicCause": "mandatory downstream containment capability is checked after the canonical effect it protects"
+  },
+  "requiredCorrection": {
+    "preApplyContainmentReadiness": true,
+    "durableTypedLaunchVeto": true,
+    "freshExclusiveRollbackLease": true,
+    "journalIntentBeforeRollbackOutbox": true,
+    "exactApplyEnvelopeRecovery": true,
+    "boundedCrashReplay": true,
+    "quarantineOnAmbiguityOrDrift": true
+  },
+  "rejectedShortcuts": [
+    "advisory or sampled memory enforcement",
+    "synthetic rejected verification without a verifier run",
+    "reuse of the released apply lease",
+    "rollback derived from live workspace bytes",
+    "outbox effect before journaled intent",
+    "registry model or legacy state as rollback authority"
+  ],
+  "sourceHashes": {
+    "KernelResidentMemoryEnforcement.swift": "37f06153d90254cf07fbe76d49bc0b4f089c816ff0dad6f4607aa2362bbabcd8",
+    "JournaledProcessRuntime.swift": "5092d47dec4c7054f353cac0be4ded8cf8a323b4d34777312ee52a563a9aec53",
+    "JournaledWorkspaceMutationRuntime.swift": "47f46c77214107daf02cce3e178b2f9c0c7c2db7f5801aa5125b6dd772d3cd69",
+    "WorkspaceCompletedCandidateMutationApplyPreparation.swift": "cf0aca7841def84225f89715806331cad6ccc14578a72500f413840f4e4eb71c",
+    "WorkspaceMutationEffectOutbox.swift": "30c6c8226130b957f75dc754ddb2d207d456d6c0854e1cba5d67fdd37e4d4e6a",
+    "WorkspaceMutationRecoveryCoordinator.swift": "4055161a3c56cf3871a72643fd108f68a029e5a4b79bcc5ff5e86096c707cc66",
+    "IntegrationTransactionStateMachine.swift": "b0bf9e63b2875242d035bcaf38972041a307b68889171a27af1853fc6f809724",
+    "KernelRunEnrollmentCoordinatorTests.swift": "0cf48543f00674dab775f22cec5b9caf6e1fde1d6587698b5bb4f8922f2bda4f"
+  },
+  "easyBusinessReadOnlyHead": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+  "nextImplementationBoundary": "journal exact verifier launch-veto evidence and compose crash-replayable rollback for already-applied transactions before moving containment readiness ahead of canonical apply"
+}

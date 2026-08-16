@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "status": "journal-derived-native-provider-prompt-present-direct-provider-launch-protocol-gated",
+  "recordedAt": "2026-08-15T17:05:00Z",
+  "providerPromptAuthority": {
+    "callerSuppliesPromptBytes": false,
+    "callerSuppliesObjective": false,
+    "callerSuppliesPlan": false,
+    "callerSuppliesStrategy": false,
+    "callerSuppliesWorkspace": false,
+    "callerSuppliesOutputProtocol": false,
+    "callerSuppliesRequestIdentityOnly": true,
+    "canonicalSortedKeyJSON": true,
+    "finalLineFeedRequired": true,
+    "exactJournalHeadRevalidated": true,
+    "exactActiveAttemptRevalidated": true,
+    "exactContractPlanAdmissionRetained": true,
+    "onePromptPerAttempt": true,
+    "promptCreatedBeforeProfilePreflight": false
+  },
+  "providerProtocolGate": {
+    "typedProtocolIdentity": true,
+    "requiredProtocol": "loopForgeProviderHarnessV2",
+    "recoveredLegacyDefault": "unavailable",
+    "nativeAppDirectExecutableProfile": "unavailable",
+    "directCodexExecutableCanReceiveHarnessArguments": false,
+    "unsupportedProtocolRejectedBeforePromptCreation": true,
+    "invocationDigestContextTransportPresent": true,
+    "invocationContextDescriptor": 196,
+    "historicalV1DecodableButInvalid": true,
+    "productionProviderLaunched": false
+  },
+  "adversarialProof": {
+    "secondPromptRejected": true,
+    "arbitraryPromptAPIRemovedFromProductionSession": true,
+    "directProviderExecutableRejected": true,
+    "hiddenFanOutEnabled": false,
+    "callerEnvironmentAccepted": false
+  },
+  "verification": {
+    "focusedSuite": {
+      "executed": 15,
+      "failures": 0,
+      "runs": [
+        {
+          "executed": 14,
+          "failures": 0,
+          "seconds": 1.047
+        },
+        {
+          "executed": 1,
+          "failures": 0,
+          "purpose": "historical-v1-evidence-only-decode"
+        }
+      ]
+    },
+    "fullSuite": {
+      "executed": 819,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 63.145
+    },
+    "packageOwnedFullSuite": {
+      "executed": 819,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 64.873,
+      "realCodexChildBridgeSeconds": 19.135,
+      "logSHA256": "18e7f19e0051a104ee488921d4f9065b9cb93c5f4165720cf41f9980efb807ab"
+    },
+    "releaseBuild": {
+      "passed": true,
+      "seconds": null,
+      "timedByPackagingInvocation": false,
+      "architecture": "arm64"
+    },
+    "sourceSnapshotSHA256": "bff4173a795286a7b895f053a990692982905f1211e44d655d94b5fe5f059f6f",
+    "packagedLoopForgeSHA256": "b2e4c9463676fdd8c6151da83d1e64be21d27dc645b64e7fec6ddf70a53e3647",
+    "packagedKernelSandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "signatureVerifiedDeepStrict": true,
+    "exactPackagedMachOStartupPassed": true,
+    "postSmokePackagedProcessCount": 0
+  },
+  "sourceDigests": {
+    "taskContract": "a8022c054661cd7743270a46994b3791e6f6f3b6b91229cd935e5f76b7a0bc6b",
+    "providerInvocation": "e23922624cd5c9a0c90bb5df7cc84dc817ad2f827298052108b229f65690605e",
+    "productionExecutionCoordinator": "2e7abb32812150115c71d8f5185a6788a4c5a86a2263fc6929011a222403d89b",
+    "appModel": "8e9f1f29ba96e84ca5cd4bc9d6e466b9d6d3b62b23444d13d0b82b2cf06fbc8d",
+    "providerTests": "e4643a0d35bd5e8ca48a11817d5ee7d39a80290e34a4c6f2983797761a1fb540",
+    "productionSessionTests": "270bfccca543016c16354af52e2cbd3386beb7f2c2f5b23f4bd2642f74238060"
+  },
+  "easyBusiness": {
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "statusFingerprintSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a",
+    "mutated": false
+  },
+  "remaining": [
+    "package and ratify a real LoopForge provider harness",
+    "retain and revalidate the V2 kernel-owned context transport in every production launch",
+    "issue exact network authority or retain the launch veto",
+    "native mutation isolation and journaled preparation issuer or retained veto",
+    "legacy Single and Parallel retirement",
+    "unlocked native screenshots",
+    "clean-commit rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false
+}

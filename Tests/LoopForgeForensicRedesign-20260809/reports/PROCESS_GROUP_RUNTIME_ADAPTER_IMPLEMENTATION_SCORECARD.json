@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "status": "implemented-side-by-side",
+  "legacyExecutionCutover": false,
+  "easyBusinessMutated": false,
+  "launchBoundary": "dedicated-posix-process-group",
+  "leaderExitAloneProvesQuiescence": false,
+  "wholeProcessGroupAbsenceRequired": true,
+  "eventDrivenLeaderObservation": true,
+  "boundedDrainOnlyGroupProbe": true,
+  "staleLeaseCanSignal": false,
+  "borrowedResourceDestructionAuthorized": false,
+  "unrelatedProcessPreservedByFaultInjection": true,
+  "termResistanceEscalatesToSigkill": true,
+  "journalFirstBindingReleaseBridge": true,
+  "journalFirstAdmission": true,
+  "nativeLaunchFailureReleaseTransaction": true,
+  "osProcessStartIdentity": true,
+  "exactBoundProcessRecovery": true,
+  "identityMismatchCanSignal": false,
+  "adapterTests": {
+    "executed": 9,
+    "failed": 0
+  },
+  "fullSwiftTests": {
+    "executed": 377,
+    "skipped": 6,
+    "failed": 0
+  },
+  "lineCounts": {
+    "ProcessGroupRuntimeAdapter.swift": 558,
+    "ProcessGroupRuntimeAdapterTests.swift": 326
+  },
+  "productionHashes": {
+    "ProcessGroupRuntimeAdapter.swift": "652fc135756dcf83db1ff932f28748eb05ea00b1cd3fdeee9dbf00e493e6bb18"
+  },
+  "testHashes": {
+    "ProcessGroupRuntimeAdapterTests.swift": "e73e84dfe352bd104603f6a41dc60671e6761bbea57790b853370989672e7de3"
+  },
+  "remainingGates": [
+    "durable-launch-broker-for-unbound-crash-window",
+    "typed-journaled-runtime-queue",
+    "other-runtime-adapters",
+    "legacy-controller-shadow-and-cutover",
+    "revision-bound-final-package"
+  ]
+}

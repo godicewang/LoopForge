@@ -53,6 +53,21 @@ enum PermissionPromptPolicy {
     }
 }
 
+enum PermissionPromptScanPolicy {
+    static let interval: TimeInterval = 4
+    static let timerTolerance: TimeInterval = 1
+
+    static func shouldInspect(
+        activationPolicy: NSApplication.ActivationPolicy,
+        isActive: Bool
+    ) -> Bool {
+        // Permission sheets belong to foreground-capable applications. Scanning
+        // every accessory/background process traversed thousands of AX nodes
+        // every 1.25 seconds during Full Access Graph runs.
+        isActive || activationPolicy == .regular
+    }
+}
+
 /// Safely presses ordinary Allow/OK permission buttons during a Full Access
 /// task. It never toggles TCC settings, enters credentials, accepts legal or
 /// payment terms, selects arbitrary files, or bypasses a secure system prompt.
@@ -67,9 +82,14 @@ final class SystemPermissionAutomator {
         guard fullAccess, AXIsProcessTrusted() else { return }
         self.onAction = onAction
         scan()
-        timer = Timer.scheduledTimer(withTimeInterval: 1.25, repeats: true) { [weak self] _ in
+        let scheduled = Timer.scheduledTimer(
+            withTimeInterval: PermissionPromptScanPolicy.interval,
+            repeats: true
+        ) { [weak self] _ in
             Task { @MainActor in self?.scan() }
         }
+        scheduled.tolerance = PermissionPromptScanPolicy.timerTolerance
+        timer = scheduled
     }
 
     func stop() {
@@ -82,11 +102,14 @@ final class SystemPermissionAutomator {
     private func scan() {
         guard AXIsProcessTrusted() else { stop(); return }
         for application in NSWorkspace.shared.runningApplications where application.processIdentifier != ProcessInfo.processInfo.processIdentifier {
-            guard application.activationPolicy != .prohibited else { continue }
+            guard PermissionPromptScanPolicy.shouldInspect(
+                activationPolicy: application.activationPolicy,
+                isActive: application.isActive
+            ) else { continue }
             let appElement = AXUIElementCreateApplication(application.processIdentifier)
             guard let windows = values(of: kAXWindowsAttribute, in: appElement) else { continue }
-            for window in windows.prefix(4) {
-                let nodes = descendants(of: window, remainingDepth: 5, remainingNodes: 100)
+            for window in windows.prefix(2) {
+                let nodes = descendants(of: window, remainingDepth: 4, remainingNodes: 64)
                 let context = nodes.compactMap(textValue).joined(separator: " ")
                 guard !context.isEmpty else { continue }
                 for button in nodes where role(of: button) == kAXButtonRole as String {

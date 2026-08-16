@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "report": "WORKSPACE_MUTATION_RELEASE_AND_CRASH_RECONCILIATION_IMPLEMENTATION.md",
+  "status": "success-release-and-failed-ownership-closed-explicit-repair-pending",
+  "controls": {
+    "outboxSchemaVersion": 3,
+    "stableReleaseReceiptIdentity": true,
+    "stableReleaseCommandIdentity": true,
+    "releaseRequiredBeforeOutboxAcknowledgement": true,
+    "recordedApplyRecoveryReentersExecutor": false,
+    "recordedRollbackRecoveryReentersExecutor": false,
+    "recordedReceiptRecoveryRequiresRelease": true,
+    "pristineSupervisorHydratesFromJournal": true,
+    "divergentSupervisorOverwritten": false,
+    "journaledReleaseReconcilesRetainedSupervisorLease": true,
+    "conflictingCanonicalRootLeaseRejected": true,
+    "executorFailureDispositionComplete": true,
+    "failedOwnershipExplicitRepairImplemented": false,
+    "productionStartupDispatchConnected": false,
+    "legacyGraphConnected": false
+  },
+  "verification": {
+    "integrationTestCount": 8,
+    "filesystemOutboxTestCount": 13,
+    "completeLogPath": "/tmp/loopforge-full-tests-workspace-failure-quarantine.log",
+    "completeLogSHA256": "ff806ab768340c59f4df79ffdfb1582d805d080427ef4535c6caf1dca214942d",
+    "testCount": 506,
+    "skippedCount": 8,
+    "failureCount": 0,
+    "xctestSeconds": 28.341
+  },
+  "sourceEvidence": {
+    "authority": {
+      "path": "Sources/LoopForge/Kernel/JournaledWorkspaceMutationLeaseAuthority.swift",
+      "lineCount": 527,
+      "sha256": "5e4f7feb9411dff29545938bb341cae5c83297783d59ad0cb2716681a386f22b"
+    },
+    "runtime": {
+      "path": "Sources/LoopForge/Kernel/JournaledWorkspaceMutationRuntime.swift",
+      "lineCount": 486,
+      "sha256": "92bf53b7a9b6082da47a726be11ba81672b0d2e672df529116e996347936f1f7"
+    },
+    "outbox": {
+      "path": "Sources/LoopForge/Kernel/WorkspaceMutationEffectOutbox.swift",
+      "lineCount": 458,
+      "sha256": "c392e29cc5ca5f80b72ae2036036c28f8e0a1d4ed91ff82a2ea84fef620ff30b"
+    }
+  },
+  "safetyClaims": {
+    "mutatedEasyBusiness": false,
+    "cutoverEligible": false,
+    "taskComplete": false
+  }
+}

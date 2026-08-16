@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T01:52:26Z",
+  "supersededBy": "NATIVE_RUNTIME_CLEANUP_EXECUTION_SCORECARD.json",
+  "status": "receipt-proven-stop-closure-and-normal-quit-fail-closed-retention-passed-live-resource-cleanup-execution-and-final-release-pending",
+  "defect": {
+    "class": "circular-active-attempt-quiescence-precondition",
+    "activeAttemptCouldRemainExecutingAfterPhysicalQuiescence": true,
+    "observedAcrossRelaunch": true,
+    "replayEventPreviouslyFullyRebound": false
+  },
+  "reducerRepair": {
+    "stopQuiescenceMayInterruptActiveAttempt": true,
+    "interruptedDispositionReducerOwned": true,
+    "completionStillRequiresNoActiveAttempt": true,
+    "replayBindsRun": true,
+    "replayBindsRetainedDrain": true,
+    "replayBindsResourceSets": true,
+    "replayBindsMonotonicOrdering": true,
+    "replayBindsPhaseAndIntent": true,
+    "tamperedReplayCannotAdvance": true
+  },
+  "applicationTermination": {
+    "normalQuitUsesRetainedNativeSessions": true,
+    "allSessionsPreflightedBeforeRemoval": true,
+    "nonemptyCleanupPlanCancelsQuit": true,
+    "nonemptyCleanupPlanExecutedByThisChange": false,
+    "emptyPlanReceivesJournaledStopDrain": true,
+    "quiescenceRequiredBeforeSessionRemoval": true,
+    "stoppedProjectionRequiredBeforeSessionRemoval": true,
+    "failureCancelsQuit": true,
+    "missingDrainFrameRecoveredWithoutSecondStop": true,
+    "previouslyJournaledStopRequestResumesAtQuiescence": true,
+    "legacyControllerShutdownOccursAfterNativePreparation": true
+  },
+  "verification": {
+    "kernelReducerFocused": {"executed": 45, "failures": 0},
+    "nativeEnrollmentFocused": {"executed": 12, "failures": 0, "seconds": 13.431, "wallSeconds": 13.432},
+    "packageOwnedFullSuite": {"executed": 854, "skipped": 8, "failures": 0, "seconds": 69.023, "wallSeconds": 69.072, "realCodexChildBridgeTestSeconds": 12.221},
+    "deepStrictSignature": true,
+    "zipIntegrity": true,
+    "dmgIntegrity": true,
+    "mountedDMGExecutableIdentity": true,
+    "exactPackagedMachOStartup": true,
+    "postVerificationPackagedProcessCount": 0
+  },
+  "package": {
+    "sourceRevision": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
+    "sourceDirty": true,
+    "sourceSnapshotSHA256": "9676fc71bfb02fbab6e4a781ac317d657337c8a097fcd08917228e523944a064",
+    "builtAtUTC": "2026-08-16T01:49:09Z",
+    "testLogSHA256": "25b8629e95ba1ad1ca51d202beb32ca18a8636059eaed557fe19413185d8acfa",
+    "executableSHA256": "479c7e160d6c4d5a925c58bc6ed31793336f4e91b897a83a514ef2942c843940",
+    "applicationCDHash": "4deafc84060fcac9aa3c82d7ac45c0b5286a8a87"
+  },
+  "currentPackageNativeUI": {
+    "attempted": true,
+    "unlocked": false,
+    "screenshotCaptured": false,
+    "blocker": "macOS-locked-physical-input-unlock-required",
+    "blockedTimeCounted": false
+  },
+  "easyBusiness": {
+    "mutated": false,
+    "branch": "codex/USA_Version",
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "nulDelimitedStatusSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a"
+  },
+  "remainingGaps": [
+    "authorized execution and recovery of nonempty runtime cleanup plans",
+    "productive provider backend ratification and native launch cutover",
+    "trusted Release containment or retained launch vetoes",
+    "mutation preparation or retained vetoes",
+    "current-package unlocked native UI verification",
+    "complete native trait window baseline and candidate matrix",
+    "clean-commit package rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false
+}

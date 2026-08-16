@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T08:36:37Z",
+  "status": "journal-accepted-origins-composed-complete-store-preflight-authority-absent",
+  "finalAcceptance": false,
+  "bindings": {
+    "acceptedBaselineCaptureReceipt": true,
+    "acceptedCandidateCaptureReceipt": true,
+    "liveBaselineBytes": true,
+    "liveCandidateBytes": true,
+    "runAndIntegrationTransaction": true,
+    "workspaceRootAndCapturePolicy": true,
+    "derivationAndSourceRevisions": true,
+    "baselineExpectedPreimagePartition": true,
+    "candidateDesiredPostimagePartition": true,
+    "completeSetVerificationReceipt": true,
+    "canonicalCompositionDigest": true
+  },
+  "controls": {
+    "journalAwareIssuer": true,
+    "candidateFreshnessCheckedBeforeAndAfterVerification": true,
+    "receiptAttestationCrossBinding": true,
+    "missingUnexpectedAndSubstitutedObjectsRejected": true,
+    "corruptAndWrongSizeObjectsRejected": true,
+    "sharedDigestRequiresIdenticalObject": true,
+    "completeUnionRehashed": true,
+    "nonCodableByteCapability": true,
+    "serializesCapabilityBytes": false,
+    "writesContentStore": false,
+    "journalAcceptsContentStore": false,
+    "issuesPreflightAuthority": false,
+    "permitsPublication": false,
+    "authorizesNativeStart": false
+  },
+  "verification": {
+    "realJournalIntegrationTests": 1,
+    "suiteTestsExecutedExcludingIndependentlyRunCase": 744,
+    "independentlyRunProcessGroupCase": 1,
+    "combinedTestsCovered": 745,
+    "intentionalEnvironmentSkips": 8,
+    "testFailures": 0,
+    "releaseLoopForgeSHA256": "76002346811f87a16b8ac9cf0a395219191f64d25af3226d3003e634496f7596",
+    "releaseKernelSandboxGateSHA256": "1b7ba433fe915b0dd916aceafe62342d246bcf6bbddcfc5425b0d09fba0fbeaa",
+    "sourceSnapshotSHA256": "081fb2c226e8bab064d912c894ac70afe69627817b915cd82da576a803f24b12",
+    "compositionSourceSHA256": "425fd172beee0a3091976c817bbbe93c8d50d651d824c2d46f3b8cd14423655b",
+    "candidateCaptureSourceSHA256": "5893dc6f8674872eadd1814cd3e23479f5503885c46d1e996e354ed5c2234b26",
+    "baselineCaptureSourceSHA256": "1d8366a36489c5c3e637623637c15859bb5645dd44235aa34e2d4484d7977d22",
+    "integrationTestsSHA256": "2931d5e618c723cbb078fa850f8195ab3a93d584ee50ff2f17d6d4c36c823913"
+  },
+  "remainingPrerequisites": [
+    "journal-first content-store acceptance and exact replay",
+    "journal-owned content-complete HEAD index and untracked preimage planes",
+    "repository-metadata and ignored-path-policy authority",
+    "journal-owned WorkspacePreimage and manifest assembly",
+    "journal-owned proposal and preflight capability issuer",
+    "tested production resident-memory enforcement issuer or retained verifier and reviewer veto",
+    "native immutable design baseline complete visual evidence final authorization and executable external-dependency observation",
+    "legacy Single and Parallel retirement",
+    "current-source package sign unlocked native walkthrough clean commit and push"
+  ]
+}

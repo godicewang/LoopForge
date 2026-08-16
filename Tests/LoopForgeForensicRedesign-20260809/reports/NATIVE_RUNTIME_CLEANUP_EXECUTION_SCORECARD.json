@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T04:05:14Z",
+  "status": "live-provider-and-postimage-verifier-app-quit-and-cleanup-only-relaunch-ownership-passed-final-release-pending",
+  "terminationPreflight": {
+    "allRetainedSessionsCheckedBeforeMutation": true,
+    "supervisorAndJournalLeaseSetsMustMatchExactly": true,
+    "queuedLeasesAllowed": false,
+    "failedReleasesAllowed": false,
+    "inDoubtResourcesAllowed": false,
+    "planActionMustMatchExactLease": true,
+    "gracefulProcessRequiresPIDAndStartIdentity": true,
+    "joinRequiresExactRetainedHandle": true,
+    "borrowedDetachRequiresStableIdentity": true
+  },
+  "cleanupExecution": {
+    "capturedPlanMustRemainUnchanged": true,
+    "ownedProcessGroupTermination": true,
+    "exactPIDStartRecovery": true,
+    "durableAbsenceRelease": true,
+    "boundedJoinAndRelease": true,
+    "borrowedLogicalDetach": true,
+    "typedCleanupReceipt": true,
+    "quiescenceRequiresEmptyRemainingPlan": true,
+    "postimageVerifierFailRedCleanupPath": true,
+    "postimageCleanupDisposition": "runtimeCleanupTermination"
+  },
+  "adversarialResults": {
+    "exactLiveProcessTerminatedAndReleased": true,
+    "reconstructedRuntimeRecoveredExactProcess": true,
+    "unboundAdmissionRejectedByPreflight": true,
+    "unboundAdmissionRetainedInSupervisor": true,
+    "unboundAdmissionRetainedInJournal": true,
+    "processScanningUsed": false,
+    "ambiguousOwnershipDropped": false,
+    "executingRunCleanupOwnershipRecoveredAfterApplicationRelaunch": true,
+    "stopRequestedMissingDrainRecoveredAfterApplicationRelaunch": true,
+    "staleCleanupEvidenceVetoedQuit": true,
+    "liveProductionSessionApplicationQuitPassed": true,
+    "liveProductionProviderObservedBeforeQuit": true,
+    "liveProductionProviderReleasedWithManagedTermination": true,
+    "livePostimageVerifierApplicationQuitPassed": true,
+    "livePostimageVerifierObservedBeforeQuit": true,
+    "livePostimageVerifierReleasedWithManagedTermination": true,
+    "livePostimageVerifierContainmentDisposition": "runtimeCleanupTermination",
+    "livePostimageVerifierResultAuthorityMinted": false,
+    "productiveExecutionAuthorityRecovered": false
+  },
+  "verification": {
+    "journaledProcessRuntimeFocused": {
+      "executed": 31,
+      "failures": 0,
+      "seconds": 6.175
+    },
+    "nativeKernelEnrollmentFlow": {
+      "executed": 14,
+      "failures": 0,
+      "seconds": 18.364,
+      "wallSeconds": 18.365
+    },
+    "packageOwnedFullSuite": {
+      "executed": 861,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 80.610,
+      "wallSeconds": 80.660,
+      "realCodexChildBridgeTestSeconds": 16.308
+    },
+    "deepStrictSignature": true,
+    "zipIntegrity": true,
+    "dmgIntegrity": true,
+    "mountedDMGAllMachOByteIdentity": true,
+    "exactPackagedMachOStartup": true,
+    "postVerificationPackagedProcessCount": 0
+  },
+  "package": {
+    "sourceRevision": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
+    "sourceDirty": true,
+    "sourceSnapshotSHA256": "3686f6594a418ac4743cb14d8faddaa62b9ea24c15297a748984bf23d074f3f9",
+    "builtAtUTC": "2026-08-16T04:02:54Z",
+    "testLogSHA256": "e8e9dfed8e3d271cf692e799e72c33b3d772c30a79ff9f9de10660a86d272930",
+    "executableSHA256": "3541c91dea36e7805cc4a1f06eed96932ec1dffe5ee5723d5ff673d1e48e10dc",
+    "applicationCDHash": "cc045adbca8e8a6027303bea621d43b75dc8ce62",
+    "zipSHA256": "80c948ce015544d46188be4560810424c12ecbdcb8c21996d26e45f3d1cc87fa",
+    "dmgSHA256": "198a9303f3fd163502236c3c7d04fc2b464e131c0abd818ce1b7d40c244833ef"
+  },
+  "currentPackageNativeUI": {
+    "attempted": false,
+    "unlocked": false,
+    "screenshotCaptured": false,
+    "blocker": "not repeated for a code-only lifecycle change; direct and mounted exact startup passed",
+    "blockedTimeCounted": false
+  },
+  "knownLimits": {
+    "fullApplicationCrashReconstructsCleanupOnlySession": true,
+    "fullApplicationCrashReconstructsProductiveExecutingSession": false,
+    "joinOnlyRecoveryWithoutRetainedHandle": false,
+    "unboundAdmissionAutoReleased": false,
+    "liveProductionSessionNormalQuitEndToEndTested": true,
+    "livePostimageVerifierNormalQuitEndToEndTested": true
+  },
+  "easyBusiness": {
+    "mutated": false,
+    "branch": "codex/USA_Version",
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "nulDelimitedStatusSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a"
+  },
+  "finalRelease": false
+}

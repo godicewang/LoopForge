@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T10:05:20Z",
+  "status": "current-dirty-source-native-matrix-independent-review-pass-clean-revision-pending",
+  "baselineRevision": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
+  "candidateSourceSnapshotSHA256": "3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845",
+  "nativeCapture": {
+    "realApplication": true,
+    "standardAndAccessibility": true,
+    "expandedAndNarrow": true,
+    "displayRestoredToOriginal": true,
+    "originalDisplaySize": "1168x755"
+  },
+  "reviewChain": [
+    {
+      "order": 1,
+      "receipt": "NATIVE_MATRIX_INDEPENDENT_REVIEW.json",
+      "verdict": "veto",
+      "confidence": 0.97,
+      "failedGates": ["H-04", "H-06", "H-07", "H-09"]
+    },
+    {
+      "order": 2,
+      "receipt": "NATIVE_MATRIX_POST_VETO_INDEPENDENT_REVIEW.json",
+      "verdict": "veto",
+      "confidence": 0.97,
+      "failedGates": ["H-04"]
+    },
+    {
+      "order": 3,
+      "receipt": "NATIVE_MATRIX_WHOLE_ROW_INDEPENDENT_REVIEW.json",
+      "verdict": "pass",
+      "confidence": 0.94,
+      "passedGates": ["H-04", "H-05", "H-06", "H-07", "H-09"],
+      "requiredChanges": []
+    }
+  ],
+  "cells": [
+    {
+      "id": "standard-expanded",
+      "width": 1173,
+      "height": 768,
+      "fileSHA256": "9dbdbe3bb65fa12e1a9881f1bc350404967bb9e17f294d64e5d29982fbf3cec2",
+      "verdict": "pass"
+    },
+    {
+      "id": "standard-narrow",
+      "width": 1060,
+      "height": 752,
+      "fileSHA256": "bc88e75b0a8df7b4711eff2318d176023d0eaaf5e286f5bf8f100ac14305139c",
+      "verdict": "pass"
+    },
+    {
+      "id": "accessibility-expanded",
+      "width": 1098,
+      "height": 752,
+      "fileSHA256": "c517f92e132233c2d99927cda0319e58b7f72586ab953aa38977fb0b051fde05",
+      "verdict": "pass"
+    },
+    {
+      "id": "accessibility-narrow",
+      "width": 1060,
+      "height": 752,
+      "fileSHA256": "09eb378203ac385e1dde475e4640943ce028f85d94b23e0a460d982c293f364c",
+      "verdict": "pass"
+    }
+  ],
+  "contactSheet": {
+    "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/loopforge-native-matrix-whole-row-20260816T100000Z-contact-sheet.jpg",
+    "fileSHA256": "0c8e84353eeb1851d18548955a2a213378c1c59031d476b9d76a4920c4d8f7f5"
+  },
+  "metrics": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/loopforge-native-matrix-whole-row-20260816T100000Z-metrics.json",
+  "package": {
+    "executed": 874,
+    "skipped": 8,
+    "failures": 0,
+    "executableSHA256": "530a0eaeb39fb68f97becc8a8157b0ca6805a0b950f3280ed43da459dd427c36",
+    "zipSHA256": "7e5af93ea939e96a9ae2530f8106498396353df9027fccfd5b8108b43a29eb58",
+    "dmgSHA256": "128d41d4d034b34c874ac1a3ce93227dbb5b177e6ddd5970244eb469cf42e184",
+    "testLogSHA256": "9c16fe6f7a10f94c2a71a472c813ef291011dc7c19e15c1001325115c24edf45",
+    "signedDeepStrict": true
+  },
+  "currentMatrixComplete": true,
+  "cleanRevisionBound": false,
+  "finalRelease": false,
+  "easyBusinessMutated": false
+}

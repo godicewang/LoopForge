@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-14T12:03:27Z",
+  "status": "postimage-verifier-resident-memory-launch-veto-journaled-and-crash-replayed",
+  "finalAcceptance": false,
+  "easyBusinessMutated": false,
+  "controls": {
+    "checkedBeforeVerifierAdmission": true,
+    "journaledBeforeRuntimeError": true,
+    "nonSerializableCommandAuthority": true,
+    "exactRunActivationApplyAttemptRecipeBinding": true,
+    "exactVerifierAndResidentByteCeilingBinding": true,
+    "typedReason": "residentMemoryEnforcementUnavailable",
+    "sourceSequenceAndRuntimeTimeBound": true,
+    "duplicateReceiptRejected": true,
+    "duplicateActivationVetoRejected": true,
+    "existingLaunchRejected": true,
+    "createsVerifierLease": false,
+    "createsVerifierLaunch": false,
+    "createsVerificationResult": false,
+    "changesIntegrationPhase": false,
+    "survivesJournalReopen": true,
+    "legacyJournalDecodeCompatible": true
+  },
+  "requestValidation": {
+    "nonemptyLeaseAndResource": true,
+    "distinctOutputFiles": true,
+    "fiveDistinctReceiptIDs": true,
+    "fourDistinctCommandIDs": true,
+    "invalidRequestRejectedBeforeVeto": true
+  },
+  "verification": {
+    "focusedTestsExecuted": 44,
+    "focusedTestFailures": 0,
+    "swiftTestsExecuted": 766,
+    "swiftTestsSkipped": 8,
+    "swiftTestFailures": 0,
+    "swiftTestSeconds": 70.323,
+    "releaseBuildSeconds": 98.01,
+    "releaseExecutableSHA256": "4295304e69be6e807bb05911865d37a9528e8e59824489921f854ce3d9d59ea6",
+    "failedRunsCounted": 0,
+    "excludedFailedRuns": 3
+  },
+  "sourceHashes": {
+    "KernelPostimageVerifierActivation.swift": "bc9fc98dd1a56a103f57bb9b284eba9001a90a3d00e9f76cce83f2e227792df9",
+    "JournaledProcessRuntime.swift": "920509ad4a5a95a59a8de38d312182bcde8a6aa8e2ec9aa5cf9d77896fcead15",
+    "RunReducer.swift": "82ce4baaab1814b756c168f28a3ca15eaa04c153e08ec70e3b9e27faa52c386b",
+    "RunJournal.swift": "d5b8215f81326dac0c0539f86173dd56419495bb976489d202065d506c533734",
+    "IntegrationTransactionStateMachineTests.swift": "00e5a9a902f0399eb1b5e543d9056a4e0ef952b0765b28bada26c15891f2485a",
+    "KernelRunEnrollmentCoordinatorTests.swift": "34ee6d49355b875030a67ebd7043b68d0c7b519944f01a43f004421d317d2745"
+  },
+  "easyBusinessReadOnlyHead": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+  "remaining": [
+    "exact already-applied rollback recovery coordinator",
+    "pre-apply containment readiness gate",
+    "tested production resident-memory issuer or retained pre-apply launch veto",
+    "native baseline visual final authority and legacy cutover",
+    "current-source package sign native UI clean commit and push"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "status": "passed-current-source",
+  "recordedAt": "2026-08-10T21:53:16Z",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "defect": {
+    "expiredRequestPreviouslyEnteredExecutor": false,
+    "expiredLeasePreviouslyReleased": false,
+    "expiredEffectPreviouslyRetired": false,
+    "ordinaryRecoveryPreviouslyConverged": false
+  },
+  "implementation": {
+    "exactRequestLeaseBindingRequiredBeforeRelease": true,
+    "journalFirstOriginalLeaseRelease": true,
+    "supervisorReleaseReconciled": true,
+    "typedPreEffectRetirement": "leaseExpired",
+    "outboxQuarantineIsDurable": true,
+    "quarantineIsNotCompletion": true,
+    "secondOrdinaryRecoveryScannedCount": 0,
+    "executorEntered": false,
+    "recoveryRootCreated": false,
+    "workspaceTouched": false,
+    "automaticRenewalAttempted": false,
+    "freshIntentMinted": false,
+    "schemaVersion3PersistedMigrationTested": true,
+    "schemaVersionAfterSuccessfulRewrite": 5
+  },
+  "verification": {
+    "focusedTests": 21,
+    "focusedFailures": 0,
+    "focusedLog": "/tmp/loopforge-pre-effect-retirement-focused.log",
+    "focusedLogSHA256": "e924f9f6ae8cf324d7bcff395f6f5d107013d7d23e040386a4a5883c508ea3d0",
+    "fullTests": 506,
+    "skipped": 8,
+    "failures": 0,
+    "fullLog": "/tmp/loopforge-full-tests-dispatch-retirement.log",
+    "fullLogSHA256": "4ddf34a741b69b5a04270907f5b08f0575fb21bc32cd27706aa3f924dfc4ac4d",
+    "packageVerified": true,
+    "nativeUIVerified": false,
+    "nativeUIBlockedReason": "macOS locked"
+  },
+  "sourceSHA256": {
+    "JournaledWorkspaceMutationRuntime.swift": "6f3481c3876e1f324012913eb056fc327d82fdeae1c5ea2bfc1d9ec60e45e9dc",
+    "WorkspaceMutationEffectOutbox.swift": "27c1c58ded2a8810b9e6a4be33d603ecf658af14c90c775b0b1c5b17e49da699",
+    "IntegrationTransactionStateMachineTests.swift": "d3c7fe2a6658c38e2b9faf58c85e90bf977b2fd43edcc116fd6be1650b8685e1",
+    "WorkspaceMutationFilesystemExecutorTests.swift": "c398d92e06d7b155c70dc6a43a92b5f7de0f953e544b484804ef0d7aaba9e2de"
+  },
+  "remainingVetoes": [
+    "typed retirement or repair for non-expiry pre-effect rejection classes",
+    "explicit evidence-bound failed-ownership repair and renewal",
+    "production dispatcher startup ownership",
+    "receipt-native UI and legacy controller cutover",
+    "current native UI capture",
+    "revision-bound commit and push"
+  ],
+  "finalRelease": false
+}

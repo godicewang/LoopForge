@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-14T21:35:52Z",
+  "status": "replay-authority-hardened-executable-contract-parser-added-production-observer-runtime-pending",
+  "finalRelease": false,
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "replayAuthority": {
+    "sharesCommandValidation": true,
+    "exactActiveAttemptRequired": true,
+    "exactDeclaredDependencyRequired": true,
+    "exactRequirementIntersectionRequired": true,
+    "commandActorMustEqualObserver": true,
+    "replayRequiresAuthorizedIndependentObserver": true,
+    "exactEvidenceRecipeRequired": true,
+    "evidenceSHA256Required": true,
+    "eventTimeMustEqualObservedTime": true,
+    "duplicateReceiptIDRejected": true,
+    "invalidEventAdvancesState": false
+  },
+  "verification": {
+    "focusedTests": {
+      "executed": 42,
+      "failures": 0
+    },
+    "fullSuite": {
+      "executed": 798,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 64.520
+    },
+    "packageOwnedFullSuite": {
+      "executed": 798,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 1012.583
+    },
+    "releaseBuild": {
+      "passed": true,
+      "seconds": 114.67,
+      "architecture": "arm64"
+    },
+    "sourceSnapshotSHA256": "c4667031cc136e0a780198f21053b79ea07f02760d9790933b7fc1bc6e2d3e30",
+    "packagedLoopForgeSHA256": "55a74ce8313e27eabd24d23b3cb6d575de6e6227a6bbe529d4ee86b67941033b",
+    "packagedKernelSandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd"
+  },
+  "remaining": [
+    "descriptor-backed request materialization",
+    "journal-owned exact executable staging, sandboxed launch, exit mapping, and observation issuance",
+    "production controller invocation",
+    "legacy Single and Parallel retirement",
+    "current unlocked native UI verification and screenshots",
+    "clean-commit rebuild",
+    "commit and push"
+  ]
+}

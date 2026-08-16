@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-09T16:40:31Z",
+  "classification": "core-contaminated-by-adapter-and-incident-policy",
+  "mechanicalGroupedLineMatches": {
+    "production": {
+      "easyBusinessCommunityFriendsUSR1": 2,
+      "chromeGPT35SeleniumWebDriver": 43,
+      "gameUnityNPCAndScreenStates": 15,
+      "photos": 15,
+      "appStore": 4,
+      "iosSimulatorSimctl": 8
+    },
+    "activeTests": {
+      "easyBusinessCommunityFriendsUSR1": 31,
+      "chromeGPT35SeleniumWebDriver": 38,
+      "gameUnityNPCAndScreenStates": 35,
+      "photos": 3,
+      "appStore": 6,
+      "iosSimulatorSimctl": 3
+    },
+    "countsMayOverlap": true
+  },
+  "dispositions": {
+    "removeFromCore": [
+      "repository-and-screen-name-prompts",
+      "keyword-task-taxonomy",
+      "game-screen-evidence-classes",
+      "browser-incident-forbidden-substitution-prose",
+      "photo-keyword-authority-inference",
+      "image-count-special-casing",
+      "simulator-commands-in-universal-graph-guidance"
+    ],
+    "moveBehindTypedAdapter": [
+      "google-chrome-preflight",
+      "photos-permission-provider",
+      "ios-simulator-resource-provider"
+    ],
+    "validProviderSpecificUI": [
+      "codex-chatgpt-authentication-and-status"
+    ]
+  },
+  "requiredCoreTypes": [
+    "TaskContract",
+    "CapabilityRequest",
+    "CapabilityAdapter",
+    "EvidenceContract"
+  ],
+  "productionRefactorAuthorized": false
+}

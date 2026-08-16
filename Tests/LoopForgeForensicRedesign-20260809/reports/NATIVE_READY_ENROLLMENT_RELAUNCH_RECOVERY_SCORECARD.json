@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-15T21:19:35Z",
+  "status": "implemented-source-package-and-exact-native-relaunch-proof-passed-final-release-false",
+  "sourceSnapshotSHA256": "c974a26156aaf25a645c2a033433c25249e54a77c26791a413b8c5c7786758b8",
+  "defectsClosed": {
+    "readyProjectionWithoutEnrollmentCapabilityAfterRelaunch": true,
+    "protectedRunReadinessWithoutLiveDesignAuthority": true
+  },
+  "recoveryAuthority": {
+    "exactRegistryRegistrationRequired": true,
+    "originalRunCreatedTransactionRequired": true,
+    "exactJournalHeadRequired": true,
+    "readyPhaseRequired": true,
+    "zeroNodesAndAttemptsRequired": true,
+    "changedOrExecutingRunRejected": true,
+    "verificationStagingRecreated": false,
+    "providerCapabilityRecreated": false,
+    "processCapabilityRecreated": false,
+    "mutationCapabilityRecreated": false,
+    "retryCapabilityRecreated": false,
+    "designBaselineCapabilityRecreated": false
+  },
+  "designBaselineReadiness": {
+    "missingLiveAuthorityBlocks": true,
+    "exactRunRequired": true,
+    "exactRatificationRequired": true,
+    "exactEnrollmentJournalFrameRequired": true,
+    "exactContractRequired": true
+  },
+  "tests": {
+    "focusedNativeEnrollment": {"executed": 10, "failures": 0, "seconds": 11.354},
+    "focusedDesignBaselineAuthority": {"executed": 1, "failures": 0, "seconds": 0.027},
+    "fullSource": {"executed": 837, "skipped": 8, "failures": 0, "seconds": 65.853, "wallSeconds": 65.902},
+    "sourceRealCodexBridgeSeconds": 12.792,
+    "packageOwned": {"executed": 837, "skipped": 8, "failures": 0, "seconds": 61.558, "wallSeconds": 61.607},
+    "packageRealCodexBridgeSeconds": 9.060
+  },
+  "package": {
+    "releaseBuildPassed": true,
+    "deepStrictAdhocSignaturePassed": true,
+    "smokePassed": true,
+    "zipPassed": true,
+    "dmgPassed": true,
+    "checksumManifestPassed": true,
+    "exactPackagedMachOLaunched": true,
+    "releaseDebugRetirementHookAbsent": true,
+    "postInspectionPackagedProcessCount": 0
+  },
+  "nativeRelaunch": {
+    "exactPackagedApplication": "/Users/godice/Coding/LoopForge/dist/LoopForge.app",
+    "runID": "native-run-c2070190-a24a-42bf-a9f5-fee696aea42c",
+    "journalSequenceBefore": 1,
+    "journalSequenceAfter": 1,
+    "phaseBefore": "ready",
+    "phaseAfter": "ready",
+    "blockersBefore": 2,
+    "blockersAfter": 2,
+    "activateControlBefore": "disabled",
+    "activateControlAfter": "disabled",
+    "quitAndRelaunchPerformed": true,
+    "sameEnrollmentControlRecovered": true,
+    "publicComposerReadOnlyOptionPresent": false,
+    "readOnlyActivationCoveredByXCTest": true,
+    "productionWorkerLaunched": false
+  },
+  "screenshots": [
+    {
+      "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-ready-run-before-relaunch-20260815T205200Z.jpeg",
+      "width": 860,
+      "height": 760,
+      "sha256": "d2b154efb5972459a6ac0459a0156e97f80e7251cd6e59977be9c5b4b9c5d7e3"
+    },
+    {
+      "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-recovered-ready-run-after-relaunch-20260815T205200Z.jpeg",
+      "width": 860,
+      "height": 760,
+      "sha256": "d2b154efb5972459a6ac0459a0156e97f80e7251cd6e59977be9c5b4b9c5d7e3"
+    }
+  ],
+  "failedIntervalsCounted": false,
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "fullNativeMatrixComplete": false,
+  "finalRelease": false
+}

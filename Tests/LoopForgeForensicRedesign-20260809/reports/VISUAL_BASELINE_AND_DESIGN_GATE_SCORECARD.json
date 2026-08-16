@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "report": "VISUAL_BASELINE_AND_DESIGN_GATE_SPECIFICATION.md",
+  "status": "pre-implementation-normative-design",
+  "productionRefactorAuthorized": false,
+  "easyBusinessMutated": false,
+  "forensicExample": {
+    "chineseCommit": "301ef23a8698c3544c097895980248284f9189bb",
+    "englishCommit": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "device": "iPhone 17 Pro",
+    "runtime": "iOS 26.5",
+    "pixels": [1206, 2622],
+    "standardHeroLineCount": {"baseline": 1, "candidate": 2},
+    "standardHeroSpanPixels": {"baseline": 106.7, "candidate": 183.1},
+    "workspaceHeadingTopPixels": {"baseline": 625.0, "candidate": 735.5},
+    "maximumHeroLineCount": {"baseline": 2, "candidate": 4},
+    "maximumHeroSpanPixels": {"baseline": 383.7, "candidate": 770.2},
+    "candidateMaximumPrimaryTaskVisible": false,
+    "baselineKnownNavigationOverlapDebt": true
+  },
+  "designTokenFamilies": [
+    "typography",
+    "spacing",
+    "shape",
+    "color/material",
+    "control",
+    "layout",
+    "navigation"
+  ],
+  "gateDimensionCount": 12,
+  "gateDimensions": [
+    "provenance and comparability",
+    "product identity continuity",
+    "initial task hierarchy",
+    "typography hierarchy",
+    "symmetry and alignment groups",
+    "spacing rhythm and density",
+    "shape language",
+    "collision, occlusion, and safe area",
+    "responsive composition",
+    "accessibility semantics and operation",
+    "localization quality and slot fit",
+    "independent product/design verdict"
+  ],
+  "defaultThresholds": {
+    "typographyHierarchyRatioTolerance": 0.10,
+    "alignmentToleranceInLineHeights": 0.5,
+    "spacingPointFloor": 1.0,
+    "spacingRelativeTolerance": 0.10,
+    "maximumUnamendedOccupancyIncrease": 0.15,
+    "shapeRatioTolerance": 0.10,
+    "newOcclusionTolerancePixels": 0
+  },
+  "acceptance": {
+    "weightedAverageAllowed": false,
+    "oneApplicableFailureVetoes": true,
+    "unknownVetoes": true,
+    "baselineDebtMayWorsen": false,
+    "workerMayAmendBaseline": false,
+    "providerImageTruncationAllowed": false,
+    "independentReviewRequired": true
+  },
+  "requiredTestCount": 24,
+  "sourceEvidence": [
+    "Tests/LoopForgeForensicRedesign-20260809/evidence/runtime-baselines/chinese-home-standard.png",
+    "Tests/LoopForgeForensicRedesign-20260809/evidence/runtime-baselines/english-home-standard.png",
+    "Tests/LoopForgeForensicRedesign-20260809/evidence/runtime-baselines/chinese-home-accessibility-xxxl.png",
+    "Tests/LoopForgeForensicRedesign-20260809/evidence/runtime-baselines/english-home-accessibility-xxxl.png",
+    "Tests/LoopForgeForensicRedesign-20260809/reports/TYPOGRAPHY_SHAPE_SPACING_FORENSIC.md",
+    "Tests/LoopForgeForensicRedesign-20260809/reports/REVIEW_PROVENANCE_AND_VISUAL_VETO_ARCHITECTURE.md"
+  ]
+}

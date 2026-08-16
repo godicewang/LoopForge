@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T04:47:31Z",
+  "status": "production-postimage-verifier-veto-and-live-launch-composition-passed-final-release-pending",
+  "productionBoundary": {
+    "typedProductionRequest": true,
+    "typedVetoOrLaunchOutcome": true,
+    "exactActivationOwnedBySession": true,
+    "debugOnlyLaunchMethodRemoved": true,
+    "releaseResidentMemoryAuthorityIssuerAvailable": false,
+    "ordinaryMacOSFailsClosed": true
+  },
+  "preAdmissionVeto": {
+    "residentMemoryResolverOptional": true,
+    "nilResolverJournalsVeto": true,
+    "vetoBeforeAdmission": true,
+    "runtimeLeaseCreated": false,
+    "nativeProcessLaunched": false,
+    "vetoTransactionRevalidated": true,
+    "activationFrameDigestBound": true,
+    "integrationApplyAttemptRecipeVerifierBound": true,
+    "maximumResidentBytesBound": true,
+    "reason": "residentMemoryEnforcementUnavailable",
+    "retryReturnsExactRetainedReceiptAndTransaction": true
+  },
+  "adversarialChecks": {
+    "collidingReceiptIdentityRejectedBeforeActivation": true,
+    "collidingCommandIdentityRejectedBeforeActivation": true,
+    "crossWiredResidentMemoryAuthorityRejected": true,
+    "crossWiredLeaseCreated": false,
+    "crossWiredLaunchCreated": false,
+    "crossWiredVetoCreated": false
+  },
+  "liveLaunchAndCleanup": {
+    "productionMethodUsed": true,
+    "debugCapabilityExactActivationBound": true,
+    "independentVerifierActorUsed": true,
+    "sessionRuntimeRetainedNativeHandle": true,
+    "realVerifierPIDObservedLive": true,
+    "appModelTerminationBoundaryExercised": true,
+    "exactPIDAbsentAfterQuit": true,
+    "containmentDisposition": "runtimeCleanupTermination",
+    "postimageResultAuthorityMinted": false,
+    "postimageVerificationBatchMinted": false,
+    "runtimeLiveLeasesEmpty": true,
+    "runtimeFailedReleasesEmpty": true,
+    "terminalPhase": "stopped",
+    "quiescent": true
+  },
+  "verification": {
+    "focusedProof": {"executed": 1, "failures": 0},
+    "productionEnrollmentSuite": {"executed": 44, "failures": 0, "seconds": 9.638},
+    "releaseBuildPassed": true,
+    "packageOwnedFullSuite": {
+      "executed": 861,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 81.525,
+      "wallSeconds": 81.575,
+      "realCodexChildBridgeTestSeconds": 15.438
+    },
+    "deepStrictSignature": true,
+    "checksumAndSourceTestBinding": true,
+    "directStartup": true,
+    "mountedDMGAllMachOByteIdentity": true,
+    "mountedSignatureAndStartup": true,
+    "postVerificationProcessCount": 0,
+    "postVerificationMountCount": 0
+  },
+  "package": {
+    "sourceRevision": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
+    "sourceDirty": true,
+    "sourceSnapshotSHA256": "059dba47ad44d1ead84edbf4094fae8d7040084d2d2337cf00c616a00039f414",
+    "builtAtUTC": "2026-08-16T04:42:34Z",
+    "testLogSHA256": "f5776d9f5da9f5fb178692e565fe168a6918f31c7504f111a5780fe8b19dd941",
+    "executableSHA256": "3b657f94e3be6bb157debc71ef9e52ba4c534c609c82212b35a1168f30fa68ed",
+    "applicationCDHash": "73e0af7d1f9885d13b0927ae2f89ee164cac5f4b",
+    "zipSHA256": "21e1388edf3993c78ad6559772e6db3d8401d8cc9dbd36a1508151fcd3b65806",
+    "dmgSHA256": "fb69ea1378b7b5fea79b65353f4ec83101bef72459c06e47a94e11c057d6ae2e"
+  },
+  "nativeUI": {
+    "visibleUIChanged": false,
+    "currentPackageDirectAndMountedStartupPassed": true,
+    "currentPackageInteractiveInspectionRepeated": false,
+    "priorScreenshotRelabeledAsCurrent": false
+  },
+  "easyBusiness": {
+    "mutated": false,
+    "legacyGraphResumed": false,
+    "branch": "codex/USA_Version",
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "nulDelimitedStatusSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a"
+  },
+  "finalRelease": false
+}

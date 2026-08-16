@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-09T14:23:23Z",
+  "taskID": "1ED2180F-FBE1-4BCA-9E79-701F40CC3483",
+  "corpus": {
+    "nodeCount": 19,
+    "iterationCount": 51,
+    "eventCount": 5758,
+    "decisionCounts": {
+      "approved": 12,
+      "continueWork": 32,
+      "superseded": 5,
+      "pending": 2
+    },
+    "blockedWorkerSummaries": 37,
+    "blockedContinued": 28,
+    "blockedApproved": 7,
+    "completedNodesContainingBlockedTurn": 8,
+    "exactAdjacentInstructionRepeats": 2
+  },
+  "confirmedLoops": [
+    {
+      "id": "C-1",
+      "nodeID": "implement-bailian-json-contract",
+      "iterations": 11,
+      "blockedIterations": 11,
+      "repeatedCausalBlocker": "required write paths absent from immutable node scope",
+      "sameBlockerIterations": [2, 3, 4, 5, 6, 7, 8, 9],
+      "eventualControlChangeIteration": 10,
+      "result": "fail"
+    },
+    {
+      "id": "C-2",
+      "nodeID": "retain-ios-baseline-screenshots",
+      "iterations": 7,
+      "blockedIterations": 5,
+      "continueWorkDecisions": 6,
+      "commandEvents": 529,
+      "errorEvents": 24,
+      "exactDuplicateInstructionPair": "5->6",
+      "retirementDecision": "abandon",
+      "result": "fail"
+    },
+    {
+      "id": "C-3",
+      "nodeID": "repair-1",
+      "iterations": 4,
+      "blockedIterations": 3,
+      "repeatedCausalBlocker": "prose requested canonical cwd while the process remained in an isolated worktree",
+      "retirementDecision": "abandon",
+      "result": "fail"
+    },
+    {
+      "id": "C-4",
+      "nodeID": "integrate-xcuitest-evidence-current-main",
+      "iterations": 2,
+      "hiddenDelaySeconds": 980.887,
+      "measurementDefect": "response assertion began after synchronous tap returned",
+      "replacementChangedMeasurementBoundary": true,
+      "result": "fail"
+    }
+  ],
+  "dirtyRepairAudit": {
+    "present": [
+      "requiredWriteScopes",
+      "three-turn blocked freeze",
+      "six-unapproved-decision ceiling",
+      "canonical workspace transition interception",
+      "fresh-thread replacement",
+      "durable strategy retirement provenance"
+    ],
+    "remainingFailures": [
+      "free-form worker outcome marker",
+      "blocked runtime can be re-added on approval",
+      "display total includes excluded iteration durations",
+      "semantic strategy equivalence is not detected",
+      "causal fingerprint and cost budget are absent",
+      "reviewer failure can relaunch the worker",
+      "completed peers can incorrectly block sequential scope recovery",
+      "visual integrity is mistaken for design acceptance"
+    ],
+    "acceptable": false
+  },
+  "requiredPolicy": {
+    "immutableTopologyMismatchBudget": 1,
+    "sameCausalFingerprintMaximumOccurrences": 3,
+    "totalUnapprovedDecisionCeiling": 6,
+    "reviewerFailureRelaunchesWorker": false,
+    "blockedCanBeOrdinarilyApproved": false,
+    "replacementRequiresContractDifference": true,
+    "visualBaselineRequired": true
+  },
+  "overall": "fail"
+}

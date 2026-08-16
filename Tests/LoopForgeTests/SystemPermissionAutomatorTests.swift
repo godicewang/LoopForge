@@ -1,3 +1,4 @@
+import AppKit
 import XCTest
 @testable import LoopForge
 
@@ -40,5 +41,22 @@ final class SystemPermissionAutomatorTests: XCTestCase {
             ),
             fullAccess: true
         ))
+    }
+
+    func testPermissionScanSkipsBackgroundOnlyProcessesAndUsesCoalescedCadence() {
+        XCTAssertTrue(PermissionPromptScanPolicy.shouldInspect(
+            activationPolicy: .regular,
+            isActive: false
+        ))
+        XCTAssertTrue(PermissionPromptScanPolicy.shouldInspect(
+            activationPolicy: .accessory,
+            isActive: true
+        ))
+        XCTAssertFalse(PermissionPromptScanPolicy.shouldInspect(
+            activationPolicy: .accessory,
+            isActive: false
+        ))
+        XCTAssertGreaterThanOrEqual(PermissionPromptScanPolicy.interval, 4)
+        XCTAssertGreaterThan(PermissionPromptScanPolicy.timerTolerance, 0)
     }
 }

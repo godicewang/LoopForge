@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T02:43:41Z",
+  "status": "pure-plan-requirement-ownership-and-package-receipts-present-native-planning-cutover-pending",
+  "acceptanceRowsAdvanced": [
+    "B-02"
+  ],
+  "policy": {
+    "everyNodeRequiresKnownRequirements": true,
+    "unknownRequirementRejectsWholePlan": true,
+    "everyMandatoryRequirementRequiresOwner": true,
+    "mandatoryRequirementRequiresExactlyOneOwner": true,
+    "implicitJoinOwnershipAllowed": false,
+    "optionalRequirementMayRemainUnowned": true,
+    "invalidPlanCanEmitPlanAccepted": false,
+    "typedNodeIdentityInRejection": true,
+    "typedRequirementIdentityInRejection": true,
+    "deterministicFirstRejection": true,
+    "domainKeywordPolicyPresent": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 20,
+    "focusedFailures": 0,
+    "fullTestsExecuted": 564,
+    "fullTestsSkipped": 8,
+    "fullFailures": 0,
+    "packagingOwnedTestsExecuted": 564,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "sourceSnapshotSHA256": "a7227612b6ece755b33a587fcf2e81e8891c0271fb3a59a075b1ca949b95fbe3",
+    "focusedLogSHA256": "0d3992ce94a98b2151096366721aacd815412dcd2e9b3668017ac90c562ff480",
+    "fullLogSHA256": "6fa5fb749f5a784ecfcc00d75a7b137281863d3f8fe4e873f81a81024a3418c2",
+    "packageTestLogSHA256": "0592b0fc3565cacdc00d1477dbc31834b368f18b72a599eabe5054816c3b1b29",
+    "packageLogSHA256": "7e00725895c54338b43f7f804f74c34837b68613a1b5e6ff75f25b4ce04d69ed",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "executableSHA256": "e6f23f32329064b5d58bc321362523c2afd074283e9a6a6014c5dd39dc515f64",
+    "zipSHA256": "cd030e9e76c75cc6ffdc5e96c9f6f87d702bac175dd46b4ecab550ea3c56e867",
+    "dmgSHA256": "2646cb7891040970d86223e43c88860c67684c117894b734dc21530b22bf7e31",
+    "cdHash": "afe9ef322cccf07791088ecd335aef75e5ca5495",
+    "residualPackagedProcessCount": 0
+  },
+  "excluded": {
+    "failedRuns": 1,
+    "failedRunTimeCounted": false
+  },
+  "knownBoundary": {
+    "nativePlanAuthoringPending": true,
+    "productionRunEnrollmentPending": true,
+    "controllerCutoverPending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

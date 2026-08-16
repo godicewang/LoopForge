@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T05:22:35Z",
+  "status": "repeated-blocker-structural-decision-package-verified-production-fingerprint-cutover-pending",
+  "acceptanceRowsAdvanced": [
+    "F-06"
+  ],
+  "priorDefect": {
+    "thresholdOnlyDisabledAutomaticRetry": true,
+    "strategyEscalationWasPersisted": false,
+    "planAdjustmentCouldReactivateSameNode": true,
+    "separateSixDecisionBudgetDelayedStructuralReview": true,
+    "unsafeBehaviorEncodedAsTestExpectation": true
+  },
+  "enforcementBoundary": {
+    "thresholdBlocksNode": true,
+    "thresholdClosesActiveInterval": true,
+    "thresholdDisablesAutomaticRetry": true,
+    "thresholdPersistsStrategyEscalation": true,
+    "thresholdDetachesRejectedThread": true,
+    "schedulerDiscoversStructuralReview": true,
+    "sameNodePlanAdjustmentRejected": true,
+    "legacyWarningOnlyCheckpointUpgraded": true,
+    "ordinaryNonExhaustedReplanPreserved": true,
+    "journalIssuedBlockerFingerprintBound": false,
+    "budgetSharedAcrossReplacementLineage": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 92,
+    "focusedFailures": 0,
+    "fullTestsExecuted": 594,
+    "fullTestsSkipped": 8,
+    "fullFailures": 0,
+    "packagingOwnedTestsExecuted": 594,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "sourceSnapshotSHA256": "7e67b828a8d5e17bac8b9d5c14d4dbc10a8c01751dd24b81607b9b4922d36ec9",
+    "graphSourceSHA256": "bbed4e110672e2ae1ad446a24b3530696f47ed97c31a255b0b6c1d9fbcbe2d2a",
+    "graphTestsSHA256": "b8cb0a7408d6de98b239dde98393398b352c86786114cf0f2571744d97e8572f",
+    "focusedLogSHA256": "48cf9b11d8eda0e2147ea0841f0d0a030d8d30e2142ea03fce3c7c61770cd000",
+    "fullLogSHA256": "b2853d30e1f602ef662c88df69cc7522e4c9dd7ceb142453ef1665235895edb9",
+    "packageTestLogSHA256": "d0016ee9458ac1190652f45ca556539d34eafaaf431ae471c4a012bfc37ff14c",
+    "packageLogSHA256": "c8fd18552826f5af376e9ba482f46e3f6c13a12aae68ea3a8f212e8d9adaf8e9",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "buildManifestSHA256": "f8df837d150787ad13851f68eb88873ef889033a2263da8cfc50bb22965ac61c",
+    "executableSHA256": "dbbdaa28cfcb3a8631b788e38c9ec616cf72d496bde2b523ae17afa7ccdd992f",
+    "zipSHA256": "007d57c0917643e073fc8d8d380fe036d0a775ac5b5b9e2cd155ad2cbfc48310",
+    "dmgSHA256": "f26862818d92254a72fa7183d1af8998f6caf346b8a0275afa203363b326c846",
+    "cdHash": "a2293ed8acbc004a96bd1f3ceec54ba7df119fba",
+    "residualPackagedProcessCount": 0
+  },
+  "knownBoundary": {
+    "journalIssuedBlockerFingerprintPending": true,
+    "productionKernelReducerCutoverPending": true,
+    "replacementLineageBudgetPending": true,
+    "currentNativeUICapturePending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

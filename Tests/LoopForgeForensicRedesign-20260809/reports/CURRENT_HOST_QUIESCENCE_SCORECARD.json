@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "report": "CURRENT_HOST_QUIESCENCE_OBSERVATION.md",
+  "status": "point-in-time-observation",
+  "capturedAt": "2026-08-09T17:10:13Z",
+  "productionRefactorAuthorized": false,
+  "easyBusinessMutated": false,
+  "hostMutationsPerformed": false,
+  "legacyTask": {
+    "id": "1ED2180F-FBE1-4BCA-9E79-701F40CC3483",
+    "status": "stopped",
+    "stage": "Stopped · progress and project files are saved",
+    "resumeOnNextLaunch": false,
+    "updatedAt": "2026-08-09T13:14:04Z",
+    "checkpoint": null
+  },
+  "hostResourceLeases": {
+    "activeScopeCount": 0,
+    "totalLeaseCount": 37,
+    "releasedLeaseCount": 37,
+    "taskLeaseCount": 37,
+    "unreleasedTaskLeaseCount": 0
+  },
+  "loopForgeProcess": {
+    "pid": 68656,
+    "parentPID": 1,
+    "sampledCPUPercent": 0.0,
+    "sampledMemoryPercent": 0.6,
+    "directChildCount": 0,
+    "matchingRetiredTaskWorkerCount": 0,
+    "matchingXcodebuildCount": 0,
+    "matchingPytestCount": 0,
+    "matchingResourceBrokerCount": 0,
+    "visibleSleepAssertionCount": 0
+  },
+  "unrelatedLoadSamples": [
+    {"process": "verge-mihomo", "pid": 74884, "cpuPercent": 220.8, "attributedToLoopForge": false, "modified": false},
+    {"process": "Google Chrome Helper (Renderer)", "pid": 3476, "cpuPercent": 25.5, "attributedToLoopForge": false, "modified": false},
+    {"process": "WindowServer", "pid": 401, "cpuPercent": 24.5, "attributedToLoopForge": false, "modified": false},
+    {"process": "FrostMI", "pid": 67140, "cpuPercent": 12.2, "attributedToLoopForge": false, "modified": false}
+  ],
+  "conclusion": {
+    "retiredTaskQuietAtObservationTime": true,
+    "durableQuiescenceProven": false,
+    "reason": "Current projections and point-in-time host samples do not prove cancellation acknowledgement, descendant reaping, timer and broker shutdown, assertion release, or journal/projection sequence agreement."
+  },
+  "requiredFutureReceiptFields": [
+    "unjoinedTaskCount",
+    "ownedLivePIDs",
+    "activeTimers",
+    "activeBrokerServices",
+    "activeScheduledOperations",
+    "activePermissionScanners",
+    "activeInferenceServices",
+    "unreleasedCapabilityLeases",
+    "sleepAssertions",
+    "journalSequence",
+    "projectionSequence",
+    "cleanupEscalations",
+    "cleanupStartedAt",
+    "cleanupEndedAt"
+  ]
+}

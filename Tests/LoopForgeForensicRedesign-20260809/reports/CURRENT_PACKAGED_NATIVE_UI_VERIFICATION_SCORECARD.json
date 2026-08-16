@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 18,
+  "recordedAt": "2026-08-16T06:49:06Z",
+  "status": "latest-interactive-prior-package-terminal-strategy-history-presentation-and-real-ui-quit-passed-newer-source-only-policy-package-not-visually-recaptured",
+  "evidenceClassification": "latestInteractivePriorPackageExact",
+  "sourceSnapshotSHA256": "0e42de365702528200d97a174537d1b05d0aaf3d1a99b5a6854dce87a5821da7",
+  "builtAtUTC": "2026-08-16T06:19:54Z",
+  "packageOwnedTests": {"executed": 864, "skipped": 8, "failures": 0},
+  "inspectedPackageMachOStartupPassed": true,
+  "exactInspectedPackageApplicationInspected": true,
+  "unlockedNativeUI": true,
+  "inspectedPackageScreenshotCaptured": true,
+  "inspectedPackageDirectAndMountedStartupPassed": true,
+  "inspectionAttempted": true,
+  "blocker": null,
+  "blockedTimeCounted": false,
+  "assertions": {
+    "uiActionPerformed": true,
+    "kernelDiagnosticsOpenedReadOnly": true,
+    "realApplicationQuitPerformed": true,
+    "historicalEasyBusinessTaskObservedStopped": true,
+    "historicalEasyBusinessTaskOpened": false,
+    "activationAttempted": false,
+    "providerPromptPrepared": false,
+    "providerLaunchedByUIInspection": false,
+    "productionWorkerLaunchedByUIInspection": false,
+    "verifierLaunched": false,
+    "easyBusinessMutated": false,
+    "legacyGraphResumed": false,
+    "postInspectionPackagedProcessCount": 0,
+    "postInspectionMountCount": 0
+  },
+  "inspectedPackageScreenshots": [
+    {
+      "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-current-strategy-history-main-20260816T062100Z.png",
+      "sha256": "443373adc433a95770b06bed48f9100dacc5ea1b90748bae6223e1ef75fbbb8d",
+      "bytes": 130262,
+      "viewportPixels": {"width": 1160, "height": 768},
+      "surface": "main-window"
+    },
+    {
+      "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-current-strategy-history-diagnostics-20260816T062100Z.png",
+      "sha256": "37f8a69e33ec6164d1f750aa7aac8dffd5bb97c5c4a794ace8a237116237f50a",
+      "bytes": 94069,
+      "viewportPixels": {"width": 860, "height": 760},
+      "surface": "kernel-diagnostics"
+    }
+  ],
+  "diagnostics": {
+    "readyRunActivationDisabled": true,
+    "readyRunMutationAuthorityBlockerCount": 2,
+    "readyRunProviderProfileBlockerCount": 2,
+    "historicalStoppedRunActiveAttemptIDPresent": false,
+    "historicalUnretiredStrategyLifecycle": "active",
+    "terminalStrategyPresentation": "unretired history · run stopped",
+    "attemptInterruptionDerivedDuringCurrentReducerReplay": true,
+    "historicalJournalSequence": 10,
+    "historicalJournalFrameCount": 9,
+    "historicalJournalSHA256": "fdbb9f1dadc286b64218b06be3870776495e1bbf7d82c5056ef3ce27e07470e0",
+    "historicalTailHasStopRequest": true,
+    "historicalTailHasRuntimeDrain": true,
+    "historicalTailHasQuiescenceAndRunStopped": true,
+    "immutableJournalConsistent": true,
+    "journalMigrationRequired": false,
+    "journalQuarantineRequired": false
+  },
+  "automatedTerminationProof": {
+    "applicationCrashCleanupPathExercised": true,
+    "liveProductionProviderProcessObservedBeforeRecovery": true,
+    "liveProductionProviderProcessTerminated": true,
+    "managedProcessReleaseJournaled": true,
+    "receiptProvenStopQuiescence": true,
+    "activeAttemptInterrupted": true,
+    "productiveAuthorityReconstructed": false,
+    "nativeJoinOnlyProcessAdmissionRejected": true
+  },
+  "newerCurrentSourcePackage": {
+    "sourceSnapshotSHA256": "610338f003c251ef943a8b32c084776437d95ab91064a5403031bbb5d8a33178",
+    "builtAtUTC": "2026-08-16T06:44:37Z",
+    "visibleUIChange": false,
+    "directAndMountedStartupPassed": true,
+    "interactiveInspectionAttempted": false,
+    "screenshotCaptured": false,
+    "priorScreenshotsRelabeledAsCurrent": false
+  },
+  "fullNativeMatrixComplete": false,
+  "cleanCommitRebuildComplete": false,
+  "committed": false,
+  "pushed": false,
+  "finalRelease": false
+}

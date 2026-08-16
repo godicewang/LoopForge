@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T00:55:44Z",
+  "status": "unsupported-provider-environment-blocked-before-prompt-package-passed-final-release-false",
+  "sourceSnapshotSHA256": "0bba91621c094254b083a07401e9e45c4157e1a29626da6d3a67a28b708fd025",
+  "environmentAuthority": {
+    "supportedPolicy": "minimalKernelAllowlist",
+    "unsupportedPolicy": "declaredAllowlist",
+    "readinessBlocked": true,
+    "readinessBlocker": "declaredEnvironmentAuthorityUnsupported",
+    "directAuthorizationBlocked": true,
+    "authorizationError": "unsupportedEnvironmentAuthority",
+    "receiptReplayBlocked": true,
+    "runtimePreflightBeforePromptArtifact": true,
+    "rejectedPromptArtifactsCreated": 0
+  },
+  "tests": {
+    "focusedProviderAndRuntime": {"executed": 20, "failures": 0},
+    "affectedBoundary": {"executed": 116, "failures": 0, "seconds": 21.194},
+    "independentComplete": {"executed": 850, "skipped": 8, "failures": 0, "seconds": 63.942, "wallSeconds": 63.991},
+    "independentRealCodexBridgeSeconds": 10.536,
+    "packageOwned": {"executed": 850, "skipped": 8, "failures": 0, "seconds": 62.442, "wallSeconds": 62.491},
+    "packageRealCodexBridgeSeconds": 8.671,
+    "failedRunsCredited": false
+  },
+  "package": {
+    "gitRevision": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
+    "dirty": true,
+    "builtAtUTC": "2026-08-16T00:53:20Z",
+    "applicationExecutableSHA256": "1407e544dd40270660deb237e3b6d43610ef3a6dc28ccc9e182cb1bf93757f83",
+    "applicationCDHash": "f45679b466871096ae1983551c596c42bc7d0888",
+    "packageTestLogSHA256": "099d487bbef9710c9692d845fd166af91e234077bbb4c37e152a568f56bbd618",
+    "zipSHA256": "dba15cb6ed88195bef83047b53be0a03e4f976d0ef8724b3de97fac8f5e12ab8",
+    "dmgSHA256": "eed1a4f0ebe6e163aa2d94adcdacbdec052216a98a3c93850b7239f00260022c",
+    "deepStrictSignaturePassed": true,
+    "checksumManifestPassed": true,
+    "smokePassed": true,
+    "postSmokePackagedProcessCount": 0
+  },
+  "nativeCurrentPackageUIInspected": false,
+  "nativeCurrentPackageUIBlocker": "macOS-locked-physical-input-unlock-required",
+  "blockedTimeCounted": false,
+  "easyBusiness": {
+    "mutated": false,
+    "branch": "codex/USA_Version",
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "nulStatusSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a"
+  },
+  "fullNativeMatrixComplete": false,
+  "cleanCommitRebuildComplete": false,
+  "committed": false,
+  "pushed": false,
+  "finalRelease": false
+}

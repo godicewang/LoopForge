@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "findingId": "F-013",
+  "title": "Graph review lacked enforced independence and used provenance-free partial visual evidence",
+  "status": "confirmed",
+  "sourceTaskId": "1ED2180F-FBE1-4BCA-9E79-701F40CC3483",
+  "historicalTask": {
+    "mainAgent": "GPT-5.6-Sol / ultra",
+    "nodeAgent": "GPT-5.6-Sol / ultra",
+    "controlInteractions": 77,
+    "finalRepairRounds": 3,
+    "retainedVisualEvidencePaths": 12,
+    "explicitlyRejectedHistoricalFramesInFinalPathList": 2,
+    "codexVisualAttachmentLimit": 4,
+    "listedButNotVisuallyAttachedInStoppedFinalAudit": 8,
+    "auditScore": 100,
+    "visualAuditPassed": false,
+    "supervisorCompletionApproved": false
+  },
+  "rejectedFrameEvidence": [
+    {
+      "path": ".loopforge/evidence/us-round1/xcuitest-runtime/screenshots/08-maximum-dynamic-type-home.png",
+      "sha256": "aa5cbd6bc545457779317968deee9f9f7e46fbbd49fed338467f5737662a5a27",
+      "rejection": "Workspace content behind floating tab bar; historical before evidence; not current acceptance",
+      "positionInFinalCandidateList": 12
+    },
+    {
+      "path": ".loopforge/evidence/us-round1/xcuitest-runtime/screenshots/09-maximum-dynamic-type-actions.png",
+      "sha256": "bfc85fe4b090e5fd8843324e893b65e3566908125bc2e4c506c4100541373467",
+      "rejection": "Advisor content crosses the status-bar frame; historical before evidence; not current acceptance",
+      "positionInFinalCandidateList": 5
+    }
+  ],
+  "sourceDefects": [
+    "Graph final schema has no requirement coverage citations confidence contradictions reviewer identity or inspected evidence IDs",
+    "Graph final review does not call LocalSupervisor.enforcingCoverageForApproval",
+    "final prompt omits the collected source excerpts command ledger and full evidence body",
+    "Graph evidence collection passes an empty before fingerprint and loses mutation provenance",
+    "screenshot selection trusts path keywords semantic filename buckets and modification time",
+    "screenshot selection does not read acceptance or rejection manifests",
+    "collector selects 12 while Codex sees at most 4 and local models see at most 6",
+    "deterministic visual integrity only checks dimensions luminance variance and OCR",
+    "approval reuse is not bound to a cryptographic evidence-set identity",
+    "review stages prefer the same configured control model without enforced adversarial diversity"
+  ],
+  "independenceNuance": {
+    "freshEphemeralControlProcesses": true,
+    "sharedConversationMemory": false,
+    "differentModelOrProviderRequired": false,
+    "secondIndependentVerdictRequired": false,
+    "reviewerIdentityPersisted": false,
+    "disagreementEscalationPresent": false
+  },
+  "acceptanceRequirements": [
+    "immutable design baseline and content-addressed requirement registry",
+    "commit-bound screenshot manifests with explicit lifecycle state",
+    "exact inspected-image accounting with provider-limit batching",
+    "typed per-requirement and per-screen final verdicts with citations and confidence",
+    "full commit-bound source and command receipts in final review",
+    "adversarial reviewer independence and deterministic disagreement escalation",
+    "typography geometry spacing density hierarchy safe-area and Dynamic Type gates",
+    "content-addressed approval receipts invalidated by any evidence change",
+    "rejected evidence excluded from acceptance bundles except labeled before-after review",
+    "regression coverage for stale rejected clipped and partially attached visual evidence"
+  ],
+  "evidence": [
+    "../evidence/task-snapshot-20260809T131753Z.json",
+    "../../../Sources/LoopForge/GraphLoopEngine.swift",
+    "../../../Sources/LoopForge/AuditEvidence.swift",
+    "../../../Sources/LoopForge/LocalSupervisor.swift",
+    "../../../../EasyBusiness/.loopforge/evidence/us-round1/xcuitest-runtime/behavior-coverage-matrix.md",
+    "../../../../EasyBusiness/.loopforge/evidence/us-round1/xcuitest-runtime/acceptance-rejection-ledger.md"
+  ]
+}

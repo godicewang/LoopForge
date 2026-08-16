@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "report": "AUTHORITY_LATTICE_AND_PROJECTION_SPECIFICATION.md",
+  "status": "pre-implementation-normative-design",
+  "productionRefactorAuthorized": false,
+  "measuredLegacyModel": {
+    "loopTaskStoredPropertyCount": 63,
+    "graphLoopNodeStoredPropertyCount": 39,
+    "taskStatusDimensionCountCurrentlyCollapsed": 7,
+    "verticalTaskCategoryCount": 13
+  },
+  "authorityPrincipalCount": 11,
+  "authorityPrincipals": [
+    "user/operator",
+    "contract compiler",
+    "planning Agent",
+    "kernel/reducer",
+    "executor adapter",
+    "deterministic verifier",
+    "independent reviewer",
+    "integration coordinator",
+    "resource supervisor",
+    "recovery reconciler",
+    "projection builder"
+  ],
+  "commandFamilyCount": 16,
+  "nonWaivableDenyRuleCount": 12,
+  "runProjectionDimensions": [
+    "phase",
+    "execution",
+    "userAttention",
+    "durability",
+    "resources",
+    "authority",
+    "progress",
+    "currentIteration",
+    "cumulativeRuntime",
+    "sourceSequence",
+    "sourceStateHash"
+  ],
+  "coreRules": {
+    "fullHostAccessGrantsTaskAuthority": false,
+    "taskCategoryGrantsPolicy": false,
+    "modelProseChangesState": false,
+    "viewsWriteAuthoritativeFields": false,
+    "recoveryMayResolveAmbiguityOptimistically": false,
+    "reviewerIndependenceEnforced": true,
+    "terminalStateRequiresQuiescence": true,
+    "completionIsReceiptConjunction": true
+  },
+  "requiredDeterministicTestCount": 24,
+  "sourceEvidence": [
+    "Sources/LoopForge/Models.swift:114",
+    "Sources/LoopForge/Models.swift:135",
+    "Sources/LoopForge/Models.swift:176",
+    "Sources/LoopForge/Models.swift:355",
+    "Sources/LoopForge/Models.swift:406",
+    "Sources/LoopForge/Models.swift:426",
+    "Sources/LoopForge/Models.swift:514",
+    "Sources/LoopForge/Models.swift:613",
+    "Sources/LoopForge/Models.swift:696",
+    "Sources/LoopForge/AppModel.swift:901",
+    "Sources/LoopForge/AppModel.swift:936",
+    "Sources/LoopForge/AppModel.swift:951",
+    "Sources/LoopForge/TaskStore.swift:197",
+    "Sources/LoopForge/TaskStore.swift:341",
+    "Sources/LoopForge/AuditEvidence.swift:112",
+    "Sources/LoopForge/WorkspaceAuditor.swift:117"
+  ]
+}

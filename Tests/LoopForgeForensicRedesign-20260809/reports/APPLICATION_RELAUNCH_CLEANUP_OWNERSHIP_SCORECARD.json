@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T03:20:51Z",
+  "updatedAt": "2026-08-16T04:05:14Z",
+  "status": "cleanup-only-executing-and-stop-requested-relaunch-ownership-passed-productive-authority-remains-nonrecoverable",
+  "recoveryAuthority": {
+    "registryRatificationRequired": true,
+    "exactRunAndContractIdentityRequired": true,
+    "hashJournalHeadRequired": true,
+    "acceptedPhases": [
+      "executing",
+      "stopRequested"
+    ],
+    "exactActiveAttemptRequired": true,
+    "supervisorRestoredFromJournalSnapshot": true,
+    "attentionBearingRunsIncluded": true,
+    "productiveExecutionProofRecovered": false,
+    "candidateRootRecovered": false,
+    "providerAuthorityRecovered": false,
+    "mutationAuthorityRecovered": false,
+    "reviewOrRetryAuthorityRecovered": false
+  },
+  "applicationOwnership": {
+    "heterogeneousTerminationOnlyRegistry": true,
+    "sharedLiveAndRecoveredTerminationImplementation": true,
+    "recoveryFailureRetainedAsQuitBlocker": true,
+    "failedRecoverySilentlyDropped": false,
+    "allSessionsPreflightBeforeMutation": true
+  },
+  "adversarialResults": {
+    "executingRunRecoveredForCleanup": true,
+    "recoveredRunReachedStoppedQuiescence": true,
+    "activeAttemptInterrupted": true,
+    "readyEnrollmentAuthorityRecreated": false,
+    "productiveSessionReceiptRecreated": false,
+    "stopRequestedMissingDrainResumedAfterRelaunch": true,
+    "stoppedRunRecoveryRejected": true,
+    "staleStartupEvidenceVetoedQuit": true
+  },
+  "verification": {
+    "nativeKernelEnrollmentFlow": {
+      "executed": 14,
+      "failures": 0,
+      "seconds": 18.364,
+      "wallSeconds": 18.365
+    },
+    "packageOwnedFullSuite": {
+      "executed": 860,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 74.652,
+      "wallSeconds": 74.703,
+      "realCodexChildBridgeTestSeconds": 12.037
+    },
+    "deepStrictSignature": true,
+    "zipIntegrity": true,
+    "dmgIntegrity": true,
+    "mountedDMGAllMachOByteIdentity": true,
+    "exactPackagedMachOStartup": true,
+    "postVerificationPackagedProcessCount": 0,
+    "postVerificationMountCount": 0
+  },
+  "package": {
+    "sourceRevision": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
+    "sourceDirty": true,
+    "sourceSnapshotSHA256": "7ca002e7a5fedee480c52b26b77f6c6a84d0b25cd7169538f165cada4cb3f19d",
+    "builtAtUTC": "2026-08-16T03:15:05Z",
+    "testLogSHA256": "28e3cdba848e54c93674d1b95e383b31c7c4563da8f061f4f03e913037c871d5",
+    "executableSHA256": "d5c69f39b31d62e6053ef02b591f728fdfe26a91380432236b28ba61835f8593",
+    "applicationCDHash": "17f174f2d962cb77111c33d5697c998f3afa3b02",
+    "zipSHA256": "bef970af56ed01046795284ab1d909db835672abb522ebb520ede377357d84f4",
+    "dmgSHA256": "f54ada48068168d79784b07ad7fc5f65667280f3e15e4c622cd4906a8f80ad07"
+  },
+  "currentPackageNativeUI": {
+    "attempted": true,
+    "unlocked": true,
+    "screenshotCaptured": true,
+    "blocker": null,
+    "blockedTimeCounted": false
+  },
+  "knownLimits": {
+    "productiveExecutingSessionReconstructedAfterRelaunch": false,
+    "joinOnlyRecoveryWithoutRetainedHandle": false,
+    "unboundAdmissionAutoReleased": false,
+    "liveProductionSessionQuitTestPassed": true,
+    "livePostimageVerifierQuitTestPassed": true,
+    "livePostimageVerifierEvidence": "LIVE_POSTIMAGE_VERIFIER_APPLICATION_QUIT_SCORECARD.json"
+  },
+  "easyBusiness": {
+    "mutated": false,
+    "branch": "codex/USA_Version",
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "nulDelimitedStatusSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a"
+  },
+  "finalRelease": false
+}

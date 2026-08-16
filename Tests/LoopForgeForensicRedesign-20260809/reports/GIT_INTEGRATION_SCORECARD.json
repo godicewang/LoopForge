@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "findingId": "F-012",
+  "title": "Isolated Graph nodes directly mutated origin/main outside the integration coordinator",
+  "status": "confirmed",
+  "sourceTaskId": "1ED2180F-FBE1-4BCA-9E79-701F40CC3483",
+  "historicalMetrics": {
+    "nodesIssuingDirectMainPush": 11,
+    "completedPushAttempts": 15,
+    "successfulPushAttempts": 10,
+    "nonFastForwardPushFailures": 5,
+    "successfulCommitInvocations": 12,
+    "nodesWithSuccessfulCommitInvocation": 10,
+    "canonicalCommitsAfterInheritedGraphBaseline": 12,
+    "inheritedGraphBaseline": "88a2bdf9c5af4ac0ef97a6814d894fe58b50ba0b",
+    "stoppedCanonicalHead": "2ae40452e6d8661c46db466c43ea40bba3bfab04"
+  },
+  "splitEvidence": {
+    "canonicalDirty": true,
+    "retainedTaskWorktrees": 7,
+    "notableDetachedOrDivergentHeads": [
+      "73ea99322b3c89f94c6f43984f5947859ebfdcf0",
+      "43045bf0f0b5d28741fb07d954335da6bb616adf",
+      "07af30e67abba4f6ca95c62187272b51c32a50a6",
+      "a2df137"
+    ]
+  },
+  "causalChain": [
+    "global commit and push instruction was repeated to every bounded node",
+    "path scopes did not constrain Git refs or remote side effects",
+    "Full Access allowed each isolated worker to update origin/main",
+    "coordinator simultaneously expected patch-based integration",
+    "successful early pushes made later sibling bases diverge",
+    "non-fast-forward failures generated integration churn and false blockers",
+    "canonical worktree commits and remote refs ceased to have one authoritative owner"
+  ],
+  "currentDirtyRepairAudit": {
+    "improvementsPresent": [
+      "published node must be in verified upstream ancestry",
+      "canonical alignment must be fast-forward only",
+      "unrelated dirty paths fail closed",
+      "duplicate dirty content requires byte-identical published tree",
+      "binary patches and reverse-patch recognition remain available"
+    ],
+    "openDefects": [
+      "worker push is still permitted and reconciliation occurs after the remote mutation",
+      "fast-forward can absorb commits not independently reviewed by the current node",
+      "safety stash has no typed restore or user receipt workflow",
+      "conflict repair runs an unconstrained agent in the canonical workspace",
+      "exit code zero is treated as sufficient conflict-integration proof",
+      "stop does not complete worktree and reference lifecycle cleanup"
+    ]
+  },
+  "acceptanceRequirements": [
+    "single coordinator-owned Git transaction authority",
+    "mechanical denial of worker push merge rebase stash and canonical ref mutation",
+    "immutable integration candidate manifests",
+    "isolated merge worktree with independent post-merge review",
+    "atomic canonical integration and one final authorized push",
+    "distinct worker integrated published and verified commit identities",
+    "rollback receipts and crash-idempotent state",
+    "stop-time lease cleanup with explicit evidence archival",
+    "parallel divergence binary dirty external-commit relaunch and rollback tests"
+  ],
+  "evidence": [
+    "../evidence/task-snapshot-20260809T131753Z.json",
+    "../evidence/events-chronological-20260809T131753Z.jsonl",
+    "GIT_INTEGRATION_AND_REMOTE_SIDE_EFFECTS.md",
+    "MUTATION_PROVENANCE_AND_BUDGET.md",
+    "../../../Sources/LoopForge/GraphLoopEngine.swift"
+  ]
+}

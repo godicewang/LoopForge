@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "status": "production-execution-session-final-completion-invocation-present-native-start-cutover-pending",
+  "recordedAt": "2026-08-15T15:22:24Z",
+  "acceptanceRowsAdvanced": [
+    "E-05"
+  ],
+  "controller": {
+    "singleProductionSessionMethod": true,
+    "exactRetainedJournal": true,
+    "exactRetainedCoordinator": true,
+    "callerCompletionClaimAccepted": false,
+    "callerJournalAccepted": false,
+    "callerCommandIDAccepted": false,
+    "callerEvidenceDigestAccepted": false,
+    "currentHeadRevalidated": true,
+    "mandatoryEvidenceRevalidated": true,
+    "exactRetrySupported": true
+  },
+  "vetoProof": {
+    "realProductionSessionActivated": true,
+    "activeAttemptRejected": true,
+    "missingReducerCompletionRequestRejected": true,
+    "missingMandatoryRequirementClosureRejected": true,
+    "journalAdvanced": false,
+    "completionAuthorizationCreated": false,
+    "phaseAfterVeto": "executing"
+  },
+  "verification": {
+    "newControllerTest": {
+      "executed": 1,
+      "failures": 0,
+      "seconds": 0.027
+    },
+    "completionAndProductionEnrollmentSuites": {
+      "executed": 46,
+      "failures": 0,
+      "seconds": 6.612
+    },
+    "fullSuite": {
+      "executed": 812,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 62.745
+    },
+    "packageOwnedFullSuite": {
+      "executed": 812,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 58.560,
+      "realCodexChildBridgeSeconds": 15.549,
+      "logSHA256": "25ee0e9eeff2d847dfd1b23009a003a2f76e2d9cb9a51b655308d5eb84858ec6"
+    },
+    "releaseBuild": {
+      "passed": true,
+      "seconds": 95.63,
+      "architecture": "arm64"
+    },
+    "sourceSnapshotSHA256": "3c39d9adab552703b3613d53deb7ffb3ab5c5fc044ee84c62e1b5970be73fdeb",
+    "packagedLoopForgeSHA256": "47565dde68611c50b00847bfde0f14d9407c64fcf06be87ae4164f6926d22546",
+    "packagedKernelSandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "signatureVerifiedDeepStrict": true,
+    "exactPackagedMachOStartupPassed": true,
+    "postSmokePackagedProcessCount": 0,
+    "thermalWarning": false
+  },
+  "sourceDigests": {
+    "productionExecutionCoordinator": "12f64be7d6ca801ea07fe1c5a450495bd6bee401868b5696686c31a8a3c66c0b",
+    "productionTests": "07784e4905acec3b379eb8fea93034efd3dbda6972404d85361749a3533dfe0e"
+  },
+  "easyBusiness": {
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "statusFingerprintSHA256": "a640615bfb23f0d3a9fefe222294663302b40cca54e23b2f4ae0029f5e4bcfd7",
+    "mutatedByThisWork": false,
+    "statusChangedSincePriorReadOnlySnapshot": false
+  },
+  "remaining": [
+    "native app execution-session start cutover",
+    "trusted Release containment issuers or retained vetoes",
+    "legacy Single and Parallel retirement",
+    "unlocked native screenshots",
+    "clean-commit rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false
+}

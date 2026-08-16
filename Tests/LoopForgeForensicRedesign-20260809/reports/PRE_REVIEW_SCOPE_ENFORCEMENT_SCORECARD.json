@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T04:41:59Z",
+  "status": "isolated-delta-rejected-before-model-review-and-integration-package-verified-production-executor-cutover-pending",
+  "acceptanceRowsAdvanced": [
+    "C-05-partial"
+  ],
+  "defect": {
+    "ordinaryNodeReviewedBeforeScopeValidation": true,
+    "parallelCandidateReviewedBeforeScopeValidation": true,
+    "lateIntegrationCheckCouldEraseReviewContamination": false
+  },
+  "enforcementBoundary": {
+    "completeTrackedDeltaObserved": true,
+    "completeUntrackedDeltaObserved": true,
+    "nulDelimitedPathParsing": true,
+    "optionalGitLocksDisabled": true,
+    "declaredScopePolicyReused": true,
+    "validationOccursBeforeModelReview": true,
+    "validationOccursBeforeIntegration": true,
+    "missingIsolationFailsClosed": true,
+    "violatingNodeAutomaticRetryDisabled": true,
+    "violatingNodeRequiresStrategyEscalation": true,
+    "canonicalWorkspaceMutatedByRejectedResult": false,
+    "operatingSystemWriteDenialImplemented": false,
+    "journaledProductionExecutorEnforcementImplemented": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 2,
+    "focusedFailures": 0,
+    "fullTestsExecuted": 591,
+    "fullTestsSkipped": 8,
+    "fullFailures": 0,
+    "packagingOwnedTestsExecuted": 591,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "sourceSnapshotSHA256": "baa8ea05dfe8de6a8aef94f5b91175ee82777c5d4da6ce32fc421d5e82af427f",
+    "focusedLogSHA256": "d49ef9383fe1a83a7e35b0b024c6864ca5f7e1c43bb244dba44389ac73cd6c4f",
+    "fullLogSHA256": "3c28930212ebd39e80781cc6d05ceb1fe5ca05e0b995fc1ba1c16f074a343119",
+    "packageTestLogSHA256": "a2a09ab292cac48df93e301a475a3e0b98ce9b9899a44ad85b314a467c4ca2c7",
+    "packageLogSHA256": "038785af8ecf1afe72204d8734353d6a88f7bbde8723ed1c0056d55197058e2f",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "buildManifestSHA256": "101af272cde5ad7d375030130f94efa2f43be4787bd5318e847bfd25d108b31d",
+    "executableSHA256": "25b3468a75a4fc774496c966853607fc107e7620a874b52805b77685d376b0e7",
+    "zipSHA256": "f8b64abcd61810f1bf2a70b951b81208fb688bd90f135e98b75f21707c83779e",
+    "dmgSHA256": "d2215b51536b9a1bc347eb9205e4744a3449f81e9064e0483b2fefceb70df187",
+    "cdHash": "3656fb17ff7d373facf993983056d10d3cb51cbd",
+    "residualPackagedProcessCount": 0
+  },
+  "knownBoundary": {
+    "productionKernelEnrollmentPending": true,
+    "trustedExecutorWriteDenialPending": true,
+    "currentNativeUICapturePending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

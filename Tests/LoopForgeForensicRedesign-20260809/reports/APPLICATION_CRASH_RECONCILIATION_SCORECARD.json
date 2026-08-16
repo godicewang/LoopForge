@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T05:56:00Z",
+  "status": "exact-application-crash-cleanup-auto-interruption-passed-without-productive-authority-reconstruction",
+  "typedOrigins": {
+    "nativeQuit": "native-quit",
+    "applicationCrashRecovery": "native-crash-recovery",
+    "durableCommandNamespacesSeparated": true,
+    "receiptRetainsOrigin": true
+  },
+  "crashRecoveryAuthority": {
+    "cleanupOnlySessionRequired": true,
+    "completePlanPreflightRequired": true,
+    "productiveSessionReconstructed": false,
+    "providerAuthorityAvailable": false,
+    "mutationAuthorityAvailable": false,
+    "reviewRetryOrCompletionAuthorityAvailable": false,
+    "failedReconciliationRetainsExactSessionAndHandle": true
+  },
+  "results": {
+    "emptyPlanAutoInterrupted": true,
+    "stopRequestedMissingDrainAutoResumed": true,
+    "exactPIDStartProcessAutoTerminated": true,
+    "realProductiveProviderObservedLiveBeforeCrashRecovery": true,
+    "managedProcessReleaseJournaled": true,
+    "crashCommandNamespaceObserved": true,
+    "activeAttemptInterrupted": true,
+    "stoppedQuiescenceReached": true,
+    "staleRecoveryReportJournalAdvanceCount": 0,
+    "ambiguousOwnershipRetainedAsQuitBlocker": true
+  },
+  "joinOnlyBoundary": {
+    "nativeProcessJoinOnlyAdmissionAccepted": false,
+    "nativeProcessJoinOnlyRejection": "invalidLease",
+    "liveLeaseCountAfterRejection": 0,
+    "liveHandleCountAfterRejection": 0,
+    "cleanupPlanCountAfterRejection": 0,
+    "genericNonProcessJoinOnlyRequiresRetainedHandle": true
+  },
+  "verification": {
+    "nativeKernelEnrollmentFlow": {"executed": 14, "failures": 0, "seconds": 18.380},
+    "journaledProcessRuntime": {"executed": 32, "failures": 0, "seconds": 6.147},
+    "kernelRunEnrollmentCoordinator": {"executed": 44, "failures": 0, "seconds": 6.955},
+    "packageOwnedFullSuite": {"executed": 862, "skipped": 8, "failures": 0, "seconds": 81.987, "wallSeconds": 82.040},
+    "deepStrictSignature": true,
+    "zipIntegrity": true,
+    "dmgIntegrity": true,
+    "mountedDMGAllMachOByteIdentity": true,
+    "directAndMountedStartup": true,
+    "postVerificationProcessCount": 0,
+    "postVerificationMountCount": 0
+  },
+  "package": {
+    "sourceRevision": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
+    "sourceDirty": true,
+    "sourceSnapshotSHA256": "fef6b857691e2353c744b11b43d6af3ab8c00cf8ba2f1f686049a923f73ec74a",
+    "builtAtUTC": "2026-08-16T05:51:43Z",
+    "testLogSHA256": "240bd39278bb1183d894c782cf5c5da4d568600a0714d0408e188835892d117f",
+    "executableSHA256": "e2626e7828d1a4dfe5c07bc6729487838588d2f4aca1da2e979f3fb7e1cf0d10",
+    "applicationCDHash": "6584ac604aec29e5f43ba843e2289d21baefd503",
+    "zipSHA256": "42956c1c36d5be5dd2bcb39c7f861d5339fa8e322bc047bd6652d284bc8a1281",
+    "dmgSHA256": "fba78bc318f00529106f357316c19b1285d7c0db0c206cb363932ec3bb83fe3d"
+  },
+  "easyBusiness": {
+    "mutated": false,
+    "branch": "codex/USA_Version",
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "nulDelimitedStatusSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a"
+  },
+  "finalRelease": false
+}

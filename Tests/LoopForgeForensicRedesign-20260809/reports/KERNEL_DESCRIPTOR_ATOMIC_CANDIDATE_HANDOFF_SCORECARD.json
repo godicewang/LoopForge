@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T03:25:52Z",
+  "status": "descriptor-atomic-candidate-handoff-implemented-and-native-attested",
+  "finalAcceptance": false,
+  "controls": {
+    "nonSerializableDescriptorCapability": true,
+    "rootOpenedNoFollow": true,
+    "deviceAndInodeBound": true,
+    "descriptorRelativeTreeEnumeration": true,
+    "descriptorRelativeFileHashing": true,
+    "mutationDuringValidationRejected": true,
+    "spawnFchdirBeforeSandboxLauncher": true,
+    "sourceDescriptorNotInherited": true,
+    "stoppedChildWorkingDirectoryAttested": true,
+    "launchReplayBindsMechanismDeviceAndInode": true,
+    "mutableCandidatePathPassedToVerifier": false
+  },
+  "retiredStrategies": [
+    "absolute candidate pathname after revalidation",
+    "/dev/fd directory reopening",
+    "sandbox-gate fchdir from inherited descriptor",
+    "explicit close action after spawn fchdir"
+  ],
+  "verification": {
+    "candidateMaterializerTests": 4,
+    "integrationTests": 8,
+    "processAdapterTests": 15,
+    "journaledRuntimeTests": 28,
+    "nativeSandboxTests": 6,
+    "resultAuthorityTests": 3,
+    "swiftTestsExecuted": 716,
+    "swiftTestsSkipped": 8,
+    "swiftTestFailures": 0,
+    "releaseLoopForgeSHA256": "03ee0592b9669fb4c48d23664cd73ae394ba94e53c1e4bf7177208be2ccf9e82",
+    "releaseKernelSandboxGateSHA256": "1b7ba433fe915b0dd916aceafe62342d246bcf6bbddcfc5425b0d09fba0fbeaa",
+    "sourceSnapshotSHA256": "addb2a39ef96281ce4024790a0bd43656b395b2ad839e440f838c283bfa0bc8e",
+    "fullTestLogSHA256": "6d06ad5cb41ab620ae4e404896ea7d699ffc4e30aec7fa5fe0f99fba12783656"
+  },
+  "remainingPrerequisites": [
+    "tested production resident-memory enforcement issuer or retained veto",
+    "separately activated adversarial read-only review issuer",
+    "integration postimage-verification and independent acceptance issuers",
+    "native immutable design-baseline selection and complete visual evidence",
+    "final authorization and executable external-dependency observation",
+    "legacy Single and Parallel retirement",
+    "current-source package sign unlocked native walkthrough clean commit and push"
+  ]
+}

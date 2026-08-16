@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-15T22:41:00Z",
+  "status": "implemented-package-and-native-fixture-verified-production-provider-harness-absent-final-release-false",
+  "sourceSnapshotSHA256": "c5f368373f837697f161fbc6692fc80b7f53319edf943901f80e735266730111",
+  "resourceBoundary": {
+    "providerLaunchReceiptSchemaVersion": 2,
+    "maximumProcessCount": 1,
+    "maximumOutputFileBytes": 16777216,
+    "callerSuppliedLimitsRejected": true,
+    "postAuthorizationExactLimitsRequired": true,
+    "launchReceiptDigestBound": true,
+    "externalProcessIdentityBound": true,
+    "childProcessAttemptedByFixture": true,
+    "childProcessCreationDenied": true,
+    "hiddenFanOutMechanicallyDenied": true,
+    "historicalSchema1ReceiptCurrentValid": false
+  },
+  "tests": {
+    "focused": {
+      "executed": 50,
+      "failures": 0,
+      "seconds": 4.929,
+      "wallSeconds": 4.933
+    },
+    "independentFullSource": {
+      "executed": 839,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 60.324,
+      "wallSeconds": 60.372
+    },
+    "packageOwned": {
+      "executed": 839,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 62.976,
+      "wallSeconds": 63.024
+    },
+    "packageRealCodexBridgeSeconds": 10.628
+  },
+  "package": {
+    "gitRevision": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
+    "dirty": true,
+    "builtAtUTC": "2026-08-15T22:38:33Z",
+    "executableSHA256": "ce59a8999f5a5cc5593a9903951f8d64e77413683469a6f6766891b18067a6c6",
+    "applicationCDHash": "0144ee068f0dd7f88bd3a746ddb98f6f3ccd16a9",
+    "sandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "packageTestLogSHA256": "4471efb4916f73c0f2cd11fe68735f3648c2576c025579b99c6ab212580ff132",
+    "deepStrictSignaturePassed": true,
+    "checksumManifestPassed": true,
+    "zipPassed": true,
+    "dmgPassed": true,
+    "smokePassed": true,
+    "postInspectionPackagedProcessCount": 0
+  },
+  "nativeProof": {
+    "exactPackagedApplicationInspected": true,
+    "readyRunID": "native-run-c2070190-a24a-42bf-a9f5-fee696aea42c",
+    "activationEnabled": false,
+    "providerPromptPrepared": false,
+    "providerLaunched": false,
+    "screenshot": {
+      "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-provider-resource-boundary-20260815T223700Z.png",
+      "width": 860,
+      "height": 760,
+      "sha256": "d164fd0e327c44352c3c51500e37b0e583b92390a3d63e3fc85d38304d06136a"
+    }
+  },
+  "productionProviderHarnessPackagedAndRatified": false,
+  "networkAuthorityGranted": false,
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "fullNativeMatrixComplete": false,
+  "finalRelease": false
+}

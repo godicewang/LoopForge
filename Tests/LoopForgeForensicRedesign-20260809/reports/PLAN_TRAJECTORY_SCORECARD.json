@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-09T14:32:49Z",
+  "verdict": "fail",
+  "corpus": {
+    "sourceRecords": 8108,
+    "messages": 141,
+    "toolCalls": 1009,
+    "toolOutputs": 1009,
+    "planUpdates": 19,
+    "timelineRecords": 2159,
+    "timelineSHA256": "570eda9d6a28de7a97f7a7671ef4e3e31a6d538c55a1e22fa7e9d31166c0e04a",
+    "plansSHA256": "fabebd9d8a6e3b2fe36f9a74b37c8985ddb9e22cc15dae0f8d3f71f571b53383",
+    "rawReasoningIncluded": false
+  },
+  "initialRound": {
+    "initialPlanSteps": 8,
+    "minimumPlanSteps": 5,
+    "planStepCountsChronological": [8, 8, 7, 5, 5, 5, 5, 5],
+    "explicitTwentyPersonaRequirementPresentInitially": true,
+    "explicitTwentyPersonaRequirementPresentInFinalPlan": false,
+    "minimumDurationRequirementRepresentedInAnyPlan": false,
+    "humanStudySatisfied": false,
+    "taskDeclaredComplete": true,
+    "objectiveDrift": true
+  },
+  "deepAuditRound": {
+    "requestedMinimumSeconds": 36000,
+    "wallClockUpperBoundSeconds": 3899,
+    "durationGateRepresentedInPlan": false,
+    "statusAt20260729T183503Z": {"completed": 6, "inProgress": 1, "pending": 1},
+    "statusAt20260729T183637Z": {"completed": 7, "inProgress": 1, "pending": 0},
+    "statusAt20260729T183701Z": {"completed": 8, "inProgress": 0, "pending": 0},
+    "taskDeclaredComplete": true
+  },
+  "visualDensityRound": {
+    "planSteps": 6,
+    "wallClockUpperBoundSeconds": 4370,
+    "immutableChineseVisualBaseline": false,
+    "retainedCandidateImageCorpus": false,
+    "independentVisualReviewer": false,
+    "taskDeclaredComplete": true
+  },
+  "failureModes": [
+    "replaceable-prose-plan",
+    "missing-stable-requirement-identifiers",
+    "silent-hard-constraint-removal",
+    "self-attested-step-completion",
+    "no-duration-gate",
+    "no-preservation-constraint-type",
+    "unmet-required-deliverable-reclassified-as-external-blocker",
+    "completion-derived-from-latest-plan-story"
+  ],
+  "requiredModel": {
+    "immutableRequirementRegistry": true,
+    "stableSourceSpansAndHashes": true,
+    "typedHardConstraints": true,
+    "userAuthorizedWaivers": true,
+    "supersessionLineage": true,
+    "evidenceBoundAcceptance": true,
+    "requirementStatusIndependentFromNodeStatus": true,
+    "nonCompensatoryTaskCompletion": true
+  }
+}

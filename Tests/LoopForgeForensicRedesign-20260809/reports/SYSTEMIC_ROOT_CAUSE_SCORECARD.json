@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-09T16:40:31Z",
+  "findingCount": 156,
+  "rootCauses": [
+    {"id":"RC-01","name":"no-authoritative-event-sourced-state-machine","severity":"critical","refactorOrder":1},
+    {"id":"RC-02","name":"prose-instead-of-immutable-task-and-product-contracts","severity":"critical","refactorOrder":2},
+    {"id":"RC-03","name":"broad-inferred-post-hoc-authority","severity":"critical","refactorOrder":3},
+    {"id":"RC-04","name":"non-independent-self-sealing-review","severity":"critical","refactorOrder":5},
+    {"id":"RC-05","name":"missing-visual-and-design-baseline-contract","severity":"critical","refactorOrder":8},
+    {"id":"RC-06","name":"count-and-wording-based-convergence","severity":"critical","refactorOrder":6},
+    {"id":"RC-07","name":"non-transactional-workspace-integration","severity":"critical","refactorOrder":4},
+    {"id":"RC-08","name":"open-process-resource-persistence-and-cadence-lifecycles","severity":"critical","refactorOrder":7},
+    {"id":"RC-09","name":"unbound-verification-and-evidence","severity":"critical","refactorOrder":5},
+    {"id":"RC-10","name":"proxy-metrics-displace-product-judgment","severity":"high","refactorOrder":9},
+    {"id":"RC-11","name":"characterization-tests-ratify-unsafe-contracts","severity":"critical","refactorOrder":10},
+    {"id":"RC-12","name":"ui-hides-and-launders-unsafe-semantics","severity":"high","refactorOrder":9}
+  ],
+  "requiredFoundationSequence": [
+    "event-log-reducer-invariants",
+    "immutable-task-and-product-contracts",
+    "least-privilege-capability-and-resource-leases",
+    "transactional-mutation-and-workspace-integration",
+    "evidence-graph-and-independent-review-receipts",
+    "causal-convergence-governor",
+    "lifecycle-thermal-and-quiescence-governor",
+    "visual-design-baseline-acceptance",
+    "truthful-reporting-and-native-ui",
+    "adapter-and-test-migration"
+  ],
+  "productionRefactorAuthorized": false,
+  "authorizationGateSeconds": 36000
+}

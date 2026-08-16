@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T22:22:38Z",
+  "status": "executable-verification-recipe-contract-authority-implemented-runtime-receipt-review-and-start-vetoed",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "authority": {
+    "descriptiveOnlyRecipeCanRatify": false,
+    "directLocalExecutableOnly": true,
+    "executableContentDigestRequired": true,
+    "fixedArgumentVectorRequired": true,
+    "exactCandidatePostimageInputRequired": true,
+    "inputArgumentTokensExactAndUnique": true,
+    "minimalEnvironmentRequired": true,
+    "environmentAndCaptureIdentitiesRequired": true,
+    "parserIdentitySchemaAndDigestRequired": true,
+    "deterministicResultMappingRequired": true,
+    "unmatchedResultRejected": true,
+    "networkDisabled": true,
+    "childProcessesForbidden": true,
+    "resourceLimitsRequired": true,
+    "independentLineageRequired": true,
+    "wholeCandidateUserConfirmationRequired": true,
+    "legacyRecipeDecodeForForensicsOnly": true
+  },
+  "productionBoundary": {
+    "appModelProbeDefault": "nil",
+    "missingProbeCreatesConfirmation": false,
+    "missingProbeCreatesJournal": false,
+    "objectiveProseCanSelectExecutable": false,
+    "workerOrReviewerExecutableReusedImplicitly": false,
+    "verifierRuntimePresent": false,
+    "verificationReceiptIssuerPresent": false,
+    "nativeStartPresent": false
+  },
+  "verification": {
+    "focusedTests": 52,
+    "completeSwiftTests": 698,
+    "environmentSkips": 8,
+    "failures": 0,
+    "releaseBuild": "passed",
+    "exactSourceSnapshotSHA256": "3335064bc48870502e40e6185717314df82eaffc5cae332aedbeeda546c4b537",
+    "sourceHashes": {
+      "TaskContractCompiler.swift": "d23ab336df29499a2c6e8557be99fdd83f30964df078482e44fac29d9fc1c61c",
+      "TaskContract.swift": "4fcafb83a3491900e883a3423719bccdc2afa5df73edcc42a70c6683c18831c0",
+      "NativeTaskContractAuthoring.swift": "357545f6971c15fe60a9cc4981af88e7aa85e43fe5f4ba52f2ea0c37c5beb6f8",
+      "KernelRunEnrollmentCoordinator.swift": "c789b6a8db7d96167eaa387786b9e3d6b36b7227a1d121b8ac563a9e7789df47",
+      "AppModel.swift": "2ac007019063290b33fc5afee31b791b9a552a0e01f4eb7b9eaeb2ac24dabdca",
+      "Views.swift": "502b139058cf0b870ec8cea5ba72b29504e96720e188f31dfe0645ffc4a8e97e"
+    }
+  },
+  "remainingPrerequisites": [
+    "journal-owned candidate source-tree and postimage attestation",
+    "separately activated verifier process lease and independent actor lineage",
+    "receipt binding to recipe, executable, argv, inputs, candidate, environment, capture, parser, output, oracle, and transaction",
+    "verification identity and journal sequence with latest-red revocation",
+    "canonical verification evidence batch",
+    "separately activated read-only independent review of the exact batch"
+  ],
+  "finalAcceptance": false
+}

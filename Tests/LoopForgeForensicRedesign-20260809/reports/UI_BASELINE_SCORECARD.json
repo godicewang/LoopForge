@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-09T13:35:57Z",
+  "baseline": {
+    "commit": "301ef23a8698c3544c097895980248284f9189bb",
+    "relationship": "direct parent of first U.S. adaptation commit",
+    "firstUSCommit": "ac7b02cbe08eedd331cad678f7f1c138a67367d0"
+  },
+  "current": {
+    "commit": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "workingTreeCompared": false,
+    "reason": "uncommitted EasyBusiness files are preserved as separate read-only forensic evidence"
+  },
+  "commitChurn": [
+    {"commit":"ac7b02cbe08eedd331cad678f7f1c138a67367d0","label":"first U.S. rewrite","additions":3760,"deletions":5099,"files":46},
+    {"commit":"ceb075201bffcf09c1efa3ac9a7b9c6ebf0c8d4e","label":"U.S. audit hardening","additions":525,"deletions":270,"files":25},
+    {"commit":"88a2bdf9c5af4ac0ef97a6814d894fe58b50ba0b","label":"English visual density pass","additions":794,"deletions":450,"files":29},
+    {"commit":"f82ff2d604e10e00de7f88e1dc6a86c50d0cc0e1","label":"maximum text safe-area repair","additions":322,"deletions":31,"files":3}
+  ],
+  "visualEvidence": {
+    "standardHome": "01-home-dashboard.png",
+    "historicalRejectedMaximum": ["08-maximum-dynamic-type-home.png","09-maximum-dynamic-type-actions.png"],
+    "acceptedMaximum": ["10-maximum-dynamic-type-home-safe-area.png","11-maximum-dynamic-type-home-scroll-end.png","12-maximum-dynamic-type-advisor-actions-safe-area.png"],
+    "acceptedGeometryContractPassed": true,
+    "productVisualCoherencePassed": false,
+    "independentAestheticReviewPresent": false
+  },
+  "gateCoverage": {
+    "screenshotProvenance": "strong",
+    "hashAndAttachmentIntegrity": "strong",
+    "statusBarIntersection": "covered",
+    "tabBarReachability": "covered",
+    "touchTarget": "covered",
+    "typographyScaleBalance": "missing",
+    "iconShapeProportion": "missing",
+    "informationDensity": "missing",
+    "hierarchyPreservation": "missing",
+    "baselineVisualDiff": "missing",
+    "independentProductReview": "missing"
+  },
+  "provisionalVerdict": "The evidence proves geometric reachability, not an acceptable U.S. product design."
+}

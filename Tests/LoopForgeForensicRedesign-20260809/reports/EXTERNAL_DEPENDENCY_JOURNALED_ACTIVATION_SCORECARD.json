@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "status": "journaled-inert-external-dependency-activation-present-native-launch-and-observation-issuance-pending",
+  "recordedAt": "2026-08-15T11:35:36Z",
+  "acceptanceRowsAdvanced": [
+    "B-06"
+  ],
+  "activation": {
+    "exactActiveAttemptRequired": true,
+    "exactDeclaredDependencyRequired": true,
+    "authorizedIndependentObserverRequired": true,
+    "workspaceBindingRecomputed": true,
+    "executableStagedBySHA256": true,
+    "sourceJournalSequenceBound": true,
+    "sourceJournalFrameDigestBound": true,
+    "activationJournaledBeforeUse": true,
+    "decodedReceiptCanRecreateLiveAuthority": false
+  },
+  "requestArtifact": {
+    "canonicalSortedKeyJSON": true,
+    "newlineTerminated": true,
+    "descriptorRelativeExclusiveCreation": true,
+    "symlinkFollowed": false,
+    "ownerPrivateRunDirectoryRequired": true,
+    "readOnlyAfterCreation": true,
+    "fileAndDirectorySynced": true,
+    "sha256DeviceAndInodeBound": true,
+    "exactCrashRetry": true,
+    "freshNonceIdentityAxes": 9
+  },
+  "authorityBoundary": {
+    "processStarted": false,
+    "resourceLeaseAdmitted": false,
+    "nativeSandboxGranted": false,
+    "resultParsed": false,
+    "observationIssued": false
+  },
+  "verification": {
+    "activationTests": {
+      "executed": 4,
+      "failures": 0
+    },
+    "reducerActivationTests": {
+      "executed": 1,
+      "failures": 0
+    },
+    "fullSuite": {
+      "executed": 803,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 56.422
+    },
+    "packageOwnedFullSuite": {
+      "executed": 803,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 60.837
+    },
+    "releaseBuild": {
+      "passed": true,
+      "seconds": 95.24,
+      "architecture": "arm64"
+    },
+    "sourceSnapshotSHA256": "48c4ee6d8b6af062d3109e064b328ecae5041d9bc872aa4f8784724c14c196e6",
+    "packagedLoopForgeSHA256": "418355aaaa37d26d3f98615b27ac84d769f310c985cd1d331ae95ef3ef682c96",
+    "packagedKernelSandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "packageTestLogSHA256": "0145854828973235056c05879965ef97b1bf75e00a35eac5986bfab401cc4a08",
+    "signatureVerifiedDeepStrict": true,
+    "exactPackagedMachOStartupPassed": true,
+    "postSmokePackagedProcessCount": 0
+  },
+  "sourceDigests": {
+    "activation": "fa84626a206bc1320c8db790eea25e9524a113dd3c32e1150ec290534d3a3ef2",
+    "reducer": "7327ee1d397ffe086bc17d79002928b92881efff85b5d6dc8ea3676e256e8059",
+    "journal": "d3bed96ef2de5f472c089b17fcd23bc7f960fc0aba96ffb789de6eefe7209017",
+    "activationTests": "ebc295bbf42646cb062488e514c80b5bd4382ce2bbc9a7deb40ca25422cc154d",
+    "reducerTests": "a7c78c804fef5b140513793f1753829f31e4a48b4ab7e10fcb1514abb9f60a54"
+  },
+  "remaining": [
+    "journal-owned resource admission",
+    "exact native sandbox launch with request on standard input",
+    "bounded output and native-exit retention",
+    "declared result mapping composition",
+    "journal-owned observation issuance",
+    "production controller invocation",
+    "legacy Single and Parallel retirement",
+    "unlocked native screenshots",
+    "clean-commit rebuild",
+    "commit and push"
+  ],
+  "easyBusinessMutated": false,
+  "finalRelease": false
+}

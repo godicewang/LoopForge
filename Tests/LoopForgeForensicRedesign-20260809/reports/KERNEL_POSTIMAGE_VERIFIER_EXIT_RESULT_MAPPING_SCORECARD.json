@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T01:24:51Z",
+  "status": "exact-exit-result-mapping-present-result-authority-review-and-start-vetoed",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "mapping": {
+    "containmentSchemaVersion": 3,
+    "ratifiedProbeRetrievedByRuntime": true,
+    "ratifiedProbeRetrievedIndependentlyOnReplay": true,
+    "naturalExitRequired": true,
+    "terminationSignalRejected": true,
+    "exactExitCodeRequired": true,
+    "exactParserResultCodeRequired": true,
+    "exactlyOneMatchingRowRequired": true,
+    "unmatchedPairFailRed": true,
+    "mappingFailureDigestAtomicWithRelease": true
+  },
+  "authority": {
+    "mappingIsVerificationReceipt": false,
+    "verificationReceiptIssued": false,
+    "latestRedRevocationImplemented": false,
+    "integrationPhaseAfterTimeoutAcceptedParse": "appliedUnverified"
+  },
+  "adversarialProofs": {
+    "acceptedPairMapsAccepted": true,
+    "rejectedPairMapsRejected": true,
+    "swappedPairFailsRed": true,
+    "unknownParserCodeFailsRed": true,
+    "invalidProbeFailsRed": true,
+    "timeoutAcceptedMappingInjectionRejected": true,
+    "absentProcessCannotMap": true
+  },
+  "verification": {
+    "focusedMappingTests": 2,
+    "focusedRuntimeIntegrationTests": 1,
+    "completeSwiftTests": 710,
+    "environmentSkips": 8,
+    "failures": 0,
+    "releaseLoopForgeBuild": "passed",
+    "releaseKernelSandboxGateBuild": "passed",
+    "diffWhitespace": "passed",
+    "residualSwiftOrVerifierProcesses": 0,
+    "exactSourceSnapshotSHA256": "fd9a8e5ca33c7961f9719f035f01cce0d2ecd76252c5cb8d92a24a83c401208a",
+    "releaseArtifacts": {
+      "LoopForgeSHA256": "2cb8f2fca889929463a40165a2f3425ab581134bb2063e92692629ab01aac1c2",
+      "KernelSandboxGateSHA256": "21731107c0b85e03933bac526d5f0a705394579e9eb02a7665c950fe49949b99"
+    },
+    "sourceHashes": {
+      "KernelPostimageVerifierResultMapper.swift": "a5ccc24e5d4e2e27d4d72fef7fdfd100196dadc426743de29f3cac98c9e41912",
+      "KernelPostimageVerifierActivation.swift": "94887f864a0caa3ad2949f28c5b9ef77e0d65f579491486ba656fa9902647fbd",
+      "JournaledProcessRuntime.swift": "ddc50fce9cda22a61fcde91ba1ffe22f9b182b760d9258abdf15815f1dee8178",
+      "RunReducer.swift": "97f2231d22e5f601e5f472a138cc98ac8739e2764f6a692fe0bb4ee25146b021",
+      "KernelPostimageVerifierResultMapperTests.swift": "5d26c109bf6971e5e820bb4afc965c5d6a9535484c92d65422bd49f71a812c25",
+      "IntegrationTransactionStateMachineTests.swift": "91ff2d60c414b58c3a0056a127dc92a9036a73c4071a580099030da19b4b25f7"
+    }
+  },
+  "remainingPrerequisites": [
+    "non-forgeable postimage result and verification receipt",
+    "latest-red revocation and canonical result evidence batch",
+    "truthful per-child resident-memory enforcement",
+    "candidate descriptor capability atomic at spawn",
+    "separately activated adversarial read-only review",
+    "integration acceptance and native start",
+    "current-source package sign native walkthrough commit and push"
+  ],
+  "finalAcceptance": false
+}

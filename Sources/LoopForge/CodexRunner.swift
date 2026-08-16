@@ -13,6 +13,33 @@ struct CodexTurnResult {
     let recoveryReason: String?
 }
 
+enum GraphWorkerRuntimePolicy {
+    /// A zero process exit only means Codex returned a terminal response. Graph
+    /// workers also use an explicit BLOCKED marker when the requested outcome
+    /// could not be produced. Treating those turns as successful work inflates
+    /// task duration while the Main Graph Agent is actively rejecting them.
+    static func countsAsSuccessfulWork(_ result: CodexTurnResult) -> Bool {
+        guard result.exitCode == 0 else { return false }
+        let normalized = result.lastAgentMessage.uppercased()
+        return !normalized.contains("LOOPFORGE_STATUS: BLOCKED")
+    }
+
+    /// Runtime is provisional until the Main Graph Agent reviews the retained
+    /// result. A worker may disclose an external blocker after completing its
+    /// own scope, or return a nominally successful process result whose
+    /// evidence is rejected. Reconcile both cases at review time.
+    static func reviewAdjustment(
+        for result: CodexTurnResult,
+        approved: Bool
+    ) -> TimeInterval {
+        let wasProvisionallyCounted = countsAsSuccessfulWork(result)
+        if approved {
+            return wasProvisionallyCounted ? 0 : result.eligibleElapsed
+        }
+        return wasProvisionallyCounted ? -result.eligibleElapsed : 0
+    }
+}
+
 private final class CodexEventCollector {
     private let lock = NSLock()
     private(set) var threadID: String?
@@ -154,6 +181,7 @@ final class CodexRunner {
         task: LoopTask,
         prompt: String,
         imagePaths: [String] = [],
+        hostResourceScope: GraphHostResourceScope? = nil,
         watchdogPolicy: CodexTurnWatchdogPolicy? = nil,
         onThreadStarted: @escaping (String) -> Void,
         onEvent: @escaping (LogKind, String) -> Void,
@@ -239,7 +267,11 @@ final class CodexRunner {
             result = try await runner.run(
                 executable: executable,
                 arguments: arguments,
-                environment: environment(for: executionTask, bridgeAuthorizationToken: bridgeAuthorizationToken),
+                environment: environment(
+                    for: executionTask,
+                    bridgeAuthorizationToken: bridgeAuthorizationToken,
+                    hostResourceScope: hostResourceScope
+                ),
                 currentDirectory: workspace,
                 stdin: Data(effectivePrompt.utf8),
                 watchdog: watchdog,
@@ -395,9 +427,14 @@ final class CodexRunner {
     }
 
     private func appendGraphConcurrencyPolicy(for task: LoopTask, to arguments: inout [String]) {
-        if task.resolvedExecutionMode != .singleLoop {
+        let isContinuumWatcher = task.stage.localizedCaseInsensitiveContains(
+            "Continuum Watcher"
+        )
+        if task.resolvedExecutionMode != .singleLoop || isContinuumWatcher {
             // LoopForge's persisted graph/candidate scheduler is the sole
-            // concurrency controller.
+            // concurrency controller. Continuum Watcher also serializes
+            // expensive Agent turns while its deterministic passes remain
+            // independent and cheap.
             // Hidden Codex fan-out would bypass node scopes, max concurrency,
             // signal-based wakeups, timers, and the user-visible graph.
             arguments.append(contentsOf: [
@@ -448,9 +485,53 @@ final class CodexRunner {
 
     private func environment(
         for task: LoopTask,
-        bridgeAuthorizationToken: String?
+        bridgeAuthorizationToken: String?,
+        hostResourceScope: GraphHostResourceScope?
     ) -> [String: String] {
         var result = CodexRuntime.environment()
+        if let hostResourceScope {
+            for (key, value) in Self.hostResourceEnvironment(scope: hostResourceScope) {
+                result[key] = value
+            }
+        }
+        let requestedRuntimePaths = Self.requestedRuntimePathVariables(in: task.request)
+        if !requestedRuntimePaths.isEmpty {
+            let runtimeDirectory = URL(
+                fileURLWithPath: task.workspacePath,
+                isDirectory: true
+            ).appendingPathComponent(".loopforge-runtime", isDirectory: true)
+            try? FileManager.default.createDirectory(
+                at: runtimeDirectory,
+                withIntermediateDirectories: true
+            )
+            let excludes = runtimeDirectory.appendingPathComponent("git-excludes")
+            try? Data(".loopforge-runtime/\n".utf8).write(to: excludes, options: .atomic)
+            result["TMPDIR"] = runtimeDirectory.path
+            result["LOOPFORGE_NODE_RUNTIME_DIR"] = runtimeDirectory.path
+            result["LOOPFORGE_NODE_HANDOFF"] = runtimeDirectory
+                .appendingPathComponent("handoff.json").path
+            result["LOOPFORGE_NODE_BEFORE_STATUS"] = runtimeDirectory
+                .appendingPathComponent("before-status.txt").path
+            result["LOOPFORGE_NODE_AFTER_STATUS"] = runtimeDirectory
+                .appendingPathComponent("after-status.txt").path
+
+            let configIndex = Int(result["GIT_CONFIG_COUNT"] ?? "0") ?? 0
+            result["GIT_CONFIG_COUNT"] = String(configIndex + 1)
+            result["GIT_CONFIG_KEY_\(configIndex)"] = "core.excludesFile"
+            result["GIT_CONFIG_VALUE_\(configIndex)"] = excludes.path
+
+            for name in requestedRuntimePaths {
+                let suffix: String
+                if name.hasSuffix("_BEFORE_STATUS") {
+                    suffix = "before-status.txt"
+                } else if name.hasSuffix("_AFTER_STATUS") {
+                    suffix = "after-status.txt"
+                } else {
+                    suffix = "handoff.json"
+                }
+                result[name] = runtimeDirectory.appendingPathComponent(suffix).path
+            }
+        }
         if let bridgeAuthorizationToken {
             result["LOOPFORGE_AGENT_API_KEY"] = bridgeAuthorizationToken
         } else if let connection = task.resolvedSubAgent.apiConnection,
@@ -458,6 +539,42 @@ final class CodexRunner {
             result["LOOPFORGE_AGENT_API_KEY"] = key
         }
         return result
+    }
+
+    static func hostResourceEnvironment(
+        scope: GraphHostResourceScope,
+        brokerURL: URL? = GraphHostResourceBrokerRuntime.executableURL
+    ) -> [String: String] {
+        var result = [
+            "LOOPFORGE_HOST_RESOURCE_SCOPE_ID": scope.id.uuidString,
+            "LOOPFORGE_HOST_RESOURCE_TASK_ID": scope.taskID.uuidString,
+            "LOOPFORGE_HOST_RESOURCE_NODE_ID": scope.nodeID,
+            "LOOPFORGE_HOST_RESOURCE_ITERATION": String(scope.iteration)
+        ]
+        if let brokerDirectory = scope.brokerDirectory,
+           let brokerToken = scope.brokerToken,
+           let brokerURL {
+            result["LOOPFORGE_HOST_RESOURCE_BROKER"] = brokerURL.path
+            result["LOOPFORGE_HOST_RESOURCE_BROKER_DIRECTORY"] = brokerDirectory
+            result["LOOPFORGE_HOST_RESOURCE_BROKER_TOKEN"] = brokerToken
+        }
+        return result
+    }
+
+    static func requestedRuntimePathVariables(in request: String) -> [String] {
+        guard let expression = try? NSRegularExpression(
+            pattern: #"\b[A-Z][A-Z0-9_]{2,}\b"#
+        ) else { return [] }
+        let range = NSRange(request.startIndex..<request.endIndex, in: request)
+        var seen = Set<String>()
+        return expression.matches(in: request, range: range).compactMap { match in
+            guard let swiftRange = Range(match.range, in: request) else { return nil }
+            let name = String(request[swiftRange])
+            guard name.hasSuffix("_HANDOFF")
+                || name.hasSuffix("_BEFORE_STATUS")
+                || name.hasSuffix("_AFTER_STATUS") else { return nil }
+            return seen.insert(name).inserted ? name : nil
+        }
     }
 
     private func tomlString(_ raw: String) -> String {

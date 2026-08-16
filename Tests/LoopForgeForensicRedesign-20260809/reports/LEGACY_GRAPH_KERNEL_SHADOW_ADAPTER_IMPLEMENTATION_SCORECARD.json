@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "status": "shadow_adapter_verified_not_connected",
+  "component": "LegacyGraphKernelProjectionShadowAdapter",
+  "importAuthority": {
+    "legacyStatusCreatesKernelState": false,
+    "legacyReviewCreatesReceipt": false,
+    "legacyDurationAcceptedSeconds": 0,
+    "legacyVisualPassCreatesVisualReceipt": false,
+    "legacyIntegrationCreatesMutationAuthority": false,
+    "legacyTaskMayAutoResume": false,
+    "shadowMaySchedule": false,
+    "shadowMayIntegrate": false,
+    "shadowMayPublish": false,
+    "shadowMayWriteLegacyState": false
+  },
+  "cutoverVetoes": [
+    "invalid-legacy-structure",
+    "legacy-terminal-without-kernel-authority",
+    "legacy-completion-without-kernel-quiescence",
+    "legacy-stop-without-kernel-quiescence",
+    "legacy-node-approval-exceeds-kernel-evidence",
+    "legacy-active-node-missing-kernel-contract",
+    "legacy-dependency-contract-mismatch",
+    "legacy-mutation-scope-contract-mismatch",
+    "legacy-completed-node-lacks-kernel-acceptance",
+    "legacy-work-without-kernel-attempt",
+    "legacy-visual-pass-without-kernel-gate"
+  ],
+  "tests": {
+    "focusedExecuted": 11,
+    "focusedFailures": 0,
+    "focusedWarnings": 0,
+    "fullExecuted": 464,
+    "fullSkipped": 6,
+    "fullFailures": 0,
+    "fullWarnings": 0
+  },
+  "sources": [
+    {
+      "path": "Sources/LoopForge/LegacyGraphKernelShadowAdapter.swift",
+      "lineCount": 371,
+      "sha256": "86aa4729c1da2bfadbcff7fb86ef2bbcb3e2b2b5644cd784de83919a4600b9ea"
+    },
+    {
+      "path": "Tests/LoopForgeTests/LegacyGraphKernelShadowAdapterTests.swift",
+      "lineCount": 395,
+      "sha256": "2a7124e30cee32b2ad29f78b524f9e4581c7077e2ff2c659f7840271f3db1742"
+    }
+  ],
+  "excludedVerificationInvocations": {
+    "count": 1,
+    "reason": "invalid combined duplicate-and-cycle test fixture",
+    "countedTowardActiveLedger": false
+  },
+  "remaining": {
+    "adapterConnectedToLegacyRuntime": false,
+    "retainedStoppedTaskSnapshotReplayComplete": true,
+    "chronologicalEventCorpusReinterpretedAsKernelAuthority": false,
+    "perNodeRequirementParityAvailable": true,
+    "projectionCompatibilityManifestComplete": true,
+    "userRatifiedSemanticContractMappingComplete": false,
+    "populatedProjectionOnlyKernelShadowRunComplete": true,
+    "shadowModeEffectFreeNativeProof": false,
+    "legacyAuthorityDisabled": false,
+    "commitAndPushComplete": false
+  },
+  "easyBusinessMutated": false
+}

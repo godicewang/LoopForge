@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "verdict": "veto",
+  "confidence": 0.97,
+  "summary": "The candidate keeps the Running node loops summary visible in every initial viewport, but it introduces a material hierarchy and composition regression. The added Auto Loop/diagnostics band demotes and truncates the task identity, reduces usable canvas space, and compounds visible graph clipping—especially in narrow and Larger Text cells.",
+  "cells": [
+    {
+      "id": "standard-expanded",
+      "candidatePreservesPrimaryTask": true,
+      "candidateHasVisibleClipping": true,
+      "candidateHierarchyPasses": false,
+      "finding": "Running node loops remains fully visible. However, the new app-level header pushes the complete dashboard downward, the task title is visibly truncated, and generic Auto Loop/diagnostic chrome outranks the task being reviewed."
+    },
+    {
+      "id": "standard-narrow",
+      "candidatePreservesPrimaryTask": true,
+      "candidateHasVisibleClipping": true,
+      "candidateHierarchyPasses": false,
+      "finding": "The primary summary remains visible, but the extra header consumes substantial vertical space, the task identity truncates, and the terminal graph node is hard-cut at the right edge. The stacked app, task, migration, summary, and graph layers feel crowded."
+    },
+    {
+      "id": "accessibility-expanded",
+      "candidatePreservesPrimaryTask": true,
+      "candidateHasVisibleClipping": true,
+      "candidateHierarchyPasses": false,
+      "finding": "Text is broadly legible, but the Larger Text composition does not reflow successfully: two header bands compete with the task, node metadata becomes dense and truncated, and the rightmost graph card is clipped."
+    },
+    {
+      "id": "accessibility-narrow",
+      "candidatePreservesPrimaryTask": true,
+      "candidateHasVisibleClipping": true,
+      "candidateHierarchyPasses": false,
+      "finding": "Running node loops remains visible, but this is the weakest composition: redundant top chrome reduces the working viewport, the primary task title is shortened, graph metadata is crowded, and the rightmost node is visibly cut off."
+    }
+  ],
+  "visualGates": [
+    {
+      "id": "H-04",
+      "verdict": "veto",
+      "reason": "The added header shifts the dashboard down by roughly one header row without compensating reflow. It creates horizontal competition in the task row and leaves graph content visibly cut off in constrained cells."
+    },
+    {
+      "id": "H-05",
+      "verdict": "pass",
+      "reason": "The Running node loops summary card remains clearly visible in the initial viewport in all four candidate cells."
+    },
+    {
+      "id": "H-06",
+      "verdict": "veto",
+      "reason": "The same hierarchy defect recurs across the matrix: generic Auto Loop and diagnostics become the highest-level content, while the actual task identity is demoted, truncated, and forced to compete with migration status."
+    },
+    {
+      "id": "H-07",
+      "verdict": "veto",
+      "reason": "Although individual text remains mostly readable, the accessibility cells fail compositionally: fixed-width graph content, dense repeated metadata, two-tier chrome, reduced canvas height, and right-edge clipping do not form a robust Larger Text layout."
+    },
+    {
+      "id": "H-09",
+      "verdict": "veto",
+      "reason": "The candidate is materially less resolved aesthetically: it has more redundant chrome, weaker task focus, less breathing room, denser card interiors, conspicuous truncation, and an unbalanced passive-status area."
+    }
+  ],
+  "materialFindings": [
+    "The candidate preserves the primary Running node loops task card in every initial viewport.",
+    "The added Auto Loop/Kernel diagnostics band materially reduces usable vertical space and shifts all core content downward.",
+    "The task identity is less prominent and visibly truncated while generic mode and diagnostic labels receive stronger placement.",
+    "Graph-card metadata is noticeably denser through repeated All iterations and This iteration rows, weakening scanability.",
+    "Rightmost graph content is visibly clipped in the constrained candidate cells; similar baseline constraint does not satisfy the absolute no-clipping gate.",
+    "A directly visible safety-related change replaces the baseline Resume Task affordance with Legacy Auto Graph Loop preserved · migration required. The migration block may be intentional, but its placement crowds the primary task row."
+  ],
+  "requiredChanges": [
+    "Collapse or rebalance the added app-level header so the task identity and Running node loops summary retain primary hierarchy and baseline-like vertical prominence.",
+    "Show the complete task title in every matched cell; move diagnostics and migration status to a secondary region that cannot force task-title truncation.",
+    "Eliminate hard right-edge graph clipping through responsive reflow, fit-to-viewport behavior, or an explicitly bounded overflow treatment that does not bisect a node.",
+    "For Larger Text layouts, reflow header controls and graph metadata instead of preserving the dense fixed-width composition; condense repetitive iteration rows where necessary.",
+    "Retain the migration-required safety state if applicable, but present it as a coherent blocked-state treatment without passively replacing the former action slot or competing with the task heading."
+  ]
+}

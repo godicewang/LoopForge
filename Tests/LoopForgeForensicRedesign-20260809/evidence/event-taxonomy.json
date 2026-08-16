@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "totalEvents": 5758,
+  "categories": {
+    "providerTimeout": 13,
+    "nonFastForward": 34,
+    "pauseOrStop": 18,
+    "strategyRetirement": 23,
+    "screenshotOrVisualArtifact": 1398,
+    "testOrBuild": 1003,
+    "processOrResourceCleanup": 1664,
+    "auditOrReview": 1087,
+    "gitTransition": 1895,
+    "blocked": 282,
+    "mockOrFabrication": 232
+  }
+}

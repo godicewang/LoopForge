@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-09T16:45:34Z",
+  "status": "contract-defined-no-implementation-receipts",
+  "sections": [
+    {"id":"A","name":"state-machine-and-replay","mandatoryGates":7},
+    {"id":"B","name":"task-and-product-contracts","mandatoryGates":7},
+    {"id":"C","name":"authority-and-capability-leases","mandatoryGates":8},
+    {"id":"D","name":"workspace-mutation-and-integration","mandatoryGates":8},
+    {"id":"E","name":"evidence-and-independent-review","mandatoryGates":8},
+    {"id":"F","name":"causal-convergence","mandatoryGates":8},
+    {"id":"G","name":"lifecycle-thermal-and-persistence","mandatoryGates":11},
+    {"id":"H","name":"visual-and-product-design-acceptance","mandatoryGates":9},
+    {"id":"I","name":"watcher","mandatoryGates":7},
+    {"id":"J","name":"ui-report-package-native-verification","mandatoryGates":8}
+  ],
+  "totalMandatoryGates": 81,
+  "receiptsPresent": 0,
+  "aggregateScoreCanWaiveGate": false,
+  "agentProseCanWaiveGate": false,
+  "legacyGreenSuiteCanWaiveGate": false,
+  "productionRefactorAuthorized": false
+}

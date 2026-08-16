@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "status": "exact-external-dependency-result-mapping-present-native-launch-and-observation-issuance-pending",
+  "recordedAt": "2026-08-15T12:21:08Z",
+  "acceptanceRowsAdvanced": [
+    "B-06"
+  ],
+  "transportContract": {
+    "shellFreeDirectLocalTransport": true,
+    "exactMinimalEnvironmentDigestRequired": true,
+    "exactPrivateRequestAndBoundedOutputCaptureDigestRequired": true,
+    "substitutedValidSHA256Rejected": true
+  },
+  "canonicalParseAuthority": {
+    "exactActivationAndProbeRequired": true,
+    "terminalEnvelopeDigestRecomputed": true,
+    "forgedCanonicalDigestRejected": true,
+    "crossWiredNonceRejected": true
+  },
+  "resultMapping": {
+    "exactNativeExitPairRequired": true,
+    "exactlyOneDeclaredRowSelected": true,
+    "mappingOrdinalRetained": true,
+    "declaredAvailabilityRetained": true,
+    "selfDigestedReceipt": true,
+    "receiptCanIssueObservation": false
+  },
+  "productionAuthority": {
+    "trustedResidentMemoryIssuerAvailable": false,
+    "typedPreAdmissionVetoRetained": true,
+    "nativeProcessLaunchedByThisBoundary": false,
+    "outputRetainedByThisBoundary": false,
+    "journalObservationIssued": false
+  },
+  "verification": {
+    "focusedProbeTests": {
+      "executed": 5,
+      "failures": 0,
+      "seconds": 0.005
+    },
+    "fullSuite": {
+      "executed": 804,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 53.764,
+      "logSHA256": "476007ed9ecb01fdc580a163333c095e10fbcc3d1000eb3f68492c31d7616f60"
+    },
+    "packageOwnedFullSuite": {
+      "executed": 804,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 58.864,
+      "logSHA256": "ce5a824b85335c51eeff4bb80f96ac745f18112f70a33be6be63ed345f661fd2"
+    },
+    "releaseBuild": {
+      "passed": true,
+      "seconds": 96.09,
+      "architecture": "arm64"
+    },
+    "sourceSnapshotSHA256": "137063c4f1d6c4eee61a025ba3b14d0c2c2ee0fe6f7f437e99f5da834b030437",
+    "packagedLoopForgeSHA256": "408461c04651b91a3779cceebb06a6fdd5c906890ee4864548cac3b7bfbc6b17",
+    "packagedKernelSandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "signatureVerifiedDeepStrict": true,
+    "exactPackagedMachOStartupPassed": true,
+    "postSmokePackagedProcessCount": 0
+  },
+  "sourceDigests": {
+    "probe": "07c8c859ae8e5b13b682da74716dd1150235042d40d02f7939da5416130c9296",
+    "resultMapper": "9adaac56a15dac260e80df9c1a00dad2cdff4a4283d54255648782fffcdd76a1",
+    "testSupport": "ab1efd153ca0149d8ff2644835ea21644985b2df284e42004933c9e7e4e46abe",
+    "probeTests": "f0ce1eef644fb73509f523479053408554a2fbeb63d8a0e53ee44df295770a57"
+  },
+  "easyBusiness": {
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "statusFingerprintSHA256": "a640615bfb23f0d3a9fefe222294663302b40cca54e23b2f4ae0029f5e4bcfd7",
+    "mutated": false
+  },
+  "remaining": [
+    "trusted Release resident-memory containment issuer or retained veto",
+    "journal-owned exact native sandbox launch with retained request on standard input",
+    "bounded output and native-exit retention",
+    "journal-owned observation issuance from the exact mapping receipt",
+    "production controller invocation",
+    "legacy Single and Parallel retirement",
+    "unlocked native screenshots",
+    "clean-commit rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false
+}

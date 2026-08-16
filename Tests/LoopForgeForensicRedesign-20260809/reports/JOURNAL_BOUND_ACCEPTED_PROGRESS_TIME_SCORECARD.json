@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T06:12:11Z",
+  "status": "journal-bound-accepted-progress-time-package-verified-production-cutover-pending",
+  "acceptanceRowsAdvanced": ["F-02"],
+  "priorDefect": {
+    "succeededExecutionCouldCount": true,
+    "arbitraryEvidenceCouldCount": true,
+    "acceptedProgressReceiptRequired": false,
+    "zeroProgressCouldAccumulateDuration": true
+  },
+  "enforcementBoundary": {
+    "explicitOccurrenceProgressBinding": true,
+    "journalProjectsOnlyAcceptedProgress": true,
+    "stagnantProgressExcluded": true,
+    "legacyMissingProgressExcluded": true,
+    "forgedProgressExcluded": true,
+    "liveTimeRemainsProvisional": true,
+    "productionControllerEnrolled": false
+  },
+  "verification": {
+    "intervalTestsExecuted": 15,
+    "intervalFailures": 0,
+    "journalTestsExecuted": 15,
+    "journalFailures": 0,
+    "fullTestsExecuted": 599,
+    "fullTestsSkipped": 8,
+    "fullFailures": 0,
+    "packagingOwnedTestsExecuted": 599,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "sourceSnapshotSHA256": "8bcfb543788451ffe5d5200b88ece67443824c60900a1a49d0c37c59293e2257",
+    "intervalSourceSHA256": "31e9a73b8c4f8e9d1c6815ba0ef1dd47647a67f48fe2df9a49ba8d5f1bc2b819",
+    "journalSourceSHA256": "1e6303ba83a1a6ec192ac458264461894dde0e731c5d02f0c6bc6bfbe5b184e5",
+    "intervalTestsSHA256": "6f5b3488c055306b565cd6b211567dd68c6af9cfcae6e3c9adafbb2e689df811",
+    "journalTestsSHA256": "748849c2735db721cd254e617107513d01e801165ab2e02b05307a6e33c52a56",
+    "intervalLogSHA256": "a5c898997d70bb0999096a20dee2676ef35c252dd9bbee2006c9993b5320ab11",
+    "journalLogSHA256": "b39efd8dc183296b67f5fb104f950a421c582f13a0002859336cc6e5c9b6d8c7",
+    "packageTestLogSHA256": "7e00b5c082688d9e9ca69ae96994a3ddae88f2482f9b1e7c92c3c3a8dab74959",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "buildManifestSHA256": "5399f85d55b727addcc370fa8d86171a6328f9572792fffe2764bf0889228877",
+    "executableSHA256": "f9049dd361b0386959146752eb189e838e455e2a314911c562a21cf7b4ab568b",
+    "zipSHA256": "1da32f0404a655ca9d22dbe90f3902c4200f690c2176d5b4729dad55eda8a710",
+    "dmgSHA256": "f2f63f5114fb1cf26b21a30e0f769b2ac48fa3c5375477826130d4062af5b830",
+    "cdHash": "d3b1ac6410469444358ccab76040eb94cad3b058",
+    "residualPackagedProcessCount": 0
+  },
+  "knownBoundary": {
+    "productionKernelEnrollmentPending": true,
+    "legacyControllerCutoverPending": true,
+    "currentNativeUICapturePending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

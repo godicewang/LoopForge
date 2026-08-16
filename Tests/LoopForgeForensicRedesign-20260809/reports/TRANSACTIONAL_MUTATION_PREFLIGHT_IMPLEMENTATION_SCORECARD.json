@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "report": "TRANSACTIONAL_MUTATION_PREFLIGHT_IMPLEMENTATION.md",
+  "normativeSpecification": "TRANSACTIONAL_INTEGRATION_ROLLBACK_AND_PUBLICATION_SPECIFICATION.md",
+  "status": "implemented-pure-kernel-slice-extended-by-journal-state-machine-and-filesystem-executor-not-cut-over",
+  "subsequentReport": "WORKSPACE_MUTATION_FILESYSTEM_EXECUTOR_IMPLEMENTATION.md",
+  "productionRefactorAuthorized": true,
+  "implementation": {
+    "purePreflight": true,
+    "typedFailClosedDecision": true,
+    "contentAddressedManifest": true,
+    "canonicalPreimageDigest": true,
+    "compareAndSwap": true,
+    "entryKindAndModeBound": true,
+    "rollbackObjectCompleteness": true,
+    "reverseRollbackManifest": true,
+    "recomputedMutationBudget": true,
+    "publicationExplicitlyDenied": true,
+    "filesystemExecutor": true,
+    "journaledIntegrationStateMachine": true,
+    "effectOutbox": false,
+    "postimageVerification": true,
+    "integrationReceipt": false,
+    "canonicalCommitTransaction": false,
+    "remotePublicationTransaction": false,
+    "legacyGraphConnected": false,
+    "cutoverEligible": false
+  },
+  "operationKindCount": 7,
+  "conflictClassCount": 7,
+  "typedRejectionClassCount": 25,
+  "focusedVerification": {
+    "testCount": 12,
+    "failureCount": 0,
+    "logPath": "/tmp/loopforge-transactional-mutation-kernel-tests-final.log",
+    "logSHA256": "c40830a5b085a8b61acf6900221c9d8660dbff2e3d9715358ed8cfc34bb681fb"
+  },
+  "completeVerification": {
+    "testCount": 499,
+    "skippedCount": 8,
+    "failureCount": 0,
+    "xctestSeconds": 27.038,
+    "logPath": "/tmp/loopforge-full-tests-workspace-mutation-executor-final.log",
+    "logSHA256": "af68722fc558a878ba7e2fe424ed6c6bc8adede58089ef180c77174d4ad33b33"
+  },
+  "sourceEvidence": [
+    {
+      "path": "Sources/LoopForge/Kernel/TransactionalMutationKernel.swift",
+      "lineCount": 851,
+      "sha256": "22b83d09f05f3d28707ac330b315c4a07e77bf43f08a7fe0bcea84873be7b58a"
+    },
+    {
+      "path": "Sources/LoopForge/Kernel/KernelIdentity.swift",
+      "sha256": "3d14f06124afa4901c870bec28fe92b5c64fb214af74f943322cfb57c9e1f805"
+    },
+    {
+      "path": "Tests/LoopForgeTests/TransactionalMutationKernelTests.swift",
+      "lineCount": 556,
+      "sha256": "77ec955b4b38fbb1ea587fbe885ded1669138f7961c0ba3d0547c8407eb42c14"
+    }
+  ],
+  "safetyClaims": {
+    "touchesCanonicalWorkspace": false,
+    "launchesProcesses": false,
+    "changesGitState": false,
+    "contactsRemote": false,
+    "permitsPublication": false,
+    "mutatedEasyBusiness": false
+  },
+  "remainingCriticalBoundaries": [
+    "replace accepted receipt-ID sets with provenance-bound journal receipts",
+    "production content-object retention adapter",
+    "concrete exclusive canonical mutation-lease issuer",
+    "journaled effect outbox and crash-time recovery dispatcher",
+    "post-restore receipt recovery and directory/submodule semantics",
+    "post-integration verification and independent acceptance",
+    "accepted integration receipt required by dependency and completion reducers",
+    "separate local commit and remote publication transactions",
+    "legacy shadow replay, fault injection, and controlled cutover"
+  ]
+}

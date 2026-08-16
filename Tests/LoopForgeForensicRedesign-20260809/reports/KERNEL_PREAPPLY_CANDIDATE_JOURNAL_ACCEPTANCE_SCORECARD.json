@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T11:56:27Z",
+  "status": "preapply-candidate-receipt-journal-accepted-live-descriptor-activation-consumption-missing",
+  "finalAcceptance": false,
+  "controls": {
+    "liveNonCodableCapabilityRequired": true,
+    "heldDescriptorRevalidatedBeforeFirstAppend": true,
+    "heldDescriptorRevalidatedBeforeDuplicateResolution": true,
+    "completePristineTreeRehashed": true,
+    "pathReplacementRejected": true,
+    "closedOrMutatedAuthorityRejected": true,
+    "candidatePathBoundToExactJournalRunDirectory": true,
+    "exactEnrollmentFrameRequiredForFirstAcceptance": true,
+    "contractPlanNodeStrategySourceAndActorBound": true,
+    "selfDigestedReceiptOnlyEvent": true,
+    "oneReceiptPerAttempt": true,
+    "exactCommandIdempotency": true,
+    "sameCommandDifferentAuthorityRejected": true,
+    "pureReplayPerformsFilesystemIO": false,
+    "liveDescriptorSerialized": false,
+    "candidateBytesSerialized": false,
+    "clearsMutationReadinessBlockers": false,
+    "startsAttemptOrProcess": false,
+    "mutatesCanonicalWorkspace": false,
+    "issuesManifestPreflightEffectOrPublication": false
+  },
+  "verification": {
+    "newTests": 3,
+    "focusedTestsExecuted": 6,
+    "focusedFailures": 0,
+    "uniqueSuiteTestsExecuted": 759,
+    "intentionalEnvironmentSkips": 8,
+    "testFailures": 0,
+    "releaseLoopForgeSHA256": "bb3a011ffacb9d9af3cc87eb860410519101c79ac7251f65281b65dfe0208d84",
+    "releaseKernelSandboxGateSHA256": "1b7ba433fe915b0dd916aceafe62342d246bcf6bbddcfc5425b0d09fba0fbeaa",
+    "sourceSnapshotSHA256": "661566da74ebcd051e1b7be1b2d3de1772cfee9507f953a6ffddf94f7c21f82c",
+    "isolationCoordinatorSHA256": "990cf6ab798945a024e170a92dbb5e5132a7532da0e05ce715faceb83e74d618",
+    "candidateMaterializerSHA256": "1ee62fd68a17f5e29ef7bb3492856fb4808552968a371c1822ab1a23cd229194",
+    "runReducerSHA256": "db4240ca08ae9ee55253265c212f3df6f50f25f74036f6b25ac2a6d79e1c35e2",
+    "runJournalSHA256": "84b3294e1c3534dfe6ab4d4b5503aa30279f1b51c0cc74ebe270290d471374e4",
+    "enrollmentCoordinatorTestsSHA256": "68df9ec1443216404188a1b7282b7e87e13563023a72d6ebd236346cd46b3129"
+  },
+  "ledger": {
+    "acceptedIntervalID": "kernel-preapply-candidate-journal-acceptance-191",
+    "coveredSecondsAdded": 600,
+    "coveredActiveSeconds": 156570,
+    "acceptedIntervals": 191,
+    "failedDiagnosticsTestsBuildsWaitsAndReportsCountedSeconds": 0
+  },
+  "remainingPrerequisites": [
+    "descriptor-retaining activation that consumes the original live capability and binds the workspace-only worker to the candidate root",
+    "post-worker content-complete candidate revision with logical workspace identity and physical isolation proof",
+    "acyclic delta content-store manifest preparation rollback proposal and preflight issuance",
+    "tested resident-memory enforcement issuer or retained verifier and reviewer veto",
+    "native immutable design baseline complete visual evidence final authorization and native start",
+    "current-source package sign unlocked native walkthrough clean commit and push"
+  ]
+}

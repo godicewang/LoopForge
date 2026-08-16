@@ -1,3 +1,4 @@
+import CryptoKit
 import Foundation
 
 enum WatcherPolicyError: LocalizedError, Equatable {
@@ -32,6 +33,7 @@ enum WatcherPolicy {
     static let manifestRelativePath = ".loopforge/watcher/manifest.json"
     static let defaultTelemetryRelativePath = ".loopforge/watcher/telemetry.json"
     static let defaultCheckpointRelativePath = ".loopforge/watcher/checkpoint.json"
+    static let reviewRelativePath = ".loopforge/watcher/review.json"
     static let minimumPollInterval: TimeInterval = 60
     static let minimumReviewInterval: TimeInterval = 2 * 60 * 60
     static let maximumReviewInterval: TimeInterval = 7 * 24 * 60 * 60
@@ -43,6 +45,7 @@ enum WatcherPolicy {
     static let maximumManifestBytes = 512 * 1_024
     static let maximumTelemetryBytes = 1_024 * 1_024
     static let maximumCheckpointBytes = 8 * 1_024 * 1_024
+    static let maximumReviewBytes = 256 * 1_024
     private static let prohibitedShellTokens = ["|", "&&", "||", ";", ">", "<", "`", "$("]
 
     static func normalized(
@@ -134,6 +137,46 @@ enum WatcherPolicy {
         result.signals = signals
 
         let declaredSignals = Set(signalKeys)
+        if var dashboard = pipeline.dashboard {
+            dashboard.headline = String(
+                dashboard.headline
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .prefix(120)
+            )
+            if let key = dashboard.progressSignalKey,
+               !declaredSignals.contains(key) {
+                dashboard.progressSignalKey = nil
+            }
+            dashboard.goalAnchors = Array(
+                dashboard.goalAnchors.enumerated()
+                    .filter { index, anchor in
+                        isSafeIdentifier(anchor.id)
+                            && dashboard.goalAnchors.firstIndex {
+                                $0.id == anchor.id
+                            } == index
+                    }
+                    .map(\.element)
+                    .prefix(20)
+            ).map {
+                WatcherGoalAnchor(
+                    id: $0.id,
+                    title: boundedText($0.title, limit: 120)
+                )
+            }
+            dashboard.primarySignalKeys = Array(
+                dashboard.primarySignalKeys
+                    .filter { declaredSignals.contains($0) }
+                    .uniqued()
+                    .prefix(6)
+            )
+            dashboard.importantSignalKeys = Array(
+                dashboard.importantSignalKeys
+                    .filter { declaredSignals.contains($0) }
+                    .uniqued()
+                    .prefix(12)
+            )
+            result.dashboard = dashboard
+        }
         let rules = Array(pipeline.rules.prefix(maximumRuleCount))
         let ruleIDs = rules.map(\.id)
         guard Set(ruleIDs).count == ruleIDs.count else {
@@ -160,6 +203,11 @@ enum WatcherPolicy {
                 7 * 24 * 60 * 60,
                 max(result.pollIntervalSeconds, rule.cooldownSeconds)
             )
+            // Informational rules may remain visible in the timeline, but
+            // cannot justify an expensive Agent wake. Adaptive intervention
+            // must be explicitly warning or critical so its intent remains
+            // auditable.
+            normalized.wakesAgent = rule.wakesAgent && rule.severity >= .warning
             return normalized
         }
 
@@ -251,6 +299,69 @@ enum WatcherPolicy {
         return try normalized(decoded, workspacePath: workspacePath)
     }
 
+    static func loadAgentAssessment(
+        pipeline: WatcherPipeline,
+        workspacePath: String,
+        notOlderThan: Date,
+        now: Date = Date()
+    ) throws -> WatcherAgentAssessment {
+        let workspace = URL(fileURLWithPath: workspacePath, isDirectory: true)
+        let url = try resolvedPath(reviewRelativePath, workspace: workspace)
+        let data = try boundedData(at: url, maximumBytes: maximumReviewBytes)
+        var assessment = try JSONDecoder.loopForge.decode(
+            WatcherAgentAssessment.self,
+            from: data
+        )
+        guard assessment.schemaVersion == 1 else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "review.json schemaVersion must be 1"
+            )
+        }
+        guard assessment.reviewedAt >= notOlderThan.addingTimeInterval(-5 * 60),
+              assessment.reviewedAt <= now.addingTimeInterval(5 * 60) else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "review.json was not refreshed by the current Agent review"
+            )
+        }
+        let declaredSignals = Set(pipeline.signals.map(\.key))
+        assessment.headline = boundedText(assessment.headline, limit: 120)
+        assessment.summary = boundedText(assessment.summary, limit: 800)
+        assessment.issues = Array(assessment.issues.prefix(50)).enumerated().map { index, issue in
+            WatcherAgentIssueAssessment(
+                id: boundedIdentifier(issue.id, fallback: "assessment-\(index)"),
+                title: boundedText(issue.title, limit: 160),
+                detail: boundedText(issue.detail, limit: 800),
+                disposition: issue.disposition,
+                severity: issue.severity,
+                evidence: boundedText(issue.evidence, limit: 800),
+                userActionRequired: issue.userActionRequired
+            )
+        }
+        let goalAnchorIDs = Set(pipeline.dashboard?.goalAnchors.map(\.id) ?? [])
+        assessment.importantInformation = Array(
+            assessment.importantInformation.prefix(30)
+        ).enumerated().compactMap { index, information in
+            if !goalAnchorIDs.isEmpty,
+               information.goalAnchorID.map(goalAnchorIDs.contains) != true {
+                return nil
+            }
+            return WatcherImportantInformation(
+                id: boundedIdentifier(information.id, fallback: "information-\(index)"),
+                title: boundedText(information.title, limit: 160),
+                detail: boundedText(information.detail, limit: 800),
+                severity: information.severity,
+                signalKey: information.signalKey.flatMap {
+                    declaredSignals.contains($0) ? $0 : nil
+                },
+                value: information.value?.isFinite == true ? information.value : nil,
+                unit: information.unit.map { boundedText($0, limit: 24) },
+                goalAnchorID: information.goalAnchorID,
+                userActionRequired: information.userActionRequired
+            )
+        }
+        return assessment
+    }
+
     static func loadTelemetry(
         pipeline: WatcherPipeline,
         workspacePath: String,
@@ -288,6 +399,16 @@ enum WatcherPolicy {
         pipeline: WatcherPipeline,
         workspacePath: String
     ) throws {
+        _ = try checkpointDigest(
+            pipeline: pipeline,
+            workspacePath: workspacePath
+        )
+    }
+
+    static func checkpointDigest(
+        pipeline: WatcherPipeline,
+        workspacePath: String
+    ) throws -> ContentDigest {
         let workspace = URL(fileURLWithPath: workspacePath, isDirectory: true)
         let url = try resolvedPath(pipeline.checkpointPath, workspace: workspace)
         guard FileManager.default.fileExists(atPath: url.path) else {
@@ -300,6 +421,17 @@ enum WatcherPolicy {
         guard size <= maximumCheckpointBytes else {
             throw WatcherPolicyError.oversizedFile(url.lastPathComponent)
         }
+        let data = try boundedData(at: url, maximumBytes: maximumCheckpointBytes)
+        guard !data.isEmpty,
+              let object = try? JSONSerialization.jsonObject(with: data),
+              object is [String: Any] else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "the durable checkpoint must be a non-empty JSON object"
+            )
+        }
+        return ContentDigest(SHA256.hash(data: data).map {
+            String(format: "%02x", $0)
+        }.joined())
     }
 
     static func normalizedTelemetry(
@@ -369,8 +501,12 @@ enum WatcherPolicy {
         now: Date = Date()
     ) -> WatcherEvaluation {
         var events: [WatcherEvent] = []
+        var activeIssues: [WatcherDetectedIssue] = []
         var shouldWake = false
         var highest: WatcherSeverity = .info
+        let previousIssues = Dictionary(
+            uniqueKeysWithValues: (state.activeIssues ?? []).map { ($0.id, $0) }
+        )
         let declaredSignals = Set(pipeline.signals.map(\.key))
         let declaredRules = Set(pipeline.rules.map(\.id))
         state.latestSignals = state.latestSignals.filter {
@@ -392,15 +528,34 @@ enum WatcherPolicy {
         }
 
         for event in telemetry.events ?? [] {
-            let severity = event.severity ?? .warning
+            // Informational pipeline notes frequently omit a severity. Alert
+            // rules remain the authoritative wake mechanism, so absence must
+            // not turn a benign "unchanged input" event into a false Agent
+            // wake-up. Explicit warning/critical events still wake normally.
+            let severity = event.severity ?? .info
             highest = max(highest, severity)
             events.append(WatcherEvent(
                 timestamp: telemetry.capturedAt ?? now,
                 kind: .anomaly,
                 severity: severity,
-                message: event.message ?? event.name
+                message: event.message ?? event.name,
+                signalKey: event.name
             ))
             shouldWake = shouldWake || severity >= .warning
+            if severity >= .warning {
+                let id = "event.\(event.name)"
+                activeIssues.append(WatcherDetectedIssue(
+                    id: id,
+                    title: event.name.replacingOccurrences(of: "_", with: " ").capitalized,
+                    detail: event.message ?? event.name,
+                    severity: severity,
+                    signalKey: nil,
+                    value: nil,
+                    detectedAt: previousIssues[id]?.detectedAt ?? telemetry.capturedAt ?? now,
+                    lastSeenAt: telemetry.capturedAt ?? now,
+                    userActionRequired: severity == .critical
+                ))
+            }
         }
 
         for rule in pipeline.rules {
@@ -416,6 +571,20 @@ enum WatcherPolicy {
             state.ruleMatchCounts[rule.id] = matched
                 ? (state.ruleMatchCounts[rule.id] ?? 0) + 1
                 : 0
+            if matched, rule.severity >= .warning {
+                let id = "rule.\(rule.id)"
+                activeIssues.append(WatcherDetectedIssue(
+                    id: id,
+                    title: rule.title,
+                    detail: issueDetail(rule: rule, value: value),
+                    severity: rule.severity,
+                    signalKey: rule.signalKey,
+                    value: value,
+                    detectedAt: previousIssues[id]?.detectedAt ?? now,
+                    lastSeenAt: now,
+                    userActionRequired: rule.wakesAgent
+                ))
+            }
             guard matched,
                   (state.ruleMatchCounts[rule.id] ?? 0) >= rule.requiredConsecutiveMatches else {
                 continue
@@ -426,7 +595,10 @@ enum WatcherPolicy {
             state.ruleLastTriggeredAt[rule.id] = now
             state.ruleMatchCounts[rule.id] = 0
             highest = max(highest, rule.severity)
-            shouldWake = shouldWake || rule.wakesAgent
+            // Enforce this during evaluation too, so Watchers persisted by an
+            // older build recover safely without a manifest rebuild.
+            shouldWake = shouldWake
+                || (rule.wakesAgent && rule.severity >= .warning)
             events.append(WatcherEvent(
                 timestamp: now,
                 kind: rule.comparator == .stale ? .staleSignal : .threshold,
@@ -437,11 +609,83 @@ enum WatcherPolicy {
             ))
         }
 
+        let issueSignalKeys = Set(activeIssues.compactMap(\.signalKey))
+        for signal in pipeline.signals {
+            guard let value = telemetry.signals[signal.key],
+                  !issueSignalKeys.contains(signal.key),
+                  isOutsideExpectedRange(
+                    value: value,
+                    signal: signal,
+                    capturedAt: telemetry.capturedAt,
+                    now: now
+                  ) else { continue }
+            let id = "signal.\(signal.key)"
+            activeIssues.append(WatcherDetectedIssue(
+                id: id,
+                title: "\(signal.title) is outside its expected range",
+                detail: "\(signal.title) reported \(formatted(value)) \(signal.unit). \(signal.description)",
+                severity: .warning,
+                signalKey: signal.key,
+                value: value,
+                detectedAt: previousIssues[id]?.detectedAt ?? now,
+                lastSeenAt: now,
+                userActionRequired: false
+            ))
+        }
+        state.activeIssues = Dictionary(
+            grouping: activeIssues,
+            by: \.id
+        ).compactMap { $0.value.max(by: { $0.severity < $1.severity }) }
+            .sorted {
+                if $0.severity != $1.severity { return $0.severity > $1.severity }
+                return $0.detectedAt < $1.detectedAt
+            }
+
         return WatcherEvaluation(
             events: events,
             shouldWakeAgent: shouldWake,
-            highestSeverity: highest
+            highestSeverity: highest,
+            activeIssues: state.activeIssues ?? []
         )
+    }
+
+    private static func isOutsideExpectedRange(
+        value: Double,
+        signal: WatcherSignalSpec,
+        capturedAt: Date?,
+        now: Date
+    ) -> Bool {
+        if let minimum = signal.expectedMinimum, value < minimum { return true }
+        if let maximum = signal.expectedMaximum, value > maximum { return true }
+        if let stale = signal.staleAfterSeconds,
+           let capturedAt,
+           now.timeIntervalSince(capturedAt) > stale {
+            return true
+        }
+        return false
+    }
+
+    private static func issueDetail(rule: WatcherRule, value: Double?) -> String {
+        let measured = value.map(formatted) ?? "missing"
+        let boundary: String
+        switch rule.comparator {
+        case .above:
+            boundary = "above \(rule.threshold.map(formatted) ?? "the configured limit")"
+        case .below:
+            boundary = "below \(rule.threshold.map(formatted) ?? "the configured limit")"
+        case .outside:
+            boundary = "outside \(rule.threshold.map(formatted) ?? "—")–\(rule.upperThreshold.map(formatted) ?? "—")"
+        case .equals:
+            boundary = "equal to \(rule.threshold.map(formatted) ?? "the configured value")"
+        case .missing: boundary = "missing"
+        case .stale: boundary = "stale"
+        case .changed: boundary = "changed"
+        }
+        return "Current value \(measured) is \(boundary)."
+    }
+
+    private static func formatted(_ value: Double) -> String {
+        value.formatted(.number.precision(.fractionLength(0...3)))
     }
 
     private static func matches(
@@ -537,6 +781,19 @@ enum WatcherPolicy {
         }
     }
 
+    private static func boundedIdentifier(_ value: String, fallback: String) -> String {
+        let clean = String(value.prefix(96))
+        return isSafeIdentifier(clean) ? clean : fallback
+    }
+
+    private static func boundedText(_ value: String, limit: Int) -> String {
+        String(
+            value
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .prefix(limit)
+        )
+    }
+
     private static func resolvedThroughExistingAncestor(_ url: URL) -> URL {
         var ancestor = url
         var suffix: [String] = []
@@ -584,6 +841,307 @@ enum WatcherReviewDecision: String, Equatable {
             )
         }
         return decision
+    }
+}
+
+enum WatcherCompletionPolicy {
+    static func makeObservation(
+        pipeline: WatcherPipeline,
+        telemetry: WatcherTelemetryEnvelope,
+        runtime: WatcherRuntimeState,
+        checkpointDigest: ContentDigest,
+        observedAt: Date = Date()
+    ) throws -> WatcherDeterministicCompletionObservation {
+        guard telemetry.completed == true else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "deterministic completion requires telemetry.completed=true"
+            )
+        }
+        guard telemetry.status == "ok" else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "deterministic completion requires telemetry status ok"
+            )
+        }
+        guard let capturedAt = telemetry.capturedAt else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "deterministic completion requires a capturedAt timestamp"
+            )
+        }
+        let checkpointLabel = telemetry.checkpoint?
+            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        guard !checkpointLabel.isEmpty else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "deterministic completion requires a non-empty checkpoint label"
+            )
+        }
+        let unresolved = (runtime.activeIssues ?? []).map(\.id).sorted()
+        guard unresolved.isEmpty else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "deterministic completion has unresolved pipeline issues: "
+                    + unresolved.prefix(8).joined(separator: ", ")
+            )
+        }
+        guard runtime.totalRuns > 0 else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "deterministic completion requires a recorded pipeline run"
+            )
+        }
+        return WatcherDeterministicCompletionObservation(
+            schemaVersion: 1,
+            pipelineRevision: pipeline.revision,
+            pipelineRunNumber: runtime.totalRuns,
+            capturedAt: capturedAt,
+            observedAt: observedAt,
+            telemetryDigest: try WatcherIndependentReviewPolicy.digest(telemetry),
+            checkpointDigest: checkpointDigest,
+            checkpointLabel: checkpointLabel,
+            unresolvedIssueIDs: unresolved
+        )
+    }
+
+    static func makeReceipt(
+        observation: WatcherDeterministicCompletionObservation?,
+        pipeline: WatcherPipeline,
+        runtime: WatcherRuntimeState,
+        assessment: WatcherAgentAssessment,
+        verifiedAt: Date = Date()
+    ) throws -> WatcherDeterministicCompletionReceipt {
+        guard let observation else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "COMPLETE requires a current deterministic completion observation"
+            )
+        }
+        let covered = try validatedGoalCoverage(
+            pipeline: pipeline,
+            runtime: runtime,
+            assessment: assessment,
+            observation: observation
+        )
+        return WatcherDeterministicCompletionReceipt(
+            schemaVersion: 1,
+            verifiedAt: verifiedAt,
+            observation: observation,
+            verificationPlanDigest: try WatcherIndependentReviewPolicy.digest(
+                pipeline.verificationCommands
+            ),
+            assessmentDigest: try WatcherIndependentReviewPolicy.digest(assessment),
+            coveredGoalAnchorIDs: covered
+        )
+    }
+
+    static func validateReceipt(
+        _ receipt: WatcherDeterministicCompletionReceipt,
+        pipeline: WatcherPipeline,
+        runtime: WatcherRuntimeState,
+        assessment: WatcherAgentAssessment
+    ) throws {
+        guard receipt.schemaVersion == 1,
+              receipt.observation.schemaVersion == 1 else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "completion receipt schemaVersion must be 1"
+            )
+        }
+        let observation = receipt.observation
+        guard observation.capturedAt <= observation.observedAt.addingTimeInterval(5 * 60),
+              receipt.verifiedAt >= observation.observedAt,
+              !observation.checkpointLabel.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              isSHA256(observation.telemetryDigest),
+              isSHA256(observation.checkpointDigest) else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "completion receipt has invalid timing, checkpoint, or content-digest evidence"
+            )
+        }
+        let coverage = try validatedGoalCoverage(
+            pipeline: pipeline,
+            runtime: runtime,
+            assessment: assessment,
+            observation: receipt.observation
+        )
+        guard receipt.coveredGoalAnchorIDs == coverage else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "completion receipt does not bind exact goal-anchor coverage"
+            )
+        }
+        guard receipt.verificationPlanDigest == (try WatcherIndependentReviewPolicy.digest(
+            pipeline.verificationCommands
+        )), receipt.assessmentDigest == (try WatcherIndependentReviewPolicy.digest(assessment)) else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "completion receipt does not bind current verification and assessment artifacts"
+            )
+        }
+    }
+
+    private static func isSHA256(_ digest: ContentDigest) -> Bool {
+        digest.rawValue.count == 64 && digest.rawValue.allSatisfy {
+            "0123456789abcdef".contains($0)
+        }
+    }
+
+    static func validateCurrentCheckpoint(
+        _ receipt: WatcherDeterministicCompletionReceipt,
+        pipeline: WatcherPipeline,
+        workspacePath: String
+    ) throws {
+        guard receipt.observation.checkpointDigest == (try WatcherPolicy.checkpointDigest(
+            pipeline: pipeline,
+            workspacePath: workspacePath
+        )) else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "the completed Watcher's checkpoint changed after verification"
+            )
+        }
+    }
+
+    private static func validatedGoalCoverage(
+        pipeline: WatcherPipeline,
+        runtime: WatcherRuntimeState,
+        assessment: WatcherAgentAssessment,
+        observation: WatcherDeterministicCompletionObservation
+    ) throws -> [String] {
+        guard observation.pipelineRevision == pipeline.revision,
+              observation.pipelineRunNumber == runtime.totalRuns,
+              observation.unresolvedIssueIDs.isEmpty,
+              (runtime.activeIssues ?? []).isEmpty,
+              runtime.lastExitCode == 0,
+              runtime.consecutiveFailures == 0,
+              runtime.lastSuccessfulRunAt != nil else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "completion observation is stale or runtime requirements remain open"
+            )
+        }
+        guard assessment.reviewedAt >= observation.capturedAt.addingTimeInterval(-5 * 60) else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "completion assessment predates the deterministic observation"
+            )
+        }
+        let confirmed = assessment.issues.filter { $0.disposition == .confirmed }.map(\.id)
+        guard confirmed.isEmpty else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "completion assessment retains confirmed issues: "
+                    + confirmed.sorted().prefix(8).joined(separator: ", ")
+            )
+        }
+        let anchors = pipeline.dashboard?.goalAnchors.map(\.id).sorted() ?? []
+        guard !anchors.isEmpty else {
+            throw WatcherPolicyError.invalidManifest(
+                "completion requires at least one explicit goal anchor"
+            )
+        }
+        let covered = Set(assessment.importantInformation.compactMap { information in
+            let detail = information.detail.trimmingCharacters(in: .whitespacesAndNewlines)
+            return detail.isEmpty ? nil : information.goalAnchorID
+        })
+        guard Set(anchors).isSubset(of: covered) else {
+            let missing = Set(anchors).subtracting(covered).sorted()
+            throw WatcherPolicyError.invalidTelemetry(
+                "completion lacks evidence for goal anchors: "
+                    + missing.prefix(8).joined(separator: ", ")
+            )
+        }
+        return anchors
+    }
+}
+
+enum WatcherIndependentReviewPolicy {
+    static func digest<T: Encodable>(_ value: T) throws -> ContentDigest {
+        let data = try JSONEncoder.loopForge.encode(value)
+        return ContentDigest(SHA256.hash(data: data).map {
+            String(format: "%02x", $0)
+        }.joined())
+    }
+
+    static func lineageDigest(
+        agent: AgentSelection,
+        threadID: String,
+        role: String
+    ) -> ContentDigest {
+        let material = [
+            agent.provider.rawValue,
+            agent.modelID,
+            agent.reasoningEffort ?? "",
+            role,
+            threadID
+        ].joined(separator: "\u{1f}")
+        return ContentDigest(SHA256.hash(data: Data(material.utf8)).map {
+            String(format: "%02x", $0)
+        }.joined())
+    }
+
+    static func makeReceipt(
+        pipeline: WatcherPipeline,
+        assessment: WatcherAgentAssessment,
+        authorAgent: AgentSelection,
+        authorThreadID: String,
+        reviewerAgent: AgentSelection,
+        reviewerThreadID: String,
+        completionReceipt: WatcherDeterministicCompletionReceipt? = nil,
+        verdict: WatcherIndependentReviewVerdict,
+        response: String,
+        reviewedAt: Date = Date()
+    ) throws -> WatcherIndependentReviewReceipt {
+        WatcherIndependentReviewReceipt(
+            schemaVersion: 1,
+            reviewedAt: reviewedAt,
+            authorThreadID: authorThreadID,
+            reviewerThreadID: reviewerThreadID,
+            authorLineageDigest: lineageDigest(
+                agent: authorAgent,
+                threadID: authorThreadID,
+                role: "watcher-review-author"
+            ),
+            reviewerLineageDigest: lineageDigest(
+                agent: reviewerAgent,
+                threadID: reviewerThreadID,
+                role: "watcher-independent-reviewer"
+            ),
+            pipelineDigest: try digest(pipeline),
+            assessmentDigest: try digest(assessment),
+            completionReceiptDigest: try completionReceipt.map(digest),
+            verdict: verdict,
+            reviewerProvider: String(reviewerAgent.summary.prefix(160)),
+            evidence: String(response.trimmingCharacters(in: .whitespacesAndNewlines).prefix(800))
+        )
+    }
+
+    static func validate(
+        _ receipt: WatcherIndependentReviewReceipt,
+        pipeline: WatcherPipeline,
+        assessment: WatcherAgentAssessment,
+        completionReceipt: WatcherDeterministicCompletionReceipt? = nil,
+        authorThreadID: String
+    ) throws {
+        guard receipt.schemaVersion == 1 else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "independent review receipt schemaVersion must be 1"
+            )
+        }
+        guard !receipt.authorThreadID.isEmpty,
+              !receipt.reviewerThreadID.isEmpty,
+              receipt.authorThreadID == authorThreadID else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "independent review does not bind the current author thread"
+            )
+        }
+        guard receipt.authorThreadID != receipt.reviewerThreadID,
+              !receipt.authorLineageDigest.rawValue.isEmpty,
+              !receipt.reviewerLineageDigest.rawValue.isEmpty,
+              receipt.authorLineageDigest != receipt.reviewerLineageDigest else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "an adaptive review Agent cannot approve its own assessment"
+            )
+        }
+        guard receipt.pipelineDigest == (try digest(pipeline)),
+              receipt.assessmentDigest == (try digest(assessment)),
+              receipt.completionReceiptDigest == (try completionReceipt.map(digest)) else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "independent review does not cover the accepted pipeline and assessment"
+            )
+        }
+        guard receipt.verdict == .approved else {
+            throw WatcherPolicyError.invalidTelemetry(
+                "the independent reviewer rejected the adaptive review"
+            )
+        }
     }
 }
 

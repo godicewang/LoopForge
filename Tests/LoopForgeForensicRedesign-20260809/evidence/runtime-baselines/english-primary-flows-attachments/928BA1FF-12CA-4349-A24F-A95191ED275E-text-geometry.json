@@ -1,0 +1,140 @@
+{
+  "observations" : [
+    {
+      "confidence" : 1,
+      "height" : 0.01744185941624876,
+      "pixelHeight" : 45.732555389404254,
+      "pixelWidth" : 144.5678253173828,
+      "pixelX" : 148.3722395217502,
+      "pixelYFromTop" : 76.22093206494903,
+      "text" : "09:41",
+      "width" : 0.11987381867113003,
+      "x" : 0.12302839097989238,
+      "yFromTop" : 0.029069768140712826
+    },
+    {
+      "confidence" : 0.3,
+      "height" : 0.02906976811854911,
+      "pixelHeight" : 76.22093200683577,
+      "pixelWidth" : 72.28391265869146,
+      "pixelX" : 661.9684541185586,
+      "pixelYFromTop" : 1017.5494182619476,
+      "text" : "))",
+      "width" : 0.05993690933556506,
+      "x" : 0.548895898937445,
+      "yFromTop" : 0.3880813952181341
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.02631578947368418,
+      "pixelHeight" : 68.99999999999993,
+      "pixelWidth" : 859.798095703125,
+      "pixelX" : 175.00316290472415,
+      "pixelYFromTop" : 1227.0000016432723,
+      "text" : "Join the Community to Chat",
+      "width" : 0.7129337443641169,
+      "x" : 0.14511041700225882,
+      "yFromTop" : 0.46796338735441356
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.02546845820912147,
+      "pixelHeight" : 66.77829742431649,
+      "pixelWidth" : 880.0077514648439,
+      "pixelX" : 163.01349435349584,
+      "pixelYFromTop" : 1305.1318889434087,
+      "text" : "Create a profile to message founders, start",
+      "width" : 0.7296913362063382,
+      "x" : 0.13516873495314746,
+      "yFromTop" : 0.4977619713742978
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.018895347822176167,
+      "pixelHeight" : 49.54360198974591,
+      "pixelWidth" : 570.6624755859375,
+      "pixelX" : 315.76654687185794,
+      "pixelYFromTop" : 1375.787792266573,
+      "text" : "groups, and invite advisors.",
+      "width" : 0.473186132326648,
+      "x" : 0.2618296408556036,
+      "yFromTop" : 0.5247093029239409
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.01612695785627205,
+      "pixelHeight" : 42.284883499145316,
+      "pixelWidth" : 334.78863525390625,
+      "pixelX" : 433.70347656250163,
+      "pixelYFromTop" : 1505.0000005191591,
+      "text" : "Join Community",
+      "width" : 0.27760251679428377,
+      "x" : 0.35962145651948724,
+      "yFromTop" : 0.5739893213269104
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.008826012833258456,
+      "pixelHeight" : 23.141805648803672,
+      "pixelWidth" : 87.5734176635742,
+      "pixelX" : 144.53190424905978,
+      "pixelYFromTop" : 2496.09770172804,
+      "text" : "Home",
+      "width" : 0.07261477418206816,
+      "x" : 0.11984403337401309,
+      "yFromTop" : 0.9519823423829291
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.010174418114051842,
+      "pixelHeight" : 26.67732429504393,
+      "pixelWidth" : 178.80757141113278,
+      "pixelX" : 300.54889270232013,
+      "pixelYFromTop" : 2492.424419438379,
+      "text" : "Storefronts",
+      "width" : 0.1482649845863456,
+      "x" : 0.24921135381618584,
+      "yFromTop" : 0.9505813956668112
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.010174418114051842,
+      "pixelHeight" : 26.67732429504393,
+      "pixelWidth" : 167.3943176269532,
+      "pixelX" : 540.2271330812869,
+      "pixelYFromTop" : 2496.2354655689023,
+      "text" : "Community",
+      "width" : 0.13880125839714197,
+      "x" : 0.4479495299181483,
+      "yFromTop" : 0.9520348838935554
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.0122321424913443,
+      "pixelHeight" : 32.07267761230475,
+      "pixelWidth" : 118.33796691894528,
+      "pixelX" : 768.2915837212673,
+      "pixelYFromTop" : 2491.632265531451,
+      "text" : "Friends",
+      "width" : 0.09812435067905911,
+      "x" : 0.6370576979446662,
+      "yFromTop" : 0.9502792774719493
+    },
+    {
+      "confidence" : 1,
+      "height" : 0.008720929708124436,
+      "pixelHeight" : 22.866277694702273,
+      "pixelWidth" : 45.652996063232386,
+      "pixelX" : 996.7570987535573,
+      "pixelYFromTop" : 2496.2354656132593,
+      "text" : "Me",
+      "width" : 0.037854888941320386,
+      "x" : 0.8264984235104124,
+      "yFromTop" : 0.9520348839104726
+    }
+  ],
+  "path" : "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/evidence/runtime-baselines/english-primary-flows-attachments/928BA1FF-12CA-4349-A24F-A95191ED275E.png",
+  "pixelHeight" : 2622,
+  "pixelWidth" : 1206,
+  "schemaVersion" : 1
+}

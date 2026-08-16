@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "status": "implemented-side-by-side",
+  "legacyExecutionCutover": false,
+  "easyBusinessMutated": false,
+  "productionFilesAdded": 3,
+  "testFilesAdded": 1,
+  "newLines": 1286,
+  "targetedTests": {
+    "executed": 11,
+    "failed": 0
+  },
+  "fullSwiftTests": {
+    "executed": 354,
+    "skipped": 6,
+    "failed": 0
+  },
+  "enforcedInvariantCount": 11,
+  "verticalPolicyMatches": 0,
+  "productionHashes": {
+    "KernelIdentity.swift": "def00daa6b0d582c583d6b5fd433ce07322629ede96147d61438ee25db6cde22",
+    "RunReducer.swift": "de05f87bc99775ab51ad4f22357de79a92719232dc2d0a1969c35153922d2d57",
+    "TaskContract.swift": "c31df2cf7be382d928aaa47c1e31237de239b5cd62d8b091a9db6a6636335d21"
+  },
+  "testHash": "25237c4d07f2c95a49419476bc0cc24b836f2ec15e82b4f6f42d8f674656b2fd",
+  "nextGate": "real-runtime-adapters-and-shadow-cutover"
+}

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-14T15:41:02Z",
+  "status": "distinct-ratified-independent-visual-review-authority-present-journal-bound-kernel-evaluation-issuer-pending",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "captureAuthority": {
+    "retainsExactRawEvidenceBehindLiveAuthority": true,
+    "laterImageBytesRevalidatedAgainstPixelReceipt": true,
+    "decodedCaptureCanRecreateAuthority": false
+  },
+  "measurementAuthority": {
+    "acceptedKnownDebtBound": true,
+    "exactDebtSeverityCoverageRequired": true,
+    "severityMaterialAttestationBound": true
+  },
+  "reviewAuthority": {
+    "liveCandidateCapturesRequiredForEveryCell": true,
+    "liveMeasurementsRequiredForEveryApplicableCell": true,
+    "baselineAndCandidatePixelsRevalidated": true,
+    "exactContractedMutationMatrixRequired": true,
+    "ratifiedReadOnlyOfflinePluginFreeMinimalProfileRequired": true,
+    "distinctReviewerLineageRequired": true,
+    "allowListedHarnessAndExactProviderModelExecutableRequired": true,
+    "adapterOwnsPromptsAndEvidenceContext": true,
+    "workerNarrativeAccepted": false,
+    "completePerImageAndPerPairDecisionsRequired": true,
+    "adapterDerivesAggregateVerdict": true,
+    "adapterOwnsReviewAndBatchReceiptIDs": true,
+    "redVerdictRetainedAsDurableEvidence": true,
+    "liveReviewAuthorityCodable": false,
+    "createsJournalOrMutationAuthority": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 5,
+    "focusedFailures": 0,
+    "developmentTestsExecuted": 783,
+    "developmentTestsSkipped": 8,
+    "developmentFailures": 0,
+    "developmentTestSeconds": 60.731,
+    "releaseBuildPassed": true,
+    "releaseBuildSeconds": 100.80,
+    "diffCheckPassed": true,
+    "residualExactExecutableCount": 0,
+    "failedCompileAttemptsCounted": 0,
+    "unrecoverableOutputRunsCounted": 0
+  },
+  "sourceSHA256": {
+    "NativeVisualCaptureAdapter.swift": "c4d20bdd31f3aaeeaa3bc1edff280a7521f2a67fba45b19be55b84d279fbc7cd",
+    "NativeVisualMeasurementAdapter.swift": "dd86c1c0f9e10429f5b9ddf73e26e4528bec066993551f374ce67f6a39a2f7ec",
+    "NativeIndependentVisualReviewAdapter.swift": "bac1c040825d0e45f2bf5f6314a1ddf2954850da2f33c4e6167244d54be3b44e",
+    "NativeIndependentVisualReviewAdapterTests.swift": "1902aff70cdb0f42c09b5a553bd4d44ecdcc03ea7ee5366b698549ae5c4e1c96"
+  },
+  "sourceSnapshotSHA256": "1a73df35424b1ae1be186ff49a8d7c75373c44d2e090aa9cbff32d7493d790cd",
+  "remainingVetoes": {
+    "journalBoundAuthorizedKernelVisualEvaluationIssuer": false,
+    "trustedReleaseContainmentIssuer": false,
+    "externalDependencyRuntimeObserver": false,
+    "finalCompletionAuthorization": false,
+    "legacyControllerCutover": false,
+    "currentNativeScreenshots": false,
+    "currentSourcePackage": false,
+    "cleanCommitAndPush": false
+  },
+  "finalAcceptance": false
+}

@@ -367,7 +367,17 @@ struct APIModelDiscoveryResult: Equatable {
 }
 
 enum APIKeyVault {
-    private static let service = "com.loopforge.api-connections"
+    static let service = "com.loopforge.api-connections"
+
+    static func kernelCredentialReference(
+        for id: UUID
+    ) -> KernelProviderCredentialReference {
+        KernelProviderCredentialReference(
+            source: .macOSKeychainGenericPassword,
+            service: service,
+            account: id.uuidString
+        )
+    }
 
     static func set(_ key: String, for id: UUID) throws {
         let account = id.uuidString

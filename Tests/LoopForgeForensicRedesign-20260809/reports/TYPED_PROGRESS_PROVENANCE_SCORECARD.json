@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T06:55:35Z",
+  "status": "typed-progress-and-evidence-provenance-package-verified-production-issuer-pending",
+  "acceptanceRowsAdvanced": ["F-02"],
+  "priorDefect": {
+    "anyProcessedCommandCouldMasqueradeAsProgress": true,
+    "inventedEvidenceIdentityCouldEnterOccurrence": true,
+    "priorOccurrenceCouldRecursivelyActAsEvidence": true
+  },
+  "enforcementBoundary": {
+    "allCausalProgressTransactionsPersisted": true,
+    "acceptedProgressSubsetPersisted": true,
+    "arbitraryProcessedCommandRejected": true,
+    "inventedEvidenceRejected": true,
+    "occurrenceEvidenceRecursionRejected": true,
+    "stagnantProgressDiagnosticOnly": true,
+    "productionOccurrenceIssuerConnected": false
+  },
+  "verification": {
+    "reducerTestsExecuted": 31,
+    "reducerFailures": 0,
+    "journalTestsExecuted": 16,
+    "journalFailures": 0,
+    "fullTestsExecuted": 601,
+    "fullTestsSkipped": 8,
+    "fullFailures": 0,
+    "packagingOwnedTestsExecuted": 601,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "sourceSnapshotSHA256": "14b4610930e88b11007d660ad98704ee5461e2ef5d8a0fdcda70582a1b007607",
+    "reducerSourceSHA256": "c22cb62d84910bf2db080368c4e3a1bdd9844ded6ca6df26fc201fb17561c688",
+    "journalSourceSHA256": "f18039546095126c138f90a9616634781f735a312995814425f269a009a5dbab",
+    "reducerTestsSHA256": "8b33ff43ef4a3c02982ae70adacb5b6827efa4ce51047fc28a8bc61536d06253",
+    "journalTestsSHA256": "7fce422ee091260925b2a96485d02bcb8cc8e1082b95003fbfa27bca3d493004",
+    "fullTestLogSHA256": "3c09646c7f7a0e019b4d2a1fec5c00cf3a7ffd6d1615c7fb8ff118879d25ca70",
+    "packageTestLogSHA256": "c2b765e2ea0f956bda1c982c73eef962322f5ee1bfa652fa5cbc3c7f7d5955bf",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "buildManifestSHA256": "4bef0ced44ed67380097967680d381ed0f7e02987c3fcdb17c0d4dc8f3897bd3",
+    "executableSHA256": "6f99b8ab85b1026d1f27c1a8f2e4f6a0ad738dec6d1952f7700b7309a5ccc9c9",
+    "zipSHA256": "821330a27cc04727338d7c60c385d36228b8bd2b029477724556257f2ca59b40",
+    "dmgSHA256": "735355d374c872120fd496779c70d99f4389f1e66dc547d77509aef9fed7ea49",
+    "cdHash": "68676f5de2cc3ef2ff13ea43f1f6d5bf444abf71",
+    "residualPackagedProcessCount": 0
+  },
+  "knownBoundary": {
+    "productionKernelEnrollmentPending": true,
+    "trustedOccurrenceIssuerPending": true,
+    "legacyControllerCutoverPending": true,
+    "currentNativeUICapturePending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

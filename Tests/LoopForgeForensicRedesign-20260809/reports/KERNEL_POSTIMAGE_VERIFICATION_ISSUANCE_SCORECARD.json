@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T02:30:29Z",
+  "status": "ordinary-postimage-verification-issuance-and-latest-red-revocation-proven-integration-review-and-start-vetoed",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "verificationIssuance": {
+    "liveResultCapabilityRequired": true,
+    "decodedResultCanIssueVerification": false,
+    "exactReleaseTransactionReadBack": true,
+    "releaseMustBeNonDuplicateSingleEvent": true,
+    "activationLaunchIntegrationApplyAttemptBound": true,
+    "requirementsSourceEnvironmentOracleOutcomeBound": true,
+    "callerSelectsReceiptIdentityOrVerdict": false,
+    "canonicalEvidenceBatch": true,
+    "reducerRecomputesFullBatchDigest": true,
+    "idempotentExactCommandReplay": true
+  },
+  "revocation": {
+    "identityFields": [
+      "attemptID",
+      "requirementID",
+      "sourceRevision",
+      "environmentDigest",
+      "oracleDigest"
+    ],
+    "orderingSource": "postimage release ending journal sequence",
+    "laterRedRevokesEarlierGreen": true,
+    "v2RedSuppressesMatchingLegacyGreen": true,
+    "otherOracleRedDoesNotRevoke": true,
+    "newerGreenCanRestoreVerification": true,
+    "oldReviewCanApproveNewerGreen": false,
+    "reviewOwnEvidencePreservedSeparately": true,
+    "acceptedNodeDemotedWhenRevoked": true,
+    "integrationPreflightRejectsRevokedReceipt": true
+  },
+  "nativeProof": {
+    "naturalExitAcceptedResult": true,
+    "ordinaryVerificationJournaled": true,
+    "exactVerificationTransactionReadback": true,
+    "duplicateCommandReplaysExactVerification": true,
+    "integrationPhaseAfterOrdinaryVerification": "appliedUnverified"
+  },
+  "verification": {
+    "focusedResultAuthorityTests": 3,
+    "focusedReducerTests": 39,
+    "focusedJournalIntegrationTests": 8,
+    "completeSwiftTests": 715,
+    "environmentSkips": 8,
+    "failures": 0,
+    "releaseLoopForgeBuild": "passed",
+    "releaseKernelSandboxGateBuild": "passed",
+    "diffWhitespace": "passed",
+    "residualSwiftOrVerifierProcesses": 0,
+    "exactSourceSnapshotSHA256": "2a51935fae8030ac4f7ce8f9687105dc3b1d6285abd60eed68788463d3e4927d",
+    "releaseArtifacts": {
+      "LoopForgeSHA256": "df95c69a9463160125d09ace39d7bcefbfddbf23037dc45993d5d291d05fa095",
+      "KernelSandboxGateSHA256": "21731107c0b85e03933bac526d5f0a705394579e9eb02a7665c950fe49949b99"
+    },
+    "sourceHashes": {
+      "KernelPostimageVerifierResultAuthority.swift": "20f0edb01ad1b5834a9efca184146caa8d4227d865c198e335e933110491fc97",
+      "JournaledProcessRuntime.swift": "2f292ddfb10275b1ef8d3f777d37af5065084e3c3b5bedbb4d486281a7e3d9b0",
+      "RunJournal.swift": "eaf9c7d25c925548addfc24b4387e86cd281bbe89b8af4229920e503af62a8e1",
+      "RunReducer.swift": "623587999420026ab3269d8e40ec8030ef690c44e7c58546f6e3766b9ed68b79",
+      "KernelPostimageVerifierResultAuthorityTests.swift": "f44ebfd7cdb380ed173e70739885dc864398fe0cb0c05b5ad3710a18b40c128a",
+      "KernelRunReducerTests.swift": "aa12e97539876c952787e2c8969eaf7a59ae0a38445aff22f02408d9e4d07ae2",
+      "IntegrationTransactionStateMachineTests.swift": "04803ab8798b5b4a09ba13f8fcd09a986ebecf6bfe1c9c7620477b19e3985bfe"
+    }
+  },
+  "remainingPrerequisites": [
+    "truthful per-child resident-memory enforcement",
+    "candidate descriptor capability atomic at spawn",
+    "separately activated adversarial read-only review issuer",
+    "integration postimage-verification and independent acceptance issuers",
+    "native immutable design-baseline selection and complete visual evidence",
+    "final authorization and executable external-dependency observation",
+    "legacy Single and Parallel retirement",
+    "current-source package sign unlocked native walkthrough clean commit and push"
+  ],
+  "finalAcceptance": false
+}

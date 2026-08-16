@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "status": "production-startup-guard-passed-legacy-cutover-vetoed",
+  "recordedAt": "2026-08-10T22:32:23Z",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "registry": {
+    "snapshotSchemaVersion": 1,
+    "maximumRuns": 256,
+    "maximumSnapshotBytes": 8388608,
+    "maximumDispatchBatch": 64,
+    "digestSealed": true,
+    "atomicPersistence": true,
+    "crossProcessRegistryLock": true,
+    "rootPermissions": "0700",
+    "snapshotAndLockPermissions": "0600",
+    "registryDerivesJournalAndOutboxRoots": true,
+    "symlinkWorkspaceAccepted": false,
+    "workspaceRegistryOverlapAccepted": false,
+    "duplicateConflictAccepted": false,
+    "tamperedSnapshotAccepted": false
+  },
+  "coordinator": {
+    "maximumRunsPerLaunch": 32,
+    "crossProcessRecoveryOwner": true,
+    "timerPolling": false,
+    "legacyTaskInput": false,
+    "legacyGraphInput": false,
+    "restoresSupervisorBeforeDispatcher": true,
+    "validatesEveryOutboxWorkspaceBinding": true,
+    "missingWorkspaceRequiresAttention": true,
+    "quarantineRequiresAttention": true,
+    "liveResourcesRequireAttention": true,
+    "failedReleaseRequiresAttention": true
+  },
+  "productionStartup": {
+    "nativeAppStartsDefaultRecovery": true,
+    "singleLoopAwaitsRecovery": true,
+    "parallelIntegrationAwaitsRecovery": true,
+    "legacyHostRecoveryRunsBeforeKernelRecovery": false,
+    "agentWorkAllowedAfterAttentionReport": false,
+    "legacyGraphWorkAllowedAfterAttentionReport": false,
+    "automaticResumeAllowedAfterAttentionReport": false,
+    "terminationCancelsActiveRecovery": false,
+    "emptyRegistryIsNoOp": true
+  },
+  "authorityBoundary": {
+    "legacyGraphRegistrationCallCount": 0,
+    "legacyShadowProductionCallCount": 0,
+    "legacyStateCanInferActorFromProse": false,
+    "productionRunCreationPathExists": false,
+    "separateSwiftModuleCapabilityBoundary": false
+  },
+  "verification": {
+    "focusedTests": 5,
+    "focusedFailures": 0,
+    "fullTests": 511,
+    "skipped": 8,
+    "failures": 0,
+    "fullLog": "/tmp/loopforge-full-test-workspace-recovery-startup.log",
+    "fullLogSHA256": "7699852211721f2023b74ff7112fdbb362a8b108a192884245ae95c05226b84e",
+    "packageVerified": true,
+    "currentNativeUIVerified": false,
+    "currentNativeUIBlockedReason": "latest known macOS state locked; no repeated unlock or polling attempt"
+  },
+  "sourceSHA256": {
+    "WorkspaceMutationRecoveryRegistry.swift": "ce16395b554533306e55e25521da9070cee802d05ced2ae862e48c96cd73f7dd",
+    "WorkspaceMutationRecoveryCoordinator.swift": "00c946bfa5da4b900df8826cd77d3e183e20ffc516ab3b824ef561ac4ee6df31",
+    "LoopController.swift": "d143b57cc2682d1cd2b53508db7d6ef9e868d882ef8b3105cb5af20c946d8576",
+    "AppModel.swift": "c8851932a3303e2d1b95d6d970550da78cec3d52d6b1ca9101dc27fdbad90548",
+    "LoopForgeApp.swift": "e3d93e44d1bd835334025cec85d082d96c5951820b4ce7a3d074f2a3fa0817ae"
+  },
+  "package": {
+    "executableSHA256": "eb07a465de795466578db76f38f1def56c4d088535908d81bb58e9f616c23676",
+    "zipSHA256": "0eced99c6fa1b5f1674867f01aaea6d82e2839842084d3489fdd30f6fab73886",
+    "dmgSHA256": "5a12e4d031be387af8b9b1975044ad3dd80f490d6323008a0317d841e5a4728a",
+    "checksumManifestSHA256": "abda252af8a5bb8ad9db88872c589ef2aae5ea19e8ea9e07dfa8008f9668aaec",
+    "signatureCDHash": "6a77f692ed399cf33c0dc349729943464b2b0293"
+  },
+  "finalRelease": false
+}

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T01:51:01Z",
+  "status": "durable-result-and-post-journal-live-wrapper-positive-native-issuance-proven-verification-review-and-start-vetoed",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "resultAuthority": {
+    "containmentSchemaVersion": 4,
+    "contentAddressedReceipt": true,
+    "activationBound": true,
+    "launchBound": true,
+    "releaseReceiptBound": true,
+    "integrationApplyAttemptBound": true,
+    "requirementSetAndRecipeBound": true,
+    "candidateSourceRevisionBound": true,
+    "verifierLineageBound": true,
+    "retainedOutputDigestsBound": true,
+    "canonicalParseBound": true,
+    "exactMappingAndOutcomeBound": true,
+    "failRedFailureDigestAtomicWithRelease": true,
+    "liveWrapperPrivateInitializer": true,
+    "liveWrapperRequiresFileOwnedNonSerializableIssuer": true,
+    "liveWrapperIssuedOnlyAfterExactJournalReleaseReadback": true,
+    "decodedReceiptCanRecreateLiveAuthority": false
+  },
+  "authoritySeparation": {
+    "resultIsVerificationReceipt": false,
+    "verificationReceiptIssued": false,
+    "latestRedRevocationImplemented": false,
+    "independentReviewIssued": false,
+    "integrationAccepted": false
+  },
+  "adversarialProofs": {
+    "deterministicCompleteEvidenceReceipt": true,
+    "crossWiredParseRejected": true,
+    "crossWiredLaunchRejected": true,
+    "emptyReleaseIdentityRejected": true,
+    "timeoutProducesNoResultOrLiveCapability": true,
+    "absentRecoveryProducesNoResultOrLiveCapability": true,
+    "timeoutInjectedAcceptedResultRejectedOnReplay": true,
+    "positiveNativeNaturalExitLiveIssuanceReceipt": true,
+    "liveReceiptMatchesDurableContainmentResult": true,
+    "liveReleaseTransactionReadsBackExactRelease": true,
+    "ordinaryVerificationStillAbsentAfterLiveResult": true,
+    "integrationStillAppliedUnverifiedAfterLiveResult": true
+  },
+  "verification": {
+    "focusedResultAuthorityTests": 2,
+    "focusedJournalIntegrationTests": 8,
+    "completeSwiftTests": 712,
+    "environmentSkips": 8,
+    "failures": 0,
+    "releaseLoopForgeBuild": "passed",
+    "releaseKernelSandboxGateBuild": "passed",
+    "diffWhitespace": "passed",
+    "residualSwiftOrVerifierProcesses": 0,
+    "exactSourceSnapshotSHA256": "69c38850dbca09b40b77f101dd903221f3b55791f933a4f85a9c92549a6b00ab",
+    "releaseArtifacts": {
+      "LoopForgeSHA256": "67eca1b10e5d5ae550fcae4e91e414d6e51630a5a0b307ff53bcc0c60dba202a",
+      "KernelSandboxGateSHA256": "21731107c0b85e03933bac526d5f0a705394579e9eb02a7665c950fe49949b99"
+    },
+    "sourceHashes": {
+      "KernelPostimageVerifierResultAuthority.swift": "c867b94af508e17c8cdf10bd44bc6e43627346c9e538723d88c97cdcf5ca2cfc",
+      "KernelPostimageVerifierActivation.swift": "ceb2f33f14538fb359012c29292de6830b5742946df776476ecf6c338bfb741f",
+      "JournaledProcessRuntime.swift": "1f74d046dd88669297e272f243c870c139f61b892e8883a1c32be3458dafbb9a",
+      "KernelPostimageVerifierResultAuthorityTests.swift": "91a3b9910a3addf5c28d885efbcece1637ebc90d2b3b42ac9cbb33ca6b44b768",
+      "IntegrationTransactionStateMachineTests.swift": "3e9a09be6f904c929c879a6849f7457712a87f1ff0ecc6278f9ef2430955748c"
+    }
+  },
+  "remainingPrerequisites": [
+    "ordinary verification receipt and canonical result evidence batch",
+    "latest-red verification revocation",
+    "truthful per-child resident-memory enforcement",
+    "candidate descriptor capability atomic at spawn",
+    "separately activated adversarial read-only review",
+    "integration acceptance and native start",
+    "current-source package sign native walkthrough clean commit and push"
+  ],
+  "finalAcceptance": false
+}

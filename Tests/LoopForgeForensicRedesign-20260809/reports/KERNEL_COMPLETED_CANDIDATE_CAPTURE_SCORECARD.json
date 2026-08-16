@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T15:51:40Z",
+  "status": "postworker-candidate-content-captured-derived-journaled-and-crash-replayable",
+  "finalAcceptance": false,
+  "controls": {
+    "exactCompletedDispositionRequired": true,
+    "exactReleaseParseAndExecutionTransactionsRequired": true,
+    "runtimeMustHaveNoLiveOrInDoubtResources": true,
+    "captureUsesRetainedCandidateDescriptor": true,
+    "noFollowStableReads": true,
+    "ratifiedExcludedDirectoriesApplied": true,
+    "secondIndependentTreeRehash": true,
+    "logicalWorkspaceIdentityPreserved": true,
+    "physicalIsolationIdentityRecordedSeparately": true,
+    "immutableCandidateBytesRetainedInNonCodableCapability": true,
+    "contentObjectsDeduplicatedAndSelfDigested": true,
+    "deltaRestrictedToPreparedNodeRequirementsAndWritablePaths": true,
+    "allDesiredPostimagesPresentInCapturedBytes": true,
+    "captureAttemptConsumedOnce": true,
+    "pureReducerAcceptance": true,
+    "hashJournalFrameLineageBound": true,
+    "crashReplayRestoresReceiptButNotByteAuthority": true,
+    "canonicalWorkspaceMutationAuthorityIssued": false
+  },
+  "verification": {
+    "newCaptureTests": 3,
+    "swiftTestsExecuted": 764,
+    "intentionalEnvironmentSkips": 8,
+    "swiftTestFailures": 0,
+    "swiftTestWallSeconds": 61.602,
+    "workspaceCandidateMaterializerSHA256": "9b26184fdf3b813377b794760210bf252aa1cd4d9128ada2d05efe8808757581",
+    "workspaceSourceRevisionCollectorSHA256": "917907810f5f32013b3fd878aa3835e6e9e561e790e5488846473a1eb47ae111",
+    "journaledProcessRuntimeSHA256": "5092d47dec4c7054f353cac0be4ded8cf8a323b4d34777312ee52a563a9aec53",
+    "kernelProductionCoordinatorSHA256": "3ef6c774429caff7e6ffa276a1e0a281037a94015a8b7056485bddb41ab0d299",
+    "runReducerSHA256": "f916b56e7a6392aca0b184d9603481ad1834a72b680f4e1ced019dfea3f0c45e",
+    "runJournalSHA256": "a55304f90b9f4a26386b9a414fe5976e9f0740f0dfe3a304f74b8713ef0e8dc1",
+    "captureTestsSHA256": "8178beaaac262dda988e2a83cb4273327ebdcd917d2d516e0308ca9a507dbe88",
+    "enrollmentTestsSHA256": "09787ed927e4caaa8f18fed7d1f7410c272d1f2283c96655c728697006e67244",
+    "fullTestLogSHA256": "81afdfb5dfc3be59054c822168d6f8086336bb03b51a636593286370267dc6f5"
+  },
+  "ledger": {
+    "acceptedIntervalID": "kernel-completed-candidate-capture-193",
+    "coveredSecondsAdded": 600,
+    "coveredActiveSeconds": 157770,
+    "acceptedIntervals": 193,
+    "failedDiagnosticsTestsBuildsWaitsAndReportsCountedSeconds": 0
+  },
+  "remainingPrerequisites": [
+    "compose captured immutable bytes through the production content store",
+    "issue the remaining manifest preparation-facts rollback proposal and mutation-preflight chain",
+    "provide tested resident-memory enforcement or retain verifier and reviewer veto",
+    "compose native immutable design baseline complete visual evidence final authorization and native UI start",
+    "retire remaining legacy Single and Parallel paths",
+    "complete current-source package sign hash unlocked native walkthrough clean commit and push"
+  ]
+}

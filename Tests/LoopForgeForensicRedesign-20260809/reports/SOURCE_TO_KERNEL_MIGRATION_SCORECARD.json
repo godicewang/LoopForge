@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "report": "SOURCE_TO_KERNEL_MIGRATION_MAP.md",
+  "status": "pre-implementation-contract",
+  "productionRefactorAuthorized": false,
+  "auditedManifestFiles": 64,
+  "auditedManifestLines": 37444,
+  "productionFilesMapped": 45,
+  "targetOwnershipAreas": [
+    "Kernel",
+    "Execution",
+    "Evidence",
+    "Convergence",
+    "Adapters",
+    "Watcher",
+    "Compatibility",
+    "UI"
+  ],
+  "rolloutSlices": 7,
+  "authoritativeReplacements": [
+    "GraphLoopEngine monolith",
+    "LoopController runtime ownership",
+    "TaskStore snapshot authority",
+    "WorkspaceAuditor aggregate scoring",
+    "AuditEvidence prose bundle",
+    "WatcherController task ownership",
+    "WatcherStore checkpoint authority"
+  ],
+  "retainedAdapterAssets": [
+    "ProcessRunner process-tree escalation",
+    "Codex event transport",
+    "provider API clients",
+    "resource lease intent-before-acquire pattern",
+    "pure UI focus projection",
+    "deterministic package and asset scripts"
+  ],
+  "coreDomainSpecificPolicyAllowed": false,
+  "migrationRule": "Build the typed kernel side-by-side, migrate call sites by receipt-backed slices, and remove legacy authority only after deterministic replay and native package acceptance."
+}

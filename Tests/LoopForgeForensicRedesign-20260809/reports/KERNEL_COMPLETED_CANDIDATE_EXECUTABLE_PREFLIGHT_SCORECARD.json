@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-14T00:30:50Z",
+  "status": "completed-candidate-executable-preflight-journaled-and-crash-replayable",
+  "finalAcceptance": false,
+  "easyBusinessMutated": false,
+  "controls": {
+    "liveAcceptedRollbackAuthorityRequired": true,
+    "decodedReceiptsCannotMintAuthority": true,
+    "canonicalAffectedPathsRevalidated": true,
+    "completeCurrentWorktreeRecaptured": true,
+    "externalContentStoreRevalidated": true,
+    "contractProtectedBaselineBindingsProjected": true,
+    "callerSelectedAcceptedReceiptSetsForbidden": true,
+    "integrationProposalJournaled": true,
+    "mutationPreflightJournaled": true,
+    "deterministicRollbackMatchesRehearsal": true,
+    "duplicateReplayExact": true,
+    "proposalOnlyCrashCanResumePreflight": true,
+    "publicationPermitted": false,
+    "applyIntentIssued": false,
+    "canonicalWorkspaceMutationAuthorityIssued": false
+  },
+  "verification": {
+    "swiftTestsExecuted": 766,
+    "intentionalEnvironmentSkips": 8,
+    "swiftTestFailures": 0,
+    "swiftTestSeconds": 57.462,
+    "swiftTestWallSeconds": 57.507,
+    "sourceHashes": {
+      "WorkspaceCompletedCandidateMutationPreflight.swift": "95f352dfb959a9d6727de9ef6efc20fa580a92f69e565ca87922f7c13487cc00",
+      "TransactionalMutationKernel.swift": "0b79607c89b9219943e1c2024a283db28eed57d802e4b61a2d070694a686cfc3",
+      "JournaledWorkspaceMutationRuntime.swift": "43b7126537c58fec0fe1526645ddeabdde20edd3e871939e4441946c2a0bbadd",
+      "RunReducer.swift": "efc5160173c62e6c7d85911ac53647884266542cc0df74d84b5c80d271e8c45b",
+      "KernelRunEnrollmentCoordinatorTests.swift": "c353ae52e22a6d1397634d0887f55d9377218e637cfa23d2196bdd3a03601b7f"
+    }
+  },
+  "ledger": {
+    "acceptedIntervalID": "kernel-completed-candidate-executable-preflight-198",
+    "coveredSecondsAdded": 600,
+    "coveredActiveSeconds": 160770,
+    "acceptedIntervals": 198,
+    "failedRunsTestsBuildsWaitsAndReportsCountedSeconds": 0
+  },
+  "remainingPrerequisites": [
+    "compose the journal-first apply-intent and exact live mutation-lease boundary",
+    "provide tested resident-memory enforcement or retain verifier and reviewer veto",
+    "compose native immutable design baseline complete visual evidence final authorization and native UI start",
+    "retire remaining legacy Single and Parallel paths",
+    "complete current-source package sign hash unlocked native walkthrough clean commit and push"
+  ]
+}

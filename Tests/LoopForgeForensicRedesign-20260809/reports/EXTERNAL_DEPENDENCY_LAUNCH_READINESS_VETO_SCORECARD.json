@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "status": "external-dependency-launch-fails-closed-before-admission-without-hard-resident-memory-enforcement",
+  "recordedAt": "2026-08-15T11:58:00Z",
+  "acceptanceRowsAdvanced": [
+    "B-06"
+  ],
+  "readinessBoundary": {
+    "exactLiveActivationTransactionRequired": true,
+    "requestArtifactRevalidated": true,
+    "requestSHA256DeviceAndInodeRevalidated": true,
+    "stagedExecutableSHA256DeviceAndInodeRevalidated": true,
+    "nonCodableContainmentAuthorityRequired": true,
+    "containmentBoundToExactRunActivationAndResidentCeiling": true,
+    "productionResidentMemoryIssuerAvailable": false,
+    "debugOnlyPositiveCompositionAuthority": true
+  },
+  "veto": {
+    "reason": "residentMemoryEnforcementUnavailable",
+    "journaledBeforeAdmission": true,
+    "exactCommandRetry": true,
+    "decodedEventRevalidated": true,
+    "duplicateActivationVetoRejected": true,
+    "crossWiredContainmentRejected": true,
+    "durableReplayCreatesLiveAuthority": false
+  },
+  "noEffectProof": {
+    "runtimeAdmissionReceiptCreated": false,
+    "resourceLeaseCreated": false,
+    "sandboxGranted": false,
+    "nativeProcessStarted": false,
+    "outputArtifactCreated": false,
+    "externalDependencyObservationIssued": false
+  },
+  "verification": {
+    "focusedActivationTests": {
+      "executed": 4,
+      "failures": 0,
+      "seconds": 0.023
+    },
+    "focusedReducerTests": {
+      "executed": 1,
+      "failures": 0,
+      "seconds": 0.007
+    },
+    "fullSuite": {
+      "executed": 803,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 61.267,
+      "logSHA256": "c413664708f4608a4335cf57c9c815ee9defc644629fefdb099948d962d1e713"
+    },
+    "packageOwnedFullSuite": {
+      "executed": 803,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 55.982,
+      "logSHA256": "cbbe8ca26f8ea77c1143b452d890f2d3ada7a003bf88b308096ec59c5b82b1b6"
+    },
+    "releaseBuild": {
+      "passed": true,
+      "seconds": 104.81,
+      "architecture": "arm64"
+    },
+    "sourceSnapshotSHA256": "d33b9c3dabfb24b3d7d8d0bf16dc0cd2283b1278ad85a6193c1b7003f28ce36e",
+    "packagedLoopForgeSHA256": "6423500ac387207251ed6eb7c63c045345fc0e8d6def24fde3c05185cfa4e625",
+    "packagedKernelSandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "signatureVerifiedDeepStrict": true,
+    "exactPackagedMachOStartupPassed": true,
+    "postSmokePackagedProcessCount": 0
+  },
+  "sourceDigests": {
+    "launchReadiness": "73b26704024cebb7e9ce27a16f106c7fa95800a38a05062fb6ea76e305cd9f0b",
+    "residentMemoryEnforcement": "772521c4d322f50e237ee22540b2915473e54b7acf1988b19d910a8fdc14d10f",
+    "reducer": "0ba16ee4b9715b62bae93b89c3d8968e74d472013a3678ab92164e29c06bbffc",
+    "journal": "e4161c3fe068ce00b589a1bf562372763c642072666517f3954c295b9caffe75",
+    "activationTests": "6e97410ed9d3ff7421953ba28fe491f16b72fc435b808f4e0a5dc6f839606b08",
+    "reducerTests": "2d4db803b0720798feff99cf0a6dc5bd01e73aa7316a6b1c4759d535d8f0c363"
+  },
+  "easyBusiness": {
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "statusFingerprintSHA256": "a640615bfb23f0d3a9fefe222294663302b40cca54e23b2f4ae0029f5e4bcfd7",
+    "mutated": false
+  },
+  "remaining": [
+    "trusted Release resident-memory containment issuer or retained veto",
+    "journal-owned exact native sandbox launch with retained request on standard input",
+    "bounded output and native-exit retention",
+    "declared result mapping composition",
+    "journal-owned observation issuance",
+    "production controller invocation",
+    "legacy Single and Parallel retirement",
+    "unlocked native screenshots",
+    "clean-commit rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false
+}

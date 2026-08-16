@@ -38,6 +38,26 @@ final class GraphLoopTests: XCTestCase {
         XCTAssertFalse(GraphPlanPolicy.isAcyclic(cyclic))
     }
 
+    func testPlanNormalizationRejectsNarrativeWriteScopeInsteadOfWideningIt() {
+        let proposal = GraphPlanNodeProposal(
+            id: "repair-community",
+            title: "Repair Community",
+            objective: "Repair the measured Community entry delay.",
+            dependencies: [],
+            writeScopes: [
+                "iOS client files related to the Community entry point",
+                "docs/us-graph-round1-audit.md"
+            ],
+            verification: ["Run the focused response deadline test."],
+            readOnly: false
+        )
+
+        XCTAssertTrue(
+            GraphPlanPolicy.normalizedNodes([proposal]).isEmpty,
+            "Narrative scope text must fail before a writer is launched; retaining only the doc path would produce an impossible contract."
+        )
+    }
+
     func testSchedulerParallelizesOnlyNonOverlappingIsolatedWriters() {
         let source = node(id: "source", scopes: ["Sources/Feature"])
         let tests = node(id: "tests", scopes: ["Tests/Feature"])
@@ -59,6 +79,25 @@ final class GraphLoopTests: XCTestCase {
             ["Sources/Feature"],
             ["Tests/Feature"]
         ))
+        XCTAssertTrue(GraphSchedulingPolicy.writeScopesOverlap(
+            ["EasyBusiness/**"],
+            ["EasyBusiness/AppStore.swift"]
+        ))
+        XCTAssertTrue(GraphDeclaredScopePolicy.allows(
+            changedPath: "EasyBusiness/AppStore.swift",
+            declaredScopes: ["EasyBusiness/**"],
+            relativeWorkspace: ""
+        ))
+        XCTAssertTrue(GraphDeclaredScopePolicy.allows(
+            changedPath: "NestedProject/EasyBusiness/AppStore.swift",
+            declaredScopes: ["EasyBusiness/**"],
+            relativeWorkspace: "NestedProject"
+        ))
+        XCTAssertFalse(GraphDeclaredScopePolicy.allows(
+            changedPath: "backend/app/service.py",
+            declaredScopes: ["EasyBusiness/**"],
+            relativeWorkspace: ""
+        ))
     }
 
     func testSchedulerSerializesWritersWithoutCleanGitIsolation() {
@@ -74,6 +113,36 @@ final class GraphLoopTests: XCTestCase {
             ),
             ["one"]
         )
+    }
+
+    func testOnlyApprovedIsolatedNodesEnterIntegrationRecovery() {
+        var approved = node(id: "approved-integration", scopes: ["Sources"])
+        approved.status = .blocked
+        approved.workspaceStrategy = .gitWorktree
+        approved.iterationHistory = [
+            GraphNodeIterationRecord(
+                number: 1,
+                instruction: "Complete the bounded work.",
+                startedAt: Date(),
+                finishedAt: Date(),
+                threadID: "approved-thread",
+                exitCode: 0,
+                agentSummary: "LOOPFORGE_STATUS: COMPLETE",
+                mainReview: "Approved with retained evidence.",
+                nextInstruction: "",
+                decision: .approved,
+                activeSeconds: 12
+            )
+        ]
+
+        XCTAssertTrue(GraphIntegrationRecoveryPolicy.requiresRecovery(approved))
+
+        approved.iterationHistory?[0].decision = .continueWork
+        XCTAssertFalse(GraphIntegrationRecoveryPolicy.requiresRecovery(approved))
+
+        approved.iterationHistory?[0].decision = .approved
+        approved.status = .completed
+        XCTAssertFalse(GraphIntegrationRecoveryPolicy.requiresRecovery(approved))
     }
 
     func testSchedulerWaitsForTheEntireFrontierBatchBeforeStartingASuccessor() {
@@ -464,6 +533,126 @@ final class GraphLoopTests: XCTestCase {
         )
     }
 
+    func testNodeTimingSeparatesAllIterationsFromLiveCurrentIteration() {
+        let now = Date(timeIntervalSince1970: 10_000)
+        var current = node(id: "current", scopes: [])
+        current.status = .running
+        current.iteration = 3
+        current.accumulatedActiveSeconds = 120
+        current.activeStartedAt = now.addingTimeInterval(-15)
+        current.iterationHistory = [
+            GraphNodeIterationRecord(
+                number: 3,
+                instruction: "Verify the current candidate.",
+                startedAt: now.addingTimeInterval(-60),
+                finishedAt: nil,
+                threadID: "thread-3",
+                exitCode: nil,
+                agentSummary: "",
+                mainReview: "",
+                nextInstruction: "",
+                decision: .pending,
+                activeSeconds: 45
+            )
+        ]
+
+        XCTAssertEqual(current.liveCurrentIterationActiveSeconds(at: now), 60)
+        XCTAssertEqual(current.liveActiveSeconds(at: now), 180)
+
+        current.activeStartedAt = nil
+        current.accumulatedActiveSeconds = 180
+        current.iterationHistory?[0].activeSeconds = 60
+        current.iterationHistory?[0].finishedAt = now
+        current.iterationHistory?[0].decision = .approved
+
+        XCTAssertEqual(current.liveCurrentIterationActiveSeconds(at: now), 60)
+        XCTAssertEqual(current.liveActiveSeconds(at: now), 180)
+    }
+
+    func testNodeTimingIncludesRejectedIterationsInAllIterationsTotal() {
+        let now = Date(timeIntervalSince1970: 20_000)
+        var current = node(id: "rejected-timing", scopes: [])
+        current.status = .blocked
+        current.iteration = 1
+        current.accumulatedActiveSeconds = 0
+        current.activeStartedAt = nil
+        current.iterationHistory = [
+            GraphNodeIterationRecord(
+                number: 1,
+                instruction: "Verify the candidate.",
+                startedAt: now.addingTimeInterval(-1_100),
+                finishedAt: now,
+                threadID: "thread-1",
+                exitCode: 0,
+                agentSummary: "Evidence retained.",
+                mainReview: "Continue with a bounded repair.",
+                nextInstruction: "Instrument the slow interaction.",
+                decision: .continueWork,
+                activeSeconds: 1_058.7054460048676
+            )
+        ]
+
+        XCTAssertEqual(
+            current.liveCurrentIterationActiveSeconds(at: now),
+            1_058.7054460048676
+        )
+        XCTAssertEqual(
+            current.liveActiveSeconds(at: now),
+            1_058.7054460048676
+        )
+
+        current.status = .running
+        current.iteration = 2
+        current.activeStartedAt = now.addingTimeInterval(-10)
+        current.iterationHistory?.append(
+            GraphNodeIterationRecord(
+                number: 2,
+                instruction: "Instrument the slow interaction.",
+                startedAt: now.addingTimeInterval(-10),
+                finishedAt: nil,
+                threadID: "thread-2",
+                exitCode: nil,
+                agentSummary: "",
+                mainReview: "",
+                nextInstruction: "",
+                decision: .pending,
+                activeSeconds: 0
+            )
+        )
+
+        XCTAssertEqual(current.liveCurrentIterationActiveSeconds(at: now), 10)
+        XCTAssertEqual(
+            current.liveActiveSeconds(at: now),
+            1_068.7054460048676
+        )
+    }
+
+    func testLegacyIterationTimingDecodesWithoutActiveSeconds() throws {
+        let record = GraphNodeIterationRecord(
+            number: 1,
+            instruction: "Inspect.",
+            startedAt: Date(timeIntervalSince1970: 1_000),
+            finishedAt: Date(timeIntervalSince1970: 1_030),
+            threadID: "legacy",
+            exitCode: 0,
+            agentSummary: "Done.",
+            mainReview: "Approved.",
+            nextInstruction: "",
+            decision: .approved,
+            activeSeconds: 30
+        )
+        let encoded = try JSONEncoder().encode(record)
+        var object = try XCTUnwrap(
+            JSONSerialization.jsonObject(with: encoded) as? [String: Any]
+        )
+        object.removeValue(forKey: "activeSeconds")
+        let legacy = try JSONSerialization.data(withJSONObject: object)
+
+        let decoded = try JSONDecoder().decode(GraphNodeIterationRecord.self, from: legacy)
+        XCTAssertNil(decoded.activeSeconds)
+        XCTAssertEqual(decoded.decision, .approved)
+    }
+
     func testRepeatedPromptForOnePendingIterationReconstructsOneCycle() {
         let start = Date(timeIntervalSince1970: 2_000)
         var historical = node(id: "legacy", scopes: [])
@@ -670,7 +859,7 @@ final class GraphLoopTests: XCTestCase {
                     title: "Integrated repair",
                     objective: "Repair the combined result from both independent branches.",
                     dependencies: ["root-a", "successor-a", "root-b"],
-                    writeScopes: ["."],
+                    writeScopes: ["Sources/A"],
                     verification: ["Run the whole-project path"],
                     readOnly: false
                 )
@@ -686,6 +875,72 @@ final class GraphLoopTests: XCTestCase {
         )
     }
 
+    func testRedundantFinalRepairRetirementNeverRefundsDurableBudgets() throws {
+        var completed = node(id: "completed-frontier", scopes: [])
+        markAuditedAndIntegrated(&completed)
+        let repairA = node(
+            id: "repair-first-gap",
+            scopes: ["Sources/A"],
+            dependencies: [completed.id]
+        )
+        let repairB = node(
+            id: "repair-second-gap",
+            scopes: ["Sources/B"],
+            dependencies: [completed.id]
+        )
+        var graph = state(
+            nodes: [completed, repairA, repairB],
+            supportsWorktrees: true
+        )
+        graph.finalRepairRounds = GraphPlanPolicy.maximumFinalRepairRounds
+        let retiredAt = Date(timeIntervalSince1970: 4_200)
+
+        let retirement = GraphPlanPolicy.retiringRedundantPendingRepairs(
+            in: graph,
+            at: retiredAt
+        )
+
+        XCTAssertEqual(
+            retirement.retiredNodeIDs,
+            ["repair-first-gap", "repair-second-gap"]
+        )
+        XCTAssertEqual(
+            retirement.graph.finalRepairRounds,
+            GraphPlanPolicy.maximumFinalRepairRounds,
+            "Retiring two nodes from one repair round must not refund two rounds—or any round."
+        )
+        XCTAssertEqual(retirement.graph.nodes.count, 3)
+        XCTAssertEqual(retirement.graph.supersededNodeCount, 2)
+        XCTAssertEqual(
+            retirement.graph.nodes
+                .filter { $0.id.hasPrefix("repair-") }
+                .map(\.supersededAt),
+            [retiredAt, retiredAt]
+        )
+        XCTAssertTrue(
+            retirement.graph.nodes
+                .filter { $0.id.hasPrefix("repair-") }
+                .allSatisfy {
+                    $0.strategyLesson == GraphPlanPolicy.defaultRetiredStrategyLesson
+                },
+            "Every new retirement must persist an anti-repeat lesson for final review and crash replay."
+        )
+        XCTAssertFalse(GraphPlanPolicy.canCreateFinalRepair(in: retirement.graph))
+
+        let encoded = try JSONEncoder().encode(retirement.graph)
+        let restored = try JSONDecoder().decode(GraphLoopState.self, from: encoded)
+        XCTAssertEqual(
+            restored.finalRepairRounds,
+            GraphPlanPolicy.maximumFinalRepairRounds
+        )
+        XCTAssertEqual(restored.nodes.count, 3)
+        XCTAssertEqual(restored.supersededNodeCount, 2)
+        XCTAssertFalse(
+            GraphPlanPolicy.canCreateFinalRepair(in: restored),
+            "Crash/relaunch replay must remain exhausted after redundant branch cleanup."
+        )
+    }
+
     func testJoinGroupCheckpointRoundTripsAndLegacyStateStillDecodes() throws {
         var grouped = node(id: "grouped", scopes: [])
         grouped.joinGroupID = "frontier-1-core"
@@ -694,6 +949,9 @@ final class GraphLoopTests: XCTestCase {
         graph.incrementallyReviewedNodeIDs = ["grouped"]
         graph.nodes[0].replacesNodeIDs = ["legacy-branch"]
         graph.nodes[0].planAdjustment = "Retain the verified contract."
+        graph.nodes[0].strategyEscalationRequired = true
+        graph.nodes[0].strategyLesson = "Do not repeat the retired artifact search."
+        graph.nodes[0].strategyDecision = GraphExhaustedNodeAction.reframe.rawValue
         graph.nodes[0].iterationHistory = [
             GraphNodeIterationRecord(
                 number: 1,
@@ -718,6 +976,12 @@ final class GraphLoopTests: XCTestCase {
         XCTAssertEqual(restored.incrementallyReviewedNodeIDs, ["grouped"])
         XCTAssertEqual(restored.nodes[0].replacesNodeIDs, ["legacy-branch"])
         XCTAssertEqual(restored.nodes[0].planAdjustment, "Retain the verified contract.")
+        XCTAssertEqual(restored.nodes[0].strategyEscalationRequired, true)
+        XCTAssertEqual(
+            restored.nodes[0].strategyLesson,
+            "Do not repeat the retired artifact search."
+        )
+        XCTAssertEqual(restored.nodes[0].strategyDecision, "reframe")
         XCTAssertEqual(restored.nodes[0].iterationHistory?.first?.decision, .approved)
 
         var object = try XCTUnwrap(
@@ -730,6 +994,9 @@ final class GraphLoopTests: XCTestCase {
         nodeObjects[0].removeValue(forKey: "replacesNodeIDs")
         nodeObjects[0].removeValue(forKey: "planAdjustment")
         nodeObjects[0].removeValue(forKey: "iterationHistory")
+        nodeObjects[0].removeValue(forKey: "strategyEscalationRequired")
+        nodeObjects[0].removeValue(forKey: "strategyLesson")
+        nodeObjects[0].removeValue(forKey: "strategyDecision")
         object["nodes"] = nodeObjects
         let legacyData = try JSONSerialization.data(withJSONObject: object)
         let legacy = try decoder.decode(GraphLoopState.self, from: legacyData)
@@ -738,6 +1005,9 @@ final class GraphLoopTests: XCTestCase {
         XCTAssertNil(legacy.nodes[0].joinGroupID)
         XCTAssertNil(legacy.nodes[0].replacesNodeIDs)
         XCTAssertNil(legacy.nodes[0].iterationHistory)
+        XCTAssertNil(legacy.nodes[0].strategyEscalationRequired)
+        XCTAssertNil(legacy.nodes[0].strategyLesson)
+        XCTAssertNil(legacy.nodes[0].strategyDecision)
     }
 
     func testOnlyPredecessorFreeNodesAppearInTheInitialGraphBatch() {
@@ -924,7 +1194,7 @@ final class GraphLoopTests: XCTestCase {
                     title: "Repair final audit gap",
                     objective: "Close the verified whole-project gap.",
                     dependencies: ["inspect", "implement", "verify"],
-                    writeScopes: ["."],
+                    writeScopes: ["Sources"],
                     verification: ["Rerun the complete path"],
                     readOnly: false
                 )
@@ -962,6 +1232,102 @@ final class GraphLoopTests: XCTestCase {
         XCTAssertTrue(repairs.isEmpty)
     }
 
+    func testConservativeFinalRepairFallbackPreservesAuthorizedScopeAndDropsUnsafeDependencies() throws {
+        var baseline = node(id: "integrated-baseline", scopes: [])
+        markAuditedAndIntegrated(&baseline)
+        var retired = node(id: "repair-1", scopes: ["backend"])
+        retired.status = .superseded
+        retired.objective = "Align the canonical branch to the published repair."
+        retired.currentInstruction = retired.objective
+        retired.dependencies = ["integrated-baseline"]
+        retired.strategyLesson = "Canonical alignment is now complete; do not repeat it."
+        let unsafe = GraphPlanNodeProposal(
+            id: "repair-1",
+            title: "Unify the report entry path",
+            objective: retired.objective,
+            dependencies: ["future-report-verification"],
+            writeScopes: ["backend/reporting"],
+            verification: ["Run the report contract and native failure-state path."],
+            readOnly: false
+        )
+
+        XCTAssertTrue(
+            GraphPlanPolicy.finalRepairBatchNodes(
+                [unsafe],
+                existingNodes: [baseline, retired]
+            ).isEmpty,
+            "The reviewer's future dependency must remain fail-closed."
+        )
+
+        let fallback = try XCTUnwrap(GraphPlanPolicy.conservativeFinalRepairProposal(
+            proposed: [unsafe],
+            reviewerSummary: "The latest final audit found a new report-entry defect.",
+            nextInstruction: "",
+            verification: ["Run the whole-project path."],
+            existingNodes: [baseline, retired],
+            finalRepairRounds: 0
+        ))
+        XCTAssertEqual(fallback.id, "repair-2")
+        XCTAssertEqual(fallback.dependencies, [])
+        XCTAssertEqual(fallback.writeScopes, ["backend/reporting"])
+        XCTAssertEqual(
+            fallback.objective,
+            "The latest final audit found a new report-entry defect."
+        )
+        XCTAssertEqual(fallback.verification, unsafe.verification)
+
+        let repairs = GraphPlanPolicy.finalRepairBatchNodes(
+            [fallback],
+            existingNodes: [baseline, retired]
+        )
+        XCTAssertEqual(repairs.map(\.id), ["repair-2"])
+        XCTAssertEqual(repairs[0].dependencies, ["integrated-baseline"])
+    }
+
+    func testFinalRepairScopeCannotBeInventedOrWidenedByReviewer() {
+        var writer = node(id: "bounded-writer", scopes: ["Sources/Feature"])
+        markAuditedAndIntegrated(&writer)
+
+        func proposal(scopes: [String]?, readOnly: Bool = false) -> GraphPlanNodeProposal {
+            GraphPlanNodeProposal(
+                id: "repair",
+                title: "Repair",
+                objective: "Repair the audited bounded gap.",
+                dependencies: [],
+                writeScopes: scopes,
+                verification: ["Run the bounded verification."],
+                readOnly: readOnly
+            )
+        }
+
+        XCTAssertNil(GraphPlanPolicy.conservativeFinalRepairProposal(
+            proposed: [],
+            reviewerSummary: "Repair required.",
+            nextInstruction: "Repair it.",
+            verification: ["Verify"],
+            existingNodes: [writer],
+            finalRepairRounds: 0
+        ))
+        for scopes in [[], ["."], ["Sources"], ["../Sources"], ["the relevant source files"]] {
+            XCTAssertFalse(GraphPlanPolicy.finalRepairScopeIsAuthorized(
+                proposal(scopes: scopes),
+                existingNodes: [writer]
+            ))
+            XCTAssertTrue(GraphPlanPolicy.finalRepairBatchNodes(
+                [proposal(scopes: scopes)],
+                existingNodes: [writer]
+            ).isEmpty)
+        }
+        XCTAssertTrue(GraphPlanPolicy.finalRepairScopeIsAuthorized(
+            proposal(scopes: ["Sources/Feature/Subtree"]),
+            existingNodes: [writer]
+        ))
+        XCTAssertTrue(GraphPlanPolicy.finalRepairScopeIsAuthorized(
+            proposal(scopes: [], readOnly: true),
+            existingNodes: [writer]
+        ))
+    }
+
     func testFinalRepairPreservesExactLegacyTruncatedPredecessorID() {
         var inspect = node(id: "inspect", scopes: [])
         var legacy = node(
@@ -979,7 +1345,7 @@ final class GraphLoopTests: XCTestCase {
                     title: "Refresh final evidence",
                     objective: "Rerun the final integrated product evidence.",
                     dependencies: ["repair-intent-aware-conflict-and-keyboard-"],
-                    writeScopes: ["README.md", "artifacts/screenshots"],
+                    writeScopes: ["pulseboard/static"],
                     verification: ["Run the complete suite and browser path"],
                     readOnly: false
                 )
@@ -1084,10 +1450,17 @@ final class GraphLoopTests: XCTestCase {
 
         XCTAssertEqual(isolated.accessMode, .readOnly)
         XCTAssertEqual(isolated.accessMode.sandboxMode, "read-only")
-        XCTAssertFalse(CodexAccessMode.selectableCases.contains(.readOnly))
+        XCTAssertEqual(
+            CodexAccessMode.nativeWorkerSelectableCases,
+            [.readOnly, .workspaceOnly, .fullAccess]
+        )
+        XCTAssertEqual(
+            CodexAccessMode.independentReviewerSelectableCases,
+            [.readOnly]
+        )
     }
 
-    func testParallelWriterNarrowsFullAccessUnlessItsObjectiveNeedsHostTools() {
+    func testParallelWriterPreservesExplicitFullAccessAcrossNodeObjectives() {
         let parent = AgentSelection.codex(
             model: "gpt-test",
             displayName: "GPT Test",
@@ -1110,7 +1483,7 @@ final class GraphLoopTests: XCTestCase {
                 node: codeNode,
                 category: .web
             ).accessMode,
-            .workspaceOnly
+            .fullAccess
         )
         XCTAssertEqual(
             GraphNodeAccessPolicy.selection(
@@ -1134,6 +1507,65 @@ final class GraphLoopTests: XCTestCase {
                 category: .web
             ),
             "The same objective-plus-verification request must drive installed tool loading."
+        )
+    }
+
+    func testReadOnlyHandoffNodeRequiresDisposableRuntime() {
+        var evidenceNode = node(id: "evidence", scopes: [])
+        evidenceNode.readOnly = true
+        evidenceNode.objective = "Write the validated JSON to US_R1_HANDOFF."
+
+        XCTAssertTrue(GraphVerificationPolicy.requiresDisposableRuntime(for: evidenceNode))
+    }
+
+    func testBlockedWorkerTurnDoesNotCountAsSuccessfulRuntime() {
+        let blocked = CodexTurnResult(
+            exitCode: 0,
+            elapsed: 120,
+            eligibleElapsed: 117,
+            threadID: "thread",
+            lastAgentMessage: "LOOPFORGE_STATUS: BLOCKED\nNo writable scratch.",
+            commandSuccesses: 4,
+            commandFailures: 1,
+            stderr: "",
+            eventErrors: [],
+            recoveryReason: nil
+        )
+        let completed = CodexTurnResult(
+            exitCode: 0,
+            elapsed: 120,
+            eligibleElapsed: 117,
+            threadID: "thread",
+            lastAgentMessage: "LOOPFORGE_STATUS: COMPLETE\nVerified.",
+            commandSuccesses: 5,
+            commandFailures: 0,
+            stderr: "",
+            eventErrors: [],
+            recoveryReason: nil
+        )
+
+        XCTAssertFalse(GraphWorkerRuntimePolicy.countsAsSuccessfulWork(blocked))
+        XCTAssertTrue(GraphWorkerRuntimePolicy.countsAsSuccessfulWork(completed))
+        XCTAssertEqual(
+            GraphWorkerRuntimePolicy.reviewAdjustment(for: blocked, approved: true),
+            117
+        )
+        XCTAssertEqual(
+            GraphWorkerRuntimePolicy.reviewAdjustment(for: completed, approved: false),
+            -117
+        )
+        XCTAssertEqual(
+            GraphWorkerRuntimePolicy.reviewAdjustment(for: completed, approved: true),
+            0
+        )
+    }
+
+    func testRuntimePathVariablesAreDiscoveredFromNodeContract() {
+        XCTAssertEqual(
+            Set(CodexRunner.requestedRuntimePathVariables(
+                in: "Write US_R1_HANDOFF and compare US_R1_BEFORE_STATUS with US_R1_AFTER_STATUS."
+            )),
+            Set(["US_R1_HANDOFF", "US_R1_BEFORE_STATUS", "US_R1_AFTER_STATUS"])
         )
     }
 
@@ -1211,9 +1643,853 @@ final class GraphLoopTests: XCTestCase {
         XCTAssertTrue(guidance.contains("harness error"))
     }
 
+    func testGraphDoesNotRepeatAProvenExternalCapabilityBoundary() {
+        let guidance = GraphCompletionPolicy.disclosedGapGuidance
+            .split(whereSeparator: \.isWhitespace)
+            .joined(separator: " ")
+
+        XCTAssertTrue(guidance.contains("external operating dependency"))
+        XCTAssertTrue(guidance.contains("bounded capability or evidence audit is complete"))
+        XCTAssertTrue(guidance.contains("do not reject, reschedule, or repeatedly probe"))
+        XCTAssertTrue(guidance.contains("feasible local preparation remains incomplete"))
+    }
+
+    func testRejectedNodeReviewDecodesExactScopeRecoveryWithoutAddingWork() throws {
+        let raw = #"{"approved":false,"summary":"Readiness is still wrong.","nextInstruction":"Repair readiness.","verification":["Run health tests"],"addedNodes":[],"requiredWriteScopes":["backend/app/main.py","backend/tests/test_api_health.py"]}"#
+
+        let decoded = try XCTUnwrap(
+            GraphLoopEngine.decode(GraphNodeReviewEnvelope.self, from: raw)
+        )
+
+        XCTAssertFalse(decoded.approved)
+        XCTAssertEqual(decoded.addedNodes, [])
+        XCTAssertEqual(
+            decoded.requiredWriteScopes,
+            ["backend/app/main.py", "backend/tests/test_api_health.py"]
+        )
+    }
+
+    func testNodeScopeRecoveryAcceptsOnlyDisjointPreciseRepositoryPaths() {
+        var current = node(id: "provider", scopes: ["backend/app/provider.py"])
+        current.joinGroupID = "frontier-2"
+        var sibling = node(id: "finance", scopes: ["backend/app/schemas.py"])
+        sibling.joinGroupID = "frontier-2"
+        let graph = state(nodes: [current, sibling], supportsWorktrees: true)
+
+        let decision = GraphNodeScopeRecoveryPolicy.decision(
+            requestedScopes: [
+                "./backend/app/main.py",
+                "backend/tests/test_api_health.py/",
+                ".",
+                "../outside",
+                "backend/app/schemas.py"
+            ],
+            currentNode: current,
+            state: graph
+        )
+
+        XCTAssertEqual(
+            decision.acceptedScopes,
+            ["backend/app/main.py", "backend/tests/test_api_health.py"]
+        )
+        XCTAssertEqual(
+            decision.rejectedScopes,
+            [".", "../outside", "backend/app/schemas.py"]
+        )
+    }
+
+    func testThreeConsecutiveBlockedTurnsRequireReplanInsteadOfAnotherRetry() {
+        let start = Date(timeIntervalSince1970: 1_000)
+        var current = node(id: "blocked", scopes: ["backend/app/provider.py"])
+        current.iterationHistory = [
+            GraphNodeIterationRecord(
+                number: 1,
+                instruction: "Implement.",
+                startedAt: start,
+                finishedAt: start.addingTimeInterval(10),
+                threadID: "one",
+                exitCode: 0,
+                agentSummary: "LOOPFORGE_STATUS: BLOCKED\nMissing scope.",
+                mainReview: "Continue.",
+                nextInstruction: "Repair readiness.",
+                decision: .continueWork
+            ),
+            GraphNodeIterationRecord(
+                number: 2,
+                instruction: "Repair readiness.",
+                startedAt: start.addingTimeInterval(20),
+                finishedAt: start.addingTimeInterval(30),
+                threadID: "two",
+                exitCode: 0,
+                agentSummary: "LOOPFORGE_STATUS: BLOCKED\nThe same scope is missing.",
+                mainReview: "Continue.",
+                nextInstruction: "Repair readiness.",
+                decision: .continueWork
+            ),
+            GraphNodeIterationRecord(
+                number: 3,
+                instruction: "Repair readiness.",
+                startedAt: start.addingTimeInterval(40),
+                finishedAt: nil,
+                threadID: "three",
+                exitCode: nil,
+                agentSummary: "",
+                mainReview: "",
+                nextInstruction: "",
+                decision: .pending
+            )
+        ]
+
+        XCTAssertTrue(
+            GraphRejectedTurnPolicy.shouldStopRetrying(
+                node: current,
+                currentAgentSummary: "LOOPFORGE_STATUS: BLOCKED\nStill missing scope."
+            )
+        )
+        XCTAssertFalse(
+            GraphRejectedTurnPolicy.shouldStopRetrying(
+                node: current,
+                currentAgentSummary: "Implemented and verified the requested change."
+            )
+        )
+
+        current.threadID = "blocked-causal-route"
+        GraphRejectedTurnPolicy.freezeForRepeatedBlockerReview(
+            &current,
+            at: start.addingTimeInterval(50)
+        )
+        XCTAssertEqual(current.status, .blocked)
+        XCTAssertTrue(GraphRejectedTurnPolicy.isAutomaticRetryDisabled(current))
+        XCTAssertEqual(current.strategyEscalationRequired, true)
+        XCTAssertNil(current.threadID)
+        XCTAssertTrue(GraphNodeStrategyEscalationPolicy.requiresStrategyReview(current))
+        XCTAssertEqual(
+            GraphNodeStrategyEscalationPolicy.pendingNodeID(
+                in: state(nodes: [current], supportsWorktrees: true)
+            ),
+            current.id
+        )
+    }
+
+    func testTerminallyBlockedNodeKeepsProductiveSiblingRunningAndStaysFrozenAfterRelaunch() {
+        var frozen = node(id: "missing-artifact", scopes: [])
+        frozen.status = .blocked
+        frozen.automaticRetryDisabled = true
+        var productive = node(id: "financial-contracts", scopes: ["Sources/Reports"])
+        productive.status = .running
+        var graph = state(nodes: [frozen, productive], supportsWorktrees: true)
+
+        XCTAssertTrue(GraphRejectedTurnPolicy.isAutomaticRetryDisabled(frozen))
+        XCTAssertTrue(
+            GraphRejectedTurnPolicy.hasViablePeer(
+                afterFreezing: frozen.id,
+                state: graph
+            ),
+            "A terminal blocker in one branch must not cancel a productive sibling."
+        )
+
+        productive.status = .completed
+        productive.completedAt = Date()
+        productive.lastReview = "Approved and integrated."
+        graph.nodes[1] = productive
+        XCTAssertFalse(
+            GraphRejectedTurnPolicy.hasViablePeer(
+                afterFreezing: frozen.id,
+                state: graph
+            ),
+            "A graph with no running or ready peer still needs an explicit Main Graph replan."
+        )
+
+        frozen.automaticRetryDisabled = nil
+        frozen.logs.append(TaskLogEntry(
+            kind: .warning,
+            message: "Stopped after 3 consecutive blocked turns with no safe scope recovery. The same node will not be relaunched automatically."
+        ))
+        frozen.status = .waiting
+        frozen.logs.append(TaskLogEntry(
+            kind: .warning,
+            message: "Recovered the task checkpoint after relaunch."
+        ))
+        XCTAssertTrue(
+            GraphRejectedTurnPolicy.isAutomaticRetryDisabled(frozen),
+            "Older checkpoints must stay frozen even after status normalization and later recovery warnings."
+        )
+        XCTAssertTrue(GraphRejectedTurnPolicy.hasRepeatedBlockerStopProvenance(frozen))
+        XCTAssertTrue(
+            GraphNodeStrategyEscalationPolicy.requiresStrategyReview(frozen),
+            "A legacy repeated-blocker warning is durable exhausted-budget provenance, not an ordinary retry pause."
+        )
+        XCTAssertFalse(GraphRejectedTurnPolicy.shouldResumeAfterExplicitReplan(frozen))
+
+        frozen.planAdjustment = "Capture fresh product screenshots from the current integrated HEAD."
+        XCTAssertFalse(
+            GraphRejectedTurnPolicy.shouldResumeAfterExplicitReplan(frozen),
+            "A plan adjustment cannot reactivate the same node after its repeated-blocker budget is exhausted."
+        )
+        frozen.threadID = "rejected-historical-artifact-thread"
+        GraphRejectedTurnPolicy.applyExplicitReplan(
+            to: &frozen,
+            replacementPlan: frozen.planAdjustment ?? ""
+        )
+        XCTAssertEqual(frozen.status, .blocked)
+        XCTAssertTrue(GraphRejectedTurnPolicy.isAutomaticRetryDisabled(frozen))
+        XCTAssertEqual(frozen.strategyEscalationRequired, true)
+        XCTAssertEqual(frozen.threadID, "rejected-historical-artifact-thread")
+
+        var replannable = node(id: "ordinary-terminal-pause", scopes: [])
+        replannable.status = .blocked
+        replannable.automaticRetryDisabled = true
+        replannable.planAdjustment = "Capture fresh product screenshots from the current integrated HEAD."
+        replannable.threadID = "ordinary-rejected-thread"
+        XCTAssertTrue(
+            GraphRejectedTurnPolicy.shouldResumeAfterExplicitReplan(replannable),
+            "An ordinary non-exhausted pause may still consume one explicit bounded replacement plan."
+        )
+        GraphRejectedTurnPolicy.applyExplicitReplan(
+            to: &replannable,
+            replacementPlan: replannable.planAdjustment ?? ""
+        )
+        XCTAssertEqual(replannable.status, .waiting)
+        XCTAssertFalse(GraphRejectedTurnPolicy.isAutomaticRetryDisabled(replannable))
+        XCTAssertNil(
+            replannable.threadID,
+            "A replacement plan must not inherit the rejected turn's reasoning context."
+        )
+        XCTAssertEqual(replannable.replacementPlanStartedFreshThread, true)
+        XCTAssertEqual(
+            replannable.replacementPlanContractVersion,
+            GraphRejectedTurnPolicy.currentReplacementContractVersion
+        )
+        XCTAssertFalse(GraphRejectedTurnPolicy.requiresFreshThreadMigration(replannable))
+        XCTAssertEqual(
+            replannable.currentInstruction,
+            "MAIN GRAPH REPLACEMENT PLAN:\nCapture fresh product screenshots from the current integrated HEAD."
+        )
+
+        var build117Checkpoint = replannable
+        build117Checkpoint.threadID = "stale-build-117-thread"
+        build117Checkpoint.replacementPlanStartedFreshThread = nil
+        build117Checkpoint.replacementPlanContractVersion = nil
+        XCTAssertTrue(
+            GraphRejectedTurnPolicy.requiresFreshThreadMigration(build117Checkpoint),
+            "A persisted build-117 replacement plan must detach from its stale thread exactly once."
+        )
+        GraphRejectedTurnPolicy.applyExplicitReplan(
+            to: &build117Checkpoint,
+            replacementPlan: build117Checkpoint.planAdjustment ?? ""
+        )
+        XCTAssertNil(build117Checkpoint.threadID)
+        XCTAssertFalse(GraphRejectedTurnPolicy.requiresFreshThreadMigration(build117Checkpoint))
+        XCTAssertTrue(
+            GraphActiveNodeContractPolicy.hasAuthoritativeReplacement(build117Checkpoint)
+        )
+        XCTAssertEqual(
+            GraphActiveNodeContractPolicy.activeObjective(for: build117Checkpoint),
+            "Capture fresh product screenshots from the current integrated HEAD."
+        )
+        let replacementVerification =
+            GraphActiveNodeContractPolicy.verificationGuidance(for: build117Checkpoint)
+        XCTAssertTrue(replacementVerification.contains("replacement outcome"))
+        XCTAssertTrue(replacementVerification.contains("incompatible clauses are superseded"))
+
+        var build118Checkpoint = build117Checkpoint
+        build118Checkpoint.threadID = "fresh-but-conflicting-build-118-thread"
+        build118Checkpoint.replacementPlanStartedFreshThread = true
+        build118Checkpoint.replacementPlanContractVersion = nil
+        XCTAssertTrue(GraphRejectedTurnPolicy.requiresFreshThreadMigration(build118Checkpoint))
+        GraphRejectedTurnPolicy.applyExplicitReplan(
+            to: &build118Checkpoint,
+            replacementPlan: build118Checkpoint.planAdjustment ?? ""
+        )
+        XCTAssertNil(build118Checkpoint.threadID)
+        XCTAssertEqual(
+            build118Checkpoint.replacementPlanContractVersion,
+            GraphRejectedTurnPolicy.currentReplacementContractVersion
+        )
+    }
+
+    func testCanonicalWorkspaceTransitionRequiresImmediateStructuralReplan() {
+        var isolated = node(id: "published-repair", scopes: ["."])
+        isolated.workspaceStrategy = .gitWorktree
+        isolated.isolationRootPath = "/tmp/loopforge-isolated-repair"
+
+        XCTAssertTrue(
+            GraphRejectedTurnPolicy.requiresCanonicalWorkspaceTransition(
+                node: isolated,
+                nextInstruction: "Rematerialize this node with its actual WORKSPACE/cwd bound to the canonical EasyBusiness worktree."
+            )
+        )
+        isolated.currentInstruction = "Rematerialize this node with its actual WORKSPACE/cwd bound to the canonical EasyBusiness worktree."
+        XCTAssertTrue(
+            GraphNodeStrategyEscalationPolicy.requiresStrategyReview(isolated),
+            "A persisted immutable-cwd transition must enter structural review immediately after relaunch."
+        )
+        XCTAssertTrue(
+            GraphRejectedTurnPolicy.requiresCanonicalWorkspaceTransition(
+                node: isolated,
+                nextInstruction: "将节点实际 environment_context.cwd 物化为目标工作树，再完成收口。"
+            )
+        )
+        XCTAssertFalse(
+            GraphRejectedTurnPolicy.requiresCanonicalWorkspaceTransition(
+                node: isolated,
+                nextInstruction: "Inspect the canonical API contract from the current isolated workspace."
+            ),
+            "Merely mentioning canonical product behavior must not force a workspace transition."
+        )
+    }
+
+    func testSeventhUnapprovedCycleRequiresStructuralStrategyReview() {
+        let start = Date(timeIntervalSince1970: 2_000)
+        var exhausted = node(id: "stalled-evidence", scopes: [".loopforge/evidence"])
+        exhausted.iteration = 7
+        exhausted.status = .waiting
+        var records: [GraphNodeIterationRecord] = []
+        for number in 1...6 {
+            let startedAt = start.addingTimeInterval(Double(number * 20))
+            let finishedAt = start.addingTimeInterval(Double(number * 20 + 10))
+            let summary = number.isMultiple(of: 2)
+                ? "LOOPFORGE_STATUS: BLOCKED\nNo new evidence."
+                : "The result remains incomplete."
+            records.append(GraphNodeIterationRecord(
+                number: number,
+                instruction: "Repeat unavailable evidence path \(number).",
+                startedAt: startedAt,
+                finishedAt: finishedAt,
+                threadID: "thread-\(number)",
+                exitCode: 0,
+                agentSummary: summary,
+                mainReview: "The same gap remains.",
+                nextInstruction: "Try the same evidence path again.",
+                decision: .continueWork
+            ))
+        }
+        records.append(GraphNodeIterationRecord(
+            number: 7,
+            instruction: "Resume the replacement plan.",
+            startedAt: start.addingTimeInterval(200),
+            finishedAt: nil,
+            threadID: "pending-seven",
+            exitCode: nil,
+            agentSummary: "",
+            mainReview: "",
+            nextInstruction: "",
+            decision: .pending
+        ))
+        exhausted.iterationHistory = records
+
+        XCTAssertEqual(
+            GraphNodeStrategyEscalationPolicy.unapprovedDecisionCount(exhausted),
+            6
+        )
+        XCTAssertTrue(
+            GraphNodeStrategyEscalationPolicy.requiresStrategyReview(exhausted)
+        )
+        XCTAssertEqual(
+            GraphNodeStrategyEscalationPolicy.pendingNodeID(
+                in: state(nodes: [exhausted], supportsWorktrees: true)
+            ),
+            exhausted.id
+        )
+    }
+
+    func testExhaustedNodeCannotConsumeAnotherExplicitPlanAdjustment() {
+        var exhausted = node(id: "stalled", scopes: [])
+        exhausted.status = .blocked
+        exhausted.iteration = 7
+        exhausted.strategyEscalationRequired = true
+        exhausted.automaticRetryDisabled = true
+        exhausted.threadID = "must-not-resume"
+        exhausted.planAdjustment = "Try the same objective from a new thread."
+
+        XCTAssertFalse(GraphRejectedTurnPolicy.shouldResumeAfterExplicitReplan(exhausted))
+        GraphRejectedTurnPolicy.applyExplicitReplan(
+            to: &exhausted,
+            replacementPlan: exhausted.planAdjustment ?? ""
+        )
+
+        XCTAssertEqual(exhausted.status, .blocked)
+        XCTAssertTrue(GraphRejectedTurnPolicy.isAutomaticRetryDisabled(exhausted))
+        XCTAssertEqual(exhausted.strategyEscalationRequired, true)
+        XCTAssertEqual(exhausted.threadID, "must-not-resume")
+    }
+
+    func testResumeFreezeNeverReactivatesCompletedOrSupersededHistory() {
+        var blocked = node(id: "blocked", scopes: [])
+        blocked.status = .blocked
+        blocked.automaticRetryDisabled = true
+        XCTAssertTrue(GraphRejectedTurnPolicy.shouldRemainFrozenOnResume(blocked))
+
+        var superseded = blocked
+        superseded.status = .superseded
+        superseded.supersededAt = Date(timeIntervalSince1970: 1_000)
+        superseded.planAdjustment = "A stale historical replacement plan."
+        XCTAssertFalse(
+            GraphRejectedTurnPolicy.shouldRemainFrozenOnResume(superseded),
+            "Resume normalization must not turn retired graph history back into an active blocker."
+        )
+        XCTAssertFalse(
+            GraphRejectedTurnPolicy.shouldResumeAfterExplicitReplan(superseded),
+            "A plan adjustment cannot reactivate a node with terminal superseded provenance."
+        )
+        XCTAssertFalse(GraphNodeStrategyEscalationPolicy.requiresStrategyReview(superseded))
+
+        var completed = blocked
+        completed.status = .completed
+        completed.completedAt = Date(timeIntervalSince1970: 1_100)
+        XCTAssertFalse(GraphRejectedTurnPolicy.shouldRemainFrozenOnResume(completed))
+    }
+
+    func testCorruptWaitingStatusRestoresFromSupersededProvenance() {
+        var corrupted = node(id: "retired-history", scopes: [])
+        corrupted.status = .waiting
+        corrupted.supersededAt = Date(timeIntervalSince1970: 2_000)
+        corrupted.automaticRetryDisabled = true
+        corrupted.planAdjustment = "Stale adjustment that must never run."
+        corrupted.iteration = 7
+
+        XCTAssertTrue(GraphRejectedTurnPolicy.shouldRestoreSupersededHistory(corrupted))
+        XCTAssertFalse(GraphRejectedTurnPolicy.shouldResumeAfterExplicitReplan(corrupted))
+        XCTAssertFalse(
+            GraphNodeStrategyEscalationPolicy.requiresStrategyReview(corrupted),
+            "Durable terminal provenance must prevent another Main retirement review even when an older status was corrupted."
+        )
+    }
+
+    func testStructuralReplacementUsesNewNodeAndRejectsRetiredContract() {
+        var exhausted = node(id: "old-screenshots", scopes: [".loopforge/evidence"])
+        exhausted.objective = "Recover the two missing historical PNG byte objects."
+        exhausted.currentInstruction = exhausted.objective
+        exhausted.verification = ["Compare every historical PNG byte for byte."]
+        exhausted.dependencies = ["baseline"]
+        exhausted.joinGroupID = "frontier-4"
+
+        let duplicate = GraphPlanNodeProposal(
+            id: "same-work-new-id",
+            title: "Same work",
+            objective: exhausted.objective,
+            dependencies: [],
+            writeScopes: [".loopforge/evidence"],
+            verification: exhausted.verification,
+            readOnly: false
+        )
+        XCTAssertFalse(
+            GraphNodeStrategyEscalationPolicy.isMateriallyDifferent(
+                duplicate,
+                from: exhausted
+            )
+        )
+        XCTAssertTrue(
+            GraphNodeStrategyEscalationPolicy.replacementNodes(
+                from: [duplicate],
+                action: .replace,
+                exhaustedNode: exhausted,
+                existingNodes: [node(id: "baseline", scopes: []), exhausted]
+            ).isEmpty
+        )
+
+        let replacement = GraphPlanNodeProposal(
+            id: "audit-current-product-evidence",
+            title: "Audit current product evidence",
+            objective: "Independently audit already captured current-HEAD product evidence and document only reproducible coverage boundaries.",
+            dependencies: [],
+            writeScopes: [],
+            verification: ["Hash and decode retained current-HEAD evidence without recovering historical objects."],
+            readOnly: true
+        )
+        let nodes = GraphNodeStrategyEscalationPolicy.replacementNodes(
+            from: [replacement],
+            action: .reframe,
+            exhaustedNode: exhausted,
+            existingNodes: [node(id: "baseline", scopes: []), exhausted]
+        )
+
+        XCTAssertEqual(nodes.count, 1)
+        XCTAssertEqual(nodes[0].id, "audit-current-product-evidence")
+        XCTAssertEqual(nodes[0].iteration, 0)
+        XCTAssertNil(nodes[0].threadID)
+        XCTAssertEqual(nodes[0].dependencies, ["baseline"])
+        XCTAssertEqual(nodes[0].joinGroupID, "frontier-4")
+        XCTAssertEqual(nodes[0].replacesNodeIDs, [exhausted.id])
+    }
+
+    func testStructuralReplacementRejectsParaphraseWhenCausalRouteIsUnchanged() {
+        var exhausted = node(id: "same-route", scopes: ["Sources/Feature/**"])
+        exhausted.objective = "Replace the failing implementation and rerun its focused check."
+        exhausted.verification = ["Run the focused check."]
+
+        let paraphrase = GraphPlanNodeProposal(
+            id: "fresh-id-and-wording",
+            title: "Try a newly worded repair",
+            objective: "Rework the broken feature using a substantially improved implementation.",
+            dependencies: [],
+            writeScopes: ["./Sources/Feature"],
+            verification: ["Execute that same focused verification again."],
+            readOnly: false
+        )
+        XCTAssertFalse(
+            GraphNodeStrategyEscalationPolicy.isMateriallyDifferent(
+                paraphrase,
+                from: exhausted
+            ),
+            "New prose and a fresh ID cannot prove a new causal strategy when the mutation route is unchanged."
+        )
+        XCTAssertTrue(
+            GraphNodeStrategyEscalationPolicy.replacementNodes(
+                from: [paraphrase],
+                action: .replace,
+                exhaustedNode: exhausted,
+                existingNodes: [exhausted]
+            ).isEmpty
+        )
+
+        let changedSurface = GraphPlanNodeProposal(
+            id: "bounded-subtree-repair",
+            title: "Repair a bounded subtree",
+            objective: "Repair the independently isolated subtree.",
+            dependencies: [],
+            writeScopes: ["Sources/Feature", "Sources/Feature/Subtree"],
+            verification: ["Verify the bounded subtree."],
+            readOnly: false
+        )
+        XCTAssertTrue(
+            GraphNodeStrategyEscalationPolicy.isMateriallyDifferent(
+                changedSurface,
+                from: exhausted
+            ),
+            "A mechanically observable mutation-topology change remains eligible for one bounded replacement."
+        )
+    }
+
+    func testStructuralReplacementNormalizesScopeNoiseAndRejectsMalformedTopology() {
+        let exhausted = node(
+            id: "normalized-route",
+            scopes: ["Sources/A", "Sources/B/**"]
+        )
+        let reordered = GraphPlanNodeProposal(
+            id: "scope-noise",
+            title: "Reordered scopes",
+            objective: "Use reordered and duplicated spellings.",
+            dependencies: [],
+            writeScopes: ["./Sources/B", "Sources/A/**", "Sources/A"],
+            verification: ["Repeat the same route."],
+            readOnly: false
+        )
+        XCTAssertFalse(
+            GraphNodeStrategyEscalationPolicy.isMateriallyDifferent(
+                reordered,
+                from: exhausted
+            )
+        )
+
+        for invalidScope in [
+            "/tmp/escape",
+            "../outside",
+            "files related to the broken feature"
+        ] {
+            let malformed = GraphPlanNodeProposal(
+                id: "invalid-\(invalidScope)",
+                title: "Malformed route",
+                objective: "Attempt a replacement with an untrusted route.",
+                dependencies: [],
+                writeScopes: [invalidScope],
+                verification: ["Run a check."],
+                readOnly: false
+            )
+            XCTAssertFalse(
+                GraphNodeStrategyEscalationPolicy.isMateriallyDifferent(
+                    malformed,
+                    from: exhausted
+                ),
+                "Malformed, escaping, or narrative scope descriptions must fail closed."
+            )
+        }
+    }
+
+    func testStalePendingContinuationRequiresStructuralReplanBeforeRelaunch() {
+        let start = Date(timeIntervalSince1970: 1_000)
+        var stale = node(id: "integration-evidence", scopes: ["Evidence/**"])
+        stale.status = .waiting
+        stale.iteration = 2
+        stale.currentInstruction = "Repeat the full integration evidence run."
+        stale.iterationHistory = [
+            GraphNodeIterationRecord(
+                number: 1,
+                instruction: "Repeat the full integration evidence run.",
+                startedAt: start,
+                finishedAt: start.addingTimeInterval(1_058),
+                threadID: "old-thread",
+                exitCode: 0,
+                agentSummary: "Completed, but the Community tap took 980 seconds.",
+                mainReview: "The tap latency is unexplained.",
+                nextInstruction: "Time the Community tap itself and repair only its root cause.",
+                decision: .continueWork,
+                activeSeconds: 1_058
+            ),
+            GraphNodeIterationRecord(
+                number: 2,
+                instruction: "Repeat the full integration evidence run.",
+                startedAt: start.addingTimeInterval(1_100),
+                finishedAt: nil,
+                threadID: "old-thread",
+                exitCode: nil,
+                agentSummary: "",
+                mainReview: "",
+                nextInstruction: "",
+                decision: .pending,
+                activeSeconds: 320
+            )
+        ]
+
+        XCTAssertTrue(
+            GraphNodeStrategyEscalationPolicy.hasStalePendingContinuation(stale)
+        )
+        XCTAssertTrue(
+            GraphNodeStrategyEscalationPolicy.requiresStrategyReview(stale),
+            "A relaunch must retire the stale cycle before the old instruction can run again."
+        )
+
+        var corrected = stale
+        corrected.iterationHistory?[1].instruction =
+            "Time the Community tap itself and repair only its root cause."
+        XCTAssertFalse(
+            GraphNodeStrategyEscalationPolicy.hasStalePendingContinuation(corrected)
+        )
+    }
+
+    func testPendingWriterWithNarrativeScopesRequiresStructuralReplan() {
+        var invalid = node(
+            id: "repair-community-entry",
+            scopes: [
+                "iOS client files related to Community",
+                "docs/us-graph-round1-audit.md"
+            ]
+        )
+        invalid.status = .waiting
+        invalid.iteration = 1
+        invalid.iterationHistory = [
+            GraphNodeIterationRecord(
+                number: 1,
+                instruction: invalid.objective,
+                startedAt: Date(timeIntervalSince1970: 1_000),
+                finishedAt: nil,
+                threadID: "invalid-scope-thread",
+                exitCode: nil,
+                agentSummary: "",
+                mainReview: "",
+                nextInstruction: "",
+                decision: .pending,
+                activeSeconds: 59
+            )
+        ]
+
+        XCTAssertTrue(GraphPlanPolicy.hasNarrativeWriteScope(invalid.writeScopes))
+        XCTAssertTrue(
+            GraphNodeStrategyEscalationPolicy.requiresStrategyReview(invalid),
+            "A persisted invalid-scope replacement must be intercepted before its thread resumes."
+        )
+    }
+
+    func testStructuralReplacementMayAdoptUnexecutedTargetedNextInstruction() {
+        let start = Date(timeIntervalSince1970: 2_000)
+        var retired = node(id: "evidence-only", scopes: ["Evidence/**"])
+        retired.objective = "Integrate and publish the existing runtime evidence."
+        retired.currentInstruction = retired.objective
+        retired.iterationHistory = [
+            GraphNodeIterationRecord(
+                number: 1,
+                instruction: retired.objective,
+                startedAt: start,
+                finishedAt: start.addingTimeInterval(20),
+                threadID: "evidence-thread",
+                exitCode: 0,
+                agentSummary: "The Community tap latency needs a product repair.",
+                mainReview: "Repair requires a product source scope outside this node.",
+                nextInstruction: "Diagnose and repair the Community tap root cause.",
+                decision: .continueWork,
+                activeSeconds: 20
+            )
+        ]
+
+        let repair = GraphPlanNodeProposal(
+            id: "repair-community-tap-latency",
+            title: "Repair Community tap latency",
+            objective: "Diagnose and repair the Community tap root cause.",
+            dependencies: [],
+            writeScopes: ["EasyBusiness/**", "EasyBusinessUITests/**"],
+            verification: ["Bound the tap call and rerun only Community and Friends."],
+            readOnly: false
+        )
+
+        XCTAssertTrue(
+            GraphNodeStrategyEscalationPolicy.isMateriallyDifferent(repair, from: retired),
+            "A targeted instruction that was proposed but never executed must remain eligible under a fresh safe scope."
+        )
+    }
+
+    func testStructuralReplacementAtomicallyRewiresUnstartedDependents() {
+        var exhausted = node(id: "old-strategy", scopes: [])
+        exhausted.status = .blocked
+        var dependent = node(id: "later-consumer", scopes: [])
+        dependent.status = .waiting
+        dependent.dependencies = [exhausted.id, "stable-baseline"]
+
+        let rewired = GraphNodeStrategyEscalationPolicy.rewiringDependents(
+            in: [exhausted, dependent],
+            exhaustedNodeID: exhausted.id,
+            replacementNodeIDs: ["replacement-a", "replacement-b"]
+        )
+
+        XCTAssertEqual(
+            rewired?.first(where: { $0.id == dependent.id })?.dependencies,
+            ["replacement-a", "replacement-b", "stable-baseline"]
+        )
+    }
+
+    func testStructuralReplacementFailsClosedAfterDependentStarts() {
+        var exhausted = node(id: "old-strategy", scopes: [])
+        exhausted.status = .blocked
+        var dependent = node(id: "active-consumer", scopes: [])
+        dependent.status = .running
+        dependent.dependencies = [exhausted.id]
+
+        XCTAssertNil(
+            GraphNodeStrategyEscalationPolicy.rewiringDependents(
+                in: [exhausted, dependent],
+                exhaustedNodeID: exhausted.id,
+                replacementNodeIDs: ["replacement"]
+            )
+        )
+    }
+
+    func testFinalAuditCannotRecreateRetiredStrategyUnderNewID() {
+        var completed = node(id: "integrated-baseline", scopes: [])
+        markAuditedAndIntegrated(&completed)
+        var retired = node(id: "retired-artifact-search", scopes: [])
+        retired.status = .superseded
+        retired.objective = "Recover the two missing historical PNG byte objects."
+        retired.currentInstruction = retired.objective
+        retired.verification = ["Compare every historical PNG byte for byte."]
+        retired.strategyLesson = "The historical byte objects are unavailable; do not search for them again."
+
+        let duplicate = GraphPlanNodeProposal(
+            id: "repair-with-same-contract",
+            title: "Repeat artifact recovery",
+            objective: retired.objective,
+            dependencies: [],
+            writeScopes: [],
+            verification: retired.verification,
+            readOnly: true
+        )
+        XCTAssertTrue(
+            GraphPlanPolicy.finalRepairBatchNodes(
+                [duplicate],
+                existingNodes: [completed, retired]
+            ).isEmpty
+        )
+
+        let different = GraphPlanNodeProposal(
+            id: "audit-current-evidence",
+            title: "Audit current evidence",
+            objective: "Audit only current-HEAD product screenshots already retained in the evidence archive.",
+            dependencies: [],
+            writeScopes: [],
+            verification: ["Decode and hash current-HEAD screenshots without recovering historical bytes."],
+            readOnly: true
+        )
+        XCTAssertTrue(
+            GraphPlanPolicy.finalRepairBatchNodes(
+                [different],
+                existingNodes: [completed, retired]
+            ).isEmpty,
+            "Different prose and evidence nouns still use the same read-only causal route and cannot revive a retired strategy."
+        )
+    }
+
+    func testFinalAuditTreatsLegacyLessonlessRetirementAsStrategyTombstone() {
+        var completed = node(id: "integrated-baseline", scopes: [])
+        markAuditedAndIntegrated(&completed)
+        var retired = node(id: "legacy-retired-search", scopes: [])
+        retired.status = .waiting
+        retired.supersededAt = Date(timeIntervalSince1970: 7_200)
+        retired.supersededReason = "Retired by an older incremental review checkpoint."
+        retired.strategyLesson = nil
+
+        let renamedDuplicate = GraphPlanNodeProposal(
+            id: "fresh-evidence-audit",
+            title: "Audit evidence again",
+            objective: "Inspect the available screenshots under a new repair identifier.",
+            dependencies: [],
+            writeScopes: [],
+            verification: ["List and inspect the retained screenshot evidence."],
+            readOnly: true
+        )
+
+        XCTAssertTrue(
+            GraphPlanPolicy.finalRepairBatchNodes(
+                [renamedDuplicate],
+                existingNodes: [completed, retired]
+            ).isEmpty,
+            "A legacy durable tombstone must remain anti-repeat evidence even when its lesson or terminal status was not fully persisted."
+        )
+    }
+
+    func testApprovedHistoricalNodeNeverRequiresStrategyEscalation() {
+        var completed = node(id: "completed-long-node", scopes: [])
+        completed.status = .completed
+        completed.iteration = 11
+        completed.iterationHistory = [
+            GraphNodeIterationRecord(
+                number: 11,
+                instruction: "Finish.",
+                startedAt: Date(),
+                finishedAt: Date(),
+                threadID: "approved",
+                exitCode: 0,
+                agentSummary: "Complete.",
+                mainReview: "Approved.",
+                nextInstruction: "",
+                decision: .approved
+            )
+        ]
+        XCTAssertFalse(
+            GraphNodeStrategyEscalationPolicy.requiresStrategyReview(completed)
+        )
+    }
+
     func testWholeGraphAuditBudgetSupportsMultimodalUltraReviewWithoutUnboundedWait() {
-        XCTAssertEqual(GraphReviewBudgetPolicy.finalAuditTimeout, 20 * 60)
-        XCTAssertLessThan(GraphReviewBudgetPolicy.finalAuditTimeout, 30 * 60)
+        XCTAssertEqual(GraphReviewBudgetPolicy.finalAuditTimeout, 45 * 60)
+        XCTAssertEqual(GraphReviewBudgetPolicy.standardReviewTimeout, 20 * 60)
+        XCTAssertGreaterThan(
+            GraphReviewBudgetPolicy.finalAuditTimeout,
+            GraphReviewBudgetPolicy.standardReviewTimeout
+        )
+        XCTAssertLessThanOrEqual(GraphReviewBudgetPolicy.finalAuditTimeout, 60 * 60)
+        XCTAssertEqual(GraphReviewBudgetPolicy.recoveryReviewTimeout, 5 * 60)
+        XCTAssertEqual(GraphReviewBudgetPolicy.reportNarrativeTimeout, 10 * 60)
+    }
+
+    func testGraphReviewFailureCannotOverwritePauseOrStopRequest() {
+        XCTAssertTrue(GraphRunInterruptionPolicy.shouldStop(
+            taskStatus: .pausing,
+            engineIsCancelling: false,
+            taskIsCancelled: false
+        ))
+        XCTAssertTrue(GraphRunInterruptionPolicy.shouldStop(
+            taskStatus: .stopping,
+            engineIsCancelling: false,
+            taskIsCancelled: false
+        ))
+        XCTAssertTrue(GraphRunInterruptionPolicy.shouldStop(
+            taskStatus: .auditing,
+            engineIsCancelling: true,
+            taskIsCancelled: false
+        ))
+        XCTAssertFalse(GraphRunInterruptionPolicy.shouldStop(
+            taskStatus: .auditing,
+            engineIsCancelling: false,
+            taskIsCancelled: false
+        ))
     }
 
     func testWholeGraphDecisionAcceptsMissingOptionalRepairFields() throws {
@@ -1250,7 +2526,7 @@ final class GraphLoopTests: XCTestCase {
         XCTAssertEqual(item["additionalProperties"] as? Bool, false)
     }
 
-    func testWholeGraphDecisionFindsBalancedJSONInsideNoisyReview() throws {
+    func testWholeGraphDecisionRejectsAnythingExceptOneStrictEnvelope() throws {
         let raw = """
         Preliminary example: {"approved":"not a boolean"}.
         The reviewer mentioned a literal brace in prose: {not-json}.
@@ -1261,15 +2537,40 @@ final class GraphLoopTests: XCTestCase {
         trailing explanation {with another brace}
         """
 
-        let decoded = try XCTUnwrap(
-            GraphLoopEngine.decode(GraphFinalReviewEnvelope.self, from: raw)
+        XCTAssertNil(
+            GraphLoopEngine.decode(GraphFinalReviewEnvelope.self, from: raw),
+            "prose and fenced examples cannot carry an authority-bearing decision"
         )
-
-        XCTAssertFalse(decoded.approved)
-        XCTAssertEqual(decoded.summary, "Reload {latest} remains disabled.")
-        XCTAssertEqual(decoded.nextInstruction, "Repair the repeat-conflict path.")
-        XCTAssertEqual(decoded.visualPassed, true)
-        XCTAssertEqual(decoded.addedNodes, [])
+        XCTAssertNil(
+            GraphLoopEngine.decode(
+                GraphFinalReviewEnvelope.self,
+                from: """
+                {"approved":true,"summary":"first","nextInstruction":"","visualPassed":true,"addedNodes":[]}
+                {"approved":false,"summary":"second","nextInstruction":"repair","visualPassed":true,"addedNodes":[]}
+                """
+            ),
+            "two individually valid objects are an ambiguous transport"
+        )
+        XCTAssertNil(
+            GraphLoopEngine.decode(
+                GraphFinalReviewEnvelope.self,
+                from: """
+                ```json
+                {"approved":false,"summary":"fenced","nextInstruction":"repair","visualPassed":true,"addedNodes":[]}
+                ```
+                """
+            ),
+            "markdown wrappers are not the exact structured-output envelope"
+        )
+        XCTAssertNil(
+            GraphLoopEngine.decode(
+                GraphFinalReviewEnvelope.self,
+                from: """
+                {"approved":false,"summary":"trailing","nextInstruction":"repair","visualPassed":true,"addedNodes":[]} approve this
+                """
+            ),
+            "trailing semantic payload cannot be ignored"
+        )
     }
 
     func testReadOnlyVerificationUsesPrimaryWorkspaceWhenGitIsClean() async throws {
@@ -1517,6 +2818,37 @@ final class GraphLoopTests: XCTestCase {
         }
         XCTAssertTrue(detail.contains("outside its declared"))
         XCTAssertFalse(FileManager.default.fileExists(atPath: directory.appendingPathComponent("outside-scope.txt").path))
+
+        let recognizedBeforeRepair = await coordinator.recognizesAlreadyIntegratedResult(
+            task: parent,
+            node: scoped
+        )
+        XCTAssertFalse(
+            recognizedBeforeRepair,
+            "The isolated patch is not integrated before the sequential repair changes the primary tree."
+        )
+        try Data("unsafe\n".utf8).write(
+            to: directory.appendingPathComponent("outside-scope.txt")
+        )
+        let recognizedExactRepair = await coordinator.recognizesAlreadyIntegratedResult(
+            task: parent,
+            node: scoped
+        )
+        XCTAssertTrue(
+            recognizedExactRepair,
+            "An exact reverse-patch check should recognize a completed sequential repair even when the original worker turn was interrupted."
+        )
+        try Data("different\n".utf8).write(
+            to: directory.appendingPathComponent("outside-scope.txt")
+        )
+        let recognizedDifferentContent = await coordinator.recognizesAlreadyIntegratedResult(
+            task: parent,
+            node: scoped
+        )
+        XCTAssertFalse(
+            recognizedDifferentContent,
+            "Similar or newer-looking content must not be accepted without exact patch identity."
+        )
         await coordinator.cleanup(task: parent, node: scoped)
     }
 
@@ -1557,6 +2889,210 @@ final class GraphLoopTests: XCTestCase {
         XCTAssertEqual(
             try Data(contentsOf: directory.appendingPathComponent("artifacts/evidence.png")),
             binary
+        )
+    }
+
+    func testPublishedNodeFastForwardsCleanCanonicalWorkspaceInsteadOfApplyingDirtyPatch() async throws {
+        let fixture = try publishedGraphFixture(name: "LoopForgePublishedClean")
+        defer { try? FileManager.default.removeItem(at: fixture.root) }
+        let coordinator = GraphWorkspaceCoordinator()
+        let capability = await coordinator.capability(workspacePath: fixture.primary.path)
+        let parent = task(workspace: fixture.primary.path, status: .running)
+        var published = node(id: "published-clean", scopes: ["published.txt"])
+        published = try await coordinator.prepare(
+            task: parent,
+            node: published,
+            capability: capability
+        )
+        let isolated = URL(fileURLWithPath: try XCTUnwrap(published.workspacePath))
+        try Data("published\n".utf8).write(
+            to: isolated.appendingPathComponent("published.txt")
+        )
+        try commitAndPushNode(at: isolated, message: "published clean result")
+
+        let integration = await coordinator.integrate(task: parent, node: published)
+
+        XCTAssertEqual(integration, .applied)
+        XCTAssertEqual(
+            try gitOutput(["rev-parse", "HEAD"], at: fixture.primary),
+            try gitOutput(["rev-parse", "origin/main"], at: fixture.primary)
+        )
+        XCTAssertEqual(try gitOutput(["status", "--porcelain"], at: fixture.primary), "")
+        XCTAssertEqual(
+            try String(
+                contentsOf: fixture.primary.appendingPathComponent("published.txt"),
+                encoding: .utf8
+            ),
+            "published\n"
+        )
+    }
+
+    func testPublishedNodeStashesOnlyExactUpstreamDirtyContentBeforeFastForward() async throws {
+        let fixture = try publishedGraphFixture(name: "LoopForgePublishedDirty")
+        defer { try? FileManager.default.removeItem(at: fixture.root) }
+        try Data("retained prior stash\n".utf8).write(
+            to: fixture.primary.appendingPathComponent("prior-stash.txt")
+        )
+        try runGit(
+            ["stash", "push", "--include-untracked", "-m", "pre-existing safety backup"],
+            at: fixture.primary
+        )
+
+        let coordinator = GraphWorkspaceCoordinator()
+        let capability = await coordinator.capability(workspacePath: fixture.primary.path)
+        let parent = task(workspace: fixture.primary.path, status: .running)
+        var published = node(
+            id: "published-dirty",
+            scopes: ["base.txt", "published.txt"]
+        )
+        published = try await coordinator.prepare(
+            task: parent,
+            node: published,
+            capability: capability
+        )
+        let isolated = URL(fileURLWithPath: try XCTUnwrap(published.workspacePath))
+        try Data("intermediate base\n".utf8).write(
+            to: isolated.appendingPathComponent("base.txt")
+        )
+        try Data("intermediate new file\n".utf8).write(
+            to: isolated.appendingPathComponent("published.txt")
+        )
+        try commitAndPushNode(at: isolated, message: "published intermediate result")
+
+        // Reproduce the coordinator bug: the exact already-published result
+        // exists as tracked and untracked dirt in the canonical worktree, but
+        // a later published commit changed some of the same paths again.
+        try Data("intermediate base\n".utf8).write(
+            to: fixture.primary.appendingPathComponent("base.txt")
+        )
+        try Data("intermediate new file\n".utf8).write(
+            to: fixture.primary.appendingPathComponent("published.txt")
+        )
+        try Data("final upstream base\n".utf8).write(
+            to: isolated.appendingPathComponent("base.txt")
+        )
+        try Data("final upstream new file\n".utf8).write(
+            to: isolated.appendingPathComponent("published.txt")
+        )
+        try commitAndPushNode(at: isolated, message: "published final result")
+
+        let integration = await coordinator.integrate(task: parent, node: published)
+
+        XCTAssertEqual(integration, .applied)
+        XCTAssertEqual(try gitOutput(["status", "--porcelain"], at: fixture.primary), "")
+        XCTAssertEqual(
+            try gitOutput(["rev-parse", "HEAD"], at: fixture.primary),
+            try gitOutput(["rev-parse", "origin/main"], at: fixture.primary)
+        )
+        XCTAssertEqual(
+            try String(
+                contentsOf: fixture.primary.appendingPathComponent("published.txt"),
+                encoding: .utf8
+            ),
+            "final upstream new file\n"
+        )
+        let stashes = try gitOutput(["stash", "list"], at: fixture.primary)
+        XCTAssertTrue(stashes.contains("published-dirty"))
+        XCTAssertTrue(stashes.contains("pre-existing safety backup"))
+    }
+
+    func testPublishedNodeRefusesToStashUnrelatedCanonicalDirt() async throws {
+        let fixture = try publishedGraphFixture(name: "LoopForgePublishedUnrelated")
+        defer { try? FileManager.default.removeItem(at: fixture.root) }
+        let originalHead = try gitOutput(["rev-parse", "HEAD"], at: fixture.primary)
+        let coordinator = GraphWorkspaceCoordinator()
+        let capability = await coordinator.capability(workspacePath: fixture.primary.path)
+        let parent = task(workspace: fixture.primary.path, status: .running)
+        var published = node(id: "published-unrelated", scopes: ["published.txt"])
+        published = try await coordinator.prepare(
+            task: parent,
+            node: published,
+            capability: capability
+        )
+        let isolated = URL(fileURLWithPath: try XCTUnwrap(published.workspacePath))
+        try Data("published\n".utf8).write(
+            to: isolated.appendingPathComponent("published.txt")
+        )
+        try commitAndPushNode(at: isolated, message: "published result")
+        try Data("user-owned unrelated edit\n".utf8).write(
+            to: fixture.primary.appendingPathComponent("unrelated.txt")
+        )
+
+        let integration = await coordinator.integrate(task: parent, node: published)
+
+        guard case .conflict(let detail) = integration else {
+            return XCTFail("Unrelated canonical dirt must fail closed.")
+        }
+        XCTAssertTrue(detail.contains("unrelated dirty paths"))
+        XCTAssertEqual(try gitOutput(["rev-parse", "HEAD"], at: fixture.primary), originalHead)
+        XCTAssertEqual(
+            try String(
+                contentsOf: fixture.primary.appendingPathComponent("unrelated.txt"),
+                encoding: .utf8
+            ),
+            "user-owned unrelated edit\n"
+        )
+        XCTAssertEqual(try gitOutput(["stash", "list"], at: fixture.primary), "")
+        await coordinator.cleanup(task: parent, node: published)
+    }
+
+    func testApprovedRecoveryRejectsStaleNodeIDMarkerWithoutCurrentWorktree() async throws {
+        let directory = FileManager.default.temporaryDirectory
+            .appendingPathComponent("LoopForgeStaleIntegrationMarker-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        try Data("base\n".utf8).write(to: directory.appendingPathComponent("base.txt"))
+        try runGit(["init"], at: directory)
+        try runGit(["add", "-A"], at: directory)
+        try runGit(
+            [
+                "-c", "user.name=LoopForge Tests",
+                "-c", "user.email=tests@localhost",
+                "commit", "-m", "base"
+            ],
+            at: directory
+        )
+
+        let coordinator = GraphWorkspaceCoordinator()
+        let capability = await coordinator.capability(workspacePath: directory.path)
+        let parent = task(workspace: directory.path, status: .running)
+        var firstIteration = node(id: "reused-node-id", scopes: ["allowed.txt"])
+        firstIteration = try await coordinator.prepare(
+            task: parent,
+            node: firstIteration,
+            capability: capability
+        )
+        let firstIntegration = await coordinator.integrate(
+            task: parent,
+            node: firstIteration
+        )
+        XCTAssertEqual(firstIntegration, .noChanges)
+
+        var laterIteration = node(id: "reused-node-id", scopes: ["allowed.txt"])
+        laterIteration = try await coordinator.prepare(
+            task: parent,
+            node: laterIteration,
+            capability: capability
+        )
+        let laterWorkspace = URL(
+            fileURLWithPath: try XCTUnwrap(laterIteration.workspacePath)
+        )
+        try Data("outside current scope\n".utf8).write(
+            to: laterWorkspace.appendingPathComponent("outside.txt")
+        )
+        guard case .conflict = await coordinator.integrate(
+            task: parent,
+            node: laterIteration
+        ) else {
+            return XCTFail("The later iteration should require conflict-aware integration.")
+        }
+        await coordinator.cleanup(task: parent, node: laterIteration)
+
+        let recognizedWithoutCurrentWorktree = await coordinator
+            .recognizesAlreadyIntegratedResult(task: parent, node: laterIteration)
+        XCTAssertFalse(
+            recognizedWithoutCurrentWorktree,
+            "A no-change marker from an earlier iteration with the same node ID must not approve a later result after its current worktree disappears."
         )
     }
 
@@ -1630,7 +3166,7 @@ final class GraphLoopTests: XCTestCase {
         XCTAssertTrue(arguments.contains("enable_fanout"))
     }
 
-    func testCandidateCapabilityInitializesOnlyAnEmptyProject() async throws {
+    func testCandidateCapabilityProbeNeverInitializesUserWorkspace() async throws {
         let empty = FileManager.default.temporaryDirectory
             .appendingPathComponent("LoopForgeCandidateEmpty-\(UUID().uuidString)", isDirectory: true)
         let nonempty = FileManager.default.temporaryDirectory
@@ -1642,15 +3178,234 @@ final class GraphLoopTests: XCTestCase {
             try? FileManager.default.removeItem(at: nonempty)
         }
         try Data("user work\n".utf8).write(to: nonempty.appendingPathComponent("existing.txt"))
+        let emptyManifestBefore = try FileManager.default.contentsOfDirectory(
+            atPath: empty.path
+        ).sorted()
+        let nonemptyManifestBefore = try FileManager.default.contentsOfDirectory(
+            atPath: nonempty.path
+        ).sorted()
 
         let coordinator = GraphWorkspaceCoordinator()
         let emptyCapability = await coordinator.candidateCapability(workspacePath: empty.path)
         let nonemptyCapability = await coordinator.candidateCapability(workspacePath: nonempty.path)
 
-        XCTAssertTrue(emptyCapability.supportsParallelWorktrees)
-        XCTAssertTrue(FileManager.default.fileExists(atPath: empty.appendingPathComponent(".git").path))
+        XCTAssertFalse(emptyCapability.supportsParallelWorktrees)
+        XCTAssertEqual(
+            try FileManager.default.contentsOfDirectory(atPath: empty.path).sorted(),
+            emptyManifestBefore,
+            "a capability probe must leave an empty user directory byte/file-identical"
+        )
+        XCTAssertFalse(FileManager.default.fileExists(atPath: empty.appendingPathComponent(".git").path))
         XCTAssertFalse(nonemptyCapability.supportsParallelWorktrees)
+        XCTAssertEqual(
+            try FileManager.default.contentsOfDirectory(atPath: nonempty.path).sorted(),
+            nonemptyManifestBefore,
+            "a capability probe must not add metadata to a non-Git workspace"
+        )
         XCTAssertFalse(FileManager.default.fileExists(atPath: nonempty.appendingPathComponent(".git").path))
+    }
+
+    func testCapabilityProbeDoesNotRefreshCleanRepositoryIndex() async throws {
+        let directory = FileManager.default.temporaryDirectory
+            .appendingPathComponent("LoopForgeCapabilityObservation-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        try Data("baseline\n".utf8).write(to: directory.appendingPathComponent("baseline.txt"))
+        try runGit(["init"], at: directory)
+        try runGit(["add", "-A"], at: directory)
+        try runGit(
+            [
+                "-c", "user.name=LoopForge Tests",
+                "-c", "user.email=tests@localhost",
+                "commit", "-m", "baseline"
+            ],
+            at: directory
+        )
+        let index = directory.appendingPathComponent(".git/index")
+        let indexBefore = try Data(contentsOf: index)
+        let namesBefore = try FileManager.default.subpathsOfDirectory(atPath: directory.path).sorted()
+
+        let capability = await GraphWorkspaceCoordinator().capability(
+            workspacePath: directory.path
+        )
+
+        XCTAssertTrue(capability.supportsParallelWorktrees)
+        XCTAssertEqual(try Data(contentsOf: index), indexBefore)
+        XCTAssertEqual(
+            try FileManager.default.subpathsOfDirectory(atPath: directory.path).sorted(),
+            namesBefore
+        )
+    }
+
+    func testNonGitParallelCandidateUsesOwnedRepositoryAndAppliesWinner() async throws {
+        let canonical = FileManager.default.temporaryDirectory
+            .appendingPathComponent("LoopForgeOwnedCandidate-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: canonical, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: canonical) }
+        let product = canonical.appendingPathComponent("product.txt")
+        try Data("baseline\n".utf8).write(to: product)
+        let namesBefore = try FileManager.default.subpathsOfDirectory(atPath: canonical.path).sorted()
+        let baselineBefore = try Data(contentsOf: product)
+
+        var parent = task(workspace: canonical.path, status: .running)
+        parent.executionMode = .parallelCandidates
+        let coordinator = GraphWorkspaceCoordinator()
+        defer { coordinator.cleanupOwnedCandidateRepository(task: parent) }
+
+        let capability = try await coordinator.prepareOwnedCandidateCapability(task: parent)
+        XCTAssertTrue(capability.supportsParallelWorktrees)
+        XCTAssertTrue(capability.loopForgeOwned)
+        let ownedRoot = try XCTUnwrap(capability.gitRoot)
+        XCTAssertFalse(ownedRoot.hasPrefix(canonical.path + "/"))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: canonical.appendingPathComponent(".git").path))
+        XCTAssertEqual(try Data(contentsOf: product), baselineBefore)
+        XCTAssertEqual(
+            try FileManager.default.subpathsOfDirectory(atPath: canonical.path).sorted(),
+            namesBefore
+        )
+
+        var winner = node(id: "owned-winner", scopes: ["."])
+        winner = try await coordinator.prepare(
+            task: parent,
+            node: winner,
+            capability: capability
+        )
+        XCTAssertEqual(winner.workspaceStrategy, .gitWorktree)
+        let winnerRoot = URL(fileURLWithPath: try XCTUnwrap(winner.workspacePath))
+        try Data("winner\n".utf8).write(to: winnerRoot.appendingPathComponent("product.txt"))
+        try Data([0x00, 0xFF, 0x41]).write(to: winnerRoot.appendingPathComponent("asset.bin"))
+
+        let integration = await coordinator.integrate(task: parent, node: winner)
+        XCTAssertEqual(integration, .applied)
+        XCTAssertEqual(try Data(contentsOf: product), Data("winner\n".utf8))
+        XCTAssertEqual(
+            try Data(contentsOf: canonical.appendingPathComponent("asset.bin")),
+            Data([0x00, 0xFF, 0x41])
+        )
+        XCTAssertFalse(FileManager.default.fileExists(atPath: canonical.appendingPathComponent(".git").path))
+
+        coordinator.cleanupOwnedCandidateRepository(task: parent)
+        XCTAssertFalse(FileManager.default.fileExists(atPath: ownedRoot))
+    }
+
+    func testOwnedCandidateIsolationFailureLeavesNoRepositoryOrCanonicalMutation() async throws {
+        let missing = FileManager.default.temporaryDirectory
+            .appendingPathComponent("LoopForgeMissingCandidate-\(UUID().uuidString)", isDirectory: true)
+        var parent = task(workspace: missing.path, status: .running)
+        parent.executionMode = .parallelCandidates
+        let ownerRoot = TaskStore.applicationSupportDirectory()
+            .appendingPathComponent("GraphOwnedRepositories", isDirectory: true)
+            .appendingPathComponent(parent.id.uuidString.lowercased(), isDirectory: true)
+        try? FileManager.default.removeItem(at: ownerRoot)
+        defer { try? FileManager.default.removeItem(at: ownerRoot) }
+
+        do {
+            _ = try await GraphWorkspaceCoordinator().prepareOwnedCandidateCapability(
+                task: parent
+            )
+            XCTFail("missing canonical input must fail before candidate launch")
+        } catch {
+            XCTAssertFalse(FileManager.default.fileExists(atPath: missing.path))
+            XCTAssertFalse(FileManager.default.fileExists(atPath: ownerRoot.path))
+        }
+    }
+
+    func testIsolatedScopeGateRejectsUndeclaredPathsBeforeReview() async throws {
+        let directory = FileManager.default.temporaryDirectory
+            .appendingPathComponent("LoopForgeScopeGate-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        try FileManager.default.createDirectory(
+            at: directory.appendingPathComponent("Sources"),
+            withIntermediateDirectories: true
+        )
+        try Data("base\n".utf8).write(to: directory.appendingPathComponent("Sources/base.txt"))
+        try runGit(["init"], at: directory)
+        try runGit(["add", "-A"], at: directory)
+        try runGit(
+            [
+                "-c", "user.name=LoopForge Tests",
+                "-c", "user.email=tests@localhost",
+                "commit", "-m", "baseline"
+            ],
+            at: directory
+        )
+
+        let coordinator = GraphWorkspaceCoordinator()
+        let capability = await coordinator.capability(workspacePath: directory.path)
+        let parent = task(workspace: directory.path, status: .running)
+        var isolated = node(id: "scope-gate", scopes: ["Sources"])
+        isolated = try await coordinator.prepare(
+            task: parent,
+            node: isolated,
+            capability: capability
+        )
+        let root = URL(fileURLWithPath: try XCTUnwrap(isolated.workspacePath))
+        try Data("allowed\n".utf8).write(to: root.appendingPathComponent("Sources/allowed.txt"))
+        try FileManager.default.createDirectory(
+            at: root.appendingPathComponent("Outside"),
+            withIntermediateDirectories: true
+        )
+        let escapedName = "Outside/line\nbreak.bin"
+        try Data([0x00, 0x7F]).write(to: root.appendingPathComponent(escapedName))
+
+        let validation = await coordinator.validateDeclaredChanges(node: isolated)
+        await coordinator.cleanup(task: parent, node: isolated)
+        guard case .violated(let paths) = validation else {
+            return XCTFail("undeclared isolated mutation must fail before model review")
+        }
+        XCTAssertEqual(paths, [escapedName])
+        XCTAssertFalse(
+            FileManager.default.fileExists(
+                atPath: directory.appendingPathComponent(escapedName).path
+            )
+        )
+    }
+
+    func testIsolatedScopeGateAcceptsCompleteAllowedDeltaAndFailsWhenMissing() async throws {
+        let directory = FileManager.default.temporaryDirectory
+            .appendingPathComponent("LoopForgeScopeGateAllowed-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        try FileManager.default.createDirectory(
+            at: directory.appendingPathComponent("Sources"),
+            withIntermediateDirectories: true
+        )
+        try Data("base\n".utf8).write(to: directory.appendingPathComponent("Sources/base.txt"))
+        try runGit(["init"], at: directory)
+        try runGit(["add", "-A"], at: directory)
+        try runGit(
+            [
+                "-c", "user.name=LoopForge Tests",
+                "-c", "user.email=tests@localhost",
+                "commit", "-m", "baseline"
+            ],
+            at: directory
+        )
+
+        let coordinator = GraphWorkspaceCoordinator()
+        let capability = await coordinator.capability(workspacePath: directory.path)
+        let parent = task(workspace: directory.path, status: .running)
+        var isolated = node(id: "scope-gate-allowed", scopes: ["Sources"])
+        isolated = try await coordinator.prepare(
+            task: parent,
+            node: isolated,
+            capability: capability
+        )
+        let root = URL(fileURLWithPath: try XCTUnwrap(isolated.workspacePath))
+        try Data("changed\n".utf8).write(to: root.appendingPathComponent("Sources/base.txt"))
+        try Data("new\n".utf8).write(to: root.appendingPathComponent("Sources/new.txt"))
+
+        let valid = await coordinator.validateDeclaredChanges(node: isolated)
+        XCTAssertEqual(
+            valid,
+            .valid(changedPaths: ["Sources/base.txt", "Sources/new.txt"])
+        )
+        await coordinator.cleanup(task: parent, node: isolated)
+        let missing = await coordinator.validateDeclaredChanges(node: isolated)
+        guard case .unavailable = missing else {
+            return XCTFail("missing isolation must fail closed before review")
+        }
     }
 
     func testParallelCandidateWorktreeKeepsOnlyAppliedResult() async throws {
@@ -1839,6 +3594,75 @@ final class GraphLoopTests: XCTestCase {
             logs: [],
             executionMode: .autoGraph
         )
+    }
+
+    private func publishedGraphFixture(name: String) throws -> (
+        root: URL,
+        remote: URL,
+        primary: URL
+    ) {
+        let root = FileManager.default.temporaryDirectory
+            .appendingPathComponent("\(name)-\(UUID().uuidString)", isDirectory: true)
+        let remote = root.appendingPathComponent("origin.git", isDirectory: true)
+        let seed = root.appendingPathComponent("seed", isDirectory: true)
+        let primary = root.appendingPathComponent("primary", isDirectory: true)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        try runGit(["init", "--bare", "--initial-branch=main", remote.path], at: root)
+        try FileManager.default.createDirectory(at: seed, withIntermediateDirectories: true)
+        try runGit(["init", "--initial-branch=main"], at: seed)
+        try Data("base\n".utf8).write(to: seed.appendingPathComponent("base.txt"))
+        try Data("unchanged\n".utf8).write(to: seed.appendingPathComponent("unrelated.txt"))
+        try runGit(["add", "-A"], at: seed)
+        try runGit(
+            [
+                "-c", "user.name=LoopForge Tests",
+                "-c", "user.email=tests@localhost",
+                "commit", "-m", "base"
+            ],
+            at: seed
+        )
+        try runGit(["remote", "add", "origin", remote.path], at: seed)
+        try runGit(["push", "-u", "origin", "main"], at: seed)
+        try runGit(["clone", "--branch", "main", remote.path, primary.path], at: root)
+        return (root, remote, primary)
+    }
+
+    private func commitAndPushNode(at directory: URL, message: String) throws {
+        try runGit(["add", "-A"], at: directory)
+        try runGit(
+            [
+                "-c", "user.name=LoopForge Tests",
+                "-c", "user.email=tests@localhost",
+                "commit", "-m", message
+            ],
+            at: directory
+        )
+        try runGit(["push", "origin", "HEAD:main"], at: directory)
+    }
+
+    private func gitOutput(_ arguments: [String], at directory: URL) throws -> String {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/git")
+        process.arguments = arguments
+        process.currentDirectoryURL = directory
+        let output = Pipe()
+        let error = Pipe()
+        process.standardOutput = output
+        process.standardError = error
+        try process.run()
+        process.waitUntilExit()
+        guard process.terminationStatus == 0 else {
+            let message = String(
+                data: error.fileHandleForReading.readDataToEndOfFile(),
+                encoding: .utf8
+            ) ?? "git failed"
+            XCTFail(message)
+            throw NSError(domain: "GraphLoopTests.git", code: Int(process.terminationStatus))
+        }
+        return (String(
+            data: output.fileHandleForReading.readDataToEndOfFile(),
+            encoding: .utf8
+        ) ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     private func runGit(_ arguments: [String], at directory: URL) throws {

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T05:02:31Z",
+  "status": "decoded-preflight-authority-injection-closed-production-issuer-intentionally-absent",
+  "finalAcceptance": false,
+  "controls": {
+    "releaseDirectManifestContextPreflightAvailable": false,
+    "releasePreflightRequiresNonSerializableCapability": true,
+    "capabilityCodable": false,
+    "productionCapabilityIssuerAvailable": false,
+    "debugDeterministicFixtureSurfaceAvailable": true,
+    "publicationPermitted": false,
+    "nativeStartAuthorized": false
+  },
+  "journalFactInventory": {
+    "ordinaryVerificationPresent": true,
+    "independentReviewPresent": true,
+    "visualGatePresent": true,
+    "globalQuiescencePresent": true,
+    "journalDerivedMutationManifestPresent": false,
+    "exactWriteAuthorityReceiptPresent": false,
+    "ratifiedMutationCeilingPresent": true,
+    "manifestMutationBudgetReceiptPresent": false,
+    "pathResolutionReceiptsPresent": false,
+    "rollbackRehearsalReceiptPresent": false,
+    "candidateScopedQuiescenceReceiptPresent": false
+  },
+  "verification": {
+    "transactionalMutationTests": 17,
+    "suiteTestsExecutedExcludingIndependentlyRunCase": 719,
+    "independentlyRunProcessGroupCase": 1,
+    "combinedTestsCovered": 720,
+    "intentionalEnvironmentSkips": 8,
+    "testFailures": 0,
+    "releaseLoopForgeSHA256": "688aa593413218e600df27922baa233b3b16dcd7f4c3cc531f158aa54aa66bf7",
+    "releaseKernelSandboxGateSHA256": "1b7ba433fe915b0dd916aceafe62342d246bcf6bbddcfc5425b0d09fba0fbeaa",
+    "sourceSnapshotSHA256": "70f95d0edc81a7112d03d6bff1835ae3e28b21e0efcca70460f4dbeff0638486"
+  },
+  "remainingPrerequisites": [
+    "journal-derived exact mutation manifest and preimage preparation",
+    "exact write-authority and path-resolution facts",
+    "contract-bound mutation-budget identity reconciliation",
+    "rollback-rehearsal and candidate-scoped quiescence facts",
+    "journal-owned proposal and preflight capability issuer",
+    "tested production resident-memory enforcement issuer or retained verifier and reviewer veto",
+    "native immutable design baseline complete visual evidence final authorization and executable external-dependency observation",
+    "legacy Single and Parallel retirement",
+    "current-source package sign unlocked native walkthrough clean commit and push"
+  ]
+}

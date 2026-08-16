@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-13T16:00:31Z",
+  "status": "completed-candidate-rollback-rehearsal-owner-private-exact-journaled-and-crash-replayable",
+  "finalAcceptance": false,
+  "easyBusinessMutated": false,
+  "controls": {
+    "exactAcceptedPreparationTransactionRequired": true,
+    "exactEffectiveVerificationRequired": true,
+    "exactMatchingIndependentReviewRequired": true,
+    "visualGateRequiredWhenBaselineIntersects": true,
+    "ownerPrivateReplicaOutsideCanonicalWorkspace": true,
+    "forwardAndDeterministicInverseExecuted": true,
+    "regularFileCreateModifyDeleteAndModeCovered": true,
+    "initialAndRestoredStateDigestEqual": true,
+    "appliedStateDigestMustDiffer": true,
+    "replicaCleanupRequired": true,
+    "canonicalWorkspaceRevalidatedBeforeAppend": true,
+    "duplicateReplayReexecutesRehearsal": true,
+    "crashReplayIsReceiptOnly": true,
+    "executableMutationManifestIssued": false,
+    "authorizedMutationPreflightIssued": false,
+    "integrationTransactionCreated": false,
+    "canonicalWorkspaceMutationAuthorityIssued": false
+  },
+  "adversarialVerification": {
+    "workspaceLocalReplicaRejected": true,
+    "exactInverseRestorationPassed": true,
+    "duplicateReceiptExact": true,
+    "closeReopenReplayExact": true,
+    "proposalRetryAfterReviewIsIdempotent": true,
+    "canonicalFixtureByteIdentical": true,
+    "runtimeReleaseFormerStackCrashPassed": true
+  },
+  "stackSafety": {
+    "failedRunsCountedSeconds": 0,
+    "signal": 10,
+    "cause": "deep postimage containment validation inherited the monolithic reducer command-switch frame",
+    "runtimeReleaseDispatchedBeforeMonolithicSwitch": true,
+    "richRollbackCommandAuthorityBoxed": true,
+    "rollbackEventPayloadIndirect": true,
+    "failedDiagnosticCount": 6
+  },
+  "verification": {
+    "swiftTestsExecuted": 766,
+    "intentionalEnvironmentSkips": 8,
+    "swiftTestFailures": 0,
+    "swiftTestSeconds": 60.861,
+    "swiftTestWallSeconds": 60.907,
+    "sourceHashes": {
+      "WorkspaceCompletedCandidateMutationRollbackRehearsal.swift": "5ab41e0e4cd7441de60516ff7d55d04e82794c09269089be6bb6a80fd2464a82",
+      "WorkspaceCompletedCandidateMutationManifestProposal.swift": "d3c799590488aaae7e20d08532750cfc7099e42fb0cd37c329fad584b11814a2",
+      "RunReducer.swift": "df4a34b75aff2da89c28d8c17048fcb82e76d41aa3e4c15890cfff733cf9d8e9",
+      "RunJournal.swift": "15a3d708e3990decadf9e7779347c3c65389ab4782a90d766c8453062c5023c8",
+      "WorkspaceCompletedCandidateMutationRollbackRehearsalTests.swift": "1a0e83d193983e8f3c3d6096bb7cf0ad9040d9a2d69d314daf0050450f2058b3",
+      "KernelRunEnrollmentCoordinatorTests.swift": "8365238c49fe162e542bc3b9068d784c4f4836ca08e5774324f11282e733e3e3"
+    }
+  },
+  "ledger": {
+    "acceptedIntervalID": "kernel-completed-candidate-rollback-rehearsal-197",
+    "coveredSecondsAdded": 600,
+    "coveredActiveSeconds": 160170,
+    "acceptedIntervals": 197,
+    "failedRunsTestsBuildsWaitsAndReportsCountedSeconds": 0
+  },
+  "remainingPrerequisites": [
+    "assemble the executable manifest then issue proposal and preflight authority",
+    "provide tested resident-memory enforcement or retain verifier and reviewer veto",
+    "compose native immutable design baseline complete visual evidence final authorization and native UI start",
+    "retire remaining legacy Single and Parallel paths",
+    "complete current-source package sign hash unlocked native walkthrough clean commit and push"
+  ]
+}

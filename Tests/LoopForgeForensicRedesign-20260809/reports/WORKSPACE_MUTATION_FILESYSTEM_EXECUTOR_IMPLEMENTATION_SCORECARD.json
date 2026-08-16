@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "report": "WORKSPACE_MUTATION_FILESYSTEM_EXECUTOR_IMPLEMENTATION.md",
+  "status": "implemented-concrete-executor-not-cut-over",
+  "focusedTestCount": 8,
+  "completeTestCount": 499,
+  "completeSkippedCount": 8,
+  "completeFailureCount": 0,
+  "implementation": {
+    "realFilesystemEffects": true,
+    "preflightRevalidated": true,
+    "canonicalRootDeviceInodeBound": true,
+    "exclusiveCrossProcessLock": true,
+    "leaseIdentityAndLifetimeBound": true,
+    "remoteAccessDisabled": true,
+    "contentObjectsRehashed": true,
+    "durableRecoveryArtifactBeforeEffect": true,
+    "perOperationRecoveryProgress": true,
+    "affectedPostimageVerified": true,
+    "unrelatedTreeProof": true,
+    "symlinkParentEscapeRejected": true,
+    "sameContentForeignInodeRejected": true,
+    "staleCASRejected": true,
+    "rollbackQuarantine": true,
+    "integrationReducerReceiptCompatibility": true,
+    "directoryMutation": false,
+    "submoduleMutation": false,
+    "crashRecoveryDispatcher": false,
+    "postRestoreReceiptRecovery": false,
+    "journaledEffectOutbox": false,
+    "acceptedIntegrationReceipt": false,
+    "dependencyCompletionCutover": false,
+    "commitTransaction": false,
+    "publicationTransaction": false,
+    "legacyGraphConnected": false,
+    "cutoverEligible": false
+  },
+  "focusedVerification": {
+    "logPath": "/tmp/loopforge-workspace-mutation-filesystem-executor-tests-final.log",
+    "sha256": "288f55743d09f3504009474978f2deecc461ad49c9e19e51287c29b57702f7aa"
+  },
+  "completeVerification": {
+    "logPath": "/tmp/loopforge-full-tests-workspace-mutation-executor-final.log",
+    "sha256": "af68722fc558a878ba7e2fe424ed6c6bc8adede58089ef180c77174d4ad33b33",
+    "xctestSeconds": 27.038
+  },
+  "sourceEvidence": [
+    {
+      "path": "Sources/LoopForge/Kernel/WorkspaceMutationFilesystemExecutor.swift",
+      "lineCount": 1205,
+      "sha256": "e5fa00b1f33ee15ab93283ba395252922e6d3b1fc24c401766bd73ea8775da0a"
+    },
+    {
+      "path": "Sources/LoopForge/Kernel/IntegrationTransactionStateMachine.swift",
+      "lineCount": 538,
+      "sha256": "53dff2b0c35bf3079ea8de1f5c38adbccf97b1d4c5115426555f57a55242157f"
+    },
+    {
+      "path": "Sources/LoopForge/Kernel/TransactionalMutationKernel.swift",
+      "lineCount": 851,
+      "sha256": "22b83d09f05f3d28707ac330b315c4a07e77bf43f08a7fe0bcea84873be7b58a"
+    },
+    {
+      "path": "Tests/LoopForgeTests/WorkspaceMutationFilesystemExecutorTests.swift",
+      "lineCount": 605,
+      "sha256": "a49206cfc73fd834426dc8b50745c27d18178494ce7b87dc6452c8bcdbe24b3c"
+    }
+  ],
+  "safetyClaims": {
+    "mutatesOnlySyntheticTestWorkspacesInVerification": true,
+    "changesGitState": false,
+    "contactsRemote": false,
+    "permitsPublication": false,
+    "mutatedEasyBusiness": false
+  }
+}

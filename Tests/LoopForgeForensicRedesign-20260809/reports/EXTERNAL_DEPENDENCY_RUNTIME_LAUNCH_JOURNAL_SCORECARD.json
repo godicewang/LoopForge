@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "status": "external-dependency-runtime-launch-journal-boundary-present-production-spawn-vetoed",
+  "recordedAt": "2026-08-15T13:31:10Z",
+  "acceptanceRowsAdvanced": [
+    "B-06"
+  ],
+  "durableLaunch": {
+    "activationReceiptAndFrameBound": true,
+    "runAttemptDependencyRecipeObserverBound": true,
+    "resourceLeaseAndBindingBound": true,
+    "stagedExecutableAndImmutableRequestBound": true,
+    "argumentEnvironmentAndPrivateIOBound": true,
+    "nativeSandboxAttestationBound": true,
+    "parserMappingNetworkAndResourceLimitsBound": true,
+    "exactResidentMemoryCeilingBound": true,
+    "productionNativeObserverSpawnExecuted": false
+  },
+  "authority": {
+    "requiresNonCodableActivationReadiness": true,
+    "requiresNonCodableResidentMemoryCapability": true,
+    "decodedReceiptsCanMintLaunchAuthority": false,
+    "bindingAndLaunchAppendedAtomically": true,
+    "requiresActiveUndisposedAttempt": true,
+    "requiresLiveProductiveOwnedProcessTreeLease": true,
+    "requiresGracefulThenTerminatePolicy": true,
+    "requiresExactActorAndTime": true,
+    "duplicateLaunchRejected": true,
+    "vetoedActivationRejected": true,
+    "priorObservationRejected": true
+  },
+  "runtimeIdentity": {
+    "exactPIDStartExecutableEnvironmentAndArguments": true,
+    "oneProcessKernelLimitRequired": true,
+    "nativeSandboxStoppedGateAndExecHandshakeRequired": true,
+    "candidateWorkingDirectoryForbidden": true,
+    "exactPrivateIOBasenamesAndPathDigestsRequired": true,
+    "naturalExitIdentityRequiredBeforeObservation": true
+  },
+  "replay": {
+    "decodedEventUsesSameCompiler": true,
+    "exactTwoEventTransactionReadback": true,
+    "crosswiredDependencyRejected": true,
+    "closeReopenRetainsExactLaunch": true,
+    "replayReconstructsLiveCapability": false
+  },
+  "verification": {
+    "focusedSuite": {
+      "executed": 14,
+      "failures": 0
+    },
+    "fullSuite": {
+      "executed": 807,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 59.543,
+      "logSHA256": null
+    },
+    "packageOwnedFullSuite": {
+      "executed": 807,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 65.538,
+      "logSHA256": "5ebee76893a360870ed5de41ca032c394f26f2a6e1ff9b8de86f13da9b1a5cab"
+    },
+    "releaseBuild": {
+      "passed": true,
+      "seconds": 105.20,
+      "architecture": "arm64"
+    },
+    "sourceSnapshotSHA256": "24aafeca731a6ca1104b44b42541e20c1140bb46ef8443de401cb8ddbde05f6e",
+    "packagedLoopForgeSHA256": "42f8a80f2700a1cd3216e4aaf277f39a723c127a67c1af398e9fc7318cc11898",
+    "packagedKernelSandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "signatureVerifiedDeepStrict": true,
+    "exactPackagedMachOStartupPassed": true,
+    "postSmokePackagedProcessCount": 0
+  },
+  "sourceDigests": {
+    "runtimeLaunch": "584905d7b991542e1be6b88a81eef00fd1586f708b840a6c2275e2d023943944",
+    "nativeSandbox": "a0b5690ab0480db25c7db1af5e628ba70fc7a238fc01d88a5a1f64f96b7cd813",
+    "runReducer": "dc41bcf621b94189688074ac749785a0ce06df8f9c1533d43ac16969bfd9a1c4",
+    "runJournal": "23fd14cfac5bfeb3a7279536fa48547b843e87d037467627d47c80da7863c980",
+    "launchReadiness": "50273d6ec1b0e1a00c6e55ce5370819bc8f88302d0b7688a35a65274d98f2cd2",
+    "observationCoordinator": "d2d91c487a522a979acc1a5e1b1bf7549a1473f2dc1123071233674d68db9962",
+    "integrationTests": "47b8b3e719c107fe60327786cffc1f97afd30761de3f6138453563403d1fad60"
+  },
+  "easyBusiness": {
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "statusFingerprintSHA256": "a640615bfb23f0d3a9fefe222294663302b40cca54e23b2f4ae0029f5e4bcfd7",
+    "mutated": false
+  },
+  "remaining": [
+    "trusted Release resident-memory containment issuer or retained veto",
+    "actual journal-owned native spawn plus retained request/output/release composition",
+    "production controller invocation",
+    "legacy Single and Parallel retirement",
+    "unlocked native screenshots",
+    "clean-commit rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false
+}

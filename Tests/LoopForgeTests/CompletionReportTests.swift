@@ -71,11 +71,42 @@ final class CompletionReportTests: XCTestCase {
             completedAt: now,
             logs: []
         )
+        var timedNode = node
+        timedNode.status = .blocked
+        timedNode.iteration = 3
+        timedNode.iterationHistory = [
+            GraphNodeIterationRecord(
+                number: 2,
+                instruction: "Verify.",
+                startedAt: now.addingTimeInterval(-45),
+                finishedAt: now,
+                threadID: "report-thread",
+                exitCode: 0,
+                agentSummary: "Verified.",
+                mainReview: "Approved.",
+                nextInstruction: "",
+                decision: .approved,
+                activeSeconds: 45
+            ),
+            GraphNodeIterationRecord(
+                number: 3,
+                instruction: "Repair a measured interaction delay.",
+                startedAt: now.addingTimeInterval(-60),
+                finishedAt: now,
+                threadID: "report-thread-3",
+                exitCode: 0,
+                agentSummary: "Evidence retained.",
+                mainReview: "Continue with bounded instrumentation.",
+                nextInstruction: "Measure tap latency.",
+                decision: .continueWork,
+                activeSeconds: 60
+            )
+        ]
         task.executionMode = .autoGraph
         task.graphState = GraphLoopState(
             phase: .completed,
             planSummary: "Verified graph",
-            nodes: [node],
+            nodes: [timedNode],
             mainInteractionCount: 1,
             mainLastReview: "Approved.",
             maxConcurrentNodes: 1,
@@ -101,6 +132,8 @@ final class CompletionReportTests: XCTestCase {
         XCTAssertTrue(html.contains("Product strengths"))
         XCTAssertTrue(html.contains("Requirement evidence coverage"))
         XCTAssertTrue(html.contains("Graph performance"))
+        XCTAssertTrue(html.contains("All iterations 3m"))
+        XCTAssertTrue(html.contains("This iteration 1m"))
         XCTAssertTrue(html.contains("parallel work factor"))
         XCTAssertTrue(html.contains("Primary workflow: candidate evidence attached"))
         XCTAssertTrue(html.contains("data-loopforge-report-schema=\"3\""))
@@ -111,7 +144,21 @@ final class CompletionReportTests: XCTestCase {
         XCTAssertTrue(html.contains("rel=\"icon\" href=\"data:image/svg+xml"))
         XCTAssertTrue(html.contains("Atlas &lt;script&gt;"))
         XCTAssertFalse(html.contains("<h1>Atlas <script>"))
-        XCTAssertTrue(FileManager.default.fileExists(atPath: URL(fileURLWithPath: path).deletingLastPathComponent().appendingPathComponent("media/evidence-01.png").path))
+        let screenshotDigest = HeavyEvidenceCache.sha256(Data("fake image".utf8)).rawValue
+        let retainedScreenshot = URL(fileURLWithPath: path).deletingLastPathComponent()
+            .appendingPathComponent("media/\(screenshotDigest).png")
+        XCTAssertTrue(FileManager.default.fileExists(atPath: retainedScreenshot.path))
+
+        let sentinelDate = Date(timeIntervalSince1970: 100)
+        try FileManager.default.setAttributes(
+            [.modificationDate: sentinelDate],
+            ofItemAtPath: retainedScreenshot.path
+        )
+        _ = try CompletionReportGenerator().generate(task: task, audit: audit, snapshot: snapshot)
+        let retainedDate = try XCTUnwrap(
+            FileManager.default.attributesOfItem(atPath: retainedScreenshot.path)[.modificationDate] as? Date
+        )
+        XCTAssertEqual(retainedDate.timeIntervalSince1970, sentinelDate.timeIntervalSince1970, accuracy: 1)
     }
 
     func testParallelCandidateReportExplainsConfiguredWorktreeCount() throws {

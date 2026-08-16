@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "path": "/Users/godice/.codex/sessions/2026/07/29/rollout-2026-07-29T00-36-14-019fa995-7d40-72a0-ba7a-0027c1fca906.jsonl",
+    "sha256": "fefb8951c15de21a907568b1ddfe04c529607030cd95556920ec6cdc6a360ec4",
+    "bytes": 131944752
+  },
+  "firstTimestamp": "2026-07-28T16:36:14.553Z",
+  "lastTimestamp": "2026-07-30T17:43:27.793Z",
+  "counts": {
+    "records": 8108,
+    "messages": 141,
+    "userMessages": 6,
+    "assistantMessages": 135,
+    "toolCalls": 1009,
+    "toolOutputs": 1009,
+    "planUpdates": 19
+  },
+  "artifacts": {
+    "timeline": {
+      "path": "direct-session-timeline.jsonl",
+      "sha256": "570eda9d6a28de7a97f7a7671ef4e3e31a6d538c55a1e22fa7e9d31166c0e04a"
+    },
+    "plans": {
+      "path": "direct-session-plans.jsonl",
+      "sha256": "fabebd9d8a6e3b2fe36f9a74b37c8985ddb9e22cc15dae0f8d3f71f571b53383"
+    }
+  },
+  "contentBoundary": "Raw reasoning records are intentionally excluded. Full tool outputs remain in the immutable hashed source; the derived corpus stores bounded prefixes, suffixes, and sizes for navigation."
+}

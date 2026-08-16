@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "status": "external-dependency-native-observation-composition-debug-proven-production-containment-and-controller-invocation-pending",
+  "recordedAt": "2026-08-15T14:43:49Z",
+  "acceptanceRowsAdvanced": [
+    "B-06"
+  ],
+  "composition": {
+    "callerSuppliedOutputRejected": true,
+    "callerSuppliedTimeoutRejected": true,
+    "callerSuppliedParseRejected": true,
+    "callerSuppliedMappingRejected": true,
+    "callerSuppliedReleaseRejected": true,
+    "callerSuppliedResultRejected": true,
+    "callerSuppliedObservationRejected": true,
+    "activationProbeLaunchBindingAndLeaseReResolved": true,
+    "wallDeadlineDerivedFromActivationAndProcessStart": true,
+    "naturalJoinAndJournalRelease": true,
+    "exactPriorReleaseRecoveryAccepted": true,
+    "descriptorRelativeRetainedOutputRead": true,
+    "regularFileLinkModeSizeInodeChecks": true,
+    "boundedOutputEnforced": true,
+    "emptyStandardErrorRequired": true,
+    "strictNonceBoundCanonicalParse": true,
+    "exactNativeExitResultMapping": true,
+    "releaseBoundResultAuthority": true,
+    "journalOwnedObservationAppend": true
+  },
+  "nativeProof": {
+    "actualNativeProcessSpawned": true,
+    "actualNativeSandboxGateUsed": true,
+    "immutableCanonicalRequestConsumed": true,
+    "canonicalSortedResultEmitted": true,
+    "naturalExitCode": 0,
+    "releaseJournaled": true,
+    "resultJournaled": true,
+    "observationJournaled": true,
+    "sameCommandRetryExact": true,
+    "freshRunJournalReplayExact": true,
+    "noncanonicalNativeOutputRejected": true,
+    "noncanonicalOutputAppendedObservation": false,
+    "postCompletionRuntimeHandleCount": 0,
+    "postCompletionInDoubtResourceCount": 0,
+    "postCompletionSupervisorLeaseCount": 0,
+    "debugTestOnlyResidentMemoryCapability": true,
+    "productionNativeObserverSpawnExecuted": false
+  },
+  "verification": {
+    "exactCompositionSuite": {
+      "executed": 4,
+      "failures": 0,
+      "seconds": 0.462
+    },
+    "exactEnvironmentRegression": {
+      "executed": 1,
+      "failures": 0,
+      "seconds": 0.605
+    },
+    "fullSuite": {
+      "executed": 809,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 67.141,
+      "logSHA256": null
+    },
+    "packageOwnedFullSuite": {
+      "executed": 809,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 63.748,
+      "realCodexChildBridgeSeconds": 20.432,
+      "logSHA256": "620c5050af5c46d16329164da7ed9bdab26647d0c1c924bb286f10f51359700a"
+    },
+    "releaseBuild": {
+      "passed": true,
+      "seconds": 96.47,
+      "architecture": "arm64"
+    },
+    "sourceSnapshotSHA256": "f560dc26e1b074a1cb528ee26de11995ab5447f80926ea744e554303ce64bc15",
+    "packagedLoopForgeSHA256": "477f037ad0dfe58fce22c1f9d767722b558e9aa2a82f261fc819d717654b8816",
+    "packagedKernelSandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "signatureVerifiedDeepStrict": true,
+    "exactPackagedMachOStartupPassed": true,
+    "postSmokePackagedProcessCount": 0,
+    "thermalWarning": false,
+    "failedFoundationDiagnosticCountedAsActiveTime": false
+  },
+  "sourceDigests": {
+    "journaledRuntime": "f7c58787f5f027b638d2936895318d3a828833f64c44ad0dde1c8bd8bfca0c89",
+    "nativeFixture": "23a1d22d9645aee4f474ab970a19f6d567549073feee4bfd8f8e8ecb21c8b81e",
+    "integrationTests": "ae99bd9b7294677d0c2f9a541cf2263144283a4450a397a6143a61744601dc24"
+  },
+  "easyBusiness": {
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "statusFingerprintSHA256": "a640615bfb23f0d3a9fefe222294663302b40cca54e23b2f4ae0029f5e4bcfd7",
+    "mutated": false
+  },
+  "remaining": [
+    "trusted Release resident-memory containment issuer or retained veto",
+    "production-controller invocation of the composed observer path",
+    "final-completion controller invocation",
+    "legacy Single and Parallel retirement",
+    "unlocked native screenshots",
+    "clean-commit rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false
+}

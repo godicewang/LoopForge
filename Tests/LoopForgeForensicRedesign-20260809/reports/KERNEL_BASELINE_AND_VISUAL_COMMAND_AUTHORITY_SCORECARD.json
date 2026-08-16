@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-14T14:14:57Z",
+  "status": "production-baseline-and-visual-receipt-injection-closed-native-design-issuer-present-complete-visual-issuer-pending",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "finding": {
+    "baselinePreviouslyAcceptedCodableBundle": true,
+    "baselineComparedCallerConstructibleActorValues": true,
+    "visualEvaluationPreviouslyAcceptedCodableCandidate": true,
+    "candidateContainedCallerConstructibleCaptureMeasurementAndReviewData": true,
+    "nativeCaptureAdapterOutputIsCodable": true,
+    "productionCandidateAuthorityAssemblerPreviouslyPresent": false
+  },
+  "authority": {
+    "baselineCommandRequiresNonCodableAuthority": true,
+    "visualCommandRequiresNonCodableAuthority": true,
+    "decodedBaselineCanRecreateCommandAuthority": false,
+    "decodedCandidateCanRecreateCommandAuthority": false,
+    "productionDesignBaselineIssuerPresent": true,
+    "productionVisualEvaluationIssuerPresent": false,
+    "releasePreparationWithRawBaselineFailsClosed": true,
+    "releasePreparationWithAuthorizedBaselinePasses": true,
+    "releasePreparationWithoutBaselineRemainsAvailable": true,
+    "debugFactoriesCompiledInRelease": false,
+    "durableReplaySchemasChanged": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 36,
+    "focusedFailures": 0,
+    "developmentTestsExecuted": 769,
+    "developmentTestsSkipped": 8,
+    "developmentFailures": 0,
+    "releaseBuildPassed": true,
+    "diffCheckPassed": true,
+    "residualExactExecutableCount": 0,
+    "runReducerSHA256": "e93273a58834e62ead9c5a2dbf6a58fe831644e4ab538fb410f4b48e50eb844c",
+    "preparationCoordinatorSHA256": "115d9900219c214cab9acb09139cf6b1acaecf671b6850e74303c9f8e1b95485",
+    "nativeDesignBaselineConfirmationSHA256": "d25fbcc92df3b90ac530823a5383c1a468779718570e70547730a7d9abb0488c",
+    "nativeCaptureAdapterSHA256": "64a967513cec2b3d63079fb4660fb215683cd6b3439b34a12857677d019a307e",
+    "designBaselineGateSHA256": "34cc44ce9401b383dc45d1fb7b2eae53f15cc85106d1c9e59240dfbd2531cb87",
+    "visualJournalTestsSHA256": "56968a1c5642ae45ec3bb13d5e4c0b2798ef1c9c9377f93ec1173f77f35f8228",
+    "nativeCaptureTestsSHA256": "ba00a152a921fb0b69cabd024ae692cbdbcc3f61dfe25f8c63cc9f5b871f22e8"
+  },
+  "remainingVetoes": {
+    "nativeDesignBaselineIssuerResolved": true,
+    "nativeCaptureSourceSelectionUI": false,
+    "nativeCaptureMatrixAssembler": false,
+    "deterministicMeasurementIssuer": false,
+    "independentVisualReviewerRuntimeIssuer": false,
+    "integrationAcceptanceAuthority": false,
+    "completionAuthorization": false,
+    "nativePlanAndStart": false,
+    "legacySingleAndParallelMigrated": false,
+    "currentSourcePackagedSignedHashed": false,
+    "currentNativeScreenshots": false,
+    "cleanCommitAndPush": false
+  },
+  "finalAcceptance": false
+}

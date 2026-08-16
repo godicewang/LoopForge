@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T00:38:42Z",
+  "status": "implemented-and-regression-package-verified-not-final",
+  "acceptanceRowsAdvanced": ["G-08"],
+  "rootCause": {
+    "imageDecodeLuminanceOCRRepeatedPerReview": true,
+    "reportMediaDeletedAndRecopiedPerGeneration": true,
+    "genericDigestAddressedProjectionBoundaryPreviouslyPresent": false,
+    "pathOrMtimeWouldBeSufficientIdentity": false
+  },
+  "productionEnforcement": {
+    "contentSHA256InputsRequired": true,
+    "collectorIDAndVersionRequired": true,
+    "parametersSHA256Required": true,
+    "canonicalNamedInputOrdering": true,
+    "duplicateInputRolesRejected": true,
+    "concurrentIdenticalMissesCoalesced": true,
+    "persistentEntryRehashedOnLoad": true,
+    "tamperFailsClosed": true,
+    "payloadAndTotalByteBudgets": true,
+    "boundedEntryCount": true,
+    "hitPathWrites": 0,
+    "liveImageDecodeLuminanceOCRCacheWired": true,
+    "reportMediaUsesFullContentDigest": true,
+    "duplicateReportBytesRetainedOnce": true,
+    "existingReportObjectRehashedBeforeReuse": true
+  },
+  "verification": {
+    "cacheTestsPassed": 9,
+    "integratedCollectorCacheTestsPassed": 1,
+    "reportNoOverwriteTestsPassed": 1,
+    "focusedTestsExecuted": 29,
+    "focusedFailures": 0,
+    "fullTestsExecuted": 539,
+    "fullTestsSkipped": 8,
+    "fullTestFailures": 0,
+    "packagingOwnedTestsExecuted": 539,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "packageSmokePassed": true,
+    "residualPackagedProcessCount": 0,
+    "sourceSnapshotSHA256": "90613a8500756fad2ea3585a87f12cfc0405ecc725b133591d0f0713f37b3ac5",
+    "executableSHA256": "588ac449fd6c62ab914bd3c417ca5145fbc7357cb7b3d333a3927d0eff3c43a2",
+    "zipSHA256": "10a5313b3e667f94e6f23de40e57a6d35348c372a3195e96927f72d996e3de80",
+    "dmgSHA256": "096a7adb6d5d2a945db142490bb0bdf70b78baed48bbc3ac6aa841533352119e",
+    "packageTestLogSHA256": "60f11d05d9032382bcb3edfc73aa93699852fd9ae14c9f1cce2d71cdbc4d42e5",
+    "sourceFullTestLogSHA256": "ea64c23c48b967e8113b817744cb9f641872b3072ce2b9f392ab6db1dc38caf8",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "cdHash": "29edae9054b2424d8db56b82cf0dd03208b84508"
+  },
+  "excluded": {
+    "failedFocusedCompileCount": 2,
+    "failedRunTimeCounted": false
+  },
+  "knownBoundary": {
+    "legacyCallersWithoutAuthoritativeTreeGenerationCannotUseRepositoryIndexHit": true,
+    "nativeUnlockedMatrixPending": true,
+    "legacyCutoverPending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

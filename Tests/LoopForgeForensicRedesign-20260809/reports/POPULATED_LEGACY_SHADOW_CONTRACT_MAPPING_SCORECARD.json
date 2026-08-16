@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "status": "populated_projection_only_shadow_verified_cutover_blocked",
+  "manifest": {
+    "productionInferenceFromLegacyProse": false,
+    "explicitManifestRequired": true,
+    "snapshotDigestBound": true,
+    "verbatimObjectiveBound": true,
+    "objectiveDigestBound": true,
+    "activeNodeDigestCoverageExact": true,
+    "retiredNodeDigestCoverageExact": true,
+    "dependencyParityRequired": true,
+    "mutationScopeParityRequired": true,
+    "finiteMutationBudgetRequired": true,
+    "requirementRecipeRequired": true,
+    "mandatoryRequirementOwnerCount": 1,
+    "capabilityCeilingEnforced": true,
+    "externalPublicationPermitted": false,
+    "purpose": "projectionOnly",
+    "canonicalManifestDigest": "7df5dad278ecde75a95fdd71f740b318531613772c77ea3dcaff4ee324b7e710"
+  },
+  "retainedReplay": {
+    "inputByteCount": 8465712,
+    "inputSHA256": "bfc2a0749c1ba15ca17aed226df7d98c854ee6817f096fe192b10a7e1ba0ac29",
+    "inputUnchanged": true,
+    "legacyNodeCount": 19,
+    "mappedActiveNodeCount": 14,
+    "retiredNodeCount": 5,
+    "reducerEventCount": 2,
+    "proposedKernelNodeCount": 14,
+    "authorizedKernelNodeCount": 0,
+    "executingKernelNodeCount": 0,
+    "acceptedKernelNodeCount": 0,
+    "acceptedLegacySeconds": 0,
+    "acceptedLegacyReceiptCount": 0,
+    "criticalDivergenceCount": 14,
+    "missingNodeDivergenceCount": 0,
+    "dependencyDivergenceCount": 0,
+    "mutationScopeDivergenceCount": 0,
+    "blocksCutover": true,
+    "writeBackPermitted": false
+  },
+  "effectAuthority": {
+    "execution": false,
+    "mutation": false,
+    "integration": false,
+    "publication": false,
+    "legacyWriteBack": false
+  },
+  "canonicalEncoding": {
+    "crossProcessStable": true,
+    "setPermutationTested": true,
+    "orderedDeclarationsPreserved": true,
+    "independentProcessCount": 2,
+    "scorecardSHA256": "395c9c90a9ea1e3d05cf93dd9c8c22941aaa6708d9008918f84bd6e5f8e76f3f",
+    "preFixScorecardAuthoritative": false
+  },
+  "tests": {
+    "mapperExecuted": 9,
+    "mapperFailures": 0,
+    "reducerExecuted": 12,
+    "reducerFailures": 0,
+    "fullExecuted": 473,
+    "fullSkipped": 6,
+    "fullFailures": 0,
+    "fullWarnings": 0
+  },
+  "remaining": {
+    "projectionCompatibilityManifestComplete": true,
+    "userRatifiedTaskCompilationComplete": false,
+    "sourceSpanAndAmbiguityBindingComplete": false,
+    "immutableBaselineBindingComplete": false,
+    "runtimeShadowConnectionComplete": false,
+    "legacyAuthorityDisabled": false,
+    "transactionalIntegrationComplete": false,
+    "currentPackageAndNativeVerificationComplete": false,
+    "commitAndPushComplete": false
+  },
+  "easyBusinessMutated": false
+}

@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "findingId": "F-009",
+  "title": "Native visual regression and inherited responsive-design debt",
+  "status": "confirmed",
+  "baselines": {
+    "chineseCommit": "301ef23a8698c3544c097895980248284f9189bb",
+    "englishCommit": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "directParentRelationship": true,
+    "deviceType": "iPhone 17 Pro",
+    "runtime": "iOS 26.5",
+    "simulatorUDID": "36BE4FA7-7EDA-45B8-811F-249AA52B73C3",
+    "pixelSize": {"width": 1206, "height": 2622}
+  },
+  "screenshots": [
+    {
+      "state": "chinese-standard",
+      "path": "../evidence/runtime-baselines/chinese-home-standard.png",
+      "sha256": "6a3dc031bfd3afe3ed79c869b750b550dbe669cababfd3564f01ca370e7044a4"
+    },
+    {
+      "state": "english-standard",
+      "path": "../evidence/runtime-baselines/english-home-standard.png",
+      "sha256": "f2356f110787bda9758c8eaa555f93e1c51a6e6b0842735f127a66ee7ee52665"
+    },
+    {
+      "state": "chinese-accessibility-xxxl",
+      "path": "../evidence/runtime-baselines/chinese-home-accessibility-xxxl.png",
+      "sha256": "38cb34badb446defe025c994af7bfa44b8943192c9d307399ce16a506fb0fe37"
+    },
+    {
+      "state": "english-accessibility-xxxl",
+      "path": "../evidence/runtime-baselines/english-home-accessibility-xxxl.png",
+      "sha256": "812d2df3cde1a419a19defb4b6e6b7c7e49148d212dab3130adb76ec34c15752"
+    }
+  ],
+  "dimensionJudgments": {
+    "screenshotProvenance": "pass",
+    "buildReproducibility": "pass",
+    "standardTypographyHierarchy": "fail",
+    "standardCardBalance": "fail",
+    "maximumSizeResponsiveComposition": "fail",
+    "maximumSizeContentOcclusion": "fail",
+    "baselineIdentityPreservation": "fail",
+    "shapeLanguageIntentionality": "fail"
+  },
+  "attribution": {
+    "inheritedDebt": [
+      "Chinese maximum-size composition already collapses",
+      "floating tab bar already competes with scroll content",
+      "card geometry was not designed for accessibility-scale copy"
+    ],
+    "usAdaptationRegression": [
+      "English expansion retained Chinese geometry",
+      "asymmetric English card title wrapping breaks grid rhythm",
+      "accessibility identity was expanded into multiple oversized rows",
+      "truncation avoidance was optimized without a composition budget"
+    ],
+    "loopForgeFailure": [
+      "geometry safety was treated as visual quality",
+      "no immutable native before-state was required",
+      "the UI-writing node also produced the acceptance tests and evidence",
+      "no independent typography hierarchy density or shape gate existed"
+    ]
+  },
+  "overall": "fail"
+}

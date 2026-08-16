@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-10T23:24:13Z",
+  "status": "kernel-enforced-production-compiler-cutover-pending",
+  "acceptanceRowAdvanced": "B-05",
+  "contract": {
+    "typedProhibitSubstitutionKind": true,
+    "bindsKnownRequirementIDs": true,
+    "opaqueImplementationIDs": true,
+    "requiresNonEmptyPermittedSet": true,
+    "providerBrandDictionaryUsed": false
+  },
+  "verification": {
+    "exactObservationSetRequired": true,
+    "evidenceDigestRequired": true,
+    "missingObservationRejected": true,
+    "duplicateObservationRejected": true,
+    "unexpectedObservationRejected": true,
+    "substitutedIdentityRejected": true,
+    "permittedIdentityAccepted": true,
+    "legacyFieldAbsentEncodingDecoded": true,
+    "focusedTestsPassed": 16,
+    "fullTestsExecuted": 517,
+    "fullTestsSkipped": 8,
+    "fullTestFailures": 0
+  },
+  "package": {
+    "sourceSnapshotSHA256": "7146c8abddaa1a8ddfc36bd4aea46acda699a9f58bc06c239c113e7e949d8750",
+    "packagingOwnedTestsExecuted": 517,
+    "smokePassed": true,
+    "residualPackagedProcessCount": 0
+  },
+  "productionCompilerCutoverComplete": false,
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

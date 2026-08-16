@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-15T22:11:00Z",
+  "status": "implemented-package-and-exact-native-diagnostics-proof-passed-provider-launch-vetoed-final-release-false",
+  "sourceSnapshotSHA256": "6903695bfce7743d2cc582420ff28f2e64b56a28731150e06ad037ceb80c4306",
+  "profileAssessment": {
+    "typed": true,
+    "journalSourceFrameBoundBeforeActivation": true,
+    "sessionReceiptBoundAfterActivation": true,
+    "blocksJournalActivation": false,
+    "claimsLaunchReadiness": false,
+    "currentWorkerBlockers": [
+      "providerHarnessProtocolUnavailable",
+      "remoteProviderNetworkAuthorityMissing"
+    ],
+    "currentWorkerCanCompileProviderInvocation": false,
+    "providerPromptPrepared": false,
+    "providerLaunched": false
+  },
+  "coveredBlockerKinds": [
+    "executionIdentityInvalid",
+    "providerHarnessProtocolUnavailable",
+    "providerHarnessProtocolObsolete",
+    "remoteProviderNetworkAuthorityMissing",
+    "userInstalledPluginAuthorityUnsupported",
+    "credentialAuthorityInvalid"
+  ],
+  "tests": {
+    "focused": {"executed": 26, "failures": 0, "seconds": 11.326},
+    "packageOwned": {"executed": 839, "skipped": 8, "failures": 0, "seconds": 61.998, "wallSeconds": 62.047},
+    "packageRealCodexBridgeSeconds": 8.783
+  },
+  "package": {
+    "gitRevision": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
+    "dirty": true,
+    "builtAtUTC": "2026-08-15T22:07:52Z",
+    "executableSHA256": "e43d0f3c0ab57092ea0f5e0097487782e8b4091c95963f3230bd9c02fb7702b6",
+    "applicationCDHash": "d0a4f39f98a10fa71e16c686eb28ca43bff125bb",
+    "sandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "packageTestLogSHA256": "a69bbea9314604399692d23f69f959c4d516b2c020899738439afa416fc9c14c",
+    "deepStrictSignaturePassed": true,
+    "checksumManifestPassed": true,
+    "smokePassed": true,
+    "postInspectionPackagedProcessCount": 0
+  },
+  "nativeProof": {
+    "exactPackagedApplicationInspected": true,
+    "unlockedNativeUI": true,
+    "readyRunID": "native-run-c2070190-a24a-42bf-a9f5-fee696aea42c",
+    "readyRunActivationEnabled": false,
+    "readyRunMutationBlockerCount": 2,
+    "providerProfileBlockerCount": 2,
+    "screenshot": {
+      "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-provider-profile-blockers-20260815T220900Z.png",
+      "width": 860,
+      "height": 760,
+      "sha256": "583f37760e1c9e46c7b1d44c3a30ac872c969b820a8af85826c4a48d6dfefa2e"
+    }
+  },
+  "failedIntervalsCounted": false,
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "fullNativeMatrixComplete": false,
+  "finalRelease": false
+}

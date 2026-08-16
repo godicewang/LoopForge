@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T01:00:28Z",
+  "acceptanceGate": "J-04",
+  "status": "source-journal-native-ui-and-package-receipts-present-unlocked-native-pending",
+  "authority": "accepted-run-journal-reducer-state-v1",
+  "legacyGraphCanPopulateDiagnosis": false,
+  "agentProseCanPopulateDiagnosis": false,
+  "projection": {
+    "journalSourceSequenceBound": true,
+    "projectionDigestBound": true,
+    "budgetMaximumConsumedRemainingVisible": true,
+    "strategyFingerprintVisible": true,
+    "mutationAndVerificationCostVisible": true,
+    "evidenceAndRequirementDeltaVisible": true,
+    "blockerAndVerifierResolutionVisible": true,
+    "protectedInvariantRegressionVisible": true,
+    "retirementActionAndLessonVisible": true,
+    "replacementCausalAxesVisible": true,
+    "waitingConditionVisible": true,
+    "backwardDecodePreserved": true
+  },
+  "productionPath": {
+    "source": "hash-chained RunJournal reducer replay",
+    "transport": "WorkspaceMutationRecoveryRunReport.kernelProjection",
+    "publication": "AppModel.kernelRunProjections",
+    "nativeEntry": "module header Convergence action",
+    "nativeSurface": "KernelConvergenceDiagnosticsView",
+    "readOnly": true
+  },
+  "tests": {
+    "focusedExecuted": 20,
+    "focusedFailures": 0,
+    "fullExecuted": 541,
+    "fullSkipped": 8,
+    "fullFailures": 0,
+    "packageExecuted": 541,
+    "packageSkipped": 8,
+    "packageFailures": 0,
+    "focusedLogSHA256": "53bf2b7472f0b5d5a435163f7a5a9a2a5fdd0e606348e09d796ad6da541465b4",
+    "fullLogSHA256": "9cf3f571a42a2eec5b76dd320bb44d6d1080e168b278ee6af28e0cbca9a2887a",
+    "packageLogSHA256": "f96a45f1248aadf937d01eb77d8123eb78b3b037aeb41bd6d073ff0a858bd085"
+  },
+  "package": {
+    "sourceSnapshotSHA256": "6831b8702f374b4a405c8d93977002f621a48126a5dcb682ff186fdd1e4205ba",
+    "executableSHA256": "4adcab6a40636c6b52989fb8943db361a0693296559462b1dd04eb69ceee3d09",
+    "signatureCDHash": "45058a2ee82e827071f87259081956163321f5ef",
+    "runtimeSmokePassed": true,
+    "postSmokeProcessCount": 0
+  },
+  "native": {
+    "currentScreenshotCaptured": false,
+    "blockedReason": "latest known macOS state locked; no unlock bypass or repeated polling",
+    "blockedTimeCounted": false
+  },
+  "finalAcceptance": false,
+  "remaining": [
+    "unlocked current-package native diagnostics screenshot and accessibility walkthrough",
+    "new-kernel production execution cutover",
+    "clean commit and pushed revision receipt"
+  ],
+  "easyBusinessMutated": false
+}

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-14T01:21:02Z",
+  "status": "completed-candidate-apply-preparation-journaled-and-outboxed",
+  "finalAcceptance": false,
+  "easyBusinessMutated": false,
+  "controls": {
+    "liveAcceptedExecutablePreflightRequired": true,
+    "decodedReceiptsCannotMintAuthority": true,
+    "recoveryRegistrationExact": true,
+    "canonicalAffectedPathsRevalidated": true,
+    "externalContentStoreRevalidated": true,
+    "supervisorReconstructedFromJournal": true,
+    "workspaceWideExclusiveLeaseJournaled": true,
+    "liveRootIdentityExecutorBound": true,
+    "applyIntentJournaledBeforeOutbox": true,
+    "completeExecutionRequestPersisted": true,
+    "duplicateLeaseReplayExact": true,
+    "duplicateIntentReplayExact": true,
+    "decodedOutboxReplayIdempotent": true,
+    "filesystemExecutorDispatched": false,
+    "canonicalWorkspaceMutated": false,
+    "applyReceiptIssued": false,
+    "publicationPermitted": false
+  },
+  "verification": {
+    "swiftTestsExecuted": 766,
+    "intentionalEnvironmentSkips": 8,
+    "swiftTestFailures": 0,
+    "swiftTestSeconds": 59.654,
+    "swiftTestWallSeconds": 59.698,
+    "workspaceMutationFilesystemExecutorTests": 14,
+    "sourceHashes": {
+      "WorkspaceCompletedCandidateMutationApplyPreparation.swift": "cf0aca7841def84225f89715806331cad6ccc14578a72500f413840f4e4eb71c",
+      "JournaledWorkspaceMutationLeaseAuthority.swift": "97dbba5c89876ee4bf58f0d68ce457c391ba20cf504da590b649616721ee6b50",
+      "JournaledWorkspaceMutationRuntime.swift": "ecfee38f995f265ee38a2f7345f912595f74bb78c556a6275bfecaa4f70145f7",
+      "RunReducer.swift": "414c2e1dde9e23485270d9b0a8be98c050f1955c2584fefaa23d1b5022579317",
+      "WorkspaceMutationFilesystemExecutor.swift": "1e77f9239d0f28dadc93c17ae9367ad1b820d087d3b570669a39b7b34696faf0",
+      "WorkspaceMutationEffectOutbox.swift": "30c6c8226130b957f75dc754ddb2d207d456d6c0854e1cba5d67fdd37e4d4e6a",
+      "KernelRunEnrollmentCoordinatorTests.swift": "71aa90cddb2f08d0faaa92bb4229c99e5c246f467f3e918487153127007a4191",
+      "IntegrationTransactionStateMachineTests.swift": "efea7a1cf5d3f4a65e2586814070ab687f7e943c0429ccdca82d5f7cc34dd72d",
+      "WorkspaceMutationFilesystemExecutorTests.swift": "fa7b39faa01527316a8eade985a553de59106bee0fc0cb566e278aa203371ded"
+    }
+  },
+  "ledger": {
+    "acceptedIntervalID": "kernel-completed-candidate-apply-preparation-199",
+    "coveredSecondsAdded": 600,
+    "coveredActiveSeconds": 161370,
+    "acceptedIntervals": 199,
+    "failedRunsTestsBuildsWaitsAndReportsCountedSeconds": 0
+  },
+  "remainingPrerequisites": [
+    "dispatch the exact pending effect through the bounded recovery runtime and journal cleanup or failure",
+    "compose postimage verification and independent acceptance for the resulting apply receipt",
+    "provide tested resident-memory enforcement or retain verifier and reviewer veto",
+    "compose native immutable design baseline complete visual evidence final authorization and native UI start",
+    "retire remaining legacy Single and Parallel paths",
+    "complete current-source package sign hash unlocked native walkthrough clean commit and push"
+  ]
+}

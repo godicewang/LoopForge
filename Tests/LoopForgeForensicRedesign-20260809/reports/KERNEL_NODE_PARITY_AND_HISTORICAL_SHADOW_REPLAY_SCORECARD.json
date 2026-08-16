@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "status": "node_parity_and_retained_snapshot_replay_verified_cutover_blocked",
+  "kernelNodeProjection": {
+    "available": true,
+    "deterministicallySorted": true,
+    "authoritySource": "RunReducerState",
+    "fields": [
+      "requirementIDs",
+      "acceptedRequirementIDs",
+      "dependencyNodeIDs",
+      "writablePaths",
+      "maximumChangedFiles",
+      "maximumChangedBytes",
+      "capabilityIDs",
+      "status",
+      "attemptIDs",
+      "activeAttemptID",
+      "strategyFingerprint",
+      "strategyRetired",
+      "verificationReceiptCount",
+      "reviewReceiptCount",
+      "visualReceiptCount",
+      "latestVisualAccepted",
+      "allRequirementsAccepted"
+    ]
+  },
+  "retainedReplay": {
+    "inputPath": "Tests/LoopForgeForensicRedesign-20260809/evidence/task-snapshot-20260809T131753Z.json",
+    "inputByteCount": 8465712,
+    "inputSHA256": "bfc2a0749c1ba15ca17aed226df7d98c854ee6817f096fe192b10a7e1ba0ac29",
+    "inputUnchanged": true,
+    "legacyNodeCount": 19,
+    "completedNodeClaimCount": 12,
+    "workingNodeClaimCount": 0,
+    "acceptedLegacySeconds": 0,
+    "acceptedLegacyReceiptCount": 0,
+    "criticalDivergenceCount": 16,
+    "divergences": {
+      "legacy-active-node-missing-kernel-contract": 14,
+      "legacy-node-approval-exceeds-kernel-evidence": 1,
+      "legacy-stop-without-kernel-quiescence": 1
+    },
+    "blocksCutover": true,
+    "writeBackPermitted": false
+  },
+  "chronologicalCorpus": {
+    "eventCount": 5758,
+    "firstTimestamp": "2026-08-02T14:09:30Z",
+    "lastTimestamp": "2026-08-09T13:14:04Z",
+    "sha256": "b2a162e426063f635bb1e500efd879a5dac97281c0494951355b208969f9d1af",
+    "graphSummarySHA256": "5a6b46e8fac7ce01ad43f10a352a890f5e133d52b80d5b5fa5f56411af7c27b5",
+    "reinterpretedAsKernelAuthority": false
+  },
+  "tests": {
+    "focusedHistoricalReplayExecuted": 11,
+    "focusedHistoricalReplayFailures": 0,
+    "fullExecuted": 464,
+    "fullSkipped": 6,
+    "fullFailures": 0,
+    "fullWarnings": 0
+  },
+  "remaining": {
+    "projectionCompatibilityManifestComplete": true,
+    "userRatifiedSemanticContractMappingComplete": false,
+    "populatedProjectionOnlyKernelShadowRunComplete": true,
+    "adapterConnectedToLegacyRuntime": false,
+    "legacyAuthorityDisabled": false,
+    "transactionalIntegrationComplete": false,
+    "currentPackageAndNativeVerificationComplete": false,
+    "commitAndPushComplete": false
+  },
+  "easyBusinessMutated": false
+}

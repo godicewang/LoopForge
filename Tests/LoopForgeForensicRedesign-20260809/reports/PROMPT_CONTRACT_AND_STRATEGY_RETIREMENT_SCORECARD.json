@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "title": "Prompt Contract and Strategy-Retirement Scorecard",
+  "status": "fail",
+  "findingRange": ["F-047", "F-054"],
+  "historicalTask": {
+    "iterationRecords": 51,
+    "blockedSummaries": 37,
+    "blockedExitCodeZero": 37,
+    "blockedApproved": 7,
+    "blockedContinueWork": 28,
+    "blockedSuperseded": 2,
+    "maximumNodeIterations": 11,
+    "nodesAtOrAboveSixIterations": 3,
+    "exampleElevenBlockedThenCompleted": "implement-bailian-json-contract"
+  },
+  "historicalContract": {
+    "typedRequirementOwnership": false,
+    "immutableBaselineReceipt": false,
+    "riskClass": false,
+    "mutationBudget": false,
+    "strategyID": false,
+    "failureFingerprint": false,
+    "reviewerOwnedAcceptance": false,
+    "rollbackAndPublicationPolicy": false,
+    "typedRetireOrReplaceDecision": false,
+    "workerNarrativePrecedesEvidence": true
+  },
+  "currentDirtyRepair": {
+    "maximumUnapprovedDecisions": 6,
+    "interceptsPendingSeventhCycle": true,
+    "maximumReplacementNodes": 2,
+    "materialDifferenceMethod": "lowercase alphanumeric exact string inequality",
+    "semanticCausalSimilarity": false,
+    "riskWeightedBudget": false,
+    "typedRequirementCoverageResolution": false,
+    "wholeWorkspaceFallbackScopeStillAllowed": true,
+    "wholeWorkspaceFallbackScope": ".",
+    "verdict": "directionally useful state transition repair, insufficient convergence architecture"
+  },
+  "requiredPlanFields": [
+    "requirementIDs",
+    "baselineReceiptIDs",
+    "riskClass",
+    "strategyID",
+    "hypothesis",
+    "predictedObservations",
+    "falsificationConditions",
+    "mutationBudget",
+    "reviewerOwnedGates",
+    "rollbackRef",
+    "publicationPolicy"
+  ],
+  "requiredVetoes": [
+    "causally-equivalent-strategy-replay",
+    "immutable-visual-baseline-regression",
+    "whole-workspace-fallback-repair",
+    "unresolved-requirement-abandonment",
+    "pre-approval-canonical-or-remote-publication"
+  ],
+  "evidence": [
+    "../evidence/task-snapshot-20260809T131753Z.json",
+    "../../../Sources/LoopForge/GraphLoopEngine.swift",
+    "../../../Tests/LoopForgeTests/GraphLoopTests.swift",
+    "./STATUS_ACCOUNTING_AND_CONVERGENCE.md",
+    "./MUTATION_PROVENANCE_AND_BUDGET.md",
+    "./REVIEW_PROVENANCE_AND_VISUAL_VETO_ARCHITECTURE.md",
+    "./TYPOGRAPHY_SHAPE_SPACING_FORENSIC.md"
+  ]
+}

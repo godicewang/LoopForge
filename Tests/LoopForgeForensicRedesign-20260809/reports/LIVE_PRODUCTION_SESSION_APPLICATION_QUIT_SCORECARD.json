@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T03:20:51Z",
+  "updatedAt": "2026-08-16T04:05:14Z",
+  "status": "live-production-session-application-quit-passed-companion-verifier-proof-separately-passed-final-release-pending",
+  "productionSession": {
+    "ratifiedProductiveProviderProfile": true,
+    "nativeProviderInvocationPrepared": true,
+    "productionProviderLaunched": true,
+    "providerProcessAliveBeforeQuit": true,
+    "normalProviderCompletionCalled": false,
+    "appModelTerminationBoundaryExercised": true,
+    "providerProcessAbsentAfterQuit": true
+  },
+  "durableOutcome": {
+    "runtimeDrainJournaled": true,
+    "managedProcessTerminationJournaled": true,
+    "releaseBoundToExactPID": true,
+    "runtimeLiveLeasesEmpty": true,
+    "runtimeFailedReleasesEmpty": true,
+    "activeAttemptDisposition": "interrupted",
+    "terminalPhase": "stopped",
+    "quiescent": true,
+    "productiveCompletionAuthorityUsed": false
+  },
+  "verification": {
+    "focused": {
+      "executed": 1,
+      "failures": 0,
+      "seconds": 1.127
+    },
+    "packageOwnedProofSeconds": 1.108,
+    "packageOwnedFullSuite": {
+      "executed": 860,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 74.652,
+      "wallSeconds": 74.703,
+      "realCodexChildBridgeTestSeconds": 12.037
+    },
+    "releaseTestSeamAbsent": true,
+    "deepStrictSignature": true,
+    "mountedDMGAllMachOByteIdentity": true,
+    "directAndMountedStartup": true,
+    "postVerificationProcessCount": 0,
+    "postVerificationMountCount": 0
+  },
+  "package": {
+    "sourceRevision": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
+    "sourceDirty": true,
+    "sourceSnapshotSHA256": "7ca002e7a5fedee480c52b26b77f6c6a84d0b25cd7169538f165cada4cb3f19d",
+    "builtAtUTC": "2026-08-16T03:15:05Z",
+    "testLogSHA256": "28e3cdba848e54c93674d1b95e383b31c7c4563da8f061f4f03e913037c871d5",
+    "executableSHA256": "d5c69f39b31d62e6053ef02b591f728fdfe26a91380432236b28ba61835f8593",
+    "applicationCDHash": "17f174f2d962cb77111c33d5697c998f3afa3b02",
+    "zipSHA256": "bef970af56ed01046795284ab1d909db835672abb522ebb520ede377357d84f4",
+    "dmgSHA256": "f54ada48068168d79784b07ad7fc5f65667280f3e15e4c622cd4906a8f80ad07"
+  },
+  "nativeUI": {
+    "exactPackagedApplicationInspected": true,
+    "unlocked": true,
+    "screenshotCaptured": true,
+    "screenshotPath": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-current-live-production-quit-package-20260816T031933Z.jpeg",
+    "screenshotSHA256": "fa2301cb2f1b289a4ded75ce063fa3826454e74b9c82a5b1766fa1b06fb33b12",
+    "realUIQuitPerformed": true,
+    "postQuitPackagedProcessCount": 0
+  },
+  "easyBusiness": {
+    "mutated": false,
+    "legacyGraphResumed": false,
+    "branch": "codex/USA_Version",
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "nulDelimitedStatusSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a"
+  },
+  "livePostimageVerifierQuitTestPassed": true,
+  "livePostimageVerifierEvidence": "LIVE_POSTIMAGE_VERIFIER_APPLICATION_QUIT_SCORECARD.json",
+  "finalRelease": false
+}

@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T04:05:01Z",
+  "status": "prose-inert-exact-out-of-band-capability-authority-and-package-verified-native-issuer-and-enrollment-pending",
+  "acceptanceRowsAdvanced": [
+    "C-02"
+  ],
+  "candidateBoundary": {
+    "capabilityIDsOpaque": true,
+    "candidateCanEncodeGrantReceipt": false,
+    "unknownInjectedJSONCanGrant": false,
+    "objectiveKeywordMatching": false,
+    "explicitConstraintAloneCanGrant": false,
+    "malformedCapabilityIDAccepted": false
+  },
+  "grantBinding": {
+    "exactCapabilitySetRequired": true,
+    "oneReceiptPerCapabilityRequired": true,
+    "contractIDBound": true,
+    "candidateRevisionBound": true,
+    "completeAuthorityCeilingDigestBound": true,
+    "grantNonceDigestRequired": true,
+    "preCompilationTimestampRequired": true,
+    "initialUserActorAndLineageBound": true,
+    "compiledCandidateDigestBindsGrantReceipts": true,
+    "ratificationReceiptRetainsGrantDigests": true,
+    "duplicateReceiptAccepted": false,
+    "staleReceiptAccepted": false,
+    "changedScopeAccepted": false,
+    "partialMultiCapabilitySetAccepted": false
+  },
+  "releaseBoundary": {
+    "debugTestFactoryPresent": true,
+    "productionIssuerPresent": false,
+    "nonemptyCapabilitySetWithoutTrustedReceiptCompiles": false,
+    "legacyGraphGrantedCapability": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 21,
+    "focusedFailures": 0,
+    "fullTestsExecuted": 586,
+    "fullTestsSkipped": 8,
+    "fullFailures": 0,
+    "packagingOwnedTestsExecuted": 586,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "sourceSnapshotSHA256": "e952ae53273310614072443f591fc8d9a24910d5fa6dc6ef9aab36291414d757",
+    "focusedLogSHA256": "a4320a12fe856ddc8f9ce207ebb6df54bbc686d3827c2dbc19622cb8a244f4db",
+    "fullLogSHA256": "68365573cc21b2fa7967be5ff1fbf6a1a1ef75eff38ecbd7e72c268ec909b5f1",
+    "packageTestLogSHA256": "247793c24a656c1866d99839bc5e95d9b2daaa813473a42b83253e282ff65225",
+    "packageLogSHA256": "be0194a0a19b2707ba7e4750aded8b1f232afb5d95d9de792154ad2c62fdd262",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "buildManifestSHA256": "8cbc749796b27e5e8782b878a92701d9e10bd7efbea4de6c07271f44f928efea",
+    "executableSHA256": "2be3595aa66b4513b9e73a63389c7c1b0eb047bcb2ccc438190c652d8d7b2444",
+    "zipSHA256": "c7eb4e477b5d04ae7dad09fafeea00579dfd55a043ec22f8e1dc82d4c44ac022",
+    "dmgSHA256": "2f1571f545d15ecd2862b7a9dfbb88282aa2fbe0cf776867c4b4d181c2cc3242",
+    "cdHash": "f59e14791e78d4dd501b0fce88d510d138f0f5c0",
+    "residualPackagedProcessCount": 0
+  },
+  "knownBoundary": {
+    "nativeCapabilitySelectionPending": true,
+    "trustedProductionIssuerPending": true,
+    "productionEnrollmentPending": true,
+    "controllerCutoverPending": true,
+    "currentNativeUICapturePending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

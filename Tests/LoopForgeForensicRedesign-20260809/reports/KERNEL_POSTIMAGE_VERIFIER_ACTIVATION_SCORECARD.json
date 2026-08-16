@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T23:18:31Z",
+  "status": "journaled-independent-postimage-verifier-activation-implemented-runtime-result-review-and-start-vetoed",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "authority": {
+    "phase": "appliedUnverified",
+    "ordinaryPreflightVerificationSatisfied": false,
+    "activationCapabilityCodable": false,
+    "activationCapabilityReleaseInitializerCallerAccessible": false,
+    "liveInvocationCapabilityCodable": false,
+    "journalTransactionRequired": true,
+    "reducerRevalidatesActivation": true,
+    "duplicateRecipeActivationRejected": true,
+    "verifierProcessStarted": false,
+    "verificationReceiptIssued": false,
+    "integrationPostimageVerificationIssued": false,
+    "reviewReceiptIssued": false,
+    "integrationPhaseAfterActivation": "appliedUnverified"
+  },
+  "independence": {
+    "workerLineageDistinct": true,
+    "applyExecutorLineageDistinct": true,
+    "selfActivationRejected": true,
+    "nativeVerifierSelectionImplemented": false
+  },
+  "binding": {
+    "exactRecipeRequired": true,
+    "exactRequirementRequired": true,
+    "supportedInputBindings": ["candidatePostimage"],
+    "maximumInputBindings": 1,
+    "journalCandidateAttestationRequired": true,
+    "candidateCapabilityRevalidatedBeforeActivation": true,
+    "candidateRevalidationAtomicWithSpawn": false,
+    "exactExecutableDigestRequired": true,
+    "executableStagedOwnerPrivate": true,
+    "argumentSubstitutionShellFree": true,
+    "argumentVectorDigestBound": true,
+    "minimalEnvironmentIdentityImplemented": true,
+    "capturePolicyIdentityImplemented": true,
+    "parserContractBound": true,
+    "resourceLimitsBound": true,
+    "liveJournalHeadSequenceBound": true,
+    "liveJournalHeadFrameDigestBound": true
+  },
+  "runtimeBoundary": {
+    "journaledProcessLeaseImplementedForVerifier": false,
+    "atomicAdmissionAndSpawnImplemented": false,
+    "candidateRevalidatedAtSpawn": false,
+    "stagedExecutableRevalidatedAtSpawn": false,
+    "wallClockLimitOSEnforced": false,
+    "capturedOutputLimitOSEnforced": false,
+    "residentMemoryLimitOSEnforced": false,
+    "childProcessLimitOSEnforced": false,
+    "boundedOutputCaptured": false,
+    "parserExecuted": false,
+    "oracleEvaluated": false,
+    "latestRedRevocationImplemented": false
+  },
+  "verification": {
+    "focusedTests": 1,
+    "discoveredSwiftTests": 702,
+    "completeSwiftTests": 702,
+    "environmentSkips": 8,
+    "failures": 0,
+    "releaseBuild": "passed",
+    "diffWhitespace": "passed",
+    "ownedSwiftProcessesRemaining": 0,
+    "exactSourceSnapshotSHA256": "af8926e8dc0d76daa1a908cd9217554673ca2da19ab444a69dbe9ba739dfccb3",
+    "releaseArtifacts": {
+      "LoopForgeSHA256": "0f25799d8b245f477b55309590885c39c4f8000e2ddfe97c6626e4602706b094",
+      "KernelSandboxGateSHA256": "0e29463be4377b4d21c463e7ddb63e6256dd76abf30ff1690f0c5a482e985227"
+    },
+    "sourceHashes": {
+      "KernelPostimageVerifierActivation.swift": "0156a8eafa4b0059e0a37565f2980dfd3836e52b9d7ea1efa6d88c69ff225c39",
+      "RunJournal.swift": "2e561bc51ab1c6ab7f3e8098cda252937fd8742ab96c2a653abdaee4fff97a31",
+      "RunReducer.swift": "f617496e0e6e0d6be434b0730568d92fdd97eb9f796584974de3a3aaf909a8a5",
+      "WorkspaceCandidatePostimageMaterializer.swift": "b6841389e60887836e42b5bbbc7b43b7843bef1dda4d98a486ebcbf9b3e5adff",
+      "IntegrationTransactionStateMachineTests.swift": "5553d0d07a40c909ab544807d1faea2612990f711a997fb66194c68d81fd0aa2"
+    }
+  },
+  "remainingPrerequisites": [
+    "journaled verifier process lease and runtime owner",
+    "atomic candidate and executable revalidation admission and spawn",
+    "OS-enforced wall output memory child network stdin and environment limits",
+    "bounded private output capture bound to activation and exit",
+    "canonical parser execution and deterministic result mapping",
+    "non-forgeable postimage verification result receipt",
+    "latest-red revocation",
+    "canonical verification evidence batch",
+    "separately activated independent read-only review"
+  ],
+  "finalAcceptance": false
+}

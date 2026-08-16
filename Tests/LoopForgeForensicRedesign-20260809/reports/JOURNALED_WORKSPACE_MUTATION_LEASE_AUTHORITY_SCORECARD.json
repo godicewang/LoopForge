@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "report": "JOURNALED_WORKSPACE_MUTATION_LEASE_AUTHORITY_IMPLEMENTATION.md",
+  "status": "trusted-issuer-dual-live-and-success-release-implemented-failure-disposition-pending",
+  "controls": {
+    "typedWorkspaceMutationResource": true,
+    "journalFirstAdmission": true,
+    "canonicalRootExclusiveResource": true,
+    "runTransactionAttemptWorkspaceRootBinding": true,
+    "journalAdmissionReceiptRequired": true,
+    "journalLiveLeaseEqualityRequired": true,
+    "supervisorLiveLeaseEqualityRequired": true,
+    "wallAndMonotonicLifetimeRequired": true,
+    "newEffectWithoutAuthorityRejected": true,
+    "recordedReceiptRecoveryReentersExecutor": false,
+    "journalFirstExplicitRelease": true,
+    "automaticReleaseInDispatcher": true,
+    "crashReconciliationBeforeDispatch": true,
+    "legacyGraphConnected": false
+  },
+  "verification": {
+    "focusedAuthorityTestCount": 1,
+    "completeLogPath": "/tmp/loopforge-full-tests-workspace-failure-quarantine.log",
+    "completeLogSHA256": "ff806ab768340c59f4df79ffdfb1582d805d080427ef4535c6caf1dca214942d",
+    "testCount": 506,
+    "skippedCount": 8,
+    "failureCount": 0,
+    "xctestSeconds": 28.341
+  },
+  "sourceEvidence": {
+    "authorityPath": "Sources/LoopForge/Kernel/JournaledWorkspaceMutationLeaseAuthority.swift",
+    "authorityLineCount": 527,
+    "authoritySHA256": "5e4f7feb9411dff29545938bb341cae5c83297783d59ad0cb2716681a386f22b",
+    "runtimePath": "Sources/LoopForge/Kernel/JournaledWorkspaceMutationRuntime.swift",
+    "runtimeSHA256": "92bf53b7a9b6082da47a726be11ba81672b0d2e672df529116e996347936f1f7"
+  },
+  "safetyClaims": {
+    "mutatedEasyBusiness": false,
+    "cutoverEligible": false,
+    "taskComplete": false
+  }
+}

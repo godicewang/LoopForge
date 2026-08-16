@@ -1,0 +1,760 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-10T00:04:00+08:00",
+  "scope": "All active LoopForge package source, active tests, scripts, and executable runtime resources",
+  "requirements": {
+    "everyFileMustBeReviewed": true,
+    "productionMustBeDomainAgnostic": true,
+    "verticalSpecialCasesForbidden": true,
+    "minimumForensicAnalysisSecondsBeforeProductionRefactor": 36000
+  },
+  "totals": {
+    "files": 64,
+    "lines": 37444,
+    "reviewed": 64,
+    "pending": 0
+  },
+  "files": [
+    {
+      "path": "Package.swift",
+      "category": "package",
+      "sha256": "07db45f3e045ea25463e447f90e4c39092548477e3ef4bd47105d306fc7a1619",
+      "lines": 23,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": []
+    },
+    {
+      "path": "Resources/bin/loopforge-host-resource-broker",
+      "category": "runtime-resource",
+      "sha256": "7d20a64acb464375bee826336b1a0fdf55a5f2a7be403b76d17b9d05349e4069",
+      "lines": 71,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-067",
+        "F-077"
+      ]
+    },
+    {
+      "path": "Scripts/bootstrap_vendor.sh",
+      "category": "script",
+      "sha256": "fecd3333b0192347f30a7719e8e8e167eaf1a707a7d7baf6937dde6fd1685c03",
+      "lines": 63,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": []
+    },
+    {
+      "path": "Scripts/generate_report_example.sh",
+      "category": "script",
+      "sha256": "8d12ae15fecca1077efc81b3031470e46ffc6df84611f75110073fcaa10649fb",
+      "lines": 12,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": []
+    },
+    {
+      "path": "Scripts/make_icon.swift",
+      "category": "script",
+      "sha256": "1d5cf867a93cb40b8ca7a686ad99ad099c92cc831b9d7e62b32ed80f532dd774",
+      "lines": 61,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": []
+    },
+    {
+      "path": "Scripts/make_social_preview.swift",
+      "category": "script",
+      "sha256": "937acb1e42a8a80cb721769c28414769662fb598854bcad8bdb039924d6fcb36",
+      "lines": 129,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": []
+    },
+    {
+      "path": "Scripts/make_visual_audit_fixture.swift",
+      "category": "script",
+      "sha256": "2cacb7a12e0a416a2f6ed21e7e3c4a629ca4aa1da518a7e17c965ab38e3c693f",
+      "lines": 61,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-071"
+      ]
+    },
+    {
+      "path": "Scripts/package_app.sh",
+      "category": "script",
+      "sha256": "36bc9711195a2f9f564eaf7a50b2b1541a7874a224b9ebd7f9c47fe02017ac65",
+      "lines": 135,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": []
+    },
+    {
+      "path": "Scripts/smoke_test.sh",
+      "category": "script",
+      "sha256": "009470f79eaca6282b5e68e4064b1e31b766fb777f71863ee635a70d6f523d60",
+      "lines": 24,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-085"
+      ]
+    },
+    {
+      "path": "Scripts/validate_discovery.sh",
+      "category": "script",
+      "sha256": "bf167773791dce977eaf568ebe2f2069ffb0ca7d8d51a6001e7f55613dd4ba9d",
+      "lines": 94,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": []
+    },
+    {
+      "path": "Sources/LoopForge/AgentModels.swift",
+      "category": "production-source",
+      "sha256": "661921590ba6412460bfa9eb5d216a0c4974a6a1f1e78d4e6b688139ed566e25",
+      "lines": 721,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-075",
+        "F-083"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/AppModel.swift",
+      "category": "production-source",
+      "sha256": "a3e0ca57c93607a8b11dae1548ac10fd073b0d4f50abd17d18816af94b877dd6",
+      "lines": 1163,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:16:32Z",
+      "findingIDs": [
+        "F-102",
+        "F-110",
+        "F-111"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/AuditEvidence.swift",
+      "category": "production-source",
+      "sha256": "75df4d2bac8f04ce5ed6ebc14181f5ef6d6cec7a4c33d0aa55ce98521989389a",
+      "lines": 493,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:16:32Z",
+      "findingIDs": [
+        "F-089",
+        "F-090"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/AuxiliaryModelRouter.swift",
+      "category": "production-source",
+      "sha256": "7c581ef4fcc0449a3c2b0b512d065d6cf47465c2d0045cf41c70ca8574e6826a",
+      "lines": 277,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-070"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/CodexCapabilities.swift",
+      "category": "production-source",
+      "sha256": "e6dbfb95ae8265ab9f4624b385d5171f68c261144877ab4df8cc6a1109665065",
+      "lines": 328,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-072",
+        "F-083"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/CodexRunner.swift",
+      "category": "production-source",
+      "sha256": "034e43adf07c4b831eb1a4bd65ed3259352a588ba239025799cc513c55dcb5d4",
+      "lines": 653,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-072",
+        "F-073",
+        "F-086"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/CompletionReportGenerator.swift",
+      "category": "production-source",
+      "sha256": "aaf1eabba8c46f1a487a31eae052a6f4cfd7b95f7382f463c9daf3a5e9dd4774",
+      "lines": 360,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:16:32Z",
+      "findingIDs": [
+        "F-093"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/DesktopAutomationPreflight.swift",
+      "category": "production-source",
+      "sha256": "eae55917b888587d75a74b46f6ef89dde0b628fa30f62d9039f605860fd0be28",
+      "lines": 196,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-065"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/Estimator.swift",
+      "category": "production-source",
+      "sha256": "7051ae2514d58d7bef104a3afa45a1b5a54e5472fa56a492466d2627c206fa1c",
+      "lines": 250,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-063"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/GraphLoopEngine.swift",
+      "category": "production-source",
+      "sha256": "26052d5f646a047bcd911121224f2934bd91f7526a43e43870fc5ba698d467df",
+      "lines": 6539,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:31:56Z",
+      "findingIDs": [
+        "F-022",
+        "F-023",
+        "F-025",
+        "F-026",
+        "F-027",
+        "F-028",
+        "F-029",
+        "F-030",
+        "F-038",
+        "F-039",
+        "F-042",
+        "F-043",
+        "F-044",
+        "F-046",
+        "F-047",
+        "F-049",
+        "F-050",
+        "F-051",
+        "F-052",
+        "F-053",
+        "F-054",
+        "F-063",
+        "F-067",
+        "F-069",
+        "F-070",
+        "F-071",
+        "F-072",
+        "F-073",
+        "F-078",
+        "F-079",
+        "F-080",
+        "F-125",
+        "F-126",
+        "F-127",
+        "F-128",
+        "F-129",
+        "F-130",
+        "F-131",
+        "F-132",
+        "F-133"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/HostResourceLeases.swift",
+      "category": "production-source",
+      "sha256": "aebad9502b1d6a68685d33ed260517880cc72d1379c6b0d566d71180766c4da2",
+      "lines": 715,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-067",
+        "F-068",
+        "F-077"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/LocalSupervisor.swift",
+      "category": "production-source",
+      "sha256": "d76bac4d80e5b3913bff4adb5ed94a1053b5ab62afef34be382d0ba0a827ac1d",
+      "lines": 904,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-063",
+        "F-069",
+        "F-070",
+        "F-071",
+        "F-087",
+        "F-088"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/LoopController.swift",
+      "category": "production-source",
+      "sha256": "cbe70175f4606f11a00220d4b9d00b4750d05c870e9f6947ee03e6edc33b0463",
+      "lines": 1307,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:16:32Z",
+      "findingIDs": [
+        "F-106",
+        "F-107",
+        "F-108",
+        "F-109"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/LoopForgeApp.swift",
+      "category": "production-source",
+      "sha256": "bbf1f6eaac3fb9cd1fde82c2c5d5fbdce031f0839ce5b1c593ef7933b16b5d73",
+      "lines": 90,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-076"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/Models.swift",
+      "category": "production-source",
+      "sha256": "bf7364baa5fe13f59289ac492ab2a4be18b3826bd1514b556ed1726afec91c48",
+      "lines": 1163,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-063",
+        "F-064",
+        "F-080",
+        "F-082",
+        "F-083"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/OllamaManager.swift",
+      "category": "production-source",
+      "sha256": "62e81c26b9f9a2e84ee3accd246a6c5ef6baa271d809e2f2d4237c6cca7fbea9",
+      "lines": 373,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-076"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/OpenAICompatibleClient.swift",
+      "category": "production-source",
+      "sha256": "3d3ef81cd32e2a254febb9ce23c291757ef8329717eec058852bb68df2abe318",
+      "lines": 233,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-075"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/PermissionCenter.swift",
+      "category": "production-source",
+      "sha256": "3dcc38bb4219e0075988f7440f236a814e3f1fa7ad42a54fbf696c12422edf6e",
+      "lines": 307,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-066"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/ProcessRunner.swift",
+      "category": "production-source",
+      "sha256": "b8e1109f2e6f04fd14ee22d6ca5e2259fd51951f83e7ba38ce8ac3b0f0272e48",
+      "lines": 360,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": []
+    },
+    {
+      "path": "Sources/LoopForge/PromptCompiler.swift",
+      "category": "production-source",
+      "sha256": "f5542be8df474f90444c1a0c20f467e5dbe618b27f745c271deed1c39995c3dc",
+      "lines": 288,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-063",
+        "F-065"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/ResponsesChatBridge.swift",
+      "category": "production-source",
+      "sha256": "74e2c1489942f5924a41b5f9be5edc9af7f7a114e70ee7a2368da9c80b81735e",
+      "lines": 562,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-074",
+        "F-075"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/RuntimeHealth.swift",
+      "category": "production-source",
+      "sha256": "179f9e8315a60177f59e451a9bafa1541c006d846a9c2bd2bea2aae63b021b20",
+      "lines": 215,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-086"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/SystemPermissionAutomator.swift",
+      "category": "production-source",
+      "sha256": "f846e7312cf8ec19943e93dda298bc9c361b44bb3ca985d60bcf5a998c94e7c8",
+      "lines": 171,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-066"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/TaskStore.swift",
+      "category": "production-source",
+      "sha256": "a730412043addc378ca2e1153e1fbce04a150ab8aef75c18f102daf8c3c4b846",
+      "lines": 421,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:16:32Z",
+      "findingIDs": [
+        "F-094",
+        "F-095",
+        "F-107"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/Utilities.swift",
+      "category": "production-source",
+      "sha256": "28fa47ccec6d8142cf1d34b1c82f16546922ce11580938e14a4bc30d5c394cb5",
+      "lines": 79,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": []
+    },
+    {
+      "path": "Sources/LoopForge/Views.swift",
+      "category": "production-source",
+      "sha256": "906fc7f0f60886983520a6507f0ce0474aca0df074a76e95de6aaf4845dbd0ed",
+      "lines": 3501,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:22:57Z",
+      "findingIDs": [
+        "F-112",
+        "F-113",
+        "F-114",
+        "F-115",
+        "F-116",
+        "F-117",
+        "F-118",
+        "F-119"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/WatcherController.swift",
+      "category": "production-source",
+      "sha256": "cbbf786eebc102d816d9549489f4eab526b4d5639e443a448b58f31505804db7",
+      "lines": 1235,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:16:32Z",
+      "findingIDs": [
+        "F-099",
+        "F-100",
+        "F-101",
+        "F-102",
+        "F-103",
+        "F-105",
+        "F-106"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/WatcherFocusProjector.swift",
+      "category": "production-source",
+      "sha256": "3dea6131d0c211e0ab44c3e199be89945269e1db004b9150d0a6672f75fa6f75",
+      "lines": 226,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:16:32Z",
+      "findingIDs": [
+        "F-096"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/WatcherModels.swift",
+      "category": "production-source",
+      "sha256": "ed3fe4bc291d25a082bfa5ad36f99c1cd5145ebb35674bd4e1c5d900cc754d4b",
+      "lines": 452,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:16:32Z",
+      "findingIDs": [
+        "F-096"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/WatcherPolicy.swift",
+      "category": "production-source",
+      "sha256": "0a427208d23f07ac247fd568549a0809d53af2762a8963ccd6a9518065f25a9d",
+      "lines": 861,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:16:32Z",
+      "findingIDs": [
+        "F-097",
+        "F-098",
+        "F-099",
+        "F-100",
+        "F-104"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/WatcherPromptCompiler.swift",
+      "category": "production-source",
+      "sha256": "e2b3edfa1406fa6f192595b7f1698cebad952dd8d98330476ceab83b64a7aff0",
+      "lines": 280,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:16:32Z",
+      "findingIDs": [
+        "F-099",
+        "F-102",
+        "F-103"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/WatcherReportGenerator.swift",
+      "category": "production-source",
+      "sha256": "435513b23c3b7257baf593152538a03a936c179d8a1281f3f231a11a59978292",
+      "lines": 191,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:16:32Z",
+      "findingIDs": [
+        "F-105"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/WatcherStore.swift",
+      "category": "production-source",
+      "sha256": "91c5b510973640a7deba4bd5f555c0bd632940ef26fb538f52c54216e5918364",
+      "lines": 105,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:12:05Z",
+      "findingIDs": [
+        "F-084"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/WatcherViews.swift",
+      "category": "production-source",
+      "sha256": "dcdaf27b254423ae781ea3ad7af8fee4e5586530ae81af5c3ad656988ed84417",
+      "lines": 1637,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:22:57Z",
+      "findingIDs": [
+        "F-112",
+        "F-113",
+        "F-114",
+        "F-120",
+        "F-121",
+        "F-122",
+        "F-123",
+        "F-124"
+      ]
+    },
+    {
+      "path": "Sources/LoopForge/WorkspaceAuditor.swift",
+      "category": "production-source",
+      "sha256": "8b4c8b9e6b976502beb8c36602d0658687219176ec709dbbea4d761a5b318c05",
+      "lines": 275,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:16:32Z",
+      "findingIDs": [
+        "F-091",
+        "F-092"
+      ]
+    },
+    {
+      "path": "Tests/LoopForgeTests/AgentModelTests.swift",
+      "category": "active-test",
+      "sha256": "a46cbd846769b9f1b9cc8740d1a9172df7c8b0c84c37aeca6429026a4957e1a3",
+      "lines": 629,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-135", "F-154"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/AuditorTests.swift",
+      "category": "active-test",
+      "sha256": "fa240197bd8ce6e43864cf324f6d0f71fa28864a779ba1979e680817d12c5268",
+      "lines": 440,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-134", "F-136", "F-138", "F-156"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/CodexCapabilitiesTests.swift",
+      "category": "active-test",
+      "sha256": "0a898eb72d8352f7d4633c95c60779c9526b179f4517063838e520eba431c2e5",
+      "lines": 68,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-135"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/CompletionReportTests.swift",
+      "category": "active-test",
+      "sha256": "f43e87a8b4ffb5422a48f5c0e5ff214559903fff074f9d62d8781a04a4a66b36",
+      "lines": 175,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-137", "F-139"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/DesktopAutomationPreflightTests.swift",
+      "category": "active-test",
+      "sha256": "d1d7aa97d3db6ee6e9e6201a13174f783b2191b2e06a415d0f00e6a3dc1b17e9",
+      "lines": 62,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-134", "F-156"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/DocumentationReportFixtureTests.swift",
+      "category": "active-test",
+      "sha256": "69c68e8bf1356868081c9c8c363e2e1ef2bbdf9a500e60093ab25073a3262451",
+      "lines": 266,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-139"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/EstimatorTests.swift",
+      "category": "active-test",
+      "sha256": "e3cfe707f80a8bc00e1e226d74da3e6f86356eac4ed0de9eca6a12116dbad093",
+      "lines": 399,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-134", "F-154", "F-156"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/GraphLoopTests.swift",
+      "category": "active-test",
+      "sha256": "362d5a9c6a0ee8356f82d4a40b4e98e39c5f90b6cb3244cbb96471ada6310f3b",
+      "lines": 3167,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-134", "F-135", "F-140", "F-142", "F-143", "F-144", "F-145", "F-146", "F-147", "F-150", "F-153", "F-156"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/HostResourceLeaseTests.swift",
+      "category": "active-test",
+      "sha256": "3e5970490f3800269438bbd4893b56c5340edb336aef36d3f8da4e12ed66c845",
+      "lines": 598,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-140", "F-141"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/LocalSupervisorTests.swift",
+      "category": "active-test",
+      "sha256": "a92029d4d40b88f1ceb918ce00d28c416be901af6c67eb29fd06e802ad548bbd",
+      "lines": 434,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-134", "F-137", "F-143", "F-155", "F-156"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/LoopControllerLifecycleTests.swift",
+      "category": "active-test",
+      "sha256": "dc14747d51bf306bfdce05239ffc1d6418d64a56da14879d0668615a750f7d6f",
+      "lines": 113,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-140"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/PermissionCenterTests.swift",
+      "category": "active-test",
+      "sha256": "c0a60f1126042aaf0f455dda29da479cd570d0f56a93f70728ca05e804ab9b32",
+      "lines": 108,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-134", "F-135", "F-156"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/PromptCompilerTests.swift",
+      "category": "active-test",
+      "sha256": "d9d52925e530f074e947f6d238540fd07f7bd03dfb583ff7c81ecd17d7958ffa",
+      "lines": 150,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-134", "F-147", "F-156"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/ReleaseScenarioRoundOneTests.swift",
+      "category": "active-test",
+      "sha256": "0d6e3aea74109a264e6e6bfff864e392a60d4a99ceddd046a7a6d9b1bbb46aaa",
+      "lines": 809,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-139", "F-150"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/ReleaseScenarioRoundTwoTests.swift",
+      "category": "active-test",
+      "sha256": "25922468b5c18a7cff5e6010923c02eeebcc4c2cade0634e2070ee517741afee",
+      "lines": 558,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-136", "F-146", "F-149", "F-150"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/RuntimeHealthTests.swift",
+      "category": "active-test",
+      "sha256": "c202ce8a9f69e3916e94f2ee1a2bcde968e88696992bde2d4a84e0896a8b9802",
+      "lines": 186,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-140"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/SystemPermissionAutomatorTests.swift",
+      "category": "active-test",
+      "sha256": "b1c07c69f04a346b0bac1db1486ad9e1697f5329ad814268fb8c0f92f9966177",
+      "lines": 62,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-134", "F-135"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/TaskStoreTests.swift",
+      "category": "active-test",
+      "sha256": "d2d02f818bc7135652e1d6a8b9877cc6b6860957eb56029ab1fc54784bbbb258",
+      "lines": 511,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-134", "F-135", "F-149", "F-154", "F-156"]
+    },
+    {
+      "path": "Tests/LoopForgeTests/WatcherTests.swift",
+      "category": "active-test",
+      "sha256": "37f477c120f8d13e6acef8821e21a5fcb374f45554ac66d5b6ece3d54fdf640b",
+      "lines": 1105,
+      "reviewStatus": "reviewed",
+      "reviewedAt": "2026-08-09T16:36:39Z",
+      "findingIDs": ["F-135", "F-137", "F-147", "F-148", "F-150", "F-153", "F-156"]
+    }
+  ],
+  "lastUpdatedAt": "2026-08-09T16:36:39Z"
+}

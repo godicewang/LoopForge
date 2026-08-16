@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "status": "implemented-side-by-side",
+  "legacyExecutionCutover": false,
+  "admissionCutover": false,
+  "easyBusinessMutated": false,
+  "journalFirstExternalBinding": true,
+  "journalFirstRelease": true,
+  "journalFirstAdmission": true,
+  "invalidSpecificationRejectedBeforeAdmission": true,
+  "durableAdmissionRejectionNeverLaunches": true,
+  "nativeLaunchFailureReleaseTransaction": true,
+  "exactBoundProcessRecovery": true,
+  "exactBoundAbsenceJournalRelease": true,
+  "unboundAdmissionAutoReleased": false,
+  "freshSupervisorJournalHydration": true,
+  "sequenceCapturedInsideJournalActor": true,
+  "staleBindingWriterCompensatesNativeProcess": true,
+  "staleReleaseWriterRetainsLogicalOwnership": true,
+  "partialCoordinationVisibleAsInDoubt": true,
+  "journalFailureCanProveQuiescence": false,
+  "bridgeTests": {
+    "executed": 12,
+    "failed": 0
+  },
+  "processAdapterTests": {
+    "executed": 9,
+    "failed": 0
+  },
+  "fullSwiftTests": {
+    "executed": 377,
+    "skipped": 6,
+    "failed": 0
+  },
+  "lineCounts": {
+    "JournaledProcessRuntime.swift": 431,
+    "JournaledProcessRuntimeTests.swift": 662,
+    "RunJournal.swift": 364,
+    "RuntimeSupervisor.swift": 1174,
+    "ProcessGroupRuntimeAdapter.swift": 558
+  },
+  "productionHashes": {
+    "JournaledProcessRuntime.swift": "98b54bbd8cbd4e75539a18075f1d7cf2a93ea318cc1fc2f25ddcf8c775343664",
+    "RunJournal.swift": "fbd51a473cedbca77a312f343c3eb6cd97d710c65b2e9ebce692c693ca4c6f54",
+    "RuntimeSupervisor.swift": "0dce671b2f8538fe853bb8ab0eb280428dba17f1de65da1c512752b958376058",
+    "ProcessGroupRuntimeAdapter.swift": "652fc135756dcf83db1ff932f28748eb05ea00b1cd3fdeee9dbf00e493e6bb18"
+  },
+  "testHashes": {
+    "JournaledProcessRuntimeTests.swift": "aaa61677df5bdd58c026eaccd3bf78a48283cbf48018d505c7c06d7980be3c0a"
+  },
+  "remainingGates": [
+    "durable-launch-broker-for-unbound-crash-window",
+    "typed-journaled-runtime-queue",
+    "remaining-runtime-adapters",
+    "legacy-controller-shadow-and-cutover"
+  ]
+}

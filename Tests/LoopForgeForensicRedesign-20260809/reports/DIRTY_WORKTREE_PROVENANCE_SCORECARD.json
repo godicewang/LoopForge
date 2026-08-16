@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-09T16:45:34Z",
+  "gitBaseline": "6e9b99d",
+  "baselineBranch": "main",
+  "baselineMatchesOriginMainAtInspection": true,
+  "trackedDelta": {
+    "files": 24,
+    "insertions": 6387,
+    "deletions": 263,
+    "binaryDiffSHA256": "b238cb0b677d44e7f222c3713e1668ff3944653024757af78e49e7b31756eaae",
+    "preservedPatchSHA256": "b238cb0b677d44e7f222c3713e1668ff3944653024757af78e49e7b31756eaae",
+    "hashesMatch": true
+  },
+  "historicalEvidenceDirectories": [
+    {"path":"Tests/EasyBusinessUSGraph-20260802","approximateSize":"2.4M"},
+    {"path":"Tests/WatcherEvaluation-20260729","approximateSize":"5.2M"},
+    {"path":"Tests/WatcherMatrix-20260729","approximateSize":"736M"},
+    {"path":"Tests/WatcherQuantFactor-20260729","approximateSize":"131M"}
+  ],
+  "productionTrackedDeltaChangedByForensicPhase": false,
+  "recommendedMigration": "side-by-side-kernel-then-typed-migration",
+  "productionRefactorAuthorized": false
+}

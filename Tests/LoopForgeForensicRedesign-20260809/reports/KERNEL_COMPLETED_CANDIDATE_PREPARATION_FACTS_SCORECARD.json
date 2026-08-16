@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T20:43:00Z",
+  "status": "completed-candidate-preparation-facts-descriptor-observed-inert-journaled-and-crash-replayable",
+  "finalAcceptance": false,
+  "easyBusinessMutated": false,
+  "controls": {
+    "exactAcceptedProposalTransactionRequired": true,
+    "exactCandidateReleaseFrameRequired": true,
+    "candidateReleaseSucceeded": true,
+    "candidateScopedQuiescenceRequired": true,
+    "zeroLiveLeasesRequired": true,
+    "zeroFailedReleasesRequired": true,
+    "zeroIntegrationEffectsRequired": true,
+    "writeScopeIsExactAffectedPathSet": true,
+    "budgetCeilingEqualsObservedProposalCounts": true,
+    "canonicalRootOpenedComponentWiseNoFollow": true,
+    "affectedPathsOpenedDescriptorRelativelyNoFollow": true,
+    "stableInodeModeSizeAndPreimageDigestChecked": true,
+    "duplicateReplayReobservesWorkspace": true,
+    "crashReplayIsReceiptOnly": true,
+    "rollbackRehearsalPresent": false,
+    "candidateVerificationPresent": false,
+    "independentReviewPresent": false,
+    "visualGatePresent": false,
+    "executableMutationManifestIssued": false,
+    "authorizedMutationPreflightIssued": false,
+    "integrationTransactionCreated": false,
+    "canonicalWorkspaceMutationAuthorityIssued": false
+  },
+  "adversarialVerification": {
+    "substitutedProposalFrameRejected": true,
+    "symlinkedCanonicalTargetRejected": true,
+    "restoredRegularTargetAccepted": true,
+    "duplicateReceiptExact": true,
+    "closeReopenReplayExact": true,
+    "canonicalFixtureByteIdentical": true
+  },
+  "nativeCrashForensic": {
+    "failedRunsCountedSeconds": 0,
+    "signal": 10,
+    "cause": "Swift runtime metadata instantiation reached Foundation generic and variadic SHA formatting paths",
+    "boundedKernelHexExtendedToVerifierResultAuthority": true,
+    "releaseValidationExtractedFromOversizedReducerSwitch": true,
+    "failedDiagnosticCount": 7,
+    "diagnosticReportSHA256": {
+      "xctest-2026-08-13-043443.ips": "3696964346130a9abc3e54b32f0073cad23b0cb1a891d4f8e047a4353193593d",
+      "xctest-2026-08-13-043429.ips": "e069a61d69778b696016a658add18dc62a36f3881b7536721077989cb828bbe1",
+      "xctest-2026-08-13-043600.ips": "04efc2e1aedc5c84493e903b85490ac9b996f0daec918970af8327bc9aaa9a79",
+      "xctest-2026-08-13-043758.ips": "00946ab6e97e4eecc2be3b162f75a7c013cc768091bbd3519f56e66d2c28a62a",
+      "xctest-2026-08-13-043926.ips": "6700b6018b65daf8417b2f60e52ab8e15c8f765ec2140e157966704b795b2537",
+      "xctest-2026-08-13-044028.ips": "a5f0046eee7980e4afe5f5c75018fd1ba630899bf16a7c668566cb729c2bd3c7",
+      "xctest-2026-08-13-074328.ips": "4b2adc565ce1697e7bbbfe7c7910f24742c7906ac979cc5f8c04394f60f9f9c9"
+    }
+  },
+  "verification": {
+    "swiftTestsExecuted": 764,
+    "intentionalEnvironmentSkips": 8,
+    "swiftTestFailures": 0,
+    "swiftTestSeconds": 62.809,
+    "swiftTestWallSeconds": 62.858,
+    "diffWhitespace": "passed",
+    "ownedTestProcessesRemaining": 0,
+    "thermalWarning": false,
+    "performanceWarning": false,
+    "easyBusinessFingerprintUnchanged": true,
+    "sourceHashes": {
+      "WorkspaceCompletedCandidateMutationPreparationFacts.swift": "32d0a034608ffef3ecfcb4d2442a98a814d241c9442845e84ada163cc63af4e2",
+      "KernelPostimageVerifierActivation.swift": "bf8150d6b95668e51ebc845d7705c3f53058814750122f8c4e374f39c5afefc7",
+      "KernelPostimageVerifierResultAuthority.swift": "ba08b45bda501dada24ba9237ccc06b059b07627750fdbc4e174b5da52af3d1b",
+      "RunReducer.swift": "49ae78ef90e64ccbd687768f5955bd3d3873255b2788e7430e1c7c438487804e",
+      "RunJournal.swift": "c77465f013b9dbd419c9d510e0b5dd56c300e62b9e116386eb1aa91d159c9b80",
+      "KernelRunEnrollmentCoordinatorTests.swift": "925cb48e419c5e827075fd330e6ef848cea08a92f55021ef28f8479700d38821"
+    }
+  },
+  "ledger": {
+    "acceptedIntervalID": "kernel-completed-candidate-preparation-facts-196",
+    "coveredSecondsAdded": 600,
+    "coveredActiveSeconds": 159570,
+    "acceptedIntervals": 196,
+    "failedRunsTestsBuildsWaitsAndReportsCountedSeconds": 0
+  },
+  "remainingPrerequisites": [
+    "rehearse and journal exact rollback from the accepted inert facts",
+    "assemble executable manifest then issue proposal and preflight authority",
+    "provide tested resident-memory enforcement or retain verifier and reviewer veto",
+    "compose native immutable design baseline complete visual evidence final authorization and native UI start",
+    "retire remaining legacy Single and Parallel paths",
+    "complete current-source package sign hash unlocked native walkthrough clean commit and push"
+  ]
+}

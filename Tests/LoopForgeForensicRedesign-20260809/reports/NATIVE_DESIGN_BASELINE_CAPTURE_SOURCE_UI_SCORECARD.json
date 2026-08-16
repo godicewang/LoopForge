@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-14T14:57:22Z",
+  "status": "native-capture-source-selection-artifact-binding-and-post-enrollment-confirmation-present-complete-visual-issuer-pending",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "sourceImport": {
+    "nativeJSONFilePanel": true,
+    "strictKnownKeySchema": true,
+    "canonicalAbsolutePathsRequired": true,
+    "symlinksAndSpecialFilesRejected": true,
+    "descriptorIdentityBound": true,
+    "boundedDescriptorStreamingHashes": true,
+    "captureProtocolDigestDerived": true,
+    "oneShotNativeAdapterReceiptsRetained": true,
+    "decodedManifestCanMintReceipt": false
+  },
+  "contractBinding": {
+    "manifestDigestInTaskIdentity": true,
+    "mandatoryRequirementIDsBound": true,
+    "preservationConstraintAdded": true,
+    "preservationRequiredBaselineAdded": true,
+    "protectedBuiltArtifactRehashed": true,
+    "selectionIsReplayableNotAuthoritative": true
+  },
+  "nativeConfirmation": {
+    "twoStageFlow": true,
+    "workersStartedBeforeBaselineConfirmation": 0,
+    "exactRatifiedContractAndEnrollmentFrameBound": true,
+    "explicitConfirmAndFreezeRequired": true,
+    "liveAuthorizedBaselineRetained": true,
+    "cancelCanFreezeBaseline": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 4,
+    "focusedFailures": 0,
+    "developmentTestsExecuted": 773,
+    "developmentTestsSkipped": 8,
+    "developmentFailures": 0,
+    "developmentTestSeconds": 65.887,
+    "releaseBuildPassed": true,
+    "releaseBuildSeconds": 102.58,
+    "diffCheckPassed": true,
+    "residualExactExecutableCount": 0,
+    "failedRunsCounted": false,
+    "currentNativeScreenshotCaptured": false
+  },
+  "sourceSHA256": {
+    "NativeDesignBaselineCaptureSource.swift": "62d836a1bdb5d06433084c9d5ac0ba8ba94414519170bd9d15655a7a03eda0d9",
+    "NativeTaskContractAuthoring.swift": "668ab811f0e3099f3a4dd74a4d62852e8e83a7af5c185f95a7f47e35b3e92312",
+    "AppModel.swift": "b36597ec0efae7456bf117449566153defa96665b7559760ed4a1770ec6b6cae",
+    "Views.swift": "5902a9fa2a08bd39bd0bb23de4ee1460bcdc2d62c928676723333c8639dda442",
+    "NativeDesignBaselineCaptureSourceTests.swift": "a10e7da80f9c8804f45b1dffd5f6f3dcbf64470934d5b809f6bb329a39b74730",
+    "probe_executable_startup.sh": "0d35dff1903dea503d0052148417f7eede99446f9298f88cd7bb4a83630ba37c"
+  },
+  "sourceSnapshotSHA256": "050c7f0e3882247ed8ddc14386ec0367fbe4852e3ec49b449eca81aedac7b5c4",
+  "remainingVetoes": {
+    "completeVisualCandidateMatrixIssuer": false,
+    "deterministicMeasurementIssuer": true,
+    "independentVisualReviewerRuntimeIssuer": false,
+    "trustedReleaseContainmentIssuer": false,
+    "externalDependencyRuntimeObserver": false,
+    "finalCompletionAuthorization": false,
+    "legacyControllerCutover": false,
+    "currentNativeScreenshots": false,
+    "currentSourcePackage": false,
+    "cleanCommitAndPush": false
+  },
+  "finalAcceptance": false
+}

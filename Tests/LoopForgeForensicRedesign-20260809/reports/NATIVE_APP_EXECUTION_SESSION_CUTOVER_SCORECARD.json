@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "status": "native-read-only-production-session-activation-present-mutation-and-provider-launch-gated",
+  "recordedAt": "2026-08-15T16:00:57Z",
+  "acceptanceRowsAdvanced": [
+    "B-01",
+    "J-04"
+  ],
+  "nativeCutover": {
+    "explicitUserActionRequired": true,
+    "productionExecutionSessionConstructed": true,
+    "liveSessionsRetainedByRunIdentity": true,
+    "durableReceiptRecreatesSessionAuthority": false,
+    "callerSuppliesPlan": false,
+    "callerSuppliesStrategy": false,
+    "callerSuppliesBudget": false,
+    "callerSuppliesNode": false,
+    "callerSuppliesActor": false,
+    "callerSuppliesAdmissionCosts": false,
+    "uniqueDependencyFreeNodeRequired": true,
+    "journalHeadRevalidated": true,
+    "legacyTaskCreated": false,
+    "legacyControllerStarted": false,
+    "legacyGraphStarted": false,
+    "providerLaunched": false
+  },
+  "readOnlyAuthority": {
+    "workerSandbox": "readOnly",
+    "readableScopes": [
+      "."
+    ],
+    "writableScopes": [],
+    "maximumChangedFiles": 0,
+    "maximumChangedBytes": 0,
+    "maximumMutationCost": 0,
+    "readinessBlockers": 0,
+    "activatedPhase": "executing"
+  },
+  "mutationAuthority": {
+    "nativeActivationAllowed": false,
+    "blockers": [
+      "preApplyCandidateIsolationAuthorityMissing",
+      "journaledMutationPreparationAuthorityMissing"
+    ],
+    "journalAdvancedOnBlockedActivation": false,
+    "canonicalWorkspaceMutated": false
+  },
+  "adversarialProof": {
+    "invalidActionIdentityRejected": true,
+    "invalidActionIdentityJournalAdvanced": false,
+    "mutationActivationRejected": true,
+    "mutationActivationJournalAdvanced": false
+  },
+  "verification": {
+    "nativeCutoverSuite": {
+      "executed": 6,
+      "failures": 0,
+      "seconds": 6.195
+    },
+    "fullSuite": {
+      "executed": 816,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 60.187
+    },
+    "packageOwnedFullSuite": {
+      "executed": 816,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 61.069,
+      "realCodexChildBridgeSeconds": 13.822,
+      "logSHA256": "b8513f82f783afe0c0ad9b67cad425f6843d94b4bbf3df63d0834993374a45a3"
+    },
+    "releaseBuild": {
+      "passed": true,
+      "seconds": 104.58,
+      "architecture": "arm64"
+    },
+    "sourceSnapshotSHA256": "02722bd6c8f2c02aacd4477572ff2cfd1c274249f17f3349dfadfa2a972af85a",
+    "packagedLoopForgeSHA256": "d03464f19d7e6de8b0fe9a9b7bf112ea895fd9549f3f3a32be007c45709c2b23",
+    "packagedKernelSandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "signatureVerifiedDeepStrict": true,
+    "exactPackagedMachOStartupPassed": true,
+    "postSmokePackagedProcessCount": 0
+  },
+  "sourceDigests": {
+    "productionExecutionCoordinator": "7b12effc05a7479d786b38553c285c8c5632cb1599db10525f9d226f23484ef2",
+    "appModel": "b83086dff73dc9566da1a29fd5d6a187d2de84d947a4cbb5b6c251a054cacb17",
+    "views": "0b7e3599e46f163a4b97ef340ac3c7dfa8b04ecd2c1759671fcb4b383525296c",
+    "nativeCutoverTests": "247f4fa2f6b5a520cfd007fc526a3c380db2a9f3f3fe3674c6fe5bdc93188240"
+  },
+  "easyBusiness": {
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "statusFingerprintSHA256": "a640615bfb23f0d3a9fefe222294663302b40cca54e23b2f4ae0029f5e4bcfd7",
+    "mutated": false
+  },
+  "remaining": [
+    "native provider launch composition from the retained session",
+    "native mutation isolation and journaled preparation issuer or retained veto",
+    "trusted Release containment issuers or retained vetoes",
+    "legacy Single and Parallel retirement",
+    "unlocked native screenshots",
+    "clean-commit rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false
+}

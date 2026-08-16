@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-15T21:47:00Z",
+  "status": "implemented-source-package-and-exact-native-read-only-activation-proof-passed-final-release-false",
+  "sourceSnapshotSHA256": "8ecc27fc6116e5d120f4a77ad847e5ef3800c4e952785dc1d74bc7ea3cdb2f70",
+  "authorityPolicy": {
+    "reviewerSelectableModes": ["readOnly"],
+    "workerSelectableModes": ["readOnly", "workspaceOnly", "fullAccess"],
+    "defaultReviewerMode": "readOnly",
+    "defaultWorkerMode": "workspaceOnly",
+    "reviewerEscalationRejected": true,
+    "legacyAuthorityRewritten": false
+  },
+  "tests": {
+    "focusedTaskStore": {"executed": 20, "failures": 0, "seconds": 10.305},
+    "focusedReadOnlyActivation": {"executed": 1, "failures": 0, "seconds": 1.084},
+    "focusedReadOnlySandbox": {"executed": 1, "failures": 0, "seconds": 0.001},
+    "fullSource": {"executed": 837, "skipped": 8, "failures": 0, "seconds": 59.796, "wallSeconds": 59.845},
+    "sourceRealCodexBridgeSeconds": 6.767,
+    "packageOwned": {"executed": 837, "skipped": 8, "failures": 0, "seconds": 66.951, "wallSeconds": 67.000},
+    "packageRealCodexBridgeSeconds": 13.973
+  },
+  "package": {
+    "executableSHA256": "9c6bc2ae9daedcf89933eb35d3d6e3e37597a43e8572430d8dc589b925b9d12c",
+    "sandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "packageTestLogSHA256": "1c0848e672072846a985a414c945cb8f69b257dc13602095869bceeb616c9db1",
+    "applicationCDHash": "5a996c437287ba662dd2c8722341ec62836c6960",
+    "deepStrictSignaturePassed": true,
+    "smokePassed": true,
+    "checksumManifestPassed": true,
+    "releaseTestHookAbsent": true
+  },
+  "nativeContract": {
+    "workspace": "/Users/godice/Coding/LoopForge",
+    "workerAccess": "readOnly",
+    "reviewerAccess": "readOnly",
+    "writablePaths": [],
+    "mutationFileCeiling": 0,
+    "mutationByteCeiling": 0,
+    "networkEnabled": false,
+    "pluginsEnabled": false,
+    "sourceCaptureRevision": "7f435175a998de9100814aa7303256306f8ab6745ba74f0bcf2c1a40fd03f72c",
+    "sourceCaptureFileCount": 164,
+    "sourceCaptureBytes": 6472476,
+    "candidateDigest": "bde2f9f997cdf2f159c9bbcd093811e4ed7cd76a778db459772118778b00da9a"
+  },
+  "nativeActivation": {
+    "runID": "native-run-48b4997c-4d31-4c02-909f-f3d30dd71b70",
+    "readySequence": 1,
+    "readyPhase": "ready",
+    "readyBlockers": 0,
+    "activationControlEnabled": true,
+    "activationAttempted": true,
+    "executionEpoch": "native-dea35366-1b45-4d0c-9ccd-53f18a3cd3ae-epoch",
+    "executingSequence": 6,
+    "executingPhase": "executing",
+    "mutationDelta": 0,
+    "verificationDelta": 1,
+    "externalEffects": 0,
+    "failures": 0,
+    "legacyTaskCreated": false,
+    "graphWorkerCreated": false,
+    "providerLaunched": false,
+    "executingRunRecoveredAsReadyAfterRelaunch": false,
+    "postInspectionPackagedProcessCount": 0
+  },
+  "failedIntervalsCounted": false,
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "fullNativeMatrixComplete": false,
+  "finalRelease": false
+}

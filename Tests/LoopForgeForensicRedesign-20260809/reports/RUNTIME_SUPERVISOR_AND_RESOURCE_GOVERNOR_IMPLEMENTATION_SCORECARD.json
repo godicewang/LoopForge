@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "status": "implemented-side-by-side",
+  "legacyExecutionCutover": false,
+  "easyBusinessMutated": false,
+  "resourceVectorDimensions": 7,
+  "runtimeResourceKinds": 11,
+  "ownershipModes": 2,
+  "releasePolicies": 3,
+  "thermalStates": 5,
+  "queueOrdering": ["cleanup-first", "priority-descending", "fifo", "stable-lease-id"],
+  "quiescenceRequiresEmptyOwnership": true,
+  "staleReleaseCanEraseOwnership": false,
+  "borrowedResourceDestructionAuthorized": false,
+  "powerLeaseRequiresProgressReceipt": true,
+  "runtimeLifecycleReceiptsJournaled": true,
+  "completionRequiresIntentMatchedDrain": true,
+  "globalReceiptIdentityFence": true,
+  "nativeProcessGroupAdapterImplemented": true,
+  "nativeProcessGroupAdapterJournalBridge": true,
+  "journalFirstAdmission": true,
+  "nativeLaunchFailureReleaseTransaction": true,
+  "exactBoundProcessRecovery": true,
+  "freshSupervisorJournalHydration": true,
+  "targetedTests": {
+    "executed": 34,
+    "failed": 0
+  },
+  "runtimeJournalIntegrationTests": {
+    "executed": 5,
+    "failed": 0
+  },
+  "fullSwiftTests": {
+    "executed": 377,
+    "skipped": 6,
+    "failed": 0
+  },
+  "productionHashes": {
+    "RuntimeSupervisor.swift": "0dce671b2f8538fe853bb8ab0eb280428dba17f1de65da1c512752b958376058",
+    "RunReducer.swift": "de05f87bc99775ab51ad4f22357de79a92719232dc2d0a1969c35153922d2d57",
+    "KernelIdentity.swift": "def00daa6b0d582c583d6b5fd433ce07322629ede96147d61438ee25db6cde22"
+  },
+  "testHashes": {
+    "RuntimeSupervisorTests.swift": "215ac208bc97dcd8040458d9a6b7991377a9d9966a48044a49c8fcdb5440853a",
+    "RuntimeJournalIntegrationTests.swift": "9d10a690dba6f32e88e0eaef0923a61079bc6d730a8c64724f7a8447e73ac7b0"
+  },
+  "remainingGates": [
+    "durable-launch-broker-for-unbound-crash-window",
+    "typed-journaled-runtime-queue",
+    "remaining-runtime-adapters",
+    "legacy-controller-shadow-and-cutover"
+  ]
+}

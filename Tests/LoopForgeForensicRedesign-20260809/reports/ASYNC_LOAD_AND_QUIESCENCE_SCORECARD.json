@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "report": "ASYNC_LOAD_AND_QUIESCENCE_TOPOLOGY.md",
+  "status": "forensic-design-complete",
+  "productionRefactorAuthorized": false,
+  "findingRange": [157, 167],
+  "findingCount": 11,
+  "primaryConclusion": "LoopForge requests cancellation but lacks a run-wide, receipt-backed quiescence barrier; terminal UI state can precede task joining, process reaping, timer shutdown, and lease release.",
+  "confirmedMechanisms": {
+    "failOpenWorkspaceIsolation": true,
+    "graphChildCancellationWithoutJoin": true,
+    "loopCleanupAfterTerminalProjection": true,
+    "watcherCancellationWithoutJoin": true,
+    "fixedGraceInsteadOfObservedQuiescence": true,
+    "wholeTaskSleepPrevention": true,
+    "mainActorWholeCheckpointPersistence": true,
+    "permissionPollingTimer": true,
+    "perNodeBrokerPollingHertz": 20,
+    "ollamaTerminationWithoutReceipt": true,
+    "hotPathReportRegeneration": true
+  },
+  "requiredTerminalReceiptFields": [
+    "unjoinedTaskCount",
+    "ownedLivePIDs",
+    "activeTimers",
+    "activeScheduledOperations",
+    "activeBrokerServices",
+    "unreleasedCapabilityLeases",
+    "journalSequence",
+    "projectionSequence",
+    "sleepAssertions",
+    "cleanupEscalations",
+    "cleanupStartedAt",
+    "cleanupEndedAt"
+  ],
+  "nonWaivableGates": [
+    "isolation failure rejects or replans mutation",
+    "cancel and join every owned task",
+    "reap every owned process tree",
+    "release or durably fail every capability lease",
+    "invalidate every timer and polling service",
+    "flush the authoritative journal",
+    "publish paused or stopped only after quiescence verification"
+  ],
+  "sourceEvidence": [
+    "Sources/LoopForge/LoopController.swift:130",
+    "Sources/LoopForge/LoopController.swift:153",
+    "Sources/LoopForge/LoopController.swift:170",
+    "Sources/LoopForge/LoopController.swift:262",
+    "Sources/LoopForge/LoopController.swift:313",
+    "Sources/LoopForge/GraphLoopEngine.swift:1702",
+    "Sources/LoopForge/GraphLoopEngine.swift:2914",
+    "Sources/LoopForge/ProcessRunner.swift:127",
+    "Sources/LoopForge/HostResourceLeases.swift:375",
+    "Sources/LoopForge/WatcherController.swift:292",
+    "Sources/LoopForge/WatcherController.swift:330",
+    "Sources/LoopForge/TaskStore.swift:65",
+    "Sources/LoopForge/SystemPermissionAutomator.swift:80",
+    "Sources/LoopForge/OllamaManager.swift:327"
+  ]
+}

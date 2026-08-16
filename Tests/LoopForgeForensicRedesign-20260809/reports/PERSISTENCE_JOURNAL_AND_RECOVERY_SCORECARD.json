@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "report": "PERSISTENCE_JOURNAL_AND_RECOVERY_SPECIFICATION.md",
+  "status": "pre-implementation-normative-design",
+  "productionRefactorAuthorized": false,
+  "measuredCurrentState": {
+    "tasksBytes": 10734766,
+    "tasksBackupBytes": 10734531,
+    "taskCount": 2,
+    "topLevelTaskLogCount": 2272,
+    "graphNodeCount": 19,
+    "graphNodeLogCount": 5486,
+    "watchersBytes": 902184,
+    "watchersBackupBytes": 902192,
+    "resourceRegistryBytes": 16604,
+    "loopControllerMutationCallSites": 106,
+    "graphEngineMutationCallSites": 151,
+    "watcherControllerMutationCallSites": 20,
+    "minimumFullPayloadBytesPerTaskSave": 21469297
+  },
+  "hazardCount": 10,
+  "hazards": [
+    "snapshot identity conflates authority and presentation",
+    "failed writes are swallowed after optimistic UI advancement",
+    "unreadable task, watcher, and lease authority fails open",
+    "recovery runs unversioned current policy over historical facts",
+    "stream batching creates a 30-second causal evidence loss window",
+    "bounded arrays erase evidence without tombstones or digests",
+    "cross-file and external side effects have no transaction boundary",
+    "no interprocess single-writer fence exists",
+    "snapshot recovery cannot make side-effect retry idempotent",
+    "backup validity has no causal generation meaning"
+  ],
+  "authoritativeStore": {
+    "unit": "one atomic command decision and event batch per transaction file",
+    "hashChained": true,
+    "sequenceChecked": true,
+    "idempotencyChecked": true,
+    "singleWriterFenced": true,
+    "outboxEffects": true,
+    "snapshotsAuthoritative": false,
+    "uiProjectionsAuthoritative": false
+  },
+  "durabilityClasses": {
+    "criticalMaximumUnflushedSeconds": 0,
+    "standardMaximumUnflushedSeconds": 1,
+    "streamMaximumUnflushedSeconds": 1,
+    "streamMaximumUnflushedBytes": 65536
+  },
+  "initialBudgets": {
+    "criticalTransactionP95Milliseconds": 100,
+    "maximumPayloadWriteAmplification": 4.0,
+    "idleStoppedWritesWithoutAction": 0,
+    "snapshotTransactionInterval": 1000,
+    "snapshotJournalByteInterval": 67108864,
+    "replayTransactionCount": 100000,
+    "deterministicReplayCount": 100
+  },
+  "legacyImportRules": [
+    "preserve and hash exact legacy byte images",
+    "decode primary and backup independently",
+    "import fields as LegacyClaim rather than modern receipts",
+    "preserve prose order, omissions, and contradictions",
+    "do not certify legacy completion without modern receipts",
+    "reconcile resource claims before scheduling",
+    "never permit dual authorities for side effects"
+  ],
+  "faultMatrixCount": 12,
+  "requiredDeterministicTestCount": 20,
+  "sourceEvidence": [
+    "Sources/LoopForge/TaskStore.swift:4",
+    "Sources/LoopForge/TaskStore.swift:65",
+    "Sources/LoopForge/TaskStore.swift:101",
+    "Sources/LoopForge/TaskStore.swift:155",
+    "Sources/LoopForge/TaskStore.swift:197",
+    "Sources/LoopForge/TaskStore.swift:208",
+    "Sources/LoopForge/TaskStore.swift:264",
+    "Sources/LoopForge/TaskStore.swift:291",
+    "Sources/LoopForge/TaskStore.swift:320",
+    "Sources/LoopForge/TaskStore.swift:341",
+    "Sources/LoopForge/WatcherStore.swift:58",
+    "Sources/LoopForge/WatcherStore.swift:76",
+    "Sources/LoopForge/HostResourceLeases.swift:183",
+    "Sources/LoopForge/HostResourceLeases.swift:566",
+    "Sources/LoopForge/Models.swift:696",
+    "Sources/LoopForge/Models.swift:1140"
+  ]
+}

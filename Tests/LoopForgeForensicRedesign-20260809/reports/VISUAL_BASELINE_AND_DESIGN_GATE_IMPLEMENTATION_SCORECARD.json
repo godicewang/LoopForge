@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "status": "kernel_verified_not_cut_over",
+  "component": "ImmutableVisualBaselineAndDesignGate",
+  "normativeSpecification": "VISUAL_BASELINE_AND_DESIGN_GATE_SPECIFICATION.md",
+  "source": {
+    "path": "Sources/LoopForge/Kernel/DesignBaselineGate.swift",
+    "lineCount": 736,
+    "sha256": "34cc44ce9401b383dc45d1fb7b2eae53f15cc85106d1c9e59240dfbd2531cb87"
+  },
+  "identitySource": {
+    "path": "Sources/LoopForge/Kernel/KernelIdentity.swift",
+    "lineCount": 102,
+    "sha256": "0f52a8bdf21b557aee201dda40202dd2496ba766abb1223b7e832dbf2fd60794",
+    "newTypedIdentityCount": 4
+  },
+  "tests": {
+    "path": "Tests/LoopForgeTests/DesignBaselineGateTests.swift",
+    "lineCount": 637,
+    "sha256": "d93ac822caa3ac48279551a92bd8d5b54f63622c0ea817136b05bea188aa9009",
+    "focusedExecuted": 35,
+    "focusedFailures": 0,
+    "fullExecuted": 444,
+    "fullSkipped": 6,
+    "fullFailures": 0
+  },
+  "gate": {
+    "dimensionCount": 12,
+    "weightedAverageAllowed": false,
+    "oneApplicableFailureVetoes": true,
+    "unknownVetoes": true,
+    "newOcclusionTolerancePixels": 0,
+    "globalTokenMutationExpandsCaptureMatrix": true,
+    "candidateMayShrinkContractedMatrix": false,
+    "knownDebtMayWorsen": false,
+    "improveOnlyDebtMayRemainFlat": false,
+    "workerMaySelfAuthorizeAmendment": false
+  },
+  "captureReceipt": {
+    "exactSourceAndArtifact": true,
+    "exactProtocolAndViewport": true,
+    "exactTraitsAndFixture": true,
+    "fullViewportRequired": true,
+    "cleanInstallRequired": true,
+    "zeroExitRequired": true,
+    "imageAndAccessibilityDigestsRequired": true,
+    "navigationRecipeRequired": true
+  },
+  "reviewReceipt": {
+    "deterministicBatches": true,
+    "silentTruncationAllowed": false,
+    "duplicateAttachmentAllowed": false,
+    "perImageVerdictRequired": true,
+    "perPairVerdictRequired": true,
+    "orderedFullResolutionDigestsBound": true,
+    "providerModelContextAndPromptsBound": true,
+    "workerReviewerLineageMayMatch": false,
+    "workerNarrativeVisibleDuringBlindPass": false,
+    "deterministicEvidenceDigestCanonicalized": true,
+    "candidateImageOrMeasurementChangeExpiresReceipt": true
+  },
+  "excludedFailedVerificationInvocations": {
+    "count": 3,
+    "countedTowardActiveLedger": false,
+    "allRepairedAndRerun": true
+  },
+  "cutover": {
+    "legacyGraphUsesGate": false,
+    "journalIntegrated": true,
+    "trustedNativeCaptureAdapterConnected": false,
+    "historicalShadowReplayComplete": false,
+    "nativeUIExposesDimensionReceipts": false,
+    "latestSourcePackaged": false,
+    "commitAndPushComplete": false
+  },
+  "easyBusinessMutated": false
+}

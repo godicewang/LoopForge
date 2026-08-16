@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "status": "startup-recovery-and-journal-first-production-enrollment-passed-native-authoring-and-legacy-cutover-vetoed",
+  "recordedAt": "2026-08-11T08:15:30Z",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "productionCallGraph": {
+    "workspaceAuthorityProductionConstructionCount": 1,
+    "workspaceRuntimeProductionConstructionCount": 1,
+    "workspaceOutboxProductionConstructionCount": 1,
+    "workspaceDispatcherProductionConstructionCount": 1,
+    "shadowAdapterProductionCallCount": 0,
+    "shadowContractMapperProductionCallCount": 0,
+    "legacyHostResourceRecoveryStillOwnsStartup": false,
+    "legacyTaskResumeStillOwnsAutomaticContinuation": true
+  },
+  "missingTrustedInputs": {
+    "persistentKernelRunRegistry": false,
+    "exactActorIdentity": false,
+    "canonicalJournalAndOutboxRoots": false,
+    "workspaceIdentity": false,
+    "hostBudget": false,
+    "singleRecoveryOwner": false,
+    "crossProcessRecoveryLock": false,
+    "startupRunAndDispatchCeilings": false,
+    "typedStartupReceipt": false,
+    "visibleTaskBlockerMapping": false,
+    "terminationCoordination": false,
+    "productionRunCreationPath": false,
+    "separateRegistrationCapabilityModule": false,
+    "nativeContractAuthoringAndConfirmationInvocation": true
+  },
+  "safetyDecision": {
+    "dispatcherWiredDirectlyToLegacyStartup": false,
+    "legacyGraphAllowedToRegisterKernelRun": false,
+    "releaseRawRegistrationAvailable": false,
+    "journalMustPrecedeRecoveryRegistration": true,
+    "ratificationAndJournalFramePersisted": true,
+    "emptyRegistryRequiredAsNoOp": true,
+    "emptyRegistryObservedAsNoOp": true,
+    "corruptRegistrationMustOpenWorkspace": false,
+    "automaticLegacyResumeMustIgnoreUnresolvedKernelRun": false
+  },
+  "evidence": {
+    "workspaceRecoveryCallGraph": "/tmp/loopforge-workspace-recovery-production-callgraph-after.log",
+    "workspaceRecoveryCallGraphSHA256": "fdf18a97edc374c3054b873bc9a2b72b23805b9d31ac7bfc3e6065119ba62f0b",
+    "shadowCallGraph": "/tmp/loopforge-production-shadow-callgraph-after.log",
+    "shadowCallGraphSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "productionEnrollmentCallGraph": "/tmp/loopforge-production-enrollment-callgraph-after.log",
+    "productionEnrollmentCallGraphSHA256": "efb33b9634a60770db79a69aaf4cbf67197cf7da7a1814919e8807a7479d3c0a"
+  },
+  "implementationAuthorizedNext": [
+    "native source-span contract authoring and explicit confirmation invocation",
+    "receipt-native recovery and quarantine UI",
+    "controller dependency and completion cutover"
+  ],
+  "finalRelease": false
+}

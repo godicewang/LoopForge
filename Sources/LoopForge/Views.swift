@@ -12,14 +12,19 @@ private struct CircularWorkingIndicator: View {
     let size: CGFloat
 
     var body: some View {
-        TimelineView(.animation(minimumInterval: 1.0 / 24.0)) { context in
-            let angle = context.date.timeIntervalSinceReferenceDate
-                .truncatingRemainder(dividingBy: 1.15) / 1.15 * 360
+        ZStack {
             Circle()
                 .trim(from: 0.12, to: 0.82)
                 .stroke(color.opacity(0.78), style: StrokeStyle(lineWidth: max(1.5, size * 0.14), lineCap: .round))
-                .rotationEffect(.degrees(angle))
+            Circle()
+                .fill(color.opacity(0.9))
+                .frame(
+                    width: min(5, max(2.5, size * 0.16)),
+                    height: min(5, max(2.5, size * 0.16))
+                )
+                .offset(y: -size / 2)
         }
+        .rotationEffect(.degrees(28))
         .frame(width: size, height: size)
     }
 }
@@ -122,7 +127,9 @@ struct RootView: View {
             Text("The project folder is kept by default. Choose the second option only if you also want to move it to Trash.")
         }
         .confirmationDialog(
-            "Refine this prompt before starting?",
+            model.draftExecutionMode == .autoGraph
+                ? "Refine this prompt before contract review?"
+                : "Refine this prompt before starting?",
             isPresented: $model.showingPromptOptimizationOffer,
             titleVisibility: .visible
         ) {
@@ -141,6 +148,23 @@ struct RootView: View {
         .sheet(isPresented: $model.showingPromptOptimization) {
             PromptOptimizationView()
                 .environmentObject(model)
+        }
+        .sheet(isPresented: Binding(
+            get: {
+                model.pendingNativeContractConfirmation != nil
+                    || model.pendingNativeDesignBaselineConfirmation != nil
+            },
+            set: {
+                if !$0 { model.cancelPendingNativeAuthorityConfirmation() }
+            }
+        )) {
+            if model.pendingNativeDesignBaselineConfirmation != nil {
+                NativeDesignBaselineConfirmationView()
+                    .environmentObject(model)
+            } else {
+                NativeAutoGraphContractConfirmationView()
+                    .environmentObject(model)
+            }
         }
     }
 }
@@ -398,25 +422,41 @@ private struct WorkspaceShell: View {
             }
             .navigationSplitViewColumnWidth(min: 220, ideal: 250, max: 300)
         } detail: {
-            Group {
-                if model.selectedModule == .autoLoop {
-                    if model.showingNewTask || store.selectedTask == nil {
-                        NewTaskView()
-                    } else if let task = store.selectedTask {
-                        TaskDetailView(taskID: task.id, store: store, controller: controller).id(task.id)
-                    }
-                } else {
-                    if model.showingNewWatcher || model.watcherStore.selectedWatcher == nil {
-                        ContinuumNewWatcherView()
-                    } else if let watcher = model.watcherStore.selectedWatcher {
-                        ContinuumWatcherDetailView(
-                            watcherID: watcher.id,
-                            store: model.watcherStore,
-                            controller: model.watcherController
-                        )
-                        .id(watcher.id)
+            VStack(spacing: 0) {
+                if model.selectedModule != .autoLoop
+                    || model.showingNewTask
+                    || store.selectedTask == nil {
+                    ModuleContextLabel(
+                        module: model.selectedModule,
+                        kernelRuns: model.kernelRunProjections,
+                        recoveryRuns: model.kernelRecoveryRunReports,
+                        executionReadiness: model.kernelExecutionReadinessByRunID,
+                        providerReadiness:
+                            model.kernelProviderInvocationReadinessByRunID
+                    )
+                }
+
+                Group {
+                    if model.selectedModule == .autoLoop {
+                        if model.showingNewTask || store.selectedTask == nil {
+                            NewTaskView()
+                        } else if let task = store.selectedTask {
+                            TaskDetailView(taskID: task.id, store: store, controller: controller).id(task.id)
+                        }
+                    } else {
+                        if model.showingNewWatcher || model.watcherStore.selectedWatcher == nil {
+                            ContinuumNewWatcherView()
+                        } else if let watcher = model.watcherStore.selectedWatcher {
+                            ContinuumWatcherDetailView(
+                                watcherID: watcher.id,
+                                store: model.watcherStore,
+                                controller: model.watcherController
+                            )
+                            .id(watcher.id)
+                        }
                     }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(nsColor: .windowBackgroundColor))
@@ -425,6 +465,534 @@ private struct WorkspaceShell: View {
         .sheet(isPresented: $model.showingWatcherGuide) {
             WatcherGuideView(startIndex: model.watcherGuideStartIndex)
                 .environmentObject(model)
+        }
+    }
+}
+
+private struct ModuleContextLabel: View {
+    let module: LoopForgeModule
+    let kernelRuns: [KernelRunProjection]
+    let recoveryRuns: [WorkspaceMutationRecoveryRunReport]
+    let executionReadiness:
+        [KernelRunID: KernelNativeExecutionReadinessAssessment]
+    let providerReadiness:
+        [KernelRunID: KernelProviderInvocationProfileReadinessAssessment]
+    @State private var showingKernelDiagnostics = false
+
+    private var repositoryRuns: [WorkspaceMutationRecoveryRunReport] {
+        recoveryRuns.filter { $0.repositoryIndexStatus != .notApplicable }
+    }
+
+    private var diagnosticRunCount: Int {
+        Set(
+            kernelRuns.map(\.runID.rawValue) + repositoryRuns.map(\.runID.rawValue)
+        ).count
+    }
+
+    var body: some View {
+        HStack(spacing: 9) {
+            Image(systemName: module.symbol)
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(Color.accentColor)
+            Text(module.title)
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundStyle(.primary)
+            Spacer()
+            if diagnosticRunCount > 0 {
+                Button {
+                    showingKernelDiagnostics = true
+                } label: {
+                    Label(
+                        "Kernel diagnostics · \(diagnosticRunCount)",
+                        systemImage: "arrow.triangle.2.circlepath"
+                    )
+                    .font(.caption)
+                }
+                .buttonStyle(.borderless)
+                .accessibilityIdentifier("open-kernel-convergence-diagnostics")
+                .help("Inspect receipt-backed convergence and repository-index diagnosis")
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 30)
+        .padding(.top, 14)
+        .padding(.bottom, 10)
+        .background(Color(nsColor: .windowBackgroundColor))
+        .overlay(alignment: .bottom) {
+            Divider().opacity(0.6)
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("module-context-label")
+        .sheet(isPresented: $showingKernelDiagnostics) {
+            KernelConvergenceDiagnosticsView(
+                runs: kernelRuns,
+                recoveryRuns: repositoryRuns,
+                executionReadiness: executionReadiness,
+                providerReadiness: providerReadiness
+            )
+        }
+    }
+}
+
+/// Presentation-only lifecycle semantics for receipt-backed convergence
+/// diagnostics. An unretired strategy is selectable only while its run can
+/// execute. Once the run is terminal it remains immutable history, not an
+/// "active" process, attempt, or authority.
+enum KernelConvergenceDiagnosticPresentation {
+    static func strategyLifecycleLabel(
+        _ lifecycle: ConvergenceStrategyLifecycle,
+        runPhase: KernelRunPhase
+    ) -> String {
+        if runPhase.isTerminal {
+            switch lifecycle {
+            case .active:
+                return "unretired history · run \(runPhase.rawValue)"
+            case .waitingForCondition:
+                return "waiting history · run \(runPhase.rawValue)"
+            case .retired:
+                return "retired"
+            }
+        }
+        switch lifecycle {
+        case .active:
+            return "active"
+        case .waitingForCondition:
+            return "waiting for condition"
+        case .retired:
+            return "retired"
+        }
+    }
+
+    static func isInertTerminalHistory(
+        _ lifecycle: ConvergenceStrategyLifecycle,
+        runPhase: KernelRunPhase
+    ) -> Bool {
+        runPhase.isTerminal && lifecycle != .retired
+    }
+}
+
+private struct KernelConvergenceDiagnosticsView: View {
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var model: AppModel
+    let runs: [KernelRunProjection]
+    let recoveryRuns: [WorkspaceMutationRecoveryRunReport]
+    let executionReadiness:
+        [KernelRunID: KernelNativeExecutionReadinessAssessment]
+    let providerReadiness:
+        [KernelRunID: KernelProviderInvocationProfileReadinessAssessment]
+
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Kernel diagnostics")
+                        .font(.title2).fontWeight(.semibold)
+                    Text("Receipt-backed projection and explicit native activation")
+                        .font(.caption).foregroundStyle(.secondary)
+                }
+                Spacer()
+                Button("Done") { dismiss() }
+                    .buttonStyle(.borderedProminent)
+            }
+            .padding(20)
+            Divider()
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 18) {
+                    ForEach(runs, id: \.runID.rawValue) { run in
+                        if let diagnosis = run.convergenceDiagnosis {
+                            runSection(run: run, diagnosis: diagnosis)
+                        } else {
+                            enrolledRunSection(run)
+                        }
+                    }
+                    ForEach(recoveryRuns, id: \.runID.rawValue) { report in
+                        repositoryIndexSection(report)
+                    }
+                }
+                .padding(20)
+            }
+        }
+        .frame(minWidth: 860, idealWidth: 980, minHeight: 640, idealHeight: 760)
+        .accessibilityIdentifier("kernel-convergence-diagnostics")
+    }
+
+    private func enrolledRunSection(_ run: KernelRunProjection) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(run.runID.rawValue)
+                        .font(.headline)
+                        .textSelection(.enabled)
+                    Text("Journal sequence \(run.sequence)")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Text(run.phase.rawValue)
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.secondary)
+            }
+            Text(runStatusSummary(run))
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            Label(runBoundarySummary(run), systemImage: "checkmark.shield")
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            if let readiness = executionReadiness[run.runID] {
+                if readiness.canPrepareAndActivate {
+                    Label(
+                        "Ratified native authority is ready for one explicit activation.",
+                        systemImage: "checkmark.shield"
+                    )
+                    .font(.caption)
+                    .foregroundStyle(.green)
+                } else {
+                    Label(
+                        "Native execution blocked · \(readiness.blockers.count) missing authority receipts",
+                        systemImage: "pause.circle"
+                    )
+                    .font(.caption)
+                    .foregroundStyle(.orange)
+                    ForEach(readiness.blockers, id: \.rawValue) { blocker in
+                        Text("• \(blocker.displaySummary)")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                if model.latestKernelEnrollmentReceipt?.runID == run.runID {
+                    Button("Activate Native Attempt") {
+                        Task { await model.activateLatestEnrolledKernelRun() }
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(
+                        model.kernelExecutionStartInProgress
+                            || !readiness.canPrepareAndActivate
+                    )
+                    .accessibilityIdentifier(
+                        "activate-native-kernel-attempt-button"
+                    )
+                    Text(
+                        "Activation uses only the unchanged enrolled plan, strategy, budgets, verifier, workspace, and actor. Provider launch remains separately gated."
+                    )
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                }
+            }
+            if let provider = providerReadiness[run.runID] {
+                if provider.canCompileProviderInvocation {
+                    Label(
+                        "Provider profile authority is complete for V2 invocation compilation; no launch receipt is implied.",
+                        systemImage: "checkmark.shield"
+                    )
+                    .font(.caption)
+                    .foregroundStyle(.green)
+                } else {
+                    Label(
+                        "Provider invocation blocked · \(provider.blockers.count) exact profile constraints",
+                        systemImage: "exclamationmark.shield"
+                    )
+                    .font(.caption)
+                    .foregroundStyle(.orange)
+                    .accessibilityIdentifier(
+                        "kernel-provider-invocation-blocked"
+                    )
+                    ForEach(provider.blockers, id: \.rawValue) { blocker in
+                        Text("• \(blocker.displaySummary)")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
+        }
+        .padding(16)
+        .background(ForgeStyle.panel, in: RoundedRectangle(cornerRadius: 12))
+        .overlay(RoundedRectangle(cornerRadius: 12).stroke(ForgeStyle.hairline))
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("kernel-enrolled-ready-run")
+    }
+
+    private func runStatusSummary(_ run: KernelRunProjection) -> String {
+        let requirements =
+            "Requirements \(run.acceptedRequirementCount) / \(run.mandatoryRequirementCount)"
+        switch run.phase {
+        case .ready:
+            return "\(requirements) · no native attempt admitted"
+        case .executing:
+            return "\(requirements) · one native attempt is active"
+        default:
+            return "\(requirements) · phase \(run.phase.rawValue)"
+        }
+    }
+
+    private func runBoundarySummary(_ run: KernelRunProjection) -> String {
+        switch run.phase {
+        case .ready:
+            return "Confirmed native contract enrolled; activation remains at the journal boundary."
+        case .executing:
+            return "Kernel attempt active; provider launch awaits its own receipt-gated authority."
+        default:
+            return "Kernel state is projected only from retained journal receipts."
+        }
+    }
+
+    private func repositoryIndexSection(
+        _ report: WorkspaceMutationRecoveryRunReport
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(report.runID.rawValue)
+                        .font(.headline).textSelection(.enabled)
+                    Text("Repository generation")
+                        .font(.caption).foregroundStyle(.secondary)
+                }
+                Spacer()
+                Text(report.repositoryIndexStatus.rawValue)
+                    .font(.caption).fontWeight(.semibold)
+                    .foregroundStyle(
+                        report.repositoryIndexStatus == .resolved
+                            ? Color.green
+                            : Color.orange
+                    )
+            }
+            if let telemetry = report.repositoryIndexTelemetry {
+                HStack(spacing: 24) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("\(telemetry.entryCount)")
+                            .font(.subheadline).fontWeight(.semibold).monospacedDigit()
+                        Text("Indexed files")
+                            .font(.caption2).foregroundStyle(.secondary)
+                    }
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(telemetry.disposition.rawValue)
+                            .font(.subheadline).fontWeight(.semibold)
+                        Text("Cache disposition")
+                            .font(.caption2).foregroundStyle(.secondary)
+                    }
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("\(telemetry.sourceSequence)")
+                            .font(.subheadline).fontWeight(.semibold).monospacedDigit()
+                        Text("Journal sequence")
+                            .font(.caption2).foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                }
+                Text(
+                    "Authority \(telemetry.authority.rawValue) · generation \(telemetry.generationDigest.rawValue) · observed \(telemetry.observedMetadataDigest.rawValue)"
+                )
+                .font(.caption2).foregroundStyle(.tertiary)
+                .textSelection(.enabled)
+            } else {
+                Text("Cache reuse authority was withheld; inspect the typed recovery status before admitting work.")
+                    .font(.caption).foregroundStyle(.secondary)
+            }
+        }
+        .padding(16)
+        .background(ForgeStyle.panel, in: RoundedRectangle(cornerRadius: 12))
+        .overlay(RoundedRectangle(cornerRadius: 12).stroke(ForgeStyle.hairline))
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("kernel-repository-index-telemetry")
+    }
+
+    private func runSection(
+        run: KernelRunProjection,
+        diagnosis: ConvergenceDiagnosticProjection
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(alignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(run.runID.rawValue)
+                        .font(.headline).textSelection(.enabled)
+                    Text("Epoch \(diagnosis.epochID) · sequence \(diagnosis.sourceSequence)")
+                        .font(.caption).foregroundStyle(.secondary)
+                }
+                Spacer()
+                Text(run.phase.rawValue)
+                    .font(.caption).fontWeight(.semibold)
+                    .foregroundStyle(.secondary)
+            }
+
+            HStack(spacing: 24) {
+                diagnosticMetric(
+                    "Attempts",
+                    consumed: diagnosis.budget.consumed.attempts,
+                    maximum: diagnosis.budget.maximum.maximumAttempts
+                )
+                diagnosticMetric(
+                    "Strategies",
+                    consumed: diagnosis.budget.consumed.strategies,
+                    maximum: diagnosis.budget.maximum.maximumStrategies
+                )
+                diagnosticMetric(
+                    "Mutation cost",
+                    consumed: diagnosis.budget.consumed.mutationCost,
+                    maximum: diagnosis.budget.maximum.maximumMutationCost
+                )
+                diagnosticMetric(
+                    "Verification cost",
+                    consumed: diagnosis.budget.consumed.verificationCost,
+                    maximum: diagnosis.budget.maximum.maximumVerificationCost
+                )
+                diagnosticMetric(
+                    "Damage",
+                    consumed: diagnosis.budget.consumed.damageEvents,
+                    maximum: diagnosis.budget.maximum.maximumDamageEvents
+                )
+                if let required = run.durationRequiredSeconds {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Accepted time")
+                            .font(.caption2).foregroundStyle(.secondary)
+                        Text(
+                            "\(run.durationAcceptedSeconds.compactDuration) / \(TimeInterval(required).compactDuration)"
+                        )
+                        .font(.caption).fontWeight(.semibold).monospacedDigit()
+                        Text(
+                            "\(run.durationExcludedSeconds.compactDuration) excluded · \(run.durationCoverageViolations.count) violations"
+                        )
+                        .font(.caption2).foregroundStyle(.secondary)
+                    }
+                    .accessibilityElement(children: .combine)
+                    .accessibilityIdentifier("kernel-accepted-duration")
+                }
+                Spacer()
+            }
+
+            Divider()
+            VStack(alignment: .leading, spacing: 12) {
+                ForEach(diagnosis.strategies) { strategy in
+                    strategyRow(strategy, runPhase: run.phase)
+                }
+                if diagnosis.strategies.isEmpty {
+                    Text("No admitted strategy receipt is present.")
+                        .font(.caption).foregroundStyle(.secondary)
+                }
+            }
+
+            if !diagnosis.replacementAuthorizations.isEmpty {
+                Divider()
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Replacement authorizations")
+                        .font(.subheadline).fontWeight(.semibold)
+                    ForEach(diagnosis.replacementAuthorizations) { replacement in
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(
+                                "\(short(replacement.predecessorFingerprint.rawValue)) → \(short(replacement.replacementFingerprint.rawValue))"
+                            )
+                            .font(.caption).fontWeight(.semibold).monospaced()
+                            Text(
+                                "Changed axes: \(replacement.changedAxes.map(\.rawValue).joined(separator: ", ")) · failures: \(replacement.failureDigests.count) · \(replacement.consumed ? "consumed" : "authorized")"
+                            )
+                            .font(.caption2).foregroundStyle(.secondary)
+                        }
+                    }
+                }
+            }
+
+            Text(
+                "Authority \(diagnosis.authority) · projection \(diagnosis.projectionDigest.rawValue)"
+            )
+            .font(.caption2).foregroundStyle(.tertiary)
+            .textSelection(.enabled)
+        }
+        .padding(16)
+        .background(ForgeStyle.panel, in: RoundedRectangle(cornerRadius: 12))
+        .overlay(RoundedRectangle(cornerRadius: 12).stroke(ForgeStyle.hairline))
+    }
+
+    private func strategyRow(
+        _ strategy: ConvergenceStrategyDiagnostic,
+        runPhase: KernelRunPhase
+    ) -> some View {
+        let inertHistory = KernelConvergenceDiagnosticPresentation
+            .isInertTerminalHistory(
+                strategy.lifecycle,
+                runPhase: runPhase
+            )
+        return VStack(alignment: .leading, spacing: 7) {
+            HStack(alignment: .firstTextBaseline) {
+                Text(short(strategy.fingerprint.rawValue))
+                    .font(.caption).fontWeight(.semibold).monospaced()
+                Text(KernelConvergenceDiagnosticPresentation.strategyLifecycleLabel(
+                    strategy.lifecycle,
+                    runPhase: runPhase
+                ))
+                    .font(.caption2)
+                    .foregroundStyle(
+                        inertHistory
+                            ? Color.secondary
+                            : lifecycleColor(strategy.lifecycle)
+                    )
+                    .accessibilityIdentifier(
+                        inertHistory
+                            ? "kernel-terminal-strategy-history"
+                            : "kernel-live-strategy-lifecycle"
+                    )
+                Spacer()
+                Text("\(strategy.attemptIDs.count) attempt\(strategy.attemptIDs.count == 1 ? "" : "s")")
+                    .font(.caption2).foregroundStyle(.secondary)
+            }
+            Text(
+                "Requirements: \(strategy.requirementIDs.map(\.rawValue).joined(separator: ", "))"
+            )
+            .font(.caption2).foregroundStyle(.secondary)
+            Text(
+                "Mutation Δ \(strategy.mutationCostConsumed) · verification Δ \(strategy.verificationCostConsumed) · external effects \(strategy.externalEffectsConsumed) · failures \(strategy.failureDigests.count)"
+            )
+            .font(.caption2).foregroundStyle(.secondary)
+            if let delta = strategy.lastProgressDelta {
+                Text(
+                    "Evidence Δ +\(delta.acceptedEvidenceReceiptIDsAdded.count) · requirements +\(delta.acceptedRequirementIDsAdded.count) · blockers resolved \(delta.blockerDigestsResolved.count) · invariants regressed \(delta.invariantRegressionIDsAdded.count)"
+                )
+                .font(.caption2)
+                .foregroundStyle(
+                    delta.invariantRegressionIDsAdded.isEmpty ? Color.secondary : Color.red
+                )
+            }
+            if let action = strategy.retirementActionCode {
+                Text("Retirement: \(action)")
+                    .font(.caption2).fontWeight(.semibold).foregroundStyle(.red)
+            }
+            if let lesson = strategy.lessonDigest {
+                Text("Lesson: \(lesson.rawValue)")
+                    .font(.caption2).foregroundStyle(.secondary)
+                    .textSelection(.enabled)
+            }
+            if let waiting = strategy.waitingConditionDigest {
+                Text("Waiting condition: \(waiting.rawValue)")
+                    .font(.caption2).foregroundStyle(.orange)
+                    .textSelection(.enabled)
+            }
+        }
+        .padding(.vertical, 3)
+        .help(
+            inertHistory
+                ? "The strategy was never retired, but the terminal run makes it inert historical state."
+                : "Receipt-derived strategy lifecycle."
+        )
+    }
+
+    private func diagnosticMetric<T: BinaryInteger>(
+        _ title: String,
+        consumed: T,
+        maximum: T
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(verbatim: "\(consumed)/\(maximum)")
+                .font(.subheadline).fontWeight(.semibold).monospacedDigit()
+            Text(title).font(.caption2).foregroundStyle(.secondary)
+        }
+    }
+
+    private func short(_ value: String) -> String {
+        value.count > 14 ? String(value.prefix(14)) + "…" : value
+    }
+
+    private func lifecycleColor(_ lifecycle: ConvergenceStrategyLifecycle) -> Color {
+        switch lifecycle {
+        case .active: return .green
+        case .waitingForCondition: return .orange
+        case .retired: return .red
         }
     }
 }
@@ -691,10 +1259,10 @@ private struct TaskComposer: View {
 
                 requestEditor
                 qualityPicker
-                if model.draftExecutionMode != .autoGraph {
-                    parallelCandidateSettings
-                }
                 executionSettings
+                providerAuthoritySettings
+                sourceRevisionCapturePolicy
+                verificationProbeSelection
                 projectRow
 
                 if let estimate = model.estimate {
@@ -733,17 +1301,9 @@ private struct TaskComposer: View {
     private var qualityPicker: some View {
         HStack(alignment: .top, spacing: 14) {
             VStack(alignment: .leading, spacing: 9) {
-                Text(model.draftExecutionMode == .parallelCandidates
-                     ? "Candidate Task Quality"
-                     : "Single Loop Task Quality")
+                Text("Contract rigor")
                     .font(.headline)
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        if model.draftExecutionMode == .autoGraph {
-                            model.selectSingleLoop()
-                        }
-                    }
-                Picker("Single Loop Task Quality", selection: Binding(
+                Picker("Contract rigor", selection: Binding(
                     get: { model.draftQuality },
                     set: {
                         model.draftQuality = $0
@@ -754,22 +1314,15 @@ private struct TaskComposer: View {
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
-                Text("\(model.draftQuality.subtitle) · \(TimeInterval(model.draftQuality.defaultRuntimeMinutes * 60).compactDuration) default")
+                Text("\(model.draftQuality.subtitle) · controls planning and evidence depth, not completion authority")
                     .font(.caption).foregroundStyle(.secondary)
-                    .contentShape(Rectangle())
-                    .onTapGesture { model.selectSingleLoop() }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(14)
-            .background(
-                model.draftExecutionMode != .autoGraph
-                    ? Color.accentColor.opacity(0.075)
-                    : ForgeStyle.panel,
-                in: RoundedRectangle(cornerRadius: 13, style: .continuous)
-            )
+            .background(ForgeStyle.panel, in: RoundedRectangle(cornerRadius: 13, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: 13)
-                    .stroke(model.draftExecutionMode != .autoGraph ? Color.accentColor.opacity(0.34) : ForgeStyle.hairline)
+                    .stroke(ForgeStyle.hairline)
             )
 
             Button {
@@ -777,15 +1330,13 @@ private struct TaskComposer: View {
             } label: {
                 VStack(alignment: .leading, spacing: 9) {
                     HStack {
-                        Label("Auto Graph Loop", systemImage: "point.3.filled.connected.trianglepath.dotted")
+                        Label("Journaled Auto Graph", systemImage: "point.3.filled.connected.trianglepath.dotted")
                             .font(.headline)
                         Spacer()
-                        if model.draftExecutionMode == .autoGraph {
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundStyle(Color.accentColor)
-                        }
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundStyle(Color.accentColor)
                     }
-                        Text("Dynamic parallel graph execution.")
+                    Text("The only new-work path. Single Loop and Parallel Candidates remain read-only historical evidence.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.leading)
@@ -795,14 +1346,12 @@ private struct TaskComposer: View {
                 .frame(width: 245, alignment: .topLeading)
                 .frame(minHeight: 102, alignment: .topLeading)
                 .background(
-                    model.draftExecutionMode == .autoGraph
-                        ? Color.accentColor.opacity(0.075)
-                        : ForgeStyle.panel,
+                    Color.accentColor.opacity(0.075),
                     in: RoundedRectangle(cornerRadius: 13, style: .continuous)
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 13)
-                        .stroke(model.draftExecutionMode == .autoGraph ? Color.accentColor.opacity(0.34) : ForgeStyle.hairline)
+                        .stroke(Color.accentColor.opacity(0.34))
                 )
                 .contentShape(Rectangle())
             }
@@ -811,98 +1360,17 @@ private struct TaskComposer: View {
         }
     }
 
-    private var parallelCandidateSettings: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            Toggle(isOn: Binding(
-                get: { model.draftExecutionMode == .parallelCandidates },
-                set: model.setParallelCandidatesEnabled
-            )) {
-                VStack(alignment: .leading, spacing: 3) {
-                    Label("Parallel candidates", systemImage: "square.stack.3d.up.fill")
-                        .font(.headline)
-                    Text("Build independent results in isolated Git worktrees, then retain one.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-            }
-            .toggleStyle(.switch)
-            .accessibilityIdentifier("parallel-candidates-toggle")
-
-            if model.draftExecutionMode == .parallelCandidates {
-                Divider()
-                HStack(spacing: 18) {
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text("Results").font(.caption).foregroundStyle(.secondary)
-                        Stepper(
-                            value: Binding(
-                                get: { model.draftParallelCandidateCount },
-                                set: model.setParallelCandidateCount
-                            ),
-                            in: ParallelCandidatePolicy.minimumCount...ParallelCandidatePolicy.maximumCount
-                        ) {
-                            Text("\(model.draftParallelCandidateCount)")
-                                .font(.headline)
-                                .monospacedDigit()
-                        }
-                        .fixedSize()
-                        .accessibilityIdentifier("parallel-candidate-count")
-                    }
-                    Divider().frame(height: 42)
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text("Keep the winner").font(.caption).foregroundStyle(.secondary)
-                        Picker("Keep the winner", selection: $model.draftParallelSelectionMode) {
-                            ForEach(ParallelCandidateSelectionMode.allCases) {
-                                Text($0.title).tag($0)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                        .frame(width: 260)
-                        .accessibilityIdentifier("parallel-selection-mode")
-                    }
-                    Spacer()
-                    Label(
-                        model.draftSubProvider == .local
-                            ? "Local candidates run one at a time to protect memory."
-                            : "Up to \(model.draftParallelCandidateCount) run concurrently.",
-                        systemImage: "arrow.triangle.branch"
-                    )
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                }
-            }
-        }
-        .padding(15)
-        .background(
-            model.draftExecutionMode == .parallelCandidates
-                ? Color.accentColor.opacity(0.065)
-                : ForgeStyle.panel,
-            in: RoundedRectangle(cornerRadius: 13, style: .continuous)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 13)
-                .stroke(
-                    model.draftExecutionMode == .parallelCandidates
-                        ? Color.accentColor.opacity(0.3)
-                        : ForgeStyle.hairline
-                )
-        )
-    }
-
     private var executionSettings: some View {
         VStack(alignment: .leading, spacing: 0) {
             AgentConfigurationRow(
                 role: .control,
-                title: model.draftExecutionMode == .autoGraph
-                    ? "Main Graph Agent"
-                    : (model.draftExecutionMode == .parallelCandidates ? "Selection Agent" : nil)
+                title: "Main Graph Agent"
             )
                 .padding(16)
             Divider().padding(.horizontal, 16)
             AgentConfigurationRow(
                 role: .subAgent,
-                title: model.draftExecutionMode == .autoGraph
-                    ? "Node Loop Agent"
-                    : (model.draftExecutionMode == .parallelCandidates ? "Candidate Agent" : nil)
+                title: "Node Loop Agent"
             )
                 .padding(16)
             Divider()
@@ -918,6 +1386,125 @@ private struct TaskComposer: View {
         }
         .background(ForgeStyle.panel, in: RoundedRectangle(cornerRadius: 13, style: .continuous))
         .overlay(RoundedRectangle(cornerRadius: 13).stroke(ForgeStyle.hairline))
+    }
+
+    private var providerAuthoritySettings: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Toggle(isOn: $model.draftWorkerNetworkAccess) {
+                Label("Allow worker network access", systemImage: "network")
+                    .font(.headline)
+            }
+            .toggleStyle(.switch)
+            .accessibilityIdentifier("worker-network-authority-toggle")
+            Text("Off by default. Enabling this adds exactly kernel.network-access to the user-confirmed contract and enables networking only for the worker; the independent reviewer remains offline. It does not select, ratify, or launch a provider harness.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+        .padding(15)
+        .background(
+            ForgeStyle.panel,
+            in: RoundedRectangle(cornerRadius: 13, style: .continuous)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 13).stroke(ForgeStyle.hairline)
+        )
+    }
+
+    private var sourceRevisionCapturePolicy: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label("Exact source-revision scope", systemImage: "doc.badge.gearshape")
+                .font(.headline)
+            TextField(
+                "Excluded directory names",
+                text: $model.draftSourceRevisionExcludedDirectoryNames
+            )
+            .textFieldStyle(.roundedBorder)
+            .font(.system(.body, design: .monospaced))
+            .accessibilityLabel("Excluded source-revision directory names")
+            .accessibilityIdentifier("source-revision-exclusions-field")
+            Text("Comma- or newline-separated directory names apply at any depth. Paths, traversal, duplicates, symlink entries outside excluded trees, and silent inference all fail closed. The canonical policy and digest are shown again before confirmation.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+        .padding(15)
+        .background(
+            ForgeStyle.panel,
+            in: RoundedRectangle(cornerRadius: 13, style: .continuous)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 13).stroke(ForgeStyle.hairline)
+        )
+    }
+
+    private var verificationProbeSelection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Label("Exact postimage verifier", systemImage: "checkmark.shield")
+                .font(.headline)
+            if let selection = model.draftNativeVerificationProbeSelection {
+                HStack(alignment: .top, spacing: 10) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(selection.executableFileName)
+                            .font(.subheadline.weight(.medium))
+                        Text(selection.executablePath)
+                            .font(.system(.caption2, design: .monospaced))
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                            .truncationMode(.middle)
+                        Text("SHA-256 \(selection.probe.executableContentDigest.rawValue)")
+                            .font(.system(.caption2, design: .monospaced))
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                            .truncationMode(.middle)
+                        Text("Manifest \(selection.manifestFileName) · \(selection.probe.fixedArguments.count) fixed argv elements · \(selection.probe.resultMappings.count) result mappings")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                    Button("Change…") {
+                        model.chooseNativeVerificationProbeManifest()
+                    }
+                    .disabled(model.nativeVerificationProbeImportInProgress)
+                    Button("Remove") {
+                        model.clearNativeVerificationProbeSelection()
+                    }
+                    .disabled(model.nativeVerificationProbeImportInProgress)
+                }
+            } else {
+                HStack(alignment: .center, spacing: 12) {
+                    Text("Select a schema-constrained local verifier. LoopForge hashes its exact bytes; shell, ambient environment, network, unmatched green results, and child processes remain unavailable.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Button {
+                        model.chooseNativeVerificationProbeManifest()
+                    } label: {
+                        if model.nativeVerificationProbeImportInProgress {
+                            HStack(spacing: 6) {
+                                ProgressView().controlSize(.small)
+                                Text("Importing…")
+                            }
+                        } else {
+                            Text("Select Verifier Manifest…")
+                        }
+                    }
+                    .disabled(model.nativeVerificationProbeImportInProgress)
+                    .accessibilityIdentifier(
+                        "select-native-verifier-manifest-button"
+                    )
+                }
+            }
+            Text("The displayed path is a staging hint, not durable authority. Confirmation binds the executable digest, exact argv/input token, canonical parser, result mappings, and resource ceilings; later activation must rehash the executable again.")
+                .font(.caption2)
+                .foregroundStyle(.tertiary)
+        }
+        .padding(15)
+        .background(
+            ForgeStyle.panel,
+            in: RoundedRectangle(cornerRadius: 13, style: .continuous)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 13).stroke(ForgeStyle.hairline)
+        )
     }
 
     private var projectRow: some View {
@@ -1033,7 +1620,9 @@ private struct AgentConfigurationRow: View {
                         get: { model.accessMode(for: role) },
                         set: { model.setAccessMode($0, role: role) }
                     )) {
-                        ForEach(CodexAccessMode.selectableCases) { Text($0.title).tag($0) }
+                        ForEach(model.accessModes(for: role)) {
+                            Text($0.title).tag($0)
+                        }
                     }
                     .labelsHidden()
                 }
@@ -1536,96 +2125,82 @@ private struct EstimatePanel: View {
     @EnvironmentObject private var model: AppModel
     let estimate: TaskEstimate
 
-    private var isCustomRuntime: Bool {
-        model.draftTargetMinutes != Int(estimate.recommendedSeconds / 60)
-    }
-
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             HStack(alignment: .firstTextBaseline) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(model.draftExecutionMode == .autoGraph
-                         ? "Dynamic execution plan"
-                         : (model.draftExecutionMode == .parallelCandidates
-                            ? "Active runtime per candidate"
-                            : (isCustomRuntime ? "Custom active runtime" : "Suggested active runtime")))
+                    Text("Dynamic execution plan")
                         .font(.caption).foregroundStyle(.secondary)
-                    Text(model.draftExecutionMode == .autoGraph
-                         ? "Evidence-gated graph"
-                         : TimeInterval(model.draftTargetMinutes * 60).compactDuration)
+                    Text("Evidence-gated graph")
                         .font(.system(size: 27, weight: .semibold, design: .rounded))
                 }
                 Spacer()
                 VStack(alignment: .trailing, spacing: 4) {
-                    Text(model.draftExecutionMode == .autoGraph
-                         ? "Execution"
-                         : (model.draftExecutionMode == .parallelCandidates
-                            ? "Parallel candidates"
-                            : "Single Loop Task Quality"))
+                    Text("Execution")
                         .font(.caption).foregroundStyle(.secondary)
-                    Text(model.draftExecutionMode == .autoGraph
-                         ? "Auto Graph Loop"
-                         : (model.draftExecutionMode == .parallelCandidates
-                            ? "\(model.draftParallelCandidateCount) results · \(model.draftParallelSelectionMode.title)"
-                            : model.draftQuality.title))
+                    Text("Journaled Auto Graph")
                         .font(.headline)
-                    Text(model.draftExecutionMode == .autoGraph
-                         ? "No artificial runtime minimum"
-                         : "Mode default \(TimeInterval(model.draftQuality.defaultRuntimeMinutes * 60).compactDuration)")
+                    Text("No artificial runtime minimum")
                         .font(.caption2).foregroundStyle(.secondary)
                 }
             }
 
-            if model.draftExecutionMode == .autoGraph {
-                HStack {
-                    Label(
-                        "The Main Graph Agent expands, audits, and repairs node loops until the integrated result passes.",
-                        systemImage: "point.3.connected.trianglepath.dotted"
-                    )
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    Spacer()
-                    Button("Start Auto Graph Loop") { model.requestStartLoop() }
+            VStack(alignment: .leading, spacing: 12) {
+                    HStack {
+                        Label(
+                            "The Main Graph Agent expands, audits, and repairs node loops until the integrated result passes.",
+                            systemImage: "point.3.connected.trianglepath.dotted"
+                        )
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        Spacer()
+                        Button("Review Auto Graph Contract") {
+                            model.requestStartLoop()
+                        }
                         .buttonStyle(.borderedProminent)
                         .controlSize(.large)
                         .accessibilityIdentifier("start-task-button")
-                }
-            } else {
-                HStack(spacing: 8) {
-                    TextField("Hours", value: Binding(
-                        get: { Double(model.draftTargetMinutes) / 60.0 },
-                        set: { model.setDraftTargetHours($0) }
-                    ), format: .number.precision(.fractionLength(0...2)))
-                    .frame(width: 72)
-                    .textFieldStyle(.roundedBorder)
-                    .accessibilityLabel("Hard active Sub Agent runtime in hours")
-                    .accessibilityIdentifier("runtime-hours-field")
-                    Text("hours").foregroundStyle(.secondary)
-                    Button("−30m") { model.adjustDraftTargetMinutes(by: -30) }
-                        .disabled(model.draftTargetMinutes <= AppConstants.minimumCustomRuntimeMinutes)
-                    Button("−3h") { model.adjustDraftTargetMinutes(by: -180) }
-                        .disabled(model.draftTargetMinutes <= AppConstants.minimumCustomRuntimeMinutes)
-                    Button("+30m") { model.adjustDraftTargetMinutes(by: 30) }
-                    Button("+3h") { model.adjustDraftTargetMinutes(by: 180) }
-                    Button("Reset") { model.restoreRecommendedRuntime() }
-                    Spacer()
-                    Button(
-                        model.draftExecutionMode == .parallelCandidates
-                            ? "Start \(model.draftParallelCandidateCount) Candidates"
-                            : "Start Loop"
-                    ) { model.requestStartLoop() }
-                        .buttonStyle(.borderedProminent)
-                        .controlSize(.large)
-                        .accessibilityIdentifier("start-task-button")
-                }
-                .buttonStyle(.bordered)
-
-                Text(
-                    model.draftExecutionMode == .parallelCandidates
-                        ? "The hard runtime applies to every candidate. Only successful active candidate turns count; selection audits, pauses, and app downtime do not."
-                        : "Only successful, active Sub Agent turns count. Pauses, downloads, control audits, and app downtime do not."
-                )
-                    .font(.caption).foregroundStyle(.secondary)
+                    }
+                    HStack(spacing: 10) {
+                        if let baseline = model.draftNativeDesignBaselineSource {
+                            Label(
+                                "Protected baseline · \(baseline.captures.count) native capture\(baseline.captures.count == 1 ? "" : "s")",
+                                systemImage: "lock.shield.fill"
+                            )
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            Text(baseline.builtArtifact.rawValue)
+                                .font(.system(.caption2, design: .monospaced))
+                                .lineLimit(1)
+                                .truncationMode(.middle)
+                            Spacer()
+                            Button("Remove") {
+                                model.clearNativeDesignBaselineCaptureSource()
+                            }
+                            .disabled(model.nativeDesignBaselineImportInProgress)
+                        } else {
+                            Text("Visual or product-identity work can bind a protected native baseline before contract review.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                            Button {
+                                model.chooseNativeDesignBaselineCaptureSource()
+                            } label: {
+                                if model.nativeDesignBaselineImportInProgress {
+                                    HStack(spacing: 6) {
+                                        ProgressView().controlSize(.small)
+                                        Text("Importing…")
+                                    }
+                                } else {
+                                    Text("Select Design Baseline…")
+                                }
+                            }
+                            .disabled(model.nativeDesignBaselineImportInProgress)
+                            .accessibilityIdentifier(
+                                "select-native-design-baseline-button"
+                            )
+                        }
+                    }
             }
 
             if model.draftControlProvider == .local {
@@ -1760,6 +2335,421 @@ private struct PromptOptimizationView: View {
     }
 }
 
+private struct NativeAutoGraphContractConfirmationView: View {
+    @EnvironmentObject private var model: AppModel
+
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Confirm Auto Graph authority")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                    Text("This creates one journaled ready run. It does not start a legacy worker.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Button("Cancel") { model.cancelNativeContractConfirmation() }
+                    .disabled(model.kernelEnrollmentInProgress)
+            }
+            .padding(22)
+            Divider()
+
+            if let draft = model.pendingNativeContractConfirmation {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 18) {
+                        contractSection("Exact objective") {
+                            Text(draft.displayObjective)
+                                .textSelection(.enabled)
+                        }
+                        contractSection("Selected workspace") {
+                            Text(draft.displayWorkspacePath)
+                                .font(.system(.body, design: .monospaced))
+                                .textSelection(.enabled)
+                            Text("Read: \(draft.displayReadableScopes.joined(separator: ", "))")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            Text("Write: \(draft.displayWritableScopes.joined(separator: ", "))")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        contractSection("Acceptance") {
+                            Text("Independent review and quiescence are mandatory.")
+                            Text("No artificial duration requirement is declared for Auto Graph.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        contractSection("Bound execution budgets") {
+                            let mutation = draft.displayExecutionBudgets.mutation
+                            let convergence = draft.displayExecutionBudgets.convergence
+                            Text("Mutation ceiling: \(mutation.maximumChangedFiles) files · \(mutation.maximumChangedBytes) bytes")
+                            Text([
+                                "attempts \(convergence.maximumAttempts)",
+                                "equivalent failures \(convergence.maximumEquivalentFailures)",
+                                "strategies \(convergence.maximumStrategies)",
+                                "plan expansions \(convergence.maximumPlanExpansions)",
+                                "mutation cost \(convergence.maximumMutationCost)",
+                                "verification cost \(convergence.maximumVerificationCost)",
+                                "damage events \(convergence.maximumDamageEvents)",
+                                "external effects \(convergence.maximumExternalEffects)"
+                            ].joined(separator: " · "))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            Text("These ceilings do not manufacture strategy or plan authority. The separate proposals below become authoritative only through confirmation of the complete candidate; no worker starts.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        contractSection("Captured source revision") {
+                            let revision = draft.displaySourceRevision
+                            Text(revision.sourceRevision.rawValue)
+                                .font(.system(.caption, design: .monospaced))
+                                .textSelection(.enabled)
+                                .accessibilityIdentifier(
+                                    "native-contract-source-revision"
+                                )
+                            Text("\(revision.entries.count) files · \(revision.totalBytes) bytes")
+                            Text("Excluded directory names: \(revision.excludedDirectoryNames.joined(separator: ", "))")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            Text("Capture limits: \(revision.limits.maximumFiles) files · \(revision.limits.maximumTotalBytes) total bytes · \(revision.limits.maximumFileBytes) bytes per file")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            Text("Confirming binds this exact content, path, permission, root, and capture-policy digest into the durable contract. Git state, timestamps, and model prose are not source authority. The observation alone authorizes no strategy, plan, or worker start.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        if let baseline = draft.displayDesignBaselineSelection {
+                            contractSection("Selected protected design baseline") {
+                                Text("Baseline: \(baseline.id.rawValue)")
+                                Text("Protected artifact: \(baseline.protectedBaselineID.rawValue) · \(baseline.builtArtifact.rawValue)")
+                                    .font(.system(.caption, design: .monospaced))
+                                    .textSelection(.enabled)
+                                Text("\(baseline.captures.count) adapter-attested native captures · \(baseline.protectedInvariants.count) protected invariants · \(baseline.knownDebt.count) declared debt records")
+                                Text("Source tree: \(baseline.sourceTree.rawValue)")
+                                    .font(.system(.caption, design: .monospaced))
+                                    .textSelection(.enabled)
+                                Text("The imported JSON did not grant authority. LoopForge reopened every referenced file without following symlinks, rehashed the protected source and built artifact, and recomputed native capture receipts from raw evidence. The complete selection is sealed into this contract candidate; freezing still requires a second explicit confirmation after journal enrollment.")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        contractSection("Proposed causal strategy") {
+                            let authority = draft.displayCausalStrategyAuthority
+                            let strategy = authority.descriptor
+                            Text("Fingerprint: \(strategy.fingerprint.rawValue)")
+                                .font(.system(.caption, design: .monospaced))
+                                .textSelection(.enabled)
+                                .accessibilityIdentifier(
+                                    "native-contract-strategy-fingerprint"
+                                )
+                            Text("Hypothesis: \(strategy.hypothesisClass)")
+                            Text("Action: \(strategy.actionClass)")
+                            Text("Measurement boundary: \(strategy.measurementBoundary)")
+                            Text("Baseline revision: \(strategy.baselineRevision.rawValue)")
+                                .font(.system(.caption, design: .monospaced))
+                                .textSelection(.enabled)
+                            Text("Mutation surface: \(strategy.mutationSurfaceDigest.rawValue)")
+                                .font(.system(.caption, design: .monospaced))
+                                .textSelection(.enabled)
+                            ForEach(
+                                authority.expectedObservations.sorted { $0.id < $1.id },
+                                id: \.id
+                            ) { observation in
+                                Text("Prediction \(observation.id): requirement \(observation.requirementID.rawValue) must produce accepted recipe \(observation.evidenceRecipeID.rawValue) evidence (\(observation.expectedObservationDigest.rawValue)).")
+                                    .font(.caption)
+                                    .textSelection(.enabled)
+                            }
+                            ForEach(
+                                authority.falsificationPredicates.sorted {
+                                    $0.id < $1.id
+                                },
+                                id: \.id
+                            ) { predicate in
+                                Text("Falsifier \(predicate.id): \(predicate.kind.rawValue) for requirement \(predicate.requirementID.rawValue), recipe \(predicate.evidenceRecipeID.rawValue), at revision \(predicate.boundSourceRevision.rawValue).")
+                                    .font(.caption)
+                                    .textSelection(.enabled)
+                            }
+                            Text("This is a LoopForge proposal, not an inference from objective prose. It becomes authority only if you confirm the complete candidate digest below.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        contractSection("Executable verification recipe") {
+                            ForEach(
+                                draft.compiled.candidate.evidenceRecipes.sorted {
+                                    $0.id.rawValue < $1.id.rawValue
+                                },
+                                id: \.id
+                            ) { recipe in
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(recipe.id.rawValue).fontWeight(.semibold)
+                                    Text("Requirement: \(recipe.requirementID.rawValue) · verifier: \(recipe.verifierKind.rawValue) · independent lineage required")
+                                    if let probe = recipe.executableProbe {
+                                        Text("Executable sha256: \(probe.executableContentDigest.rawValue)")
+                                        Text("Transport: \(probe.transport.rawValue) · network: \(probe.networkPolicy.rawValue) · environment: \(probe.environmentPolicy.rawValue)")
+                                        Text("Fixed argv: \(probe.fixedArguments.isEmpty ? "none" : probe.fixedArguments.joined(separator: " ␟ "))")
+                                        Text("Inputs: \(probe.inputBindings.map { "\($0.id)=\($0.kind.rawValue):\($0.artifactID)" }.joined(separator: ", "))")
+                                        Text("Environment identity: \(probe.environmentIdentityDigest.rawValue)")
+                                        Text("Capture identity: \(probe.captureIdentityDigest.rawValue)")
+                                        Text("Parser: \(probe.parser.id) v\(probe.parser.schemaVersion) · \(probe.parser.contentDigest.rawValue)")
+                                        Text("Mappings: \(probe.resultMappings.map { "exit \($0.exitCode) + \($0.parserResultCode) → \($0.outcome.rawValue)" }.joined(separator: ", ")) · unmatched → \(probe.unmatchedOutcome.rawValue)")
+                                        Text("Limits: \(probe.resourceLimits.maximumWallClockSeconds)s · \(probe.resourceLimits.maximumCapturedOutputBytes) output bytes · \(probe.resourceLimits.maximumResidentBytes) resident bytes · \(probe.resourceLimits.maximumChildProcesses) child processes")
+                                    }
+                                }
+                                .font(.caption)
+                                .textSelection(.enabled)
+                            }
+                            Text("The direct executable, exact inputs, parser, environment, result mapping, and resource ceilings are candidate authority only after whole-candidate confirmation. Shell, network, child-process, model-prose, and unmatched-result fallbacks remain denied.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        contractSection("Proposed requirement-owned plan") {
+                            let plan = draft.displayExecutionPlan
+                            Text("Contract objective digest: \(plan.contractDigest.rawValue)")
+                                .font(.system(.caption, design: .monospaced))
+                                .textSelection(.enabled)
+                            ForEach(
+                                plan.nodes.sorted { $0.id.rawValue < $1.id.rawValue },
+                                id: \.id
+                            ) { node in
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(node.id.rawValue).fontWeight(.semibold)
+                                    Text(node.objective).textSelection(.enabled)
+                                    Text("Requirements: \(node.requirementIDs.map(\.rawValue).sorted().joined(separator: ", "))")
+                                    Text("Dependencies: \(node.dependencies.map(\.rawValue).sorted().joined(separator: ", ").isEmpty ? "none" : node.dependencies.map(\.rawValue).sorted().joined(separator: ", "))")
+                                    Text("Writable paths: \(node.mutationScope.writablePaths.sorted().joined(separator: ", ").isEmpty ? "none" : node.mutationScope.writablePaths.sorted().joined(separator: ", "))")
+                                    Text("Node ceiling: \(node.mutationScope.maximumChangedFiles) files · \(node.mutationScope.maximumChangedBytes) bytes")
+                                    Text("Strategy: \(node.strategyFingerprint.rawValue)")
+                                        .textSelection(.enabled)
+                                }
+                                .font(.caption)
+                            }
+                            Text("Every mandatory requirement has exactly one owner; plan scopes and aggregate ceilings must remain within the confirmed workspace and budgets. Confirmation still does not start a worker.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        contractSection("Bound execution identities") {
+                            executionProfileRow(
+                                title: "Worker",
+                                profile: draft.displayExecutionProfile.worker
+                            )
+                            Divider()
+                            executionProfileRow(
+                                title: "Independent reviewer",
+                                profile: draft.displayExecutionProfile.independentReviewer
+                            )
+                            Text("Capability ceiling: \(draft.displayAuthorityCapabilityIDs.isEmpty ? "none" : draft.displayAuthorityCapabilityIDs.joined(separator: ", "))")
+                                .font(.system(.caption, design: .monospaced))
+                                .textSelection(.enabled)
+                            Text("Reviewer lineage must differ from the worker. The reviewer is always read-only, offline, plugin-free, and minimally isolated. Worker network access exists only when the exact kernel.network-access capability is shown above.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        contractSection("Candidate digest shown for confirmation") {
+                            Text(draft.compiled.candidateDigest.rawValue)
+                                .font(.system(.caption, design: .monospaced))
+                                .textSelection(.enabled)
+                                .accessibilityIdentifier("native-contract-candidate-digest")
+                        }
+                        Label(
+                            "The receipt is single-use and bound to this exact workspace. A changed digest or directory fails before journal creation.",
+                            systemImage: "lock.shield"
+                        )
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    }
+                    .padding(22)
+                }
+                Divider()
+                HStack {
+                    Text("Enrollment retains the confirmed source revision, evidence recipes, budgets, causal strategy, and requirement-owned plan. It still does not authorize or start a worker.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Button("Confirm & Enroll Ready Run") {
+                        Task { await model.confirmAndEnrollNativeAutoGraphContract() }
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .disabled(model.kernelEnrollmentInProgress)
+                    .accessibilityIdentifier("confirm-native-contract-button")
+                }
+                .padding(18)
+            }
+        }
+        .frame(minWidth: 680, minHeight: 620)
+        .interactiveDismissDisabled(model.kernelEnrollmentInProgress)
+        .accessibilityIdentifier("native-contract-confirmation-sheet")
+    }
+
+    @ViewBuilder
+    private func contractSection<Content: View>(
+        _ title: String,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(.headline)
+            content()
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(15)
+        .background(ForgeStyle.panel, in: RoundedRectangle(cornerRadius: 12))
+        .overlay(RoundedRectangle(cornerRadius: 12).stroke(ForgeStyle.hairline))
+    }
+
+    private func executionProfileRow(
+        title: String,
+        profile: KernelAgentExecutionProfile
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title).fontWeight(.semibold)
+            Text("\(profile.provider.rawValue) · \(profile.modelID)")
+            Text([
+                "provider \(profile.providerReference)",
+                "executable sha256 \(profile.executableContentDigest.rawValue)",
+                "reasoning \(profile.reasoningEffort ?? "default")",
+                "sandbox \(profile.sandbox.rawValue)",
+                "network \(profile.networkPolicy.rawValue)",
+                "plugins \(profile.pluginPolicy.rawValue)",
+                "environment \(profile.environmentPolicy.rawValue)",
+                "protocol \(profile.providerProtocol.rawValue)",
+                "harness mode \(profile.providerHarnessMode.rawValue)",
+                "credential \(profile.credentialMode.rawValue)"
+            ].joined(separator: " · "))
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            .textSelection(.enabled)
+        }
+    }
+}
+
+private struct NativeDesignBaselineConfirmationView: View {
+    @EnvironmentObject private var model: AppModel
+
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Freeze protected design baseline")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                    Text("The run is enrolled. This separate action freezes the exact native captures and protected artifact; it does not start work.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Button("Leave Unfrozen") {
+                    model.cancelNativeDesignBaselineConfirmation()
+                }
+            }
+            .padding(22)
+            Divider()
+
+            if let draft = model.pendingNativeDesignBaselineConfirmation {
+                let selection = draft.selection
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 16) {
+                        baselineSection("Protected identities") {
+                            Text("Design baseline: \(selection.id.rawValue)")
+                            Text("Contract: \(selection.contractID.rawValue)")
+                            Text("Protected reference: \(selection.protectedBaselineID.rawValue)")
+                            Text("Built artifact sha256: \(selection.builtArtifact.rawValue)")
+                                .font(.system(.caption, design: .monospaced))
+                                .textSelection(.enabled)
+                            Text("Source tree sha256: \(selection.sourceTree.rawValue)")
+                                .font(.system(.caption, design: .monospaced))
+                                .textSelection(.enabled)
+                        }
+                        baselineSection("Native capture matrix") {
+                            ForEach(selection.captures.sorted {
+                                $0.cellID.rawValue < $1.cellID.rawValue
+                            }, id: \.id) { capture in
+                                VStack(alignment: .leading, spacing: 3) {
+                                    Text(capture.cellID.rawValue)
+                                        .fontWeight(.semibold)
+                                    Text("\(capture.imageWidthPixels)×\(capture.imageHeightPixels) · \(capture.traits.locale) · \(capture.traits.appearance) · \(capture.traits.contentSizeCategory)")
+                                    Text("Pixels: \(capture.imageDigest.rawValue)")
+                                    Text("Accessibility: \(capture.accessibilityTreeDigest.rawValue)")
+                                    Text("Harness: \(capture.harnessIdentity)")
+                                }
+                                .font(.caption)
+                                .textSelection(.enabled)
+                            }
+                        }
+                        baselineSection("Protected dimensions") {
+                            ForEach(selection.protectedInvariants.sorted {
+                                $0.id < $1.id
+                            }, id: \.id) { invariant in
+                                Text("\(invariant.dimension.rawValue) · \(invariant.id) · \(invariant.cellIDs.map(\.rawValue).sorted().joined(separator: ", "))")
+                                    .font(.caption)
+                            }
+                            if selection.knownDebt.isEmpty {
+                                Text("No accepted baseline debt.")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            } else {
+                                ForEach(selection.knownDebt.sorted {
+                                    $0.id.rawValue < $1.id.rawValue
+                                }, id: \.id) { debt in
+                                    Text("Debt \(debt.id.rawValue): \(debt.dimension.rawValue) · baseline \(debt.baselineSeverity) · interim ceiling \(debt.maximumInterimSeverity) · \(debt.direction.rawValue)")
+                                        .font(.caption)
+                                }
+                            }
+                        }
+                        baselineSection("Exact confirmation digest") {
+                            Text(draft.selectionDigest.rawValue)
+                                .font(.system(.caption, design: .monospaced))
+                                .textSelection(.enabled)
+                                .accessibilityIdentifier(
+                                    "native-design-baseline-selection-digest"
+                                )
+                            Text("Confirmation is single-use and bound to the exact ratification receipt, enrollment journal frame, protected artifact, capture protocol, user identity, and lineage shown above. Decoded evidence cannot reproduce this live authority.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .padding(22)
+                }
+                Divider()
+                HStack {
+                    Text("Freezing changes only journaled preparation authority. It creates no process, lease, mutation, verification result, or publication permission.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Button("Confirm & Freeze Baseline") {
+                        model.confirmNativeDesignBaseline()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .accessibilityIdentifier(
+                        "confirm-native-design-baseline-button"
+                    )
+                }
+                .padding(18)
+            }
+        }
+        .frame(minWidth: 680, minHeight: 620)
+        .interactiveDismissDisabled(model.kernelEnrollmentInProgress)
+        .accessibilityIdentifier("native-design-baseline-confirmation-sheet")
+    }
+
+    @ViewBuilder
+    private func baselineSection<Content: View>(
+        _ title: String,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title).font(.headline)
+            content()
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(15)
+        .background(ForgeStyle.panel, in: RoundedRectangle(cornerRadius: 12))
+        .overlay(RoundedRectangle(cornerRadius: 12).stroke(ForgeStyle.hairline))
+    }
+}
+
 private struct TaskDetailView: View {
     @EnvironmentObject private var model: AppModel
     let taskID: UUID
@@ -1768,8 +2758,22 @@ private struct TaskDetailView: View {
     @State private var showingEndConfirmation = false
     @State private var selectedGraphNode: GraphLoopNode?
     @State private var showingExpandedGraph = false
+    @State private var showingKernelDiagnostics = false
 
     private var task: LoopTask? { store.task(id: taskID) }
+
+    private var repositoryRecoveryRuns: [WorkspaceMutationRecoveryRunReport] {
+        model.kernelRecoveryRunReports.filter {
+            $0.repositoryIndexStatus != .notApplicable
+        }
+    }
+
+    private var diagnosticRunCount: Int {
+        Set(
+            model.kernelRunProjections.map(\.runID.rawValue)
+                + repositoryRecoveryRuns.map(\.runID.rawValue)
+        ).count
+    }
 
     var body: some View {
         if let task {
@@ -1801,13 +2805,7 @@ private struct TaskDetailView: View {
                             ParallelCandidateGrid(
                                 task: task,
                                 clock: controller.clock,
-                                onInspect: { selectedGraphNode = $0 },
-                                onChoose: {
-                                    model.chooseParallelCandidate(
-                                        task,
-                                        candidateID: $0.id
-                                    )
-                                }
+                                onInspect: { selectedGraphNode = $0 }
                             )
                         } else {
                             progressCard(task)
@@ -1847,88 +2845,131 @@ private struct TaskDetailView: View {
                     clock: controller.clock
                 )
             }
+            .sheet(isPresented: $showingKernelDiagnostics) {
+                KernelConvergenceDiagnosticsView(
+                    runs: model.kernelRunProjections,
+                    recoveryRuns: repositoryRecoveryRuns,
+                    executionReadiness: model.kernelExecutionReadinessByRunID,
+                    providerReadiness:
+                        model.kernelProviderInvocationReadinessByRunID
+                )
+            }
         } else {
             ContentUnavailableView("Task not found", systemImage: "questionmark.folder")
         }
     }
 
     private func taskHeader(_ task: LoopTask) -> some View {
-        HStack(spacing: 12) {
-            VStack(alignment: .leading, spacing: 3) {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .top, spacing: 12) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(task.displayTaskSummary)
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .layoutPriority(1)
+                    HStack(spacing: 8) {
+                        Text({
+                            switch task.resolvedExecutionMode {
+                            case .autoGraph: return "Auto Graph"
+                            case .parallelCandidates:
+                                return "Parallel ×\(task.resolvedParallelCandidateCount)"
+                            case .singleLoop: return task.quality.title
+                            }
+                        }())
+                            .font(.caption).fontWeight(.medium)
+                            .padding(.horizontal, 7).padding(.vertical, 3)
+                            .background(Color.accentColor.opacity(0.11), in: Capsule())
+                        Text(
+                            "\(task.title) · "
+                                + NSString(string: task.workspacePath).abbreviatingWithTildeInPath
+                        )
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                            .truncationMode(.middle)
+                    }
+                }
+                Spacer(minLength: 8)
                 HStack(spacing: 8) {
-                    Text(task.displayTaskSummary).font(.title2).fontWeight(.semibold).lineLimit(1)
-                    Text({
-                        switch task.resolvedExecutionMode {
-                        case .autoGraph: return "Auto Graph"
-                        case .parallelCandidates:
-                            return "Parallel ×\(task.resolvedParallelCandidateCount)"
-                        case .singleLoop: return task.quality.title
+                    if diagnosticRunCount > 0 {
+                        Button {
+                            showingKernelDiagnostics = true
+                        } label: {
+                            Image(systemName: "arrow.triangle.2.circlepath")
                         }
-                    }())
-                        .font(.caption).fontWeight(.medium)
-                        .padding(.horizontal, 7).padding(.vertical, 3)
-                        .background(Color.accentColor.opacity(0.11), in: Capsule())
+                        .buttonStyle(.bordered)
+                        .help("Kernel diagnostics · \(diagnosticRunCount)")
+                        .accessibilityLabel("Kernel diagnostics, \(diagnosticRunCount) runs")
+                        .accessibilityIdentifier("open-kernel-convergence-diagnostics")
+                    }
+                    if task.completionReportPath != nil {
+                        Button(task.status == .completed ? "Final Report" : "Status Page", systemImage: "safari") {
+                            model.openCompletionReport(task)
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                    Button { model.revealWorkspace(task) } label: {
+                        Image(systemName: "folder")
+                    }
+                    .buttonStyle(.bordered)
+                    .help("Show in Finder")
                 }
-                Text(
-                    "\(task.title) · "
-                        + NSString(string: task.workspacePath).abbreviatingWithTildeInPath
-                )
-                    .font(.caption).foregroundStyle(.secondary).lineLimit(1).truncationMode(.middle)
             }
-            Spacer()
-            if task.completionReportPath != nil {
-                Button(task.status == .completed ? "Final Report" : "Status Page", systemImage: "safari") {
-                    model.openCompletionReport(task)
+
+            HStack(spacing: 12) {
+                if task.status == .pausing {
+                    HStack(spacing: 7) {
+                        ProgressView().controlSize(.small)
+                        Text("Pausing…").font(.callout).fontWeight(.medium)
+                    }
+                    .padding(.horizontal, 11).frame(height: 30)
+                    .background(Color.orange.opacity(0.11), in: Capsule())
+                    .accessibilityElement(children: .combine)
+                    .accessibilityIdentifier("task-transition-status")
+                } else if task.status == .stopping {
+                    HStack(spacing: 7) {
+                        ProgressView().controlSize(.small)
+                        Text("Ending task…").font(.callout).fontWeight(.medium)
+                    }
+                    .padding(.horizontal, 11).frame(height: 30)
+                    .background(Color.red.opacity(0.09), in: Capsule())
+                    .accessibilityElement(children: .combine)
+                    .accessibilityIdentifier("task-transition-status")
+                } else if controller.runningTaskID == task.id {
+                    Button("Pause Task", systemImage: "pause.circle.fill") { model.pause(task) }
+                        .buttonStyle(.borderedProminent).tint(.orange)
+                        .help("Save progress and safely stop the active agent process")
+                        .accessibilityIdentifier("pause-task-button")
+                } else if task.canResume {
+                    Label(
+                        LegacyTaskExecutionRetirementPolicy.stage(
+                            for: task.resolvedExecutionMode
+                        ),
+                        systemImage: "lock.shield"
+                    )
+                        .font(.caption)
+                        .fontWeight(.medium)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("retired-legacy-task-migration-status")
                 }
-                    .buttonStyle(.borderedProminent)
-            }
-            Button { model.revealWorkspace(task) } label: { Image(systemName: "folder") }
-                .buttonStyle(.bordered).help("Show in Finder")
-            if task.status == .pausing {
-                HStack(spacing: 7) {
-                    ProgressView().controlSize(.small)
-                    Text("Pausing…").font(.callout).fontWeight(.medium)
+                Spacer(minLength: 0)
+                if task.status != .pausing, task.status != .stopping,
+                   task.status.isActive || task.status == .awaitingSelection || task.status == .paused || task.status == .blocked || task.status == .failed {
+                    Button("End Task…", systemImage: "stop.circle", role: .destructive) {
+                        showingEndConfirmation = true
+                    }
+                    .buttonStyle(.bordered)
+                    .help("End agent work while preserving progress and project files")
+                    .accessibilityIdentifier("end-task-button")
                 }
-                .padding(.horizontal, 11).frame(height: 30)
-                .background(Color.orange.opacity(0.11), in: Capsule())
-                .accessibilityElement(children: .combine)
-                .accessibilityIdentifier("task-transition-status")
-            } else if task.status == .stopping {
-                HStack(spacing: 7) {
-                    ProgressView().controlSize(.small)
-                    Text("Ending task…").font(.callout).fontWeight(.medium)
-                }
-                .padding(.horizontal, 11).frame(height: 30)
-                .background(Color.red.opacity(0.09), in: Capsule())
-                .accessibilityElement(children: .combine)
-                .accessibilityIdentifier("task-transition-status")
-            } else if controller.runningTaskID == task.id {
-                Button("Pause Task", systemImage: "pause.circle.fill") { model.pause(task) }
-                    .buttonStyle(.borderedProminent).tint(.orange)
-                    .help("Save progress and safely stop the active agent process")
-                    .accessibilityIdentifier("pause-task-button")
-            } else if task.canResume {
-                if task.status == .paused {
-                    Label("Paused · Saved", systemImage: "checkmark.circle.fill")
-                        .font(.callout).fontWeight(.medium).foregroundStyle(.secondary)
-                }
-                Button("Resume Task", systemImage: "play.circle.fill") { model.resume(task) }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(controller.runningTaskID != nil)
-                    .accessibilityIdentifier("resume-task-button")
-            }
-            if task.status != .pausing, task.status != .stopping,
-               task.status.isActive || task.status == .awaitingSelection || task.status == .paused || task.status == .blocked || task.status == .failed {
-                Button("End Task…", systemImage: "stop.circle", role: .destructive) {
-                    showingEndConfirmation = true
-                }
-                .buttonStyle(.bordered)
-                .help("End agent work while preserving progress and project files")
-                .accessibilityIdentifier("end-task-button")
             }
         }
         .padding(.horizontal, 22)
-        .padding(.vertical, 16)
+        .padding(.vertical, 13)
         .background(.ultraThinMaterial)
     }
 
@@ -2181,7 +3222,6 @@ private struct ParallelCandidateGrid: View {
     let task: LoopTask
     let clock: Date
     let onInspect: (GraphLoopNode) -> Void
-    let onChoose: (GraphLoopNode) -> Void
 
     private var candidates: [GraphLoopNode] {
         task.graphState?.nodes.filter { $0.id.hasPrefix("candidate-") } ?? []
@@ -2195,7 +3235,7 @@ private struct ParallelCandidateGrid: View {
                 Spacer()
                 Text(
                     task.status == .awaitingSelection
-                        ? "Choose one result to apply"
+                        ? "Legacy candidate selection retired"
                         : "Candidates cannot inspect one another"
                 )
                 .font(.caption)
@@ -2253,13 +3293,7 @@ private struct ParallelCandidateGrid: View {
                 Button("Inspect") { onInspect(candidate) }
                     .buttonStyle(.borderless)
                 Spacer()
-                if task.status == .awaitingSelection,
-                   candidate.status == .completed {
-                    Button("Keep This Result") { onChoose(candidate) }
-                        .buttonStyle(.borderedProminent)
-                        .controlSize(.small)
-                        .accessibilityIdentifier("choose-\(candidate.id)")
-                } else if selected {
+                if selected {
                     Label("Retained", systemImage: "checkmark.circle.fill")
                         .font(.caption)
                         .foregroundStyle(.green)
@@ -2393,6 +3427,115 @@ private struct GraphOverviewCard: View {
     }
 }
 
+enum GraphViewportFitPolicy {
+    struct Metrics: Equatable {
+        let canvasWidth: CGFloat
+        let nodeWidth: CGFloat
+        let columnGap: CGFloat
+        let columnsPerViewport: Int
+        let pageCount: Int
+        let fitsViewport: Bool
+    }
+
+    static func resolve(
+        viewportWidth: CGFloat,
+        levelCount: Int,
+        preferredNodeWidth: CGFloat,
+        minimumNodeWidth: CGFloat,
+        preferredColumnGap: CGFloat,
+        minimumColumnGap: CGFloat,
+        fixedTerminalAndInsetWidth: CGFloat
+    ) -> Metrics {
+        let viewportWidth = max(1, viewportWidth)
+        let levelCount = max(1, levelCount)
+        let availableForColumns = max(
+            minimumNodeWidth,
+            viewportWidth - fixedTerminalAndInsetWidth
+        )
+        let maximumColumnsPerViewport = max(
+            1,
+            Int(
+                floor(
+                    (availableForColumns + minimumColumnGap)
+                        / (minimumNodeWidth + minimumColumnGap)
+                )
+            )
+        )
+        let columnsPerViewport = min(levelCount, maximumColumnsPerViewport)
+        let columnsPerViewportValue = CGFloat(columnsPerViewport)
+        let gapCount = CGFloat(max(0, columnsPerViewport - 1))
+        let widthAtMinimumGap = (
+            viewportWidth
+                - fixedTerminalAndInsetWidth
+                - gapCount * minimumColumnGap
+        ) / columnsPerViewportValue
+        let resolvedNodeWidth = min(
+            preferredNodeWidth,
+            max(minimumNodeWidth, widthAtMinimumGap)
+        )
+        let remainingForGaps = viewportWidth
+            - fixedTerminalAndInsetWidth
+            - columnsPerViewportValue * resolvedNodeWidth
+        let resolvedColumnGap: CGFloat
+        if gapCount > 0 {
+            resolvedColumnGap = min(
+                preferredColumnGap,
+                max(minimumColumnGap, remainingForGaps / gapCount)
+            )
+        } else {
+            resolvedColumnGap = 0
+        }
+        let requiredWidth = fixedTerminalAndInsetWidth
+            + columnsPerViewportValue * resolvedNodeWidth
+            + gapCount * resolvedColumnGap
+        let pageCount = Int(
+            ceil(Double(levelCount) / Double(columnsPerViewport))
+        )
+        return Metrics(
+            canvasWidth: viewportWidth * CGFloat(pageCount),
+            nodeWidth: resolvedNodeWidth,
+            columnGap: resolvedColumnGap,
+            columnsPerViewport: columnsPerViewport,
+            pageCount: pageCount,
+            fitsViewport: pageCount == 1 && requiredWidth <= viewportWidth + 0.5
+        )
+    }
+}
+
+enum GraphVerticalViewportPolicy {
+    struct Metrics: Equatable {
+        let canvasHeight: CGFloat
+        let viewportHeight: CGFloat
+        let rowsPerViewport: Int
+        let pageCount: Int
+        let hasContinuation: Bool
+    }
+
+    static func resolve(
+        maximumRows: Int,
+        nodeHeight: CGFloat,
+        rowGap: CGFloat,
+        expanded: Bool
+    ) -> Metrics {
+        let maximumRows = max(1, maximumRows)
+        let showEveryRow = expanded
+        let rowsPerViewport = showEveryRow ? maximumRows : 1
+        let rowStep = nodeHeight + rowGap
+        let canvasHeight = CGFloat(maximumRows) * rowStep + 20
+        let viewportHeight = CGFloat(rowsPerViewport) * rowStep + 20
+        let pageCount = Int(
+            ceil(Double(maximumRows) / Double(rowsPerViewport))
+        )
+        return Metrics(
+            canvasHeight: canvasHeight,
+            viewportHeight: viewportHeight,
+            rowsPerViewport: rowsPerViewport,
+            pageCount: pageCount,
+            hasContinuation: pageCount > 1
+        )
+    }
+}
+
 private struct GraphLoopMap: View {
     let graph: GraphLoopState
     let clock: Date
@@ -2400,10 +3543,13 @@ private struct GraphLoopMap: View {
     let onSelect: (GraphLoopNode) -> Void
     let onExpand: (() -> Void)?
 
-    private var nodeWidth: CGFloat { expanded ? 240 : 196 }
+    private var preferredNodeWidth: CGFloat { expanded ? 240 : 196 }
+    private var minimumNodeWidth: CGFloat { expanded ? 200 : 160 }
     private var nodeHeight: CGFloat { expanded ? 132 : 108 }
-    private var columnGap: CGFloat { expanded ? 96 : 72 }
+    private var preferredColumnGap: CGFloat { expanded ? 96 : 72 }
+    private var minimumColumnGap: CGFloat { expanded ? 40 : 24 }
     private var rowGap: CGFloat { expanded ? 32 : 24 }
+    private let fixedTerminalAndInsetWidth: CGFloat = 192
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -2435,14 +3581,41 @@ private struct GraphLoopMap: View {
             }
 
             GeometryReader { geometry in
-                let resolvedWidth = max(geometry.size.width, intrinsicCanvasWidth)
-                let layoutPositions = positions(canvasWidth: resolvedWidth)
-                ScrollView(.horizontal) {
+                let metrics = GraphViewportFitPolicy.resolve(
+                    viewportWidth: geometry.size.width,
+                    levelCount: maximumLevel + 1,
+                    preferredNodeWidth: preferredNodeWidth,
+                    minimumNodeWidth: minimumNodeWidth,
+                    preferredColumnGap: preferredColumnGap,
+                    minimumColumnGap: minimumColumnGap,
+                    fixedTerminalAndInsetWidth: fixedTerminalAndInsetWidth
+                )
+                let verticalMetrics = GraphVerticalViewportPolicy.resolve(
+                    maximumRows: maximumRows,
+                    nodeHeight: nodeHeight,
+                    rowGap: rowGap,
+                    expanded: expanded
+                )
+                let layoutPositions = positions(
+                    canvasWidth: metrics.canvasWidth,
+                    canvasHeight: verticalMetrics.canvasHeight,
+                    viewportWidth: geometry.size.width,
+                    metrics: metrics,
+                    alignRowsToTop: verticalMetrics.hasContinuation
+                )
+                ScrollView([.horizontal, .vertical]) {
                     ZStack(alignment: .topLeading) {
                         Canvas { context, _ in
-                            drawEdges(context: &context, positions: layoutPositions)
+                            drawEdges(
+                                context: &context,
+                                positions: layoutPositions,
+                                nodeWidth: metrics.nodeWidth
+                            )
                         }
-                        .frame(width: resolvedWidth, height: canvasHeight)
+                        .frame(
+                            width: metrics.canvasWidth,
+                            height: verticalMetrics.canvasHeight
+                        )
 
                         GraphTerminalNode(title: "Begin", symbol: "play.fill", color: .accentColor)
                             .position(layoutPositions["__begin"] ?? .zero)
@@ -2451,7 +3624,7 @@ private struct GraphLoopMap: View {
                             GraphNodeCard(node: node, clock: clock) {
                                 onSelect(node)
                             }
-                            .frame(width: nodeWidth, height: nodeHeight)
+                            .frame(width: metrics.nodeWidth, height: nodeHeight)
                             .position(layoutPositions[node.id] ?? .zero)
                         }
 
@@ -2462,8 +3635,10 @@ private struct GraphLoopMap: View {
                         )
                         .position(layoutPositions["__end"] ?? .zero)
                     }
-                    .frame(width: resolvedWidth, height: canvasHeight)
-                    .padding(.vertical, 5)
+                    .frame(
+                        width: metrics.canvasWidth,
+                        height: verticalMetrics.canvasHeight
+                    )
                 }
                 .scrollIndicators(.hidden)
                 .contentShape(Rectangle())
@@ -2472,8 +3647,33 @@ private struct GraphLoopMap: View {
                         onExpand?()
                     }
                 )
+                .overlay(alignment: .trailing) {
+                    if metrics.pageCount > 1 {
+                        Label("Next levels", systemImage: "chevron.right")
+                            .font(.caption2.weight(.medium))
+                            .foregroundStyle(.secondary)
+                            .padding(.horizontal, 9)
+                            .padding(.vertical, 6)
+                            .background(.regularMaterial, in: Capsule())
+                            .padding(.trailing, 8)
+                            .allowsHitTesting(false)
+                    }
+                }
+                .overlay(alignment: .bottomTrailing) {
+                    if verticalMetrics.hasContinuation {
+                        Label("More nodes below", systemImage: "chevron.down")
+                            .font(.caption2.weight(.medium))
+                            .foregroundStyle(.secondary)
+                            .padding(.horizontal, 9)
+                            .padding(.vertical, 3)
+                            .background(.regularMaterial, in: Capsule())
+                            .padding(.trailing, 8)
+                            .padding(.bottom, 3)
+                            .allowsHitTesting(false)
+                    }
+                }
             }
-            .frame(height: canvasHeight + 10)
+            .frame(height: verticalViewportHeight)
         }
         .padding(18)
         .background(ForgeStyle.panel, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
@@ -2493,31 +3693,47 @@ private struct GraphLoopMap: View {
         Dictionary(grouping: visibleNodes) { levelMap[$0.id] ?? 0 }
     }
     private var maximumRows: Int { max(1, grouped.values.map(\.count).max() ?? 1) }
-    private var canvasHeight: CGFloat {
-        max(170, CGFloat(maximumRows) * (nodeHeight + rowGap) + 24)
+    private var verticalViewportHeight: CGFloat {
+        GraphVerticalViewportPolicy.resolve(
+            maximumRows: maximumRows,
+            nodeHeight: nodeHeight,
+            rowGap: rowGap,
+            expanded: expanded
+        ).viewportHeight
     }
-    private var intrinsicCanvasWidth: CGFloat {
-        let columns = CGFloat(maximumLevel + 3)
-        return max(expanded ? 920 : 720, columns * (nodeWidth + columnGap))
-    }
-
-    private func positions(canvasWidth: CGFloat) -> [String: CGPoint] {
+    private func positions(
+        canvasWidth: CGFloat,
+        canvasHeight: CGFloat,
+        viewportWidth: CGFloat,
+        metrics: GraphViewportFitPolicy.Metrics,
+        alignRowsToTop: Bool
+    ) -> [String: CGPoint] {
         var result: [String: CGPoint] = [:]
-        let step = nodeWidth + columnGap
-        result["__begin"] = CGPoint(x: 52, y: canvasHeight / 2)
+        let step = metrics.nodeWidth + metrics.columnGap
+        result["__begin"] = CGPoint(x: 44, y: canvasHeight / 2)
         for level in 0...maximumLevel {
             let nodes = (grouped[level] ?? []).sorted { $0.createdAt < $1.createdAt }
             let total = CGFloat(nodes.count) * nodeHeight + CGFloat(max(0, nodes.count - 1)) * rowGap
-            let startY = max(nodeHeight / 2 + 8, (canvasHeight - total) / 2 + nodeHeight / 2)
+            let startY = alignRowsToTop
+                ? nodeHeight / 2 + 22
+                : max(
+                    nodeHeight / 2 + 8,
+                    (canvasHeight - total) / 2 + nodeHeight / 2
+                )
+            let page = level / metrics.columnsPerViewport
+            let columnOnPage = level % metrics.columnsPerViewport
             for (index, node) in nodes.enumerated() {
                 result[node.id] = CGPoint(
-                    x: nodeWidth / 2 + 112 + CGFloat(level) * step,
+                    x: CGFloat(page) * viewportWidth
+                        + metrics.nodeWidth / 2
+                        + 96
+                        + CGFloat(columnOnPage) * step,
                     y: startY + CGFloat(index) * (nodeHeight + rowGap)
                 )
             }
         }
         result["__end"] = CGPoint(
-            x: canvasWidth - 48,
+            x: canvasWidth - 44,
             y: canvasHeight / 2
         )
         return result
@@ -2525,7 +3741,8 @@ private struct GraphLoopMap: View {
 
     private func drawEdges(
         context: inout GraphicsContext,
-        positions: [String: CGPoint]
+        positions: [String: CGPoint],
+        nodeWidth: CGFloat
     ) {
         for node in graph.nodes {
             guard let destination = positions[node.id] else { continue }
@@ -2677,13 +3894,25 @@ private struct GraphNodeCard: View {
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)
                 Spacer(minLength: 0)
-                HStack {
+                HStack(spacing: 10) {
                     Label(
-                        GraphIterationHistoryPolicy.countLabel(node.iteration),
+                        "\(node.iteration)",
                         systemImage: "arrow.triangle.2.circlepath"
                     )
-                    Spacer()
-                    Label(node.liveActiveSeconds(at: clock).compactDuration, systemImage: "timer")
+                    Label(
+                        node.liveActiveSeconds(at: clock).compactDuration,
+                        systemImage: "sum"
+                    )
+                    Label(
+                        node.liveCurrentIterationActiveSeconds(at: clock).compactDuration,
+                        systemImage: "stopwatch"
+                    )
+                    .foregroundStyle(
+                        node.status == .running
+                            ? Color.accentColor
+                            : Color.secondary
+                    )
+                    Spacer(minLength: 0)
                 }
                 .font(.caption2)
                 .foregroundStyle(.secondary)
@@ -2712,7 +3941,7 @@ private struct GraphNodeCard: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(
-            "\(node.title), \(node.status.title), \(GraphIterationHistoryPolicy.countLabel(node.iteration)), \(node.liveActiveSeconds(at: clock).compactDuration)"
+            "\(node.title), \(node.status.title), \(GraphIterationHistoryPolicy.countLabel(node.iteration)), all iterations \(node.liveActiveSeconds(at: clock).compactDuration), this iteration \(node.liveCurrentIterationActiveSeconds(at: clock).compactDuration)"
         )
         .accessibilityIdentifier("graph-node-\(node.id)")
     }
@@ -2852,7 +4081,14 @@ private struct GraphNodeInspector: View {
                                     GraphIterationHistoryPolicy.countLabel(node.iteration),
                                     systemImage: "arrow.triangle.2.circlepath"
                                 )
-                                Label(node.liveActiveSeconds(at: clock).compactDuration, systemImage: "timer")
+                                Label(
+                                    "All iterations \(node.liveActiveSeconds(at: clock).compactDuration)",
+                                    systemImage: "sum"
+                                )
+                                Label(
+                                    "This iteration \(node.liveCurrentIterationActiveSeconds(at: clock).compactDuration)",
+                                    systemImage: "stopwatch"
+                                )
                                 Label(node.workspaceStrategy?.title ?? "Preparing", systemImage: "square.stack.3d.up")
                             }
                             .font(.caption).foregroundStyle(.secondary)
@@ -2948,8 +4184,12 @@ private struct GraphIterationHistoryCard: View {
                         in: Capsule()
                     )
                 Spacer()
-                Text(record.startedAt.formatted(date: .omitted, time: .shortened))
-                    .font(.caption2).foregroundStyle(.tertiary)
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text(record.activeSeconds.map { $0.compactDuration + " active" } ?? "Legacy timing")
+                        .font(.caption2).foregroundStyle(.secondary)
+                    Text(record.startedAt.formatted(date: .omitted, time: .shortened))
+                        .font(.caption2).foregroundStyle(.tertiary)
+                }
             }
             iterationSection("Instruction", text: record.instruction)
             iterationSection(

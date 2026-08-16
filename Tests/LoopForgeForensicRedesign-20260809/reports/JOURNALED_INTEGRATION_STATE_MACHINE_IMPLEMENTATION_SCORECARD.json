@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "report": "JOURNALED_INTEGRATION_STATE_MACHINE_IMPLEMENTATION.md",
+  "status": "implemented-journaled-state-machine-with-side-by-side-executor-not-cut-over",
+  "phaseCount": 10,
+  "focusedTestCount": 6,
+  "completeTestCount": 499,
+  "completeSkippedCount": 8,
+  "completeFailureCount": 0,
+  "implementation": {
+    "runReducerIntegrated": true,
+    "hashJournalReplayed": true,
+    "proposalBoundToCompletedAttempt": true,
+    "preflightBoundToKernelEvidence": true,
+    "nodeScopeAndBudgetRechecked": true,
+    "remoteAccessDisabledForEffects": true,
+    "executorVerifierReviewerLineagesSeparated": true,
+    "failureRequiresRollback": true,
+    "rollbackFailureQuarantined": true,
+    "publicationAlwaysDenied": true,
+    "filesystemExecutor": true,
+    "realWorkspaceLease": false,
+    "contentObjectStore": false,
+    "crashReconciliationExecutor": false,
+    "acceptedIntegrationReceipt": false,
+    "dependencyCompletionCutover": false,
+    "commitTransaction": false,
+    "publicationTransaction": false,
+    "legacyGraphConnected": false,
+    "cutoverEligible": false
+  },
+  "focusedVerification": {
+    "logPath": "/tmp/loopforge-integration-state-after-recovery-binding-final.log",
+    "sha256": "0e33b09c05c61615d2d31a093ce322ff5805177073a8279e1afab28ba74971fc"
+  },
+  "completeVerification": {
+    "logPath": "/tmp/loopforge-full-tests-workspace-mutation-executor-final.log",
+    "sha256": "af68722fc558a878ba7e2fe424ed6c6bc8adede58089ef180c77174d4ad33b33",
+    "xctestSeconds": 27.038
+  },
+  "sourceEvidence": [
+    {
+      "path": "Sources/LoopForge/Kernel/IntegrationTransactionStateMachine.swift",
+      "lineCount": 538,
+      "sha256": "53dff2b0c35bf3079ea8de1f5c38adbccf97b1d4c5115426555f57a55242157f"
+    },
+    {
+      "path": "Sources/LoopForge/Kernel/TransactionalMutationKernel.swift",
+      "lineCount": 851,
+      "sha256": "22b83d09f05f3d28707ac330b315c4a07e77bf43f08a7fe0bcea84873be7b58a"
+    },
+    {
+      "path": "Sources/LoopForge/Kernel/RunReducer.swift",
+      "lineCount": 1518,
+      "sha256": "b8dff39907535ae2dba0e5f09edb7f42522a4bd1f18018cd465c2a53c5250fcc"
+    },
+    {
+      "path": "Tests/LoopForgeTests/IntegrationTransactionStateMachineTests.swift",
+      "lineCount": 515,
+      "sha256": "2f87c128f64e18f83621b55cf14e5d9d246e298e0e0fdb6ef992728f5ce8b01c"
+    }
+  ],
+  "safetyClaims": {
+    "mutatesFilesystem": false,
+    "changesGitState": false,
+    "contactsRemote": false,
+    "permitsPublication": false,
+    "mutatedEasyBusiness": false
+  }
+}

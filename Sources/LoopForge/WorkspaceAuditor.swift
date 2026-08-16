@@ -1,33 +1,53 @@
 import Foundation
 
-struct WorkspaceAuditor {
-    private let ignoredDirectories: Set<String> = [
-        ".git", ".build", "build", "dist", "DerivedData", "node_modules", "Pods", ".venv", "venv", "__pycache__"
-    ]
+struct WorkspaceAuditObservation {
+    let repositoryIndex: WorkspaceRepositoryIndex?
+    let snapshot: WorkspaceSnapshot
+    let repositoryIndexError: String?
+}
 
+struct WorkspaceAuditor {
     private let sourceExtensions: Set<String> = [
         "swift", "m", "mm", "h", "c", "cc", "cpp", "rs", "go", "py", "js", "jsx", "ts", "tsx", "vue", "svelte",
         "java", "kt", "kts", "dart", "rb", "php", "cs", "lua", "sh", "zsh", "html", "css", "scss", "sql", "ipynb"
     ]
 
     func snapshot(workspacePath: String, logs: [TaskLogEntry]) -> WorkspaceSnapshot {
-        let root = URL(fileURLWithPath: workspacePath)
-        var result = WorkspaceSnapshot()
-        guard let enumerator = FileManager.default.enumerator(
-            at: root,
-            includingPropertiesForKeys: [.isRegularFileKey, .isDirectoryKey],
-            options: [],
-            errorHandler: { _, _ in true }
-        ) else { return result }
+        observe(workspacePath: workspacePath, logs: logs).snapshot
+    }
 
-        for case let fileURL as URL in enumerator {
-            if ignoredDirectories.contains(fileURL.lastPathComponent) {
-                enumerator.skipDescendants()
-                continue
-            }
-            let values = try? fileURL.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])
-            guard values?.isRegularFile == true else { continue }
-            let relative = fileURL.path.replacingOccurrences(of: root.path + "/", with: "")
+    func observe(workspacePath: String, logs: [TaskLogEntry]) -> WorkspaceAuditObservation {
+        let root = URL(fileURLWithPath: workspacePath, isDirectory: true)
+        do {
+            let repositoryIndex = try WorkspaceRepositoryIndexer.scan(root: root)
+            return WorkspaceAuditObservation(
+                repositoryIndex: repositoryIndex,
+                snapshot: snapshot(
+                    workspacePath: workspacePath,
+                    repositoryIndex: repositoryIndex,
+                    logs: logs
+                ),
+                repositoryIndexError: nil
+            )
+        } catch {
+            return WorkspaceAuditObservation(
+                repositoryIndex: nil,
+                snapshot: snapshot(workspacePath: workspacePath, repositoryIndex: nil, logs: logs),
+                repositoryIndexError: sanitizedLogText(error.localizedDescription)
+            )
+        }
+    }
+
+    func snapshot(
+        workspacePath: String,
+        repositoryIndex: WorkspaceRepositoryIndex?,
+        logs: [TaskLogEntry]
+    ) -> WorkspaceSnapshot {
+        let root = URL(fileURLWithPath: workspacePath, isDirectory: true)
+        var result = WorkspaceSnapshot()
+        for entry in repositoryIndex?.entries ?? [] {
+            let relative = entry.relativePath
+            let fileURL = root.appendingPathComponent(relative, isDirectory: false)
             result.totalFiles += 1
             if result.samplePaths.count < 18 { result.samplePaths.append(relative) }
 
@@ -35,7 +55,7 @@ struct WorkspaceAuditor {
             let ext = fileURL.pathExtension.lowercased()
             if sourceExtensions.contains(ext) {
                 result.sourceFiles += 1
-                result.sourceBytes += Int64(values?.fileSize ?? 0)
+                result.sourceBytes += entry.size
                 if isConventionalExecutionEntryPoint(fileURL: fileURL, relativePath: relative, extension: ext) {
                     result.executionEntryPointFiles += 1
                 }
@@ -107,6 +127,20 @@ struct WorkspaceAuditor {
         let graphLogs = task.graphState?.nodes.flatMap(\.logs) ?? []
         let evidenceLogs = (task.logs + graphLogs).sorted { $0.timestamp < $1.timestamp }
         let snap = snapshot(workspacePath: task.workspacePath, logs: evidenceLogs)
+        return audit(task: task, snapshot: snap, requireVisualApproval: requireVisualApproval)
+    }
+
+    func observe(task: LoopTask) -> WorkspaceAuditObservation {
+        let graphLogs = task.graphState?.nodes.flatMap(\.logs) ?? []
+        let evidenceLogs = (task.logs + graphLogs).sorted { $0.timestamp < $1.timestamp }
+        return observe(workspacePath: task.workspacePath, logs: evidenceLogs)
+    }
+
+    func audit(
+        task: LoopTask,
+        snapshot snap: WorkspaceSnapshot,
+        requireVisualApproval: Bool = true
+    ) -> AuditResult {
         let graphResponses = task.graphState?.nodes.flatMap {
             [$0.lastAgentMessage, $0.lastReview]
         } ?? []

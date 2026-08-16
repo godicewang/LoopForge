@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T10:02:57Z",
+  "status": "journal-accepted-atomic-head-index-untracked-canonical-preimage-absent",
+  "finalAcceptance": false,
+  "bindings": {
+    "productionEnrollment": true,
+    "ratifiedSourceRevision": true,
+    "gitExecutableIdentity": true,
+    "gitDirectoryIdentity": true,
+    "headCommitIdentity": true,
+    "headPlane": true,
+    "indexPlane": true,
+    "untrackedPlane": true,
+    "ignoredButUntrackedIncluded": true,
+    "explicitEmptyPlanes": true
+  },
+  "controls": {
+    "readOnlyGitCommands": true,
+    "optionalGitLocksDisabled": true,
+    "boundedCommandOutputAndTimeout": true,
+    "completeWorkspaceRecaptureBeforeBetweenAndAfter": true,
+    "completeGitObservationRepeated": true,
+    "conflictedIndexRejected": true,
+    "unbornHeadRejected": true,
+    "unsupportedModesAndKindsRejected": true,
+    "receiptOnlyJournalEvent": true,
+    "pureDeterministicReducerReplay": true,
+    "exactDuplicateReplay": true,
+    "sameCommandSubstitutionRejected": true,
+    "issuesRepositoryMetadataAuthority": false,
+    "issuesIgnoredPathPolicyAuthority": false,
+    "issuesPreflightAuthority": false,
+    "mutatesWorkspace": false,
+    "permitsPublication": false
+  },
+  "verification": {
+    "realGitTests": 3,
+    "suiteTestsExecutedExcludingIndependentlyRunCase": 747,
+    "independentlyRunProcessGroupCase": 1,
+    "combinedTestsCovered": 748,
+    "intentionalEnvironmentSkips": 8,
+    "testFailures": 0,
+    "releaseLoopForgeSHA256": "527a2425030159b526ac332bc1e1f8ed25f182a5e21fc51af47b39f7db27a4cf",
+    "releaseKernelSandboxGateSHA256": "1b7ba433fe915b0dd916aceafe62342d246bcf6bbddcfc5425b0d09fba0fbeaa",
+    "sourceSnapshotSHA256": "431b28851a31524d63a09950350a8489234b1e6f9878ab4a71927f8094577b43",
+    "gitCaptureSourceSHA256": "0a590a1a1d69a542d1d9ccc573f38a654768bdbc575dbf4993e2aeaeccbc555d",
+    "planeProjectorSourceSHA256": "03f9b1af6f40c1e5c0e7096955f1c820455b2a44f45da4f6f9ba655dd3e2f229",
+    "runJournalSourceSHA256": "a100f3711f6fed9612c3169419e8e9ce9db2604512da307f03580b349f7f620d",
+    "runReducerSourceSHA256": "b99ab98c2c61ea0e80441dbd6a4070f2ff67d6090431d7d6aff002c39b86738b",
+    "integrationTestsSHA256": "df9b996029fee67640e821ffd678cadb67d587d6fb5977aea378ef00a2f7cd73"
+  },
+  "remainingPrerequisites": [
+    "journal-owned repository-metadata and ignored-path-policy authority",
+    "journal-owned canonical WorkspacePreimage and manifest assembly",
+    "journal-owned proposal and preflight capability issuer",
+    "tested resident-memory enforcement issuer or retained verifier and reviewer veto",
+    "native immutable design baseline complete visual evidence final authorization and native start",
+    "current-source package sign unlocked native walkthrough clean commit and push"
+  ]
+}

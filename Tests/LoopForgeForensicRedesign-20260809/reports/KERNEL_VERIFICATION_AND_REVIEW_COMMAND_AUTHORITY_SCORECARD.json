@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T18:55:51Z",
+  "status": "production-verification-and-review-receipt-injection-closed-real-issuers-pending",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "finding": {
+    "verificationPreviouslyAcceptedCodableReceipt": true,
+    "verificationPreviouslyBoundCommandContextActor": false,
+    "reviewPreviouslyAcceptedCodableReceipt": true,
+    "reviewComparedCallerConstructibleActorAndLineage": true,
+    "integrationAndCompletionConsumedTheseReceipts": true,
+    "priorGateProvedShapeAndLineageRatherThanRuntimeProvenance": true
+  },
+  "authority": {
+    "verificationCommandRequiresNonCodableAuthority": true,
+    "reviewCommandRequiresNonCodableAuthority": true,
+    "decodedReceiptCanRecreateCommandAuthority": false,
+    "productionVerificationIssuerPresent": false,
+    "productionIndependentReviewerIssuerPresent": false,
+    "debugFactoriesCompiledInRelease": false,
+    "durableReceiptAndEventReplaySchemaChanged": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 59,
+    "focusedFailures": 0,
+    "developmentTestsExecuted": 684,
+    "developmentTestsSkipped": 8,
+    "developmentFailures": 0,
+    "releaseBuildPassed": true,
+    "diffCheckPassed": true,
+    "residualExactExecutableCount": 0,
+    "runReducerSHA256": "4d6689c23c23de648bf4034879e17de5aee84f3e1fed2f7bf128d7df2cdd47c2",
+    "kernelRunReducerTestsSHA256": "14b870bcbd7b4ef8f052acf83da60f932e6a4761dfaec4babc2b2cdc182eb7ef",
+    "integrationStateMachineTestsSHA256": "6b5db157b96957a35151e5a08133d34858986ef2bdc2ed4e089414e91157ad3b",
+    "visualJournalTestsSHA256": "a9138a04609224025b3af17ede70e0e5ca24ebe814c530fe5d9b0776b6637ea1"
+  },
+  "remainingVetoes": {
+    "deterministicVerificationIssuer": false,
+    "independentReviewerRuntimeIssuer": false,
+    "visualCandidateAuthority": false,
+    "integrationAcceptanceAuthority": false,
+    "occurrenceAndQuiescence": false,
+    "completionAuthorization": false,
+    "nativePlanAndStart": false,
+    "legacySingleAndParallelMigrated": false,
+    "currentSourcePackagedSignedHashed": false,
+    "currentNativeScreenshots": false,
+    "cleanCommitAndPush": false
+  },
+  "finalAcceptance": false
+}

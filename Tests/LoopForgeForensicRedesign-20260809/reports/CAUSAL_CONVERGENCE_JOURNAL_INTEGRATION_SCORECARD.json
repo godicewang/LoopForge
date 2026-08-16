@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "status": "verified_side_by_side_not_cut_over",
+  "component": "CausalConvergenceJournalIntegration",
+  "commands": [
+    "initializeConvergence",
+    "admitCausalAttempt",
+    "recordCausalFailure",
+    "authorizeCausalReplacement",
+    "recordCausalConditionChange",
+    "recordCausalProgress",
+    "consumeCausalPlanExpansion"
+  ],
+  "durability": {
+    "singleHashChainedJournal": true,
+    "appendBeforeReducerPublication": true,
+    "duplicateCommandIdempotent": true,
+    "staleWriterRejected": true,
+    "recoveryReplaysTypedDeltas": true,
+    "fullGovernorSnapshotPerFrame": false,
+    "attemptBudgetRecovered": true,
+    "failureCountsRecovered": true,
+    "retirementRecovered": true,
+    "replacementAuthorizationRecovered": true
+  },
+  "verification": {
+    "focusedTests": 39,
+    "focusedFailures": 0,
+    "fullTests": 394,
+    "fullSkipped": 6,
+    "fullFailures": 0,
+    "failedCompileIntervalsCounted": false
+  },
+  "artifacts": [
+    {
+      "path": "Sources/LoopForge/Kernel/ConvergenceGovernor.swift",
+      "lines": 617,
+      "sha256": "5cca24f544c6c7658ca7d7cdb4dd466f4fd68279bbd3326afcfb885705599767"
+    },
+    {
+      "path": "Sources/LoopForge/Kernel/RunReducer.swift",
+      "lines": 1054,
+      "sha256": "07727575b6e652a4fc1965dcbb9280e0c514002628b1b9c9e2823a73dddbf60e"
+    },
+    {
+      "path": "Sources/LoopForge/Kernel/RunJournal.swift",
+      "lines": 368,
+      "sha256": "863b35a48aa05375301a7261436ab1d48c4cd988a6d240253abd4a451975b599"
+    },
+    {
+      "path": "Tests/LoopForgeTests/RunJournalTests.swift",
+      "lines": 544,
+      "sha256": "69deb778bdea1b0ba017fdffd93c5424e28b662723ea3e0b202140e0f637b040"
+    }
+  ],
+  "legacyGraphCutOver": false,
+  "easyBusinessMutated": false
+}

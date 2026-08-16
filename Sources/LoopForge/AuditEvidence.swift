@@ -7,9 +7,16 @@ struct WorkspaceFileStamp: Equatable, Sendable {
     let modifiedAt: TimeInterval
 }
 
-struct VisualInspection: Equatable, Sendable {
+struct VisualInspection: Codable, Equatable, Sendable {
     let passedBasicIntegrity: Bool
     let summary: String
+    let recognizedText: [String]
+}
+
+private struct CachedImageInspection: Codable, Equatable, Sendable {
+    let width: Int
+    let height: Int
+    let luminanceVariance: Double
     let recognizedText: [String]
 }
 
@@ -53,65 +60,90 @@ struct AuditEvidence: Equatable, Sendable {
 }
 
 struct WorkspaceEvidenceCollector {
-    private let ignoredDirectories: Set<String> = [
-        ".git", ".build", "build", "dist", "DerivedData", "node_modules", "Pods", ".venv", "venv", "__pycache__"
-    ]
+    private let heavyEvidenceCache: HeavyEvidenceCache
+    private let repositoryIndexer: WorkspaceRepositoryIndexer
     private let reviewableExtensions: Set<String> = [
         "swift", "m", "mm", "h", "c", "cc", "cpp", "rs", "go", "py", "js", "jsx", "ts", "tsx", "vue",
         "svelte", "java", "kt", "dart", "rb", "php", "cs", "lua", "sh", "html", "css", "scss", "sql",
         "json", "toml", "yaml", "yml", "md"
     ]
 
+    init(heavyEvidenceCache: HeavyEvidenceCache = .shared) {
+        self.heavyEvidenceCache = heavyEvidenceCache
+        repositoryIndexer = WorkspaceRepositoryIndexer(heavyEvidenceCache: heavyEvidenceCache)
+    }
+
     func fingerprint(workspacePath: String) -> [String: WorkspaceFileStamp] {
         let root = URL(fileURLWithPath: workspacePath, isDirectory: true)
-        var result: [String: WorkspaceFileStamp] = [:]
-        guard let enumerator = FileManager.default.enumerator(
-            at: root,
-            includingPropertiesForKeys: [.isRegularFileKey, .fileSizeKey, .contentModificationDateKey],
-            options: [],
-            errorHandler: { _, _ in true }
-        ) else { return result }
-        for case let url as URL in enumerator {
-            if ignoredDirectories.contains(url.lastPathComponent) {
-                enumerator.skipDescendants()
-                continue
-            }
-            guard let values = try? url.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey, .contentModificationDateKey]),
-                  values.isRegularFile == true else { continue }
-            let relative = relativePath(url, root: root)
-            result[relative] = WorkspaceFileStamp(
-                size: Int64(values.fileSize ?? 0),
-                modifiedAt: values.contentModificationDate?.timeIntervalSince1970 ?? 0
-            )
-        }
-        return result
+        return (try? WorkspaceRepositoryIndexer.scan(root: root).fingerprint) ?? [:]
     }
 
     func collect(
         task: LoopTask,
         workerFeedback: String,
         audit: AuditResult,
-        before: [String: WorkspaceFileStamp]
+        before: [String: WorkspaceFileStamp],
+        repositoryIndex sharedRepositoryIndex: WorkspaceRepositoryIndex? = nil,
+        repositoryIndexError sharedRepositoryIndexError: String? = nil,
+        treeGenerationReceipt: WorkspaceTreeGenerationReceipt? = nil
     ) async -> AuditEvidence {
         let workspacePath = task.workspacePath
         let logs = task.logs
         return await Task.detached(priority: .utility) {
-            let after = fingerprint(workspacePath: workspacePath)
+            let repositoryResolution: WorkspaceRepositoryIndexResolution?
+            let repositoryIndexError: String?
+            if let sharedRepositoryIndexError {
+                repositoryResolution = nil
+                repositoryIndexError = sanitizedLogText(sharedRepositoryIndexError)
+            } else {
+                do {
+                    let root = URL(fileURLWithPath: workspacePath, isDirectory: true)
+                    if let sharedRepositoryIndex {
+                        guard treeGenerationReceipt == nil else {
+                            throw WorkspaceRepositoryIndexError.invalidGenerationReceipt(
+                                "a shared observation and a cross-observation generation receipt are mutually exclusive"
+                            )
+                        }
+                        guard sharedRepositoryIndex.canonicalRootDigest == WorkspaceRepositoryIndexer.canonicalRootDigest(root) else {
+                            throw WorkspaceRepositoryIndexError.workspaceRootMismatch
+                        }
+                        repositoryResolution = WorkspaceRepositoryIndexResolution(
+                            index: sharedRepositoryIndex,
+                            disposition: .sharedObservation,
+                            authority: nil,
+                            sourceSequence: nil,
+                            cacheReceipt: nil
+                        )
+                    } else {
+                        repositoryResolution = try await repositoryIndexer.resolve(
+                            root: root,
+                            generationReceipt: treeGenerationReceipt
+                        )
+                    }
+                    repositoryIndexError = nil
+                } catch {
+                    repositoryResolution = nil
+                    repositoryIndexError = sanitizedLogText(error.localizedDescription)
+                }
+            }
+            let repositoryIndex = repositoryResolution?.index
+            let after = repositoryIndex?.fingerprint ?? [:]
             let allPaths = Set(before.keys).union(after.keys)
             let changed = allPaths.filter { before[$0] != after[$0] }.sorted()
             let deleted = changed.filter { after[$0] == nil }
             let existingChanged = changed.filter { after[$0] != nil }
             let reviewTargets = boundedReviewTargets(
                 changedPaths: existingChanged,
-                workspacePath: workspacePath
+                repositoryIndex: repositoryIndex
             )
             let excerpts = sourceExcerpts(paths: reviewTargets, workspacePath: workspacePath)
             let screenshots = screenshotEvidence(
                 in: workspacePath,
+                repositoryIndex: repositoryIndex,
                 changedPaths: before.isEmpty ? nil : Set(changed),
                 includeAllImages: task.category == .desktopAutomation
             )
-            let visual = task.needsVisualAudit ? inspectScreenshots(screenshots) : nil
+            let visual = task.needsVisualAudit ? await inspectScreenshots(screenshots) : nil
             let harness = CommandEvidenceLedger.render(logs: logs)
             let findings = audit.findings.isEmpty ? "None from deterministic scanner." : audit.findings.map { "- \($0)" }.joined(separator: "\n")
             let visualText = visual.map { "\($0.summary)\nOCR sample: \($0.recognizedText.prefix(20).joined(separator: " | "))" }
@@ -140,6 +172,7 @@ struct WorkspaceEvidenceCollector {
             WORKSPACE DELTA
             Changed or newly created files: \(reviewTargets.isEmpty ? "none detected" : reviewTargets.joined(separator: ", "))
             Deleted files: \(deleted.isEmpty ? "none detected" : deleted.joined(separator: ", "))
+            Repository index: \(repositoryResolution?.evidenceSummary ?? "unavailable; \(repositoryIndexError ?? "unknown indexing error")")
 
             RELEVANT CODE AND CONFIG EXCERPTS
             \(excerpts.isEmpty ? "No bounded text excerpt was available." : excerpts)
@@ -166,17 +199,24 @@ struct WorkspaceEvidenceCollector {
         }.value
     }
 
-    private func recentlyModifiedPaths(in workspacePath: String) -> [String] {
-        let files = fingerprint(workspacePath: workspacePath)
-        return files.keys.sorted { (files[$0]?.modifiedAt ?? 0) > (files[$1]?.modifiedAt ?? 0) }
+    private func recentlyModifiedPaths(in repositoryIndex: WorkspaceRepositoryIndex?) -> [String] {
+        let files = repositoryIndex?.fingerprint ?? [:]
+        return files.keys.sorted {
+            let left = files[$0]?.modifiedAt ?? 0
+            let right = files[$1]?.modifiedAt ?? 0
+            return left == right ? $0 < $1 : left > right
+        }
             .filter { reviewableExtensions.contains(URL(fileURLWithPath: $0).pathExtension.lowercased()) }
     }
 
-    private func boundedReviewTargets(changedPaths: [String], workspacePath: String) -> [String] {
+    private func boundedReviewTargets(
+        changedPaths: [String],
+        repositoryIndex: WorkspaceRepositoryIndex?
+    ) -> [String] {
         let changedSource = changedPaths.filter {
             reviewableExtensions.contains(URL(fileURLWithPath: $0).pathExtension.lowercased())
         }
-        let recent = recentlyModifiedPaths(in: workspacePath)
+        let recent = recentlyModifiedPaths(in: repositoryIndex)
         let stablePriority = recent.filter { path in
             let lower = path.lowercased()
             let name = URL(fileURLWithPath: path).lastPathComponent.lowercased()
@@ -214,25 +254,16 @@ struct WorkspaceEvidenceCollector {
 
     private func screenshotEvidence(
         in workspacePath: String,
+        repositoryIndex: WorkspaceRepositoryIndex?,
         changedPaths: Set<String>?,
         includeAllImages: Bool
     ) -> [String] {
         let root = URL(fileURLWithPath: workspacePath, isDirectory: true)
-        guard let enumerator = FileManager.default.enumerator(
-            at: root,
-            includingPropertiesForKeys: [.isRegularFileKey, .contentModificationDateKey],
-            options: [],
-            errorHandler: { _, _ in true }
-        ) else { return [] }
         var candidates: [(path: String, relative: String, modified: TimeInterval, changed: Bool)] = []
-        for case let url as URL in enumerator {
-            if ignoredDirectories.contains(url.lastPathComponent) {
-                enumerator.skipDescendants()
-                continue
-            }
-            let ext = url.pathExtension.lowercased()
+        for entry in repositoryIndex?.entries ?? [] {
+            let relative = entry.relativePath
+            let ext = URL(fileURLWithPath: relative).pathExtension.lowercased()
             guard ["png", "jpg", "jpeg", "webp"].contains(ext) else { continue }
-            let relative = relativePath(url, root: root)
             let lower = relative.lowercased()
             guard includeAllImages
                     || lower.contains(".loopforge/evidence")
@@ -241,8 +272,8 @@ struct WorkspaceEvidenceCollector {
                     || lower.contains("visual-evidence")
                     || lower.contains("ui-test")
                     || lower.contains("appshot") else { continue }
-            let modified = (try? url.resourceValues(forKeys: [.contentModificationDateKey]))?.contentModificationDate?.timeIntervalSince1970 ?? 0
-            candidates.append((url.path, relative, modified, changedPaths?.contains(relative) == true))
+            let url = root.appendingPathComponent(relative, isDirectory: false)
+            candidates.append((url.path, relative, entry.modifiedAt, changedPaths?.contains(relative) == true))
         }
         let ordered = candidates.sorted {
             if $0.changed != $1.changed { return $0.changed && !$1.changed }
@@ -388,27 +419,43 @@ struct WorkspaceEvidenceCollector {
         return result
     }
 
-    private func inspectScreenshots(_ paths: [String]) -> VisualInspection {
+    private func inspectScreenshots(_ paths: [String]) async -> VisualInspection {
         var valid = 0
         var nonBlank = 0
         var descriptions: [String] = []
         var recognized: [String] = []
         for path in paths {
-            guard let image = NSImage(contentsOfFile: path),
-                  let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else { continue }
-            let width = cgImage.width
-            let height = cgImage.height
-            let variance = luminanceVariance(of: image)
-            if width >= 400 && height >= 300 { valid += 1 }
-            if variance >= 0.004 { nonBlank += 1 }
-            descriptions.append("\(URL(fileURLWithPath: path).lastPathComponent): \(width)x\(height), luminance variance \(String(format: "%.4f", variance))")
-
-            let request = VNRecognizeTextRequest()
-            request.recognitionLevel = .fast
-            request.usesLanguageCorrection = true
-            let handler = VNImageRequestHandler(cgImage: cgImage)
-            if (try? handler.perform([request])) != nil {
-                recognized.append(contentsOf: (request.results ?? []).compactMap { $0.topCandidates(1).first?.string }.prefix(12))
+            let url = URL(fileURLWithPath: path)
+            do {
+                let data = try Data(contentsOf: url, options: [.mappedIfSafe])
+                let cacheKey = HeavyEvidenceCacheKey(
+                    operation: .imageInspection,
+                    collectorID: "loopforge.workspace-image-integrity",
+                    collectorVersion: 1,
+                    inputs: [
+                        HeavyEvidenceInput(
+                            role: "image",
+                            digest: HeavyEvidenceCache.sha256(data)
+                        )
+                    ],
+                    parametersDigest: HeavyEvidenceCache.sha256(
+                        "vision-fast-language-correction|luminance-grid-32x24|minimum-400x300|variance-0.004"
+                    )
+                )
+                let resolution: HeavyEvidenceCacheResolution<CachedImageInspection> = try await heavyEvidenceCache.resolve(
+                    key: cacheKey
+                ) {
+                    Self.inspectImage(data)
+                }
+                let inspection = resolution.value
+                if inspection.width >= 400 && inspection.height >= 300 { valid += 1 }
+                if inspection.luminanceVariance >= 0.004 { nonBlank += 1 }
+                descriptions.append(
+                    "\(url.lastPathComponent): \(inspection.width)x\(inspection.height), luminance variance \(String(format: "%.4f", inspection.luminanceVariance)), cache \(resolution.receipt.disposition.rawValue) \(resolution.receipt.keyDigest.rawValue.prefix(12))"
+                )
+                recognized.append(contentsOf: inspection.recognizedText.prefix(12))
+            } catch {
+                descriptions.append("\(url.lastPathComponent): inspection unavailable (\(error.localizedDescription))")
             }
         }
         let passed = valid > 0 && nonBlank > 0
@@ -418,7 +465,40 @@ struct WorkspaceEvidenceCollector {
         return VisualInspection(passedBasicIntegrity: passed, summary: summary, recognizedText: recognized)
     }
 
-    private func luminanceVariance(of image: NSImage) -> Double {
+    private static func inspectImage(_ data: Data) -> CachedImageInspection {
+        guard let image = NSImage(data: data),
+              let cgImage = image.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
+            return CachedImageInspection(
+                width: 0,
+                height: 0,
+                luminanceVariance: 0,
+                recognizedText: []
+            )
+        }
+        let request = VNRecognizeTextRequest()
+        request.recognitionLevel = .fast
+        request.usesLanguageCorrection = true
+        let handler = VNImageRequestHandler(cgImage: cgImage)
+        if (try? handler.perform([request])) == nil {
+            return CachedImageInspection(
+                width: cgImage.width,
+                height: cgImage.height,
+                luminanceVariance: luminanceVariance(of: image),
+                recognizedText: []
+            )
+        }
+        let recognizedText: [String] = Array((request.results ?? []).compactMap {
+            $0.topCandidates(1).first?.string
+        }.prefix(12))
+        return CachedImageInspection(
+            width: cgImage.width,
+            height: cgImage.height,
+            luminanceVariance: luminanceVariance(of: image),
+            recognizedText: recognizedText
+        )
+    }
+
+    private static func luminanceVariance(of image: NSImage) -> Double {
         guard let tiff = image.tiffRepresentation, let bitmap = NSBitmapImageRep(data: tiff) else { return 0 }
         let stepX = max(1, bitmap.pixelsWide / 32)
         let stepY = max(1, bitmap.pixelsHigh / 24)
@@ -434,13 +514,6 @@ struct WorkspaceEvidenceCollector {
         return values.reduce(0) { $0 + ($1 - mean) * ($1 - mean) } / Double(values.count)
     }
 
-    private func relativePath(_ url: URL, root: URL) -> String {
-        let resolvedRoot = root.resolvingSymlinksInPath().standardizedFileURL.path
-        let resolvedPath = url.resolvingSymlinksInPath().standardizedFileURL.path
-        let prefix = resolvedRoot.hasSuffix("/") ? resolvedRoot : resolvedRoot + "/"
-        guard resolvedPath.hasPrefix(prefix) else { return url.lastPathComponent }
-        return String(resolvedPath.dropFirst(prefix.count))
-    }
 }
 
 enum CommandEvidenceLedger {

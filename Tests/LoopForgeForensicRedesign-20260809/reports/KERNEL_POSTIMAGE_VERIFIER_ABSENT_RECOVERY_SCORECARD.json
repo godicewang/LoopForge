@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T00:21:19Z",
+  "status": "exact-absent-process-fail-red-recovery-and-release-implemented-memory-result-review-and-start-vetoed",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "recovery": {
+    "exactPIDStartAndProcessGroupRequired": true,
+    "liveExactProcessReattached": true,
+    "exactAbsentProcessDistinguished": true,
+    "lostExitCodeOrSignalInvented": false,
+    "genericVerifierReconciliationRejected": true,
+    "typedVerifierActorRequired": true,
+    "boundedRetainedOutputValidatedAndHashed": true,
+    "invalidRetainedOutputFailsRedWithDigest": true,
+    "absenceContainmentAndReleaseAtomic": true,
+    "integrationPhaseAfterRecovery": "appliedUnverified",
+    "journalReplayIdentical": true,
+    "verificationResultIssued": false
+  },
+  "liveContainmentPreserved": {
+    "journalOwnedWallDeadline": true,
+    "exactProcessGroupTermination": true,
+    "kernelOutputFileCeilings": true,
+    "kernelZeroChildCeiling": true,
+    "exactRetainedByteHashes": true
+  },
+  "hardLimits": {
+    "wallClock": "enforced",
+    "outputBytes": "kernel-enforced-conservative-per-stream-partition",
+    "childProcesses": "kernel-enforced-zero-child-policy",
+    "residentMemory": "reservation-only-not-enforced"
+  },
+  "verification": {
+    "completeSwiftTests": 703,
+    "environmentSkips": 8,
+    "failures": 0,
+    "releaseLoopForgeBuild": "passed",
+    "releaseKernelSandboxGateBuild": "passed",
+    "diffWhitespace": "passed",
+    "exactSourceSnapshotSHA256": "6794b9ba9a5a74ff35138b94a81dbe124ac8be6ba6b4fc0aa2b243541340c950",
+    "releaseArtifacts": {
+      "LoopForgeSHA256": "83163e7affa5af25cfc75afcb032871dee8801cf7ba8e5a6f79416cd880ebe98",
+      "KernelSandboxGateSHA256": "21731107c0b85e03933bac526d5f0a705394579e9eb02a7665c950fe49949b99"
+    },
+    "sourceHashes": {
+      "JournaledProcessRuntime.swift": "77c7277d161b3b7d2f350e5568bb6e6b05d09c35c6fe17c471b3652763fc56fc",
+      "KernelPostimageVerifierActivation.swift": "52b90a11b90ba56d1db9a3698efa0097d4d0ac9eb00df73951ff13c6e67f8f9c",
+      "IntegrationTransactionStateMachineTests.swift": "65211f715fc7464e21a23c88610b2e97d67c250c1895b4787a5e4e3a75eaef75"
+    },
+    "failedRunsExcluded": 1
+  },
+  "remainingPrerequisites": [
+    "truthful native resident-memory enforcement",
+    "candidate descriptor capability atomic at spawn",
+    "canonical parser and deterministic oracle",
+    "non-forgeable postimage result receipt",
+    "latest-red revocation and canonical evidence batch",
+    "separately activated adversarial read-only review",
+    "immutable baseline and complete visual evidence",
+    "integration acceptance and native start",
+    "current-source package sign native walkthrough commit and push"
+  ],
+  "finalAcceptance": false
+}

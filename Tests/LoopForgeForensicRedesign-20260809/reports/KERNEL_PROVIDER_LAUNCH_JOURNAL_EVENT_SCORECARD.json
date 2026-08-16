@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T18:23:35Z",
+  "status": "unforgeable-atomic-replayed-provider-launch-event-present-controller-composition-vetoed",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "authority": {
+    "commandAcceptsSerializableReceipt": false,
+    "requiresAuthorizedKernelProviderLaunch": true,
+    "issuerRequiresOriginalInvocationAuthority": true,
+    "issuerRequiresActualRuntimeBinding": true,
+    "decodedReceiptCanRecreateAuthority": false
+  },
+  "journal": {
+    "bindingAndLaunchOneTransaction": true,
+    "orderedEventCount": 2,
+    "bindingEventFirst": true,
+    "providerLaunchEventSecond": true,
+    "typedReceiptLookupByID": true,
+    "typedReceiptLookupByExactTransaction": true,
+    "recoveryReplaysProviderLaunch": true,
+    "projectionCountPresent": true
+  },
+  "validation": {
+    "exactRunAttemptResourceLeaseAndBinding": true,
+    "exactProcessAndArgumentIdentity": true,
+    "nativeSandboxAttestationRechecked": true,
+    "deterministicInvocationRecomputed": true,
+    "fixedFDSecretDeliveryRechecked": true,
+    "receiptDigestRecomputed": true
+  },
+  "parser": {
+    "requiresExactJournaledProviderLaunch": true,
+    "rejectsInvocationDigestSubstitution": true,
+    "rejectsPromptNonceSubstitution": true,
+    "rejectsSecretDeliverySubstitution": true
+  },
+  "verification": {
+    "providerTestsExecuted": 9,
+    "providerFailures": 0,
+    "journaledRuntimeTestsExecuted": 28,
+    "journaledRuntimeFailures": 0,
+    "developmentTestsExecuted": 682,
+    "developmentTestsSkipped": 8,
+    "developmentFailures": 0,
+    "releaseBuildPassed": true,
+    "diffCheckPassed": true,
+    "residualExactProcessCount": 0,
+    "kernelProviderInvocationSHA256": "02f9b67045893e3a27f6951a9df71690d332501b568f26c882792de30c6835d4",
+    "journaledProcessRuntimeSHA256": "3b309c96b612e0f2f2489ea307fc236ccb7c40478409572fb16a2eb12b6d29c8",
+    "runReducerSHA256": "8ec841b7a51ab9edff1e4b9c33021ee6210f1ae8bc02fdbbbea31c370dd0e933",
+    "runJournalSHA256": "89bcf35603d33fc85982bfe13cc3ff84a71d21eec847558ef15a3bc032b148f3",
+    "providerTestsSHA256": "8458e7c59c85282d018ba5fa06763f13192e604465747739f0db9b8ac581675b",
+    "journaledRuntimeTestsSHA256": "8d7cfe2ec132434864c70a63b89b6bea9fbf66bf155af5cbe6c803c9b0183344"
+  },
+  "remainingVetoes": {
+    "productionControllerUsesProviderBoundary": false,
+    "independentReviewerUsesProviderBoundary": false,
+    "verificationVisualIntegrationCompletionComposed": false,
+    "currentSourcePackagedSignedHashed": false,
+    "currentNativeScreenshots": false,
+    "cleanCommitAndPush": false
+  },
+  "nextRequiredBoundary": "production-controller-worker-reviewer-verification-visual-integration-completion-composition",
+  "finalAcceptance": false
+}

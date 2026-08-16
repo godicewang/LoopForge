@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T19:36:06Z",
+  "status": "direct-runtime-receipt-injection-closed-process-and-workspace-cleanup-issuers-preserved",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "finding": {
+    "admissionPreviouslyAcceptedCodableReceipt": true,
+    "bindingPreviouslyAcceptedCodableReceipt": true,
+    "releasePreviouslyAcceptedCodableReceipt": true,
+    "priorValidationProvedConsistencyNotRuntimeIssuerProvenance": true,
+    "processRuntimeIsLegitimateIssuer": true,
+    "workspaceMutationLeaseAuthorityIsLegitimateIssuer": true,
+    "bothIssuersRequiredForCrashCleanup": true
+  },
+  "authority": {
+    "admissionCommandRequiresNonCodableAuthority": true,
+    "bindingCommandRequiresNonCodableAuthority": true,
+    "releaseCommandRequiresNonCodableAuthority": true,
+    "authorityReceiptInitializerPrivate": true,
+    "processIssuerTokenFilePrivate": true,
+    "workspaceMutationIssuerTokenFilePrivate": true,
+    "bindingAcceptsOnlyProcessIssuerToken": true,
+    "issuerTokensExposedByAPI": false,
+    "decodedReceiptCanRecreateCommandAuthority": false,
+    "debugFactoriesCompiledInRelease": false,
+    "durableReceiptAndEventReplaySchemaChanged": false
+  },
+  "cleanupSemantics": {
+    "journalWritePrecedesSupervisorCommit": true,
+    "journalFailureRetainsLogicalOwnership": true,
+    "supervisorCommitFailureRemainsInDoubt": true,
+    "cleanupFailureRemainsVisible": true,
+    "staleWriterCannotReleaseOwnership": true,
+    "absentProcessRecoveryRetained": true,
+    "workspaceMutationReleaseFailureRetained": true
+  },
+  "verification": {
+    "focusedTestsExecuted": 93,
+    "focusedFailures": 0,
+    "developmentTestsExecuted": 684,
+    "developmentTestsSkipped": 8,
+    "developmentFailures": 0,
+    "releaseBuildPassed": true,
+    "diffCheckPassed": true,
+    "residualExactExecutableCount": 0,
+    "runReducerSHA256": "de3744047cbfb785521325b73a6dbe621f55ef697d7a87457aa1c5dd8a0e8744",
+    "journaledProcessRuntimeSHA256": "f5938ab9c42320ad64973c300f59f1424a019b978d4b6ead6ec634708a8ad713",
+    "workspaceMutationLeaseAuthoritySHA256": "d36fe8506b38de4bb9d94ca256585d2234da2483fe6bc4561f005c09fdbe6d9f",
+    "kernelRunReducerTestsSHA256": "c232c60606063a8f805cfa929f00b42e9b9f7fabe7547b8309559570ba236140",
+    "runtimeJournalIntegrationTestsSHA256": "ad71c37c2d08e7181848ccd4d1109ce37fd71be1ac73ac21e08c6d8ba2c34358",
+    "journaledProcessRuntimeTestsSHA256": "9db274ffb1ccc35032d91123de111f1b36343c7e05fbd4d306413e74a0c33dd4",
+    "integrationStateMachineTestsSHA256": "323987924ddc972a0c2b1e53b91b2223fcf7d6e2103bdc5b2538e3841ec51783",
+    "kernelExecutionTestSupportSHA256": "b7291fb319add132b096a3320652034aa810b4cb1b404654d6f3d38a597ceaf9"
+  },
+  "remainingVetoes": {
+    "externalDependencyObserverIssuer": false,
+    "runtimeDrainSupervisorIssuer": false,
+    "quiescenceSupervisorIssuer": false,
+    "nativePlanAndStart": false,
+    "deterministicVerificationAndIndependentReview": false,
+    "nativeBaselineAndVisualEvaluation": false,
+    "completeIntegrationAndFinalAuthorization": false,
+    "legacySingleAndParallelMigrated": false,
+    "currentSourcePackagedSignedHashed": false,
+    "currentNativeScreenshots": false,
+    "cleanCommitAndPush": false
+  },
+  "finalAcceptance": false
+}

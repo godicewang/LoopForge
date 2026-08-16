@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T22:36:52Z",
+  "status": "journal-owned-candidate-postimage-attestation-implemented-verifier-runtime-receipt-review-and-start-vetoed",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "authority": {
+    "affectedPathDigestTreatedAsCompleteCandidate": false,
+    "capturePolicyBoundBeforeMutation": true,
+    "ratifiedBaselineCapturePolicyReused": true,
+    "captureOccursUnderExclusiveMutationLock": true,
+    "contentCompleteRevisionArtifactRequiredForNewAttestation": true,
+    "executorReceiptCanMintAttestation": false,
+    "journalExactEventAndFrameRequired": true,
+    "receiptInitializerCallerAccessible": false,
+    "latestTransitionOnly": true,
+    "olderSuccessFallbackAfterNewerTransition": false,
+    "journalReplayStable": true,
+    "legacyApplyCanAttest": false
+  },
+  "withheldWhen": [
+    "apply-or-rollback-in-flight",
+    "failed-or-in-doubt-apply",
+    "failed-rollback",
+    "restored-rollback",
+    "legacy-exact-apply-without-candidate-artifact",
+    "ambiguous-latest-workspace-transition"
+  ],
+  "verification": {
+    "focusedExecutorTests": 14,
+    "focusedIntegrationTests": 8,
+    "completeSwiftTests": 699,
+    "environmentSkips": 8,
+    "failures": 0,
+    "releaseBuild": "passed",
+    "exactSourceSnapshotSHA256": "db94931697d862a54edcebcdfdd3948b88ad6218934c27794537f1a222276daa",
+    "completeTestLogSHA256": "5c32e9667d464d8b7ee773c626d3a854eba22b96fd64e149eb9588250553b9d9",
+    "releaseLogSHA256": "211b8c4b264245f7c58ce712524d7432acd1e9c9312827df1e9f4916598656c4",
+    "sourceHashes": {
+      "WorkspaceSourceRevisionCollector.swift": "a289fca07a6259aa46fad264e8fb576bab99ad20f3441685aa54cf1167172fc2",
+      "IntegrationTransactionStateMachine.swift": "5a555fba0f8d3670b235ee53d463758154b6b94ab40994110faa42c03b616315",
+      "WorkspaceMutationFilesystemExecutor.swift": "8d0732adc1d1f67b423ea8b19ce701eb7232e0febbfca5c29ebbe2699b28f999",
+      "RunReducer.swift": "45dbe9297553841153bad7c5fff0633ac7c4300abbd10d25bf548a070c3c8b69",
+      "RunJournal.swift": "14729f5e55127e7ce6b418c3e05ccb7bf6ea41b6860a86deaca85fb50e91f73c",
+      "WorkspaceRepositoryIndex.swift": "382d8d2e572af85a4e249c3b8fe4a0b2afd47792e75dcbca60fa126a62d38d88",
+      "JournaledWorkspaceMutationRuntime.swift": "d14316e27f99a2972d969f6ccd18816e9c932579527bd570e64b06a31d59b30f"
+    }
+  },
+  "remainingPrerequisites": [
+    "immutable candidate input materialization or exact live-tree revalidation",
+    "separately activated verifier process lease and independent actor lineage",
+    "receipt binding to recipe executable argv inputs attestation environment capture parser output oracle and transaction",
+    "verification identity and journal sequence with latest-red revocation",
+    "canonical verification evidence batch",
+    "separately activated read-only independent review of the exact batch"
+  ],
+  "finalAcceptance": false
+}

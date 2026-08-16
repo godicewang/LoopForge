@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T02:58:12Z",
+  "status": "production-verifier-launch-fails-closed-without-exact-resident-memory-capability",
+  "finalAcceptance": false,
+  "residentMemoryEnforcementImplemented": false,
+  "productionIssuerPresent": false,
+  "controls": {
+    "nonSerializableCapability": true,
+    "boundToExactRun": true,
+    "boundToExactActivation": true,
+    "boundToExactByteCeiling": true,
+    "checkedBeforeAdmission": true,
+    "debugIssuerAbsentFromRelease": true,
+    "crossWiredActivationRejected": true
+  },
+  "nativeStrategies": [
+    {
+      "strategy": "RLIMIT_RSS/RLIMIT_AS",
+      "accepted": false,
+      "reason": "RSS is an address-space alias/advisory reclamation declaration, not an exact hard physical-footprint ceiling"
+    },
+    {
+      "strategy": "RLIMIT_DATA",
+      "accepted": false,
+      "reason": "rejected with EINVAL in the probe and would not cover total physical footprint"
+    },
+    {
+      "strategy": "task_set_phys_footprint_limit",
+      "accepted": false,
+      "reason": "exact API returned KERN_NO_ACCESS for the ordinary process class"
+    },
+    {
+      "strategy": "fatal posix_spawn jetsam attributes",
+      "accepted": false,
+      "reason": "attribute setup and spawn succeeded, but a 512 MiB sustained touched allocation survived a declared 128 MiB limit and exited zero"
+    },
+    {
+      "strategy": "parent RSS polling and kill",
+      "accepted": false,
+      "reason": "post-allocation observation with a sampling gap is not inherited pre-exec kernel enforcement"
+    }
+  ],
+  "verification": {
+    "focusedNativeSandboxTests": 6,
+    "focusedIntegrationTests": 8,
+    "swiftTestsExecuted": 715,
+    "swiftTestsSkipped": 8,
+    "swiftTestFailures": 0,
+    "releaseLoopForgeSHA256": "2e739ec12592f4a7acec11c7d2065150bc730498b886359fb45dc9cbb4cf3c2b",
+    "releaseKernelSandboxGateSHA256": "21731107c0b85e03933bac526d5f0a705394579e9eb02a7665c950fe49949b99",
+    "sourceSnapshotSHA256": "69e8f5d2ee7c2a8e7e2e4f1a1c0a05428fe5ff1516d691102b51b1ea0d706f6a",
+    "sourceHashes": {
+      "KernelResidentMemoryEnforcement.swift": "37f06153d90254cf07fbe76d49bc0b4f089c816ff0dad6f4607aa2362bbabcd8",
+      "JournaledProcessRuntime.swift": "b2a02a73e8420ca7b7d6320f39bf6887acdf3ee1c126ffeec44bfa0cc0e9aa3d",
+      "IntegrationTransactionStateMachineTests.swift": "80911cf21b71c99812a95b77ed4747ce7ce77344cf247ddca7511728ff1a13f3"
+    }
+  },
+  "remainingPrerequisites": [
+    "tested production resident-memory enforcement issuer",
+    "candidate descriptor capability atomic at spawn",
+    "separately activated adversarial read-only review issuer",
+    "integration postimage-verification and independent acceptance issuers",
+    "native immutable design-baseline selection and complete visual evidence",
+    "final authorization and executable external-dependency observation",
+    "legacy Single and Parallel retirement",
+    "current-source package sign unlocked native walkthrough clean commit and push"
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T05:10:41Z",
+  "status": "legacy-causal-topology-gate-package-verified-production-descriptor-cutover-pending",
+  "acceptanceRowsAdvanced": [
+    "F-05"
+  ],
+  "priorDefect": {
+    "nodeIDCouldSignalNovelty": true,
+    "objectiveParaphraseCouldSignalNovelty": true,
+    "verificationParaphraseCouldSignalNovelty": true,
+    "sameReviewerCouldReviveRetiredRoute": true,
+    "unsafeBehaviorEncodedAsTestExpectation": true
+  },
+  "enforcementBoundary": {
+    "nodeIDIsCausallyInert": true,
+    "titleIsCausallyInert": true,
+    "objectiveProseIsCausallyInert": true,
+    "verificationProseIsCausallyInert": true,
+    "readOnlyModeCompared": true,
+    "normalizedMutationSurfaceCompared": true,
+    "scopeOrderAndDuplicatesAreInert": true,
+    "narrativeScopeRejected": true,
+    "absoluteScopeRejected": true,
+    "escapingScopeRejected": true,
+    "sameScopeAlgorithmicNoveltyAcceptedWithoutDescriptor": false,
+    "productionCausalDescriptorIssuerBound": false,
+    "journaledIndependentReplacementReceiptBound": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 92,
+    "focusedFailures": 0,
+    "fullTestsExecuted": 594,
+    "fullTestsSkipped": 8,
+    "fullFailures": 0,
+    "packagingOwnedTestsExecuted": 594,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "sourceSnapshotSHA256": "e4721947c7b44180abf2224a27768ab0424f38d5b1f5d83a50729d028709e0b5",
+    "graphSourceSHA256": "46bcc4bd10e7228c00f1c1e80c21fd376739e978a097a9d9f97efc7bca6a92ef",
+    "graphTestsSHA256": "e6a6dda15b5794b95b66635e3af2692e71f9aa931559aabf4e4095d9fdf41d8c",
+    "focusedLogSHA256": "2f0aaf02b06ad6646dba65c868b1ca1e02541e1f75b401c2c9031e4ee21b333d",
+    "fullLogSHA256": "dc223a1e4ebda7eb0da4cf513e6437f9aeeb2154a4b63ef840ef221f51792222",
+    "packageTestLogSHA256": "386f41848657da282966e228f8a936dd1c3903ce340f2883b600ff5639d8098e",
+    "packageLogSHA256": "d892f6ba32b8fad75f643b92cb71a7cfdced9c3fae2f9e31c1fc01d2202fe6b9",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "buildManifestSHA256": "a8a84b7f3c8ee0b2697107560c39aa4a0c65579c4b39b05c27f7c5f3a7750f8a",
+    "executableSHA256": "47235f2a965196ab7448b363d4a96168c21db00ef56dfd3f2ab8ad2fce1e447a",
+    "zipSHA256": "856a07552842343fff940d9a3b21308f340057f01a5d1ee4eeabea20aaaeb675",
+    "dmgSHA256": "3a908e45908471c62e47fd810585ef4717733ec9d34a7be1581b0192d4247a98",
+    "cdHash": "2106dc8cb7ae9ef569b0c3ce494cf69c094a4ab7",
+    "residualPackagedProcessCount": 0
+  },
+  "knownBoundary": {
+    "productionCausalDescriptorCutoverPending": true,
+    "journaledIndependentReplacementReceiptPending": true,
+    "currentNativeUICapturePending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

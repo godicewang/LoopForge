@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "findingRange": ["F-038", "F-046"],
+  "status": "fail",
+  "title": "Review Provenance and Visual Veto Architecture Scorecard",
+  "stoppedTask": {
+    "id": "1ED2180F-FBE1-4BCA-9E79-701F40CC3483",
+    "controlModel": "gpt-5.6-sol",
+    "controlReasoning": "ultra",
+    "workerModel": "gpt-5.6-sol",
+    "workerReasoning": "ultra",
+    "auditScore": 100,
+    "visualAuditPassed": false,
+    "supervisorCompletionApproved": false
+  },
+  "causalNode": {
+    "id": "repair-maximum-dynamic-type-safe-areas-v1",
+    "iteration": 1,
+    "decision": "approved",
+    "commit": "f82ff2d604e10e00de7f88e1dc6a86c50d0cc0e1",
+    "pushedToOriginMainBeforeFinalProductApproval": true,
+    "mainApprovalAt": "2026-08-09T07:19:01Z",
+    "durableReviewFields": ["mainReview", "lastReview"],
+    "missingDurableBindings": [
+      "goalHash",
+      "requirementContractHash",
+      "candidateTreeHash",
+      "evidenceBundleHash",
+      "reviewerProviderModelAndRunID",
+      "systemAndUserPromptHashes",
+      "exactAttachedImageHashes",
+      "rawStructuredResponseHash"
+    ]
+  },
+  "imagePipeline": {
+    "collectorMaximumSelected": 12,
+    "codexMaximumAttached": 4,
+    "silentTruncation": true,
+    "receiptRecordsSelectedVersusAttached": false,
+    "visualIntegrityChecks": ["minimum canvas dimensions", "minimum luminance variance", "OCR sample"],
+    "missingVisualVetoDimensions": [
+      "initial viewport task visibility",
+      "baseline hierarchy preservation",
+      "typography hierarchy",
+      "symmetric card rhythm",
+      "content-container occupancy",
+      "spacing rhythm",
+      "shape-language fit",
+      "navigation-content occlusion",
+      "responsive composition"
+    ]
+  },
+  "deterministicAuditWeights": {
+    "primaryDeliverable": 20,
+    "documentation": 15,
+    "entryPoint": 10,
+    "regressionEvidence": 15,
+    "successfulVerification": 20,
+    "noUnresolvedFailure": 10,
+    "completionMarker": 10,
+    "semanticRequirementScore": 0,
+    "visualQualityScore": 0
+  },
+  "requiredArchitecture": [
+    "immutable EvidenceBundleReceipt",
+    "tree-bound ReviewReceipt",
+    "contract-derived semantic requirement registry",
+    "multi-dimensional deterministic visual vetoes",
+    "per-image batched review with no silent truncation",
+    "blind adversarial review before claim reconciliation",
+    "protected candidate ref and post-approval publication"
+  ]
+}

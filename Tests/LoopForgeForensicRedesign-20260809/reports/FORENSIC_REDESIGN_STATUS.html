@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LoopForge Forensic Redesign Status</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0d12;
+      --panel: #141821;
+      --panel2: #1a202b;
+      --text: #eef2fa;
+      --muted: #9da8ba;
+      --line: #2a3342;
+      --blue: #65a6ff;
+      --green: #55d68b;
+      --amber: #f5c15d;
+      --red: #ff7474;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(circle at 15% -10%, #182846 0, transparent 34%), var(--bg);
+      color: var(--text);
+      font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main { width: min(1180px, calc(100% - 40px)); margin: 44px auto 80px; }
+    h1 { margin: 0 0 8px; font-size: clamp(32px, 5vw, 58px); letter-spacing: -0.045em; }
+    h2 { margin: 0 0 16px; font-size: 22px; }
+    h3 { margin: 0 0 8px; font-size: 16px; }
+    p { margin: 0; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .lede { color: var(--muted); font-size: 18px; max-width: 860px; }
+    .banner, .card {
+      border: 1px solid var(--line);
+      background: linear-gradient(150deg, rgba(27, 34, 46, .95), rgba(17, 21, 29, .96));
+      border-radius: 18px;
+    }
+    .banner { margin-top: 28px; padding: 22px 24px; display: flex; gap: 18px; align-items: center; }
+    .dot { width: 13px; height: 13px; border-radius: 50%; background: var(--green); box-shadow: 0 0 18px var(--green); flex: 0 0 auto; }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; margin-top: 20px; }
+    .card { grid-column: span 4; padding: 22px; }
+    .wide { grid-column: span 8; }
+    .full { grid-column: 1 / -1; }
+    .metric { font-size: 34px; font-weight: 750; letter-spacing: -0.04em; }
+    .label, .small { color: var(--muted); font-size: 13px; }
+    .status { display: inline-flex; border: 1px solid currentColor; border-radius: 999px; padding: 3px 9px; font-size: 12px; margin-bottom: 12px; }
+    .green { color: var(--green); }
+    .amber { color: var(--amber); }
+    .red { color: var(--red); }
+    ul, ol { margin: 10px 0 0; padding-left: 20px; }
+    li + li { margin-top: 7px; }
+    .links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 14px; }
+    .links a { border-bottom: 1px solid var(--line); padding: 8px 0; }
+    figure { margin: 0; }
+    figure + figure { margin-top: 18px; }
+    figure img { display: block; width: 100%; border-radius: 12px; border: 1px solid var(--line); }
+    figcaption { margin-top: 10px; color: var(--muted); font-size: 13px; }
+    code { color: #c8dcff; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    @media (max-width: 820px) {
+      .card, .wide { grid-column: 1 / -1; }
+      .links { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>LoopForge forensic redesign</h1>
+  <p class="lede">Evidence-backed reconstruction of the non-convergent EasyBusiness run, followed by a side-by-side orchestration kernel redesign. EasyBusiness is preserved as read-only evidence.</p>
+
+  <section class="banner">
+    <span class="dot"></span>
+    <div>
+      <strong>The damaging Auto Graph is permanently stopped.</strong>
+      <p class="small">Task <code>1ED2180F-FBE1-4BCA-9E79-701F40CC3483</code> was not resumed. Native verification observed it as stopped; the product repository was not mutated by this redesign.</p>
+    </div>
+  </section>
+
+  <div class="grid">
+    <section class="card">
+      <span class="status green">Forensic gate passed</span>
+      <div class="metric">39,370 s</div>
+      <div class="label">strict forensic analysis before production edits</div>
+    </section>
+    <section class="card">
+      <span class="status green">Evidence corpus</span>
+      <div class="metric">5,758</div>
+      <div class="label">chronological stopped-task events</div>
+    </section>
+    <section class="card">
+      <span class="status green">Source audit</span>
+      <div class="metric">37,444</div>
+      <div class="label">lines across 64 production files</div>
+    </section>
+    <section class="card full">
+      <span class="status green">Strict active-work floor reached</span>
+      <div class="metric">196,950 s</div>
+      <div class="label">259 accepted intervals; failed runs, tests/builds, explicit waits, lock/sleep gaps, and prior-task time excluded. This is a minimum-work gate, not completion.</div>
+    </section>
+
+    <section class="card wide">
+      <h2>Systemic cause, not a bad prompt</h2>
+      <ol>
+        <li>Mutable controller snapshots acted as authority; no replayable command/event reducer existed.</li>
+        <li>Worker prose and self-review could become completion truth without requirement-bound receipts.</li>
+        <li>Retries tracked turns and labels, not causal failure, strategy identity, novelty, or expected value.</li>
+        <li>Visual tests rewarded geometric non-overlap while no immutable Chinese/product baseline could veto typography, shape, density, or hierarchy regressions.</li>
+        <li>Graph, Single Loop, and Watcher independently owned lifecycle, timing, cancellation, persistence, and completion semantics.</li>
+        <li>Mutable integration, push, resource cleanup, and report promotion were not one receipt-backed transaction.</li>
+      </ol>
+    </section>
+    <section class="card">
+      <h2>Measured failure</h2>
+      <p>The run continued through repeated blocked/replanned cycles, admitted rejected visual frames into later review, displayed aggregate success despite visual failure, and could not distinguish cumulative accepted work from the current iteration.</p>
+    </section>
+
+    <section class="card full">
+      <h2>Implemented side-by-side</h2>
+      <div class="links">
+        <a href="NATIVE_READY_ENROLLMENT_RELAUNCH_RECOVERY_IMPLEMENTATION.md">Ready-enrollment registry/journal recovery across native relaunch</a>
+        <a href="NATIVE_READY_ENROLLMENT_RELAUNCH_RECOVERY_SCORECARD.json">Ready-enrollment relaunch recovery scorecard (machine-readable)</a>
+        <a href="NATIVE_APP_EXECUTION_SESSION_CUTOVER_IMPLEMENTATION.md">Native app production-session activation cutover</a>
+        <a href="NATIVE_APP_EXECUTION_SESSION_CUTOVER_SCORECARD.json">Native app cutover scorecard (machine-readable)</a>
+        <a href="PRODUCTION_NATIVE_VISUAL_CONTROLLER_COMPOSITION_IMPLEMENTATION.md">Production execution-session native-visual composition</a>
+        <a href="PRODUCTION_NATIVE_VISUAL_CONTROLLER_COMPOSITION_SCORECARD.json">Production native-visual controller scorecard (machine-readable)</a>
+        <a href="PRODUCTION_FINAL_COMPLETION_CONTROLLER_COMPOSITION_IMPLEMENTATION.md">Production execution-session final-completion composition</a>
+        <a href="PRODUCTION_FINAL_COMPLETION_CONTROLLER_COMPOSITION_SCORECARD.json">Production final-completion controller scorecard (machine-readable)</a>
+        <a href="PRODUCTION_EXTERNAL_DEPENDENCY_CONTROLLER_COMPOSITION_IMPLEMENTATION.md">Production execution-session external-dependency composition</a>
+        <a href="PRODUCTION_EXTERNAL_DEPENDENCY_CONTROLLER_COMPOSITION_SCORECARD.json">Production external-dependency controller scorecard (machine-readable)</a>
+        <a href="EXTERNAL_DEPENDENCY_NATIVE_OBSERVATION_COMPOSITION_IMPLEMENTATION.md">Complete native external-dependency launch-to-observation composition</a>
+        <a href="EXTERNAL_DEPENDENCY_NATIVE_OBSERVATION_COMPOSITION_SCORECARD.json">Native external-dependency observation-composition scorecard (machine-readable)</a>
+        <a href="EXTERNAL_DEPENDENCY_NATIVE_SANDBOX_SPAWN_IMPLEMENTATION.md">External-dependency native sandbox spawn implementation</a>
+        <a href="EXTERNAL_DEPENDENCY_NATIVE_SANDBOX_SPAWN_SCORECARD.json">External-dependency native sandbox spawn scorecard (machine-readable)</a>
+        <a href="KERNEL_SLICE_ONE_IMPLEMENTATION.md">Pure task contract, reducer, receipts, and projection</a>
+        <a href="JOURNAL_AND_CONSERVATIVE_IMPORT_IMPLEMENTATION.md">Hash-chained transaction journal and claims-only legacy import</a>
+        <a href="INTERVAL_LEDGER_IMPLEMENTATION.md">Boot-bound interval ledger with cumulative + live attempt time</a>
+        <a href="JOURNAL_BOUND_ACCEPTED_PROGRESS_TIME_IMPLEMENTATION.md">Journal-bound accepted progress time and fail-closed interval adjudication</a>
+        <a href="JOURNALED_DURATION_COMPLETION_GATE_IMPLEMENTATION.md">Journaled occurrences, replay-derived duration, completion veto, and native coverage diagnostics</a>
+        <a href="TYPED_PROGRESS_PROVENANCE_ENFORCEMENT.md">Typed causal-progress provenance, evidence binding, and recursive time-evidence retirement</a>
+        <a href="JOURNALED_OCCURRENCE_CLOCK_ISSUER_IMPLEMENTATION.md">Single-use clock authority, derived interval disposition, and sleep/reboot exclusion</a>
+        <a href="RUNTIME_SUPERVISOR_AND_RESOURCE_GOVERNOR_IMPLEMENTATION.md">Unified ownership, drain, quiescence, thermal budget, and queue</a>
+        <a href="PROCESS_GROUP_RUNTIME_ADAPTER_IMPLEMENTATION.md">Exact process-group launch, join, TERM/KILL drain, and descendant proof</a>
+        <a href="JOURNALED_PROCESS_RUNTIME_BRIDGE_IMPLEMENTATION.md">Journal-first process admission/binding/release and stale-writer compensation</a>
+        <a href="PROCESS_GROUP_CRASH_RECONCILIATION_IMPLEMENTATION.md">Exact PID/start/group recovery and fail-closed unbound reconciliation</a>
+        <a href="RUNTIME_SUPERVISOR_JOURNAL_HYDRATION_IMPLEMENTATION.md">Journal-head-bound supervisor hydration and recovery fences</a>
+        <a href="CAUSAL_CONVERGENCE_GOVERNOR_IMPLEMENTATION.md">Typed causal convergence, finite budgets, strategy retirement, and replacement receipts</a>
+        <a href="CAUSAL_CONVERGENCE_JOURNAL_INTEGRATION.md">Hash-journaled causal deltas, crash replay, duplicate fencing, and stale-writer rejection</a>
+        <a href="EQUIVALENT_STRATEGY_BUDGET_IDENTITY_IMPLEMENTATION.md">Equivalent-strategy identity and replay-stable shared budgets</a>
+        <a href="VISUAL_BASELINE_AND_DESIGN_GATE_IMPLEMENTATION.md">Immutable visual baselines, twelve hard gates, exact review batches, and revision-bound independent veto</a>
+        <a href="VISUAL_GATE_JOURNAL_INTEGRATION.md">Journal-first visual authority, three-way acceptance, latest-red revocation, and byte-stable frame v2</a>
+        <a href="NATIVE_VISUAL_CAPTURE_ADAPTER_IMPLEMENTATION.md">Allow-listed native capture attestation, canonical pixel evidence, and fail-closed lifecycle proof</a>
+        <a href="LEGACY_GRAPH_KERNEL_SHADOW_ADAPTER_IMPLEMENTATION.md">Claims-only legacy Graph shadow import, critical divergence vetoes, and zero writeback authority</a>
+        <a href="KERNEL_NODE_PARITY_AND_HISTORICAL_SHADOW_REPLAY.md">Exact node/requirement parity and byte-preserving retained stopped-task replay</a>
+        <a href="POPULATED_LEGACY_SHADOW_CONTRACT_MAPPING.md">Explicit compatibility manifest, populated effect-free shadow plan, and canonical cross-process evidence</a>
+        <a href="TRANSACTIONAL_MUTATION_PREFLIGHT_IMPLEMENTATION.md">Content-addressed mutation preflight, CAS conflicts, budget recomputation, and reverse rollback plan</a>
+        <a href="JOURNALED_INTEGRATION_STATE_MACHINE_IMPLEMENTATION.md">Hash-journaled apply, postimage verification, independent acceptance, rollback, and quarantine states</a>
+        <a href="WORKSPACE_MUTATION_FILESYSTEM_EXECUTOR_IMPLEMENTATION.md">Bounded filesystem execution, durable recovery, inode ownership, unchanged-tree proof, and quarantine</a>
+        <a href="JOURNALED_WORKSPACE_EFFECT_RUNTIME_IMPLEMENTATION.md">Journal-first workspace effects, immutable apply evidence, idempotent rollback, and bounded crash replay</a>
+        <a href="WORKSPACE_MUTATION_EFFECT_OUTBOX_IMPLEMENTATION.md">Durable sealed effect queue, canonical payloads, and bounded recovery dispatcher</a>
+        <a href="WORKSPACE_MUTATION_AUTHORITY_GAP_AUDIT.md">Caller-forgeable lease finding, live-expiry repair, and trusted issuer requirements</a>
+        <a href="JOURNALED_WORKSPACE_MUTATION_LEASE_AUTHORITY_IMPLEMENTATION.md">Trusted workspace lease issuer, canonical-root exclusivity, dual-live validation, and journaled release</a>
+        <a href="WORKSPACE_MUTATION_RELEASE_AND_CRASH_RECONCILIATION_IMPLEMENTATION.md">Stable release identities, pre-acknowledgement cleanup, and admission/release crash reconciliation</a>
+        <a href="WORKSPACE_MUTATION_FAILURE_QUARANTINE_OWNERSHIP_IMPLEMENTATION.md">Durable failed ownership, cleanup-failure crash reconciliation, and quiescence blocking</a>
+        <a href="FAILED_OWNERSHIP_EXECUTOR_REENTRY_RETIREMENT_IMPLEMENTATION.md">Failed-ownership executor veto, durable effect quarantine, and zero-repeat recovery</a>
+        <a href="PRE_EFFECT_EXPIRED_AUTHORITY_RETIREMENT_IMPLEMENTATION.md">Expired pre-effect authority release, durable retirement, and zero-repeat recovery</a>
+        <a href="BOUNDED_EFFECT_DISPATCH_RETIREMENT_IMPLEMENTATION.md">Exhaustive dispatch error policy, three-attempt persistence budget, and deterministic retirement</a>
+        <a href="PRODUCTION_RECOVERY_WIRING_GAP_AUDIT.md">Production recovery gap audit and trusted registry boundary</a>
+        <a href="WORKSPACE_MUTATION_RECOVERY_REGISTRY_AND_STARTUP_IMPLEMENTATION.md">Digest-sealed run registry, bounded recovery owner, startup fail-closed gate, and termination coordination</a>
+        <a href="MINIMUM_AUTHORITY_AND_RELEASE_PROVENANCE_IMPLEMENTATION.md">Minimum-authority defaults, non-escalating inference, source/test binding, and real executable smoke</a>
+        <a href="FAIL_CLOSED_CONTROL_PLANE_RETIREMENTS.md">Strict Graph envelope, bounded Watcher cadence, and negative executable-startup proof</a>
+        <a href="PROVIDER_NEUTRAL_SUBSTITUTION_CONTRACT_IMPLEMENTATION.md">Typed exact-implementation contracts and provider-neutral substitution rejection</a>
+        <a href="WATCHER_INDEPENDENT_REVIEW_IMPLEMENTATION.md">Digest-bound read-only Watcher review and fail-closed assessment authority</a>
+        <a href="WATCHER_DETERMINISTIC_COMPLETION_IMPLEMENTATION.md">Receipt-bound deterministic Watcher completion and startup invalidation</a>
+        <a href="DIGEST_ADDRESSED_HEAVY_EVIDENCE_CACHE_IMPLEMENTATION.md">Digest-addressed heavy-evidence cache, tamper rejection, coalescing, and bounded retention</a>
+        <a href="JOURNAL_BOUND_REPOSITORY_INDEX_IMPLEMENTATION.md">Journal-bound repository generations, single-scan evidence projection, and receipt-free fail-closed behavior</a>
+        <a href="SHARED_REPOSITORY_OBSERVATION_CUTOVER_IMPLEMENTATION.md">Shared Loop/Graph audit, prompt, and evidence observations with duplicate scanner retirement</a>
+        <a href="JOURNAL_ISSUED_REPOSITORY_GENERATION_IMPLEMENTATION.md">Journal-only repository-generation authority and startup cache telemetry</a>
+        <a href="SOURCE_SPAN_TASK_CONTRACT_COMPILER_IMPLEMENTATION.md">Exact UTF-8 source-span contract compiler and opaque user ratification</a>
+        <a href="PLAN_REQUIREMENT_OWNERSHIP_IMPLEMENTATION.md">Exact mandatory-requirement plan ownership and deterministic typed rejection</a>
+        <a href="PROTECTED_WORKSPACE_BASELINE_IMPLEMENTATION.md">Protected workspace baseline contract, plan, and transaction enforcement</a>
+        <a href="TYPED_DELIVERABLE_CARDINALITY_IMPLEMENTATION.md">Typed exact deliverable cardinality, explicit source authority, and member receipts</a>
+        <a href="TYPED_EXTERNAL_DEPENDENCY_EVIDENCE_IMPLEMENTATION.md">Typed external dependencies, independent observation, and receipt-bound blockers</a>
+        <a href="EXTERNAL_DEPENDENCY_REPLAY_AUTHORITY_HARDENING.md">External-dependency decoded-event replay and duplicate-receipt authority hardening</a>
+        <a href="EXTERNAL_DEPENDENCY_REPLAY_AUTHORITY_HARDENING_SCORECARD.json">External-dependency replay authority scorecard (machine-readable)</a>
+        <a href="EXTERNAL_DEPENDENCY_EXECUTABLE_PROBE_CONTRACT_IMPLEMENTATION.md">Immutable external-dependency executable probe contract and strict parser</a>
+        <a href="EXTERNAL_DEPENDENCY_JOURNALED_ACTIVATION_IMPLEMENTATION.md">Journaled inert dependency activation, exact executable staging, and immutable nonce request</a>
+        <a href="EXTERNAL_DEPENDENCY_LAUNCH_READINESS_VETO_IMPLEMENTATION.md">External-dependency launch-readiness containment veto before admission</a>
+        <a href="EXTERNAL_DEPENDENCY_LAUNCH_READINESS_VETO_SCORECARD.json">External-dependency launch-readiness veto scorecard (machine-readable)</a>
+        <a href="EXTERNAL_DEPENDENCY_RESULT_MAPPING_IMPLEMENTATION.md">Exact transport, canonical parse, native-exit, and declared-row result mapping</a>
+        <a href="EXTERNAL_DEPENDENCY_RESULT_MAPPING_SCORECARD.json">External-dependency result mapping scorecard (machine-readable)</a>
+        <a href="EXTERNAL_DEPENDENCY_RELEASE_BOUND_RESULT_AUTHORITY_IMPLEMENTATION.md">Release-bound retained-output and native-result authority</a>
+        <a href="EXTERNAL_DEPENDENCY_RELEASE_BOUND_RESULT_AUTHORITY_SCORECARD.json">External-dependency release-bound result-authority scorecard (machine-readable)</a>
+        <a href="EXTERNAL_DEPENDENCY_JOURNAL_OBSERVATION_ISSUER_IMPLEMENTATION.md">Journal-owned external-dependency observation issuance</a>
+        <a href="EXTERNAL_DEPENDENCY_JOURNAL_OBSERVATION_ISSUER_SCORECARD.json">External-dependency observation-issuer scorecard (machine-readable)</a>
+        <a href="EXTERNAL_DEPENDENCY_RUNTIME_LAUNCH_JOURNAL_IMPLEMENTATION.md">Activation-bound external-dependency runtime-launch journal boundary</a>
+        <a href="EXTERNAL_DEPENDENCY_RUNTIME_LAUNCH_JOURNAL_SCORECARD.json">External-dependency runtime-launch journal scorecard (machine-readable)</a>
+        <a href="EXTERNAL_DEPENDENCY_EXECUTABLE_PROBE_CONTRACT_SCORECARD.json">External-dependency executable probe contract scorecard (machine-readable)</a>
+        <a href="PROSE_INERT_CAPABILITY_AUTHORITY_IMPLEMENTATION.md">Prose-inert capabilities and exact out-of-band user grant receipts</a>
+        <a href="PURE_CAPABILITY_PROBE_IMPLEMENTATION.md">Pure capability observation, owned non-Git candidate isolation, and binary-safe integration</a>
+        <a href="PRE_REVIEW_SCOPE_ENFORCEMENT_IMPLEMENTATION.md">NUL-safe isolated-delta scope enforcement before model review and integration</a>
+        <a href="FINAL_AUDIT_SCOPE_MONOTONICITY_IMPLEMENTATION.md">Final-audit scope monotonicity and whole-workspace fallback retirement</a>
+        <a href="LEGACY_CAUSAL_STRATEGY_GATE_IMPLEMENTATION.md">Legacy causal topology gate and lexical-novelty retirement</a>
+        <a href="REPEATED_BLOCKER_STRUCTURAL_DECISION_IMPLEMENTATION.md">Repeated-blocker structural decision and same-node reactivation retirement</a>
+        <a href="DURABLE_FINAL_REPAIR_BUDGET_MONOTONICITY_IMPLEMENTATION.md">Durable final-repair budget monotonicity and replay exhaustion</a>
+        <a href="RETIRED_STRATEGY_TOMBSTONE_CONTINUITY_IMPLEMENTATION.md">Retired-strategy tombstone continuity across legacy checkpoints</a>
+        <a href="RECEIPT_NATIVE_CONVERGENCE_DIAGNOSTICS_IMPLEMENTATION.md">Receipt-native convergence diagnosis, journal projection, and read-only native UI</a>
+        <a href="JOURNALED_OWNED_PROCESS_OCCURRENCE_BRIDGE_IMPLEMENTATION.md">Exact owned-process occurrence binding, native-exit clock bound, and cross-wired receipt rejection</a>
+        <a href="PRODUCTION_KERNEL_RUN_ENROLLMENT_IMPLEMENTATION.md">Compiler-sealed ratified contract, journal-first production enrollment, and durable recovery provenance</a>
+        <a href="NATIVE_AUTO_GRAPH_INVOCATION_IMPLEMENTATION.md">Native contract review, exact user ratification, and inert ready enrollment</a>
+        <a href="LEGACY_AUTO_GRAPH_EXECUTION_RETIREMENT.md">Historical Auto Graph start and resume retirement</a>
+        <a href="LEGACY_SINGLE_PARALLEL_EXECUTION_RETIREMENT_IMPLEMENTATION.md">All-mode legacy execution retirement and Journaled Auto Graph-only authoring</a>
+        <a href="LEGACY_SINGLE_PARALLEL_EXECUTION_RETIREMENT_SCORECARD.json">All-mode legacy execution retirement scorecard (machine-readable)</a>
+        <a href="KERNEL_EXECUTION_ADMISSION_AUTHORITY_IMPLEMENTATION.md">Exact causal attempt admission and process materialization authority</a>
+        <a href="KERNEL_EXECUTION_COMPOSITION_IMPLEMENTATION.md">Inert execution preparation, exact activation proof, and runtime consumption</a>
+        <a href="KERNEL_WORKER_PROCESS_TRANSPORT_IMPLEMENTATION.md">Journal-private worker I/O, exact natural-exit release, and occurrence closure</a>
+        <a href="KERNEL_PROVIDER_AUTHORITY_GAP_AUDIT.md">Provider-profile authority, ambient environment, result-receipt, and cleanup-race audit</a>
+        <a href="KERNEL_EXECUTION_PROFILE_RATIFICATION_IMPLEMENTATION.md">User-visible provider-neutral execution profile, source binding, and enrollment veto</a>
+        <a href="KERNEL_ACTIVATION_EXECUTABLE_AUTHORITY_IMPLEMENTATION.md">Activation-bound worker profile, actor lineage, and executable content authority</a>
+        <a href="KERNEL_IMMUTABLE_EXECUTABLE_STAGING_IMPLEMENTATION.md">Journal-private content-addressed executable staging and launch receipt</a>
+        <a href="KERNEL_MINIMAL_PROCESS_ENVIRONMENT_IMPLEMENTATION.md">Kernel-generated minimal environment, digest receipts, and ambient-host retirement</a>
+        <a href="KERNEL_STRICT_WORKER_RESULT_PARSER_IMPLEMENTATION.md">Strict retained JSONL parsing, exact output digests, nonce binding, and journaled proposal receipt</a>
+        <a href="KERNEL_EXECUTION_DISPOSITION_DERIVATION_IMPLEMENTATION.md">Reducer-owned execution derivation and caller-selected disposition retirement</a>
+        <a href="KERNEL_NATIVE_SANDBOX_IMPLEMENTATION.md">Attested native Seatbelt sandbox, pre-exec gate, and journal-path protection</a>
+        <a href="KERNEL_PROVIDER_INVOCATION_AND_SECRET_CAPABILITY_IMPLEMENTATION.md">Journal-owned prompt, deterministic provider argv, fixed-FD secret gate transport, and release-only provider runtime API</a>
+        <a href="KERNEL_PROVIDER_LAUNCH_JOURNAL_EVENT_IMPLEMENTATION.md">Unforgeable atomic provider-launch journal event, typed recovery, and strict result-chain binding</a>
+        <a href="KERNEL_PRODUCTION_EXECUTION_COMPOSITION_IMPLEMENTATION.md">Independent production prepare/activate/provider-session composition and legacy-controller exclusion</a>
+        <a href="KERNEL_NATIVE_EXECUTION_READINESS_GATE_IMPLEMENTATION.md">Read-only native plan/start readiness, typed missing-authority blockers, and durable registration identity repair</a>
+        <a href="KERNEL_NATIVE_BOUNDED_EXECUTION_AUTHORITY_IMPLEMENTATION.md">User-confirmed native mutation and convergence ceilings bound to the confirmed plan</a>
+        <a href="KERNEL_NATIVE_BOUNDED_EXECUTION_AUTHORITY_SCORECARD.json">Native bounded execution authority scorecard (machine-readable)</a>
+        <a href="KERNEL_WORKSPACE_SOURCE_REVISION_COLLECTOR_IMPLEMENTATION.md">Bounded no-follow content-complete workspace source-revision evidence</a>
+        <a href="KERNEL_WORKSPACE_SOURCE_REVISION_COLLECTOR_SCORECARD.json">Workspace source-revision collector scorecard (machine-readable)</a>
+        <a href="KERNEL_NATIVE_SOURCE_REVISION_AUTHORITY_IMPLEMENTATION.md">Displayed, freshness-checked, user-confirmed, journal-retained source revision</a>
+        <a href="KERNEL_NATIVE_SOURCE_REVISION_AUTHORITY_SCORECARD.json">Native source-revision authority scorecard (machine-readable)</a>
+        <a href="KERNEL_NATIVE_STRATEGY_AND_PLAN_AUTHORITY_IMPLEMENTATION.md">User-confirmed causal strategy, mechanical falsifiers, and requirement-owned plan</a>
+        <a href="KERNEL_NATIVE_STRATEGY_AND_PLAN_AUTHORITY_SCORECARD.json">Native strategy and plan authority scorecard (machine-readable)</a>
+        <a href="KERNEL_VERIFICATION_AND_REVIEW_COMMAND_AUTHORITY_IMPLEMENTATION.md">Fail-closed verification/review command authority and receipt-injection retirement</a>
+        <a href="DETERMINISTIC_VERIFICATION_ISSUER_PREREQUISITE_AUDIT.md">Stop-the-line deterministic verification issuer prerequisite audit</a>
+        <a href="DETERMINISTIC_VERIFICATION_ISSUER_PREREQUISITE_AUDIT_SCORECARD.json">Deterministic verification issuer prerequisite scorecard (machine-readable)</a>
+        <a href="KERNEL_EXECUTABLE_VERIFICATION_RECIPE_AUTHORITY_IMPLEMENTATION.md">Executable verification recipe contract and native-confirmation authority</a>
+        <a href="KERNEL_EXECUTABLE_VERIFICATION_RECIPE_AUTHORITY_SCORECARD.json">Executable verification recipe authority scorecard (machine-readable)</a>
+        <a href="KERNEL_CANDIDATE_POSTIMAGE_ATTESTATION_IMPLEMENTATION.md">Journal-owned candidate-postimage attestation authority</a>
+        <a href="KERNEL_CANDIDATE_POSTIMAGE_ATTESTATION_SCORECARD.json">Candidate-postimage attestation scorecard (machine-readable)</a>
+        <a href="KERNEL_CANDIDATE_POSTIMAGE_MATERIALIZATION_IMPLEMENTATION.md">Content-addressed read-only candidate input materialization and revalidation</a>
+        <a href="KERNEL_CANDIDATE_POSTIMAGE_MATERIALIZATION_SCORECARD.json">Candidate-postimage materialization scorecard (machine-readable)</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_ACTIVATION_IMPLEMENTATION.md">Independent post-apply verifier activation and exact journal-head binding</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_ACTIVATION_SCORECARD.json">Postimage-verifier activation scorecard (machine-readable)</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_JOURNALED_RUNTIME_IMPLEMENTATION.md">Activation-linked journaled native verifier lease, launch, exit, and release</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_JOURNALED_RUNTIME_SCORECARD.json">Journaled postimage-verifier runtime scorecard (machine-readable)</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_CONTAINMENT_IMPLEMENTATION.md">Journal-owned wall, output, child-process, hashing, and release containment</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_CONTAINMENT_SCORECARD.json">Postimage-verifier containment scorecard (machine-readable)</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_ABSENT_RECOVERY_IMPLEMENTATION.md">Exact absent-PID fail-red verifier recovery without invented exit evidence</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_ABSENT_RECOVERY_SCORECARD.json">Postimage-verifier absent recovery scorecard (machine-readable)</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_PARSER_AUTHORITY_IMPLEMENTATION.md">Canonical parser format and implementation-identity authority</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_PARSER_AUTHORITY_SCORECARD.json">Postimage-verifier parser authority scorecard (machine-readable)</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_RESULT_PARSER_IMPLEMENTATION.md">Byte-exact canonical verifier result parser and non-serializable parse capability</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_RESULT_PARSER_SCORECARD.json">Postimage-verifier result parser scorecard (machine-readable)</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_RUNTIME_PARSE_COMPOSITION_IMPLEMENTATION.md">Atomic retained-byte runtime parse composition and fail-red recovery evidence</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_RUNTIME_PARSE_COMPOSITION_SCORECARD.json">Runtime parse-composition scorecard (machine-readable)</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_EXIT_RESULT_MAPPING_IMPLEMENTATION.md">Exact native-exit/parser-result mapping and fail-red replay evidence</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_EXIT_RESULT_MAPPING_SCORECARD.json">Exit/result mapping scorecard (machine-readable)</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_RESULT_AUTHORITY_IMPLEMENTATION.md">Content-addressed postimage result and post-journal live capability boundary</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_RESULT_AUTHORITY_SCORECARD.json">Postimage result-authority scorecard (machine-readable)</a>
+        <a href="KERNEL_POSTIMAGE_VERIFICATION_ISSUANCE_IMPLEMENTATION.md">Live-result-derived ordinary verification issuance and latest-red revocation</a>
+        <a href="KERNEL_POSTIMAGE_VERIFICATION_ISSUANCE_SCORECARD.json">Postimage verification issuance scorecard (machine-readable)</a>
+        <a href="KERNEL_INTEGRATION_RELIANCE_IMPLEMENTATION.md">Exact verification/review integration reliance and publication denial</a>
+        <a href="KERNEL_INTEGRATION_RELIANCE_SCORECARD.json">Integration reliance scorecard (machine-readable)</a>
+        <a href="KERNEL_MUTATION_PREFLIGHT_AUTHORITY_GAP_HARDENING.md">Decoded mutation-preflight authority injection retirement and missing-fact inventory</a>
+        <a href="KERNEL_MUTATION_PREFLIGHT_AUTHORITY_GAP_HARDENING_SCORECARD.json">Mutation-preflight authority-gap scorecard (machine-readable)</a>
+        <a href="KERNEL_MUTATION_PREPARATION_FACTS_IMPLEMENTATION.md">Transaction-bound write, budget, rollback, quiescence, and path-preparation facts</a>
+        <a href="KERNEL_MUTATION_PREPARATION_FACTS_SCORECARD.json">Mutation-preparation facts scorecard (machine-readable)</a>
+        <a href="KERNEL_MUTATION_OPERATION_DERIVATION_IMPLEMENTATION.md">Deterministic content-addressed regular-file mutation delta derivation</a>
+        <a href="KERNEL_MUTATION_OPERATION_DERIVATION_SCORECARD.json">Mutation-operation derivation scorecard (machine-readable)</a>
+        <a href="KERNEL_WORKTREE_PREIMAGE_PLANE_IMPLEMENTATION.md">Exact initial-worktree preimage plane and explicit missing-plane assessment</a>
+        <a href="KERNEL_WORKTREE_PREIMAGE_PLANE_SCORECARD.json">Worktree-preimage plane scorecard (machine-readable)</a>
+        <a href="KERNEL_MUTATION_CONTENT_OBJECT_SET_IMPLEMENTATION.md">Exact mutation-delta before/after content-byte set verification</a>
+        <a href="KERNEL_MUTATION_CONTENT_OBJECT_SET_SCORECARD.json">Mutation content-object set scorecard (machine-readable)</a>
+        <a href="KERNEL_MUTATION_CONTENT_OBJECT_STORE_IMPLEMENTATION.md">Descriptor-relative durable content-addressed mutation byte store</a>
+        <a href="KERNEL_MUTATION_CONTENT_OBJECT_STORE_SCORECARD.json">Mutation content-object store scorecard (machine-readable)</a>
+        <a href="KERNEL_RATIFIED_BASELINE_CONTENT_CAPTURE_IMPLEMENTATION.md">Journal/ratification-backed baseline byte-origin capture</a>
+        <a href="KERNEL_RATIFIED_BASELINE_CONTENT_CAPTURE_SCORECARD.json">Ratified baseline byte-origin scorecard (machine-readable)</a>
+        <a href="KERNEL_JOURNALED_MUTATION_CONTENT_COMPOSITION_IMPLEMENTATION.md">Journal-aware exact baseline/candidate byte composition</a>
+        <a href="KERNEL_JOURNALED_MUTATION_CONTENT_COMPOSITION_SCORECARD.json">Journaled mutation content-composition scorecard (machine-readable)</a>
+        <a href="KERNEL_RESIDENT_MEMORY_CAPABILITY_VETO_IMPLEMENTATION.md">Disproven Darwin memory primitives and exact production verifier-launch veto</a>
+        <a href="KERNEL_RESIDENT_MEMORY_CAPABILITY_VETO_SCORECARD.json">Resident-memory capability veto scorecard (machine-readable)</a>
+        <a href="KERNEL_DESCRIPTOR_ATOMIC_CANDIDATE_HANDOFF_IMPLEMENTATION.md">Descriptor-atomic candidate validation, spawn binding, and stopped-process vnode attestation</a>
+        <a href="KERNEL_DESCRIPTOR_ATOMIC_CANDIDATE_HANDOFF_SCORECARD.json">Descriptor-atomic candidate handoff scorecard (machine-readable)</a>
+        <a href="KERNEL_BASELINE_AND_VISUAL_COMMAND_AUTHORITY_IMPLEMENTATION.md">Fail-closed immutable-baseline/visual command authority and candidate-injection retirement</a>
+        <a href="KERNEL_BASELINE_AND_VISUAL_COMMAND_AUTHORITY_SCORECARD.json">Baseline and visual command authority scorecard (machine-readable)</a>
+        <a href="NATIVE_DESIGN_BASELINE_CONFIRMATION_AUTHORITY_IMPLEMENTATION.md">Native protected-artifact design-baseline confirmation and Release preparation</a>
+        <a href="NATIVE_DESIGN_BASELINE_CONFIRMATION_AUTHORITY_SCORECARD.json">Native design-baseline confirmation scorecard (machine-readable)</a>
+        <a href="NATIVE_DESIGN_BASELINE_CAPTURE_SOURCE_UI_IMPLEMENTATION.md">Native capture-source selection, protected-artifact binding, and post-enrollment confirmation</a>
+        <a href="NATIVE_DESIGN_BASELINE_CAPTURE_SOURCE_UI_SCORECARD.json">Native capture-source UI scorecard (machine-readable)</a>
+        <a href="NATIVE_VISUAL_MEASUREMENT_AUTHORITY_IMPLEMENTATION.md">Live native candidate-capture and deterministic measurement authority</a>
+        <a href="NATIVE_VISUAL_MEASUREMENT_AUTHORITY_SCORECARD.json">Native visual measurement authority scorecard (machine-readable)</a>
+        <a href="NATIVE_INDEPENDENT_VISUAL_REVIEW_AUTHORITY_IMPLEMENTATION.md">Distinct ratified native independent visual-review authority</a>
+        <a href="NATIVE_INDEPENDENT_VISUAL_REVIEW_AUTHORITY_SCORECARD.json">Native independent visual-review authority scorecard (machine-readable)</a>
+        <a href="JOURNALED_NATIVE_VISUAL_EVALUATION_AUTHORITY_IMPLEMENTATION.md">Journal-bound live native visual-evaluation compositor and issuer</a>
+        <a href="JOURNALED_NATIVE_VISUAL_EVALUATION_AUTHORITY_SCORECARD.json">Journaled native visual-evaluation authority scorecard (machine-readable)</a>
+        <a href="JOURNALED_KERNEL_FINAL_COMPLETION_AUTHORITY_IMPLEMENTATION.md">Deterministic hash-journal-bound final-completion authority</a>
+        <a href="JOURNALED_KERNEL_FINAL_COMPLETION_AUTHORITY_SCORECARD.json">Journaled final-completion authority scorecard (machine-readable)</a>
+        <a href="KERNEL_INTEGRATION_AND_COMPLETION_COMMAND_AUTHORITY_IMPLEMENTATION.md">Journaled-runtime-only integration transitions and frame-bound final completion authority</a>
+        <a href="KERNEL_OCCURRENCE_DEPENDENCY_AND_QUIESCENCE_COMMAND_AUTHORITY_IMPLEMENTATION.md">Clock-owned occurrence authority and fail-closed dependency/drain/quiescence command boundaries</a>
+        <a href="KERNEL_RUNTIME_FACT_COMMAND_AUTHORITY_IMPLEMENTATION.md">File-owned process/workspace issuer tokens for admission, binding, release, and cleanup facts</a>
+        <a href="KERNEL_RUNTIME_LIFECYCLE_AUTHORITY_IMPLEMENTATION.md">Journal-first supervisor-owned runtime drain and quiescence authority</a>
+        <a href="KERNEL_JOURNALED_GIT_PREIMAGE_CAPTURE_IMPLEMENTATION.md">Atomic journal-owned Git HEAD, index, and untracked preimage capture</a>
+        <a href="KERNEL_JOURNALED_GIT_PREIMAGE_CAPTURE_SCORECARD.json">Git preimage capture scorecard (machine-readable)</a>
+        <a href="KERNEL_JOURNALED_CANONICAL_PREIMAGE_IMPLEMENTATION.md">Repository metadata, ignore policy, and canonical four-plane preimage</a>
+        <a href="KERNEL_JOURNALED_CANONICAL_PREIMAGE_SCORECARD.json">Canonical preimage scorecard (machine-readable)</a>
+        <a href="KERNEL_PREAPPLY_CANDIDATE_AUTHORITY_VETO_IMPLEMENTATION.md">Pre-apply candidate-isolation and acyclic-preflight readiness veto</a>
+        <a href="KERNEL_PREAPPLY_CANDIDATE_AUTHORITY_VETO_SCORECARD.json">Pre-apply candidate authority veto scorecard (machine-readable)</a>
+        <a href="KERNEL_PREAPPLY_CANDIDATE_ISOLATION_IMPLEMENTATION.md">Inert owner-private pre-apply candidate isolation capability</a>
+        <a href="KERNEL_PREAPPLY_CANDIDATE_ISOLATION_SCORECARD.json">Pre-apply candidate isolation scorecard (machine-readable)</a>
+        <a href="KERNEL_PREAPPLY_CANDIDATE_JOURNAL_ACCEPTANCE_IMPLEMENTATION.md">Reducer/hash-journal acceptance of live pre-apply isolation</a>
+        <a href="KERNEL_PREAPPLY_CANDIDATE_JOURNAL_ACCEPTANCE_SCORECARD.json">Pre-apply candidate journal acceptance scorecard (machine-readable)</a>
+        <a href="KERNEL_PREAPPLY_CANDIDATE_ACTIVATION_IMPLEMENTATION.md">Descriptor-retaining production candidate activation</a>
+        <a href="KERNEL_PREAPPLY_CANDIDATE_ACTIVATION_SCORECARD.json">Candidate activation and native cwd attestation scorecard (machine-readable)</a>
+        <a href="ACCEPTANCE_PROGRESS_SCORECARD.json">Current acceptance progress and unresolved contradictions (machine-readable)</a>
+        <a href="PACKAGE_AND_NATIVE_VERIFICATION.md">Release package, signature, hashes, native launch, and clean quit</a>
+        <a href="PACKAGE_AND_NATIVE_VERIFICATION_SCORECARD.json">Package and native verification scorecard (machine-readable)</a>
+        <a href="NATIVE_SOURCE_REVISION_CAPTURE_POLICY_AUTHORITY_IMPLEMENTATION.md">Explicit native source-revision capture-policy authority</a>
+        <a href="NATIVE_SOURCE_REVISION_CAPTURE_POLICY_AUTHORITY_SCORECARD.json">Native source-revision capture-policy authority scorecard (machine-readable)</a>
+        <a href="NATIVE_VERIFICATION_PROBE_SELECTION_AUTHORITY_IMPLEMENTATION.md">Exact native postimage-verifier selection authority</a>
+        <a href="NATIVE_VERIFICATION_PROBE_SELECTION_AUTHORITY_SCORECARD.json">Native verifier-selection authority scorecard (machine-readable)</a>
+        <a href="NATIVE_VERIFICATION_CONFIRMATION_FRESHNESS_IMPLEMENTATION.md">Confirmation-time verifier manifest and executable freshness enforcement</a>
+        <a href="NATIVE_VERIFICATION_CONFIRMATION_FRESHNESS_SCORECARD.json">Confirmation-freshness scorecard (machine-readable)</a>
+        <a href="NATIVE_VERIFIER_ENROLLMENT_STAGING_AND_ACTIVATION_RESOLUTION_IMPLEMENTATION.md">Enrollment-owned verifier import and activation-only digest resolution</a>
+        <a href="NATIVE_VERIFIER_ENROLLMENT_STAGING_AND_ACTIVATION_RESOLUTION_SCORECARD.json">Verifier enrollment/activation continuity scorecard (machine-readable)</a>
+        <a href="NATIVE_READ_ONLY_AUTHORING_AND_ACTIVATION_IMPLEMENTATION.md">Role-specific native read-only authoring and explicit activation</a>
+        <a href="NATIVE_READ_ONLY_AUTHORING_AND_ACTIVATION_SCORECARD.json">Native read-only authoring/activation scorecard (machine-readable)</a>
+        <a href="NATIVE_TERMINATION_QUIESCENCE_HARDENING.md">Receipt-proven native stop and fail-closed application termination</a>
+        <a href="NATIVE_TERMINATION_QUIESCENCE_HARDENING_SCORECARD.json">Native termination/quiescence hardening scorecard (machine-readable)</a>
+        <a href="NATIVE_RUNTIME_CLEANUP_EXECUTION.md">Exact bound-process normal-quit cleanup execution and recovery</a>
+        <a href="NATIVE_RUNTIME_CLEANUP_EXECUTION_SCORECARD.json">Native runtime cleanup execution scorecard (machine-readable)</a>
+        <a href="APPLICATION_RELAUNCH_CLEANUP_OWNERSHIP_IMPLEMENTATION.md">Cleanup-only executing-session ownership after full application relaunch</a>
+        <a href="APPLICATION_RELAUNCH_CLEANUP_OWNERSHIP_SCORECARD.json">Application relaunch cleanup-ownership scorecard (machine-readable)</a>
+        <a href="APPLICATION_CRASH_RECONCILIATION_IMPLEMENTATION.md">Exact application-crash cleanup reconciliation and auto-interruption</a>
+        <a href="APPLICATION_CRASH_RECONCILIATION_SCORECARD.json">Application-crash reconciliation scorecard (machine-readable)</a>
+        <a href="LIVE_PRODUCTION_SESSION_APPLICATION_QUIT_IMPLEMENTATION.md">Live production session application-quit proof</a>
+        <a href="LIVE_PRODUCTION_SESSION_APPLICATION_QUIT_SCORECARD.json">Live production session application-quit scorecard (machine-readable)</a>
+        <a href="LIVE_POSTIMAGE_VERIFIER_APPLICATION_QUIT_IMPLEMENTATION.md">Live postimage-verifier fail-red application-quit proof</a>
+        <a href="LIVE_POSTIMAGE_VERIFIER_APPLICATION_QUIT_SCORECARD.json">Live postimage-verifier application-quit scorecard (machine-readable)</a>
+        <a href="PRODUCTION_POSTIMAGE_VERIFIER_CONTROLLER_COMPOSITION_IMPLEMENTATION.md">Production postimage-verifier controller composition and retained veto</a>
+        <a href="PRODUCTION_POSTIMAGE_VERIFIER_CONTROLLER_COMPOSITION_SCORECARD.json">Production postimage-verifier controller-composition scorecard (machine-readable)</a>
+        <a href="PRODUCTION_MUTATION_PREPARATION_CONTROLLER_IMPLEMENTATION.md">Production mutation-preparation controller and durable pre-effect veto</a>
+        <a href="PRODUCTION_MUTATION_PREPARATION_CONTROLLER_SCORECARD.json">Production mutation-preparation controller scorecard (machine-readable)</a>
+        <a href="WORKSPACE_MUTATION_NORMAL_QUIT_JOIN_IMPLEMENTATION.md">Exact workspace-mutation normal-quit join composition</a>
+        <a href="WORKSPACE_MUTATION_NORMAL_QUIT_JOIN_SCORECARD.json">Workspace-mutation normal-quit join scorecard (machine-readable)</a>
+        <a href="ORDINARY_MACOS_RESIDENT_MEMORY_STRATEGY_RETIREMENT.md">Ordinary-macOS resident-memory strategy retirement</a>
+        <a href="ORDINARY_MACOS_RESIDENT_MEMORY_STRATEGY_RETIREMENT_SCORECARD.json">Ordinary-macOS resident-memory strategy scorecard (machine-readable)</a>
+        <a href="PRODUCTIVE_PROVIDER_ARCHITECTURE_SCOPE_RETIREMENT.md">Productive-provider architecture scope retirement</a>
+        <a href="PRODUCTIVE_PROVIDER_ARCHITECTURE_SCOPE_RETIREMENT_SCORECARD.json">Productive-provider architecture scope scorecard (machine-readable)</a>
+        <a href="CURRENT_PACKAGED_NATIVE_UI_VERIFICATION.md">Current packaged unlocked native walkthrough and quit</a>
+        <a href="CURRENT_PACKAGED_NATIVE_UI_VERIFICATION_SCORECARD.json">Current packaged native proof scorecard (machine-readable)</a>
+        <a href="TERMINAL_STRATEGY_HISTORY_PRESENTATION_IMPLEMENTATION.md">Truthful terminal strategy-history presentation</a>
+        <a href="TERMINAL_STRATEGY_HISTORY_PRESENTATION_SCORECARD.json">Terminal strategy-history presentation scorecard (machine-readable)</a>
+        <a href="PROVIDER_HARNESS_V2_TRANSPORT_VETO_IMPLEMENTATION.md">Signed Provider Harness V2 transport-veto spine</a>
+        <a href="PROVIDER_HARNESS_V2_TRANSPORT_VETO_SCORECARD.json">Provider Harness V2 transport-veto scorecard (machine-readable)</a>
+        <a href="PROVIDER_HARNESS_MODE_AUTHORIZATION_HARDENING.md">Provider Harness mode authorization/replay hardening</a>
+        <a href="PROVIDER_HARNESS_MODE_AUTHORIZATION_HARDENING_SCORECARD.json">Provider Harness mode hardening scorecard (machine-readable)</a>
+        <a href="PROVIDER_ENVIRONMENT_PREPROMPT_VETO_HARDENING.md">Provider environment pre-prompt veto hardening</a>
+        <a href="PROVIDER_ENVIRONMENT_PREPROMPT_VETO_HARDENING_SCORECARD.json">Provider environment pre-prompt veto scorecard (machine-readable)</a>
+        <a href="NATIVE_PROVIDER_PROMPT_AUTHORITY_AND_PROTOCOL_GATE_IMPLEMENTATION.md">Journal-derived provider prompt and typed harness gate</a>
+        <a href="NATIVE_PROVIDER_PROMPT_AUTHORITY_AND_PROTOCOL_GATE_SCORECARD.json">Provider prompt authority and harness-gate scorecard (machine-readable)</a>
+        <a href="NATIVE_PROVIDER_PROFILE_READINESS_DIAGNOSTICS_IMPLEMENTATION.md">Typed provider-profile readiness diagnostics and native proof</a>
+        <a href="NATIVE_PROVIDER_PROFILE_READINESS_DIAGNOSTICS_SCORECARD.json">Provider-profile readiness diagnostics scorecard (machine-readable)</a>
+        <a href="PROVIDER_NATIVE_RESOURCE_BOUNDARY_IMPLEMENTATION.md">Provider native process/output boundary and sandbox proof</a>
+        <a href="PROVIDER_NATIVE_RESOURCE_BOUNDARY_SCORECARD.json">Provider native resource-boundary scorecard (machine-readable)</a>
+        <a href="NATIVE_NETWORK_AUTHORITY_AUTHORING_IMPLEMENTATION.md">Exact default-off native worker-network authority authoring</a>
+        <a href="NATIVE_NETWORK_AUTHORITY_AUTHORING_SCORECARD.json">Native worker-network authority scorecard (machine-readable)</a>
+        <a href="KERNEL_PROVIDER_INVOCATION_CONTEXT_TRANSPORT_IMPLEMENTATION.md">Kernel-owned V2 provider invocation-context transport</a>
+        <a href="KERNEL_PROVIDER_INVOCATION_CONTEXT_TRANSPORT_SCORECARD.json">Provider invocation-context transport scorecard (machine-readable)</a>
+        <a href="KERNEL_PROVIDER_STORED_CREDENTIAL_AUTHORITY_IMPLEMENTATION.md">Exact ratified Keychain credential authority and production secret boundary</a>
+        <a href="KERNEL_PROVIDER_STORED_CREDENTIAL_AUTHORITY_SCORECARD.json">Stored-credential authority scorecard (machine-readable)</a>
+        <a href="ARCHITECTURE_RATIFICATION_AND_CUTOVER_PLAN.md">Eleven-gate cutover plan and stop-the-line rules</a>
+      </div>
+    </section>
+
+    <section class="card wide">
+      <h2>Latest interactive packaged native UI evidence</h2>
+      <p class="small">The screenshots below belong exactly to the latest interactively inspected package built at 2026-08-16T06:19:54Z, bound to snapshot <code>0e42de36…21da7</code> and its package-owned 864-test, 8-skip, 0-failure log. Deep strict signing, ZIP/DMG/checksum validation, mounted-DMG identity for all three Mach-O files, direct and mounted exact startup, cleanup, source/test-manifest binding, unlocked inspection, and real UI quit passed. The newer source-only runtime-policy package has no visible UI change; these screenshots are not relabeled as its evidence.</p>
+      <figure>
+        <a href="../screenshots/packaged-loopforge-current-strategy-history-main-20260816T062100Z.png"><img src="../screenshots/packaged-loopforge-current-strategy-history-main-20260816T062100Z.png" alt="Exact current packaged LoopForge native UI"></a>
+        <figcaption>Exact latest interactive package: LoopForge's native Journaled Auto Graph surface was unlocked; the preserved historical EasyBusiness task was visibly stopped and legacy-migration-required. It was not opened, resumed, or modified. Screenshot SHA-256 <code>443373ad…bb8d</code>.</figcaption>
+      </figure>
+      <figure>
+        <a href="../screenshots/packaged-loopforge-current-strategy-history-diagnostics-20260816T062100Z.png"><img src="../screenshots/packaged-loopforge-current-strategy-history-diagnostics-20260816T062100Z.png" alt="Exact current packaged LoopForge kernel diagnostics"></a>
+        <figcaption>Exact latest interactive package diagnostics: activation remained disabled behind exact mutation and provider authorities. Reducer replay already clears the execution attempt; the still-unretired but inert convergence record now reads <code>unretired history · run stopped</code>. The immutable journal needs no migration or quarantine. Screenshot SHA-256 <code>37f8a69e…f50a</code>.</figcaption>
+      </figure>
+    </section>
+    <section class="card">
+      <span class="status green">Current source verification</span>
+      <div class="metric">867</div>
+      <div class="label">package-owned Swift tests · 8 environment-gated skips · 0 failures · exact transport-veto package, startup, and authority-path proof</div>
+      <ul>
+        <li>Current source snapshot <code>348535de…11d3b</code> passed its package-owned 867-test run with 8 intentional environment skips and zero failures in 87.345 test seconds. All three Release products, deep signing, ZIP integrity, DMG verification, all-three-Mach-O mounted-DMG identity, SHA-256 manifest, exact source/test binding, direct and mounted startup, detach, and cleanup passed. The exact packaged executable is <code>f09bcf83…f5fdf</code> with CDHash <code>0ba16766…dc39</code></li>
+        <li>A full-application-crash proof launched a real productive provider and observed its PID live. A new AppModel received only durable recovery evidence, reconstructed no productive session, reattached the exact PID/start identity through cleanup-only authority, terminated it, journaled release under the distinct <code>native-crash-recovery-*</code> namespace, interrupted the attempt, and reached stopped quiescence. Exact empty and missing-drain crash windows also auto-interrupt; stale or ambiguous ownership advances no journal and remains a visible blocker</li>
+        <li>The shared supervisor now rejects incompatible release semantics before admission: borrowed resources detach, owned process trees gracefully terminate, and other owned resources join through an exact typed owner. Queue insertion and recovery snapshots use the same rule. The workspace-mutation authority now retains its exact non-Codable live join handle, rechecks the complete preflight plan before dispatch, completes only the already-authorized envelope, proves exact durable release plus <code>appliedUnverified</code>, and synchronizes quit with startup recovery</li>
+        <li>A dedicated application-level test launched a ratified productive V2 provider, proved its PID live, and invoked the real AppModel quit boundary without provider completion. Exact group termination and managed-process release were journaled, the active attempt became interrupted, live leases cleared, and the run reached stopped quiescence; the proof passed again inside the package-owned suite in 1.108 seconds</li>
+        <li>A companion application-level test completed a real provider, captured its candidate, launched the exact postimage verifier, proved the verifier PID live, and invoked the same AppModel quit boundary. Cleanup journaled managed termination plus <code>runtimeCleanupTermination</code>, minted no natural exit, result authority, or verification batch, retained a failure digest, and reached stopped quiescence; the proof passed again inside the package-owned suite in 1.306 seconds</li>
+        <li>The production session now owns a typed postimage-verifier launch boundary. Missing resident-memory enforcement journals and exactly replays one pre-admission veto; malformed or cross-wired authority rejects before leases or processes. The same production API accepted an exact test-only enforcement capability, launched a real verifier, and the real application-quit path released it fail-red. Release still has no trusted resident-memory containment issuer, so it remains safely vetoed</li>
+        <li>The production execution coordinator now owns the final mutation-preparation boundary. Missing Release containment journals and replays an exact contract/transaction/preflight/recipe-set veto while integration remains <code>rollbackPrepared</code>; no workspace lease, apply intent, outbox entry, or canonical write exists. Collision, substitution, cross-wire, and inner-request capability smuggling reject. A genuinely changed exact test authority can proceed only through the same production resolver and exact journal revalidation</li>
+        <li>Native authoring exposes one explicit worker-network control off by default. An enabled profile requires exactly <code>kernel.network-access</code>; dormant and unknown grants reject. The exact user source, constraint, authority ceiling, causal strategy, plan node, authoring nonce, candidate revision, user identity/lineage, and whole-ceiling digest are bound into a non-Codable grant receipt and candidate identity. Model JSON still cannot grant capability authority</li>
+        <li>Provider launch receipt schema 2 binds the runtime and external-process identity to exactly one process and a 16 MiB per-file output ceiling. Caller-supplied, missing, or broadened limits reject. The sandboxed V2 fixture consumes all three fixed-descriptor inputs, attempts to spawn a child, and completes only when the native process-count ceiling denies that fan-out</li>
+        <li>Provider invocation readiness is now derived as a typed, separately projected contract property. The exact package names the missing LoopForge V2 harness protocol and absent <code>kernel.network-access</code> grant, while leaving journal activation governed by its own mutation/readiness constraints; no provider prompt or process is created merely to diagnose either gap</li>
+        <li>Unsupported provider environment authority now rejects at readiness, direct authorization, decoded-receipt replay, and lower runtime preparation. The lower preflight occurs before immutable prompt issuance, and an adversarial filesystem assertion proves a rejected <code>declaredAllowlist</code> policy creates zero prompt artifacts</li>
+        <li>Receipt-proven pause/stop quiescence now interrupts an unfinished active attempt only after exact retained-drain, run, resource/failure-set, monotonic-order, phase, and intent validation; an unbound replay event cannot change state. Normal app quit preflights every retained session before mutating any process session, then executes only unchanged exact cleanup plans. Bound owned process trees recover by PID/start identity, terminate as groups, and receive durable release receipts before stopped quiescence. Exact workspace-mutation joins are retained through the same composition; unbound, failed, queued, in-doubt, mismatched, quarantined, or still-pending ownership cancels quit</li>
+        <li>Startup reconstructs the newest unchanged ready enrollment only from exact durable registry and original <code>runCreated</code> proof. Separately, exact <code>executing</code> or <code>stopRequested</code> journals can recover a cleanup-only actor with no execution proof, candidate root, provider, mutation, review, retry, or completion authority. An identity mismatch is retained as a quit blocker rather than forgotten. Missing live protected-design authority remains a typed readiness blocker</li>
+        <li>The exact package exposed only Read Only for the independent reviewer and all three modes for the worker, confirmed a worker Read Only contract with no writable paths, enrolled run <code>native-run-48b4997c-4d31-4c02-909f-f3d30dd71b70</code> ready at sequence 1, and activated it to sequence 6 executing with mutation delta zero. Relaunch retained executing state without reconstructing ready activation authority; no provider, verifier, worker, mutation, or legacy execution launched</li>
+        <li>Every decoded historical mode now routes from production start, startup recovery, resume, and candidate selection into one idempotent migration-required blocker with no timer, agent, process, mutation, integration, selection, or retry authority. New authoring exposes only Journaled Auto Graph; historical evidence has no Resume or Keep This Result control. The legacy lifecycle is DEBUG-only and the exact packaged Release executable contains no characterization-hook symbol or string</li>
+        <li>Non-DEBUG native confirmation requires a real manifest selection and rejects substitution before ratification. Enrollment revalidates the immutable selection again, requires exact equality with the contract's executable recipes, and imports confirmed bytes into the private journal run directory before <code>runCreated</code>. Activation accepts no executable path and resolves and rehashes only the journal-owned digest artifact; missing or tampered artifacts veto without importing anything</li>
+        <li>The app now packages and independently selects a separately signed LoopForge Provider Harness V2 transport spine. It validates canonical FD 196 context, exact stdin prompt bytes/digest/EOF, optional length-prefixed FD 197 credential with zeroization, fixed ordered flags, and canonical terminal JSONL. Its exact manifest declares <code>transportVetoOnly</code> with no productive backend, so valid invocation can propose only <code>blocked</code> and readiness reports <code>providerHarnessProductiveBackendUnavailable</code>. Direct Codex/local/API executables remain typed <code>unavailable</code></li>
+        <li>Readiness, direct invocation authorization, and decoded-receipt replay now each independently require <code>providerHarnessMode == productive</code>. A transport-veto profile throws <code>providerHarnessProductiveBackendUnavailable</code> before prompt authority crosses the provider boundary and cannot recover launch evidence through a relabeled receipt</li>
+        <li>Native Auto Graph authoring now creates only a user-confirmed, journal-enrolled ready run; historical Auto Graph execution is retired, and the new composition layer keeps plan/baseline/convergence/node/attempt preparation inert until an unchanged journal activation issues a non-serializable proof consumed by the process runtime</li>
+        <li>Managed worker I/O is now shell-free and confined to the exact private journal run directory through no-follow directory-relative file descriptors, exclusive 0600 outputs, and overwrite/traversal/symlink rejection; natural process-group exit is journaled before lease release and closes only the exact bound occurrence</li>
+        <li>The native contract now displays and canonical-source-binds worker/reviewer provider, stable provider reference, model, reasoning, sandbox, network, plugin, and environment policies; <code>runCreated</code> journals the profile, production enrollment rejects missing profiles, reviewers are ratified read-only/offline/minimally isolated with distinct lineage required, and ungranted Full Access fails before journal creation</li>
+        <li>The exact authorized executable is staged before admission into an owner-private journal directory under its SHA-256, using an independently rehashed APFS clone-on-write inode or a bounded streaming fallback; symlinked directories, wrong existing artifacts, source mutation, unsafe modes, and oversize files fail closed, while launch receipts bind digest, byte count, device, inode, and materialization</li>
+        <li>The journal runtime now rejects caller and ambient environments, generates exactly <code>LANG</code>, <code>LC_ALL</code>, <code>NO_COLOR</code>, and fixed <code>PATH</code>, journals a value-free canonical digest receipt, persists that digest explicitly in process identity, and rechecks it before spawn; a raw-Darwin child observed exactly the four variables, while declared variables remain fail-closed without typed grants</li>
+        <li>The journal runtime now exclusively creates provider prompts beneath its run directory with descriptor-relative exclusive I/O, binds device/inode/digest/size, and rehashes the exact open stdin descriptor before spawn. Deterministic provider argv accepts no caller fragments and disables plugins and hidden fan-out. Remote credentials cross only a single-use expiring fixed-FD pipe through the signed sandbox gate after target exec, with no secret bytes, size, hash, environment, argv, disk, or recovery representation. After real spawn and attestation, a non-serializable runtime-issued capability atomically journals binding plus a credential-free provider-launch event; typed recovery and strict parsing reject invocation, nonce, process, or secret-evidence substitution. Generic runtime and adapter launch APIs are absent from release builds; a real provider fixture launch, recovery, join, release, and exact output passed</li>
+        <li>A separate production execution coordinator now carries an exact ratified enrollment through reducer-preflighted plan/admission, activation, supervisor restoration, and a private journaled provider session without referencing <code>LoopController</code>, <code>CodexRunner</code>, <code>GraphLoopEngine</code>, legacy task snapshots, or mutable timing. Preparation must exactly equal the retained strategy, plan, prediction/falsifier set, rollback revision, and convergence budget; substitution rejects before any journal append. The session constructs its productive lease and derives result digest, nonce, and disposition from accepted receipts. Native start and reviewer-to-completion composition remain intentionally unavailable</li>
+        <li>Ratification recomputes the sealed compiler candidate digest, rejects post-compile mutation, validates exact per-requirement evidence-recipe coverage, and retains the content-complete source revision plus finite mutation/convergence ceilings. Native confirmation also displays and explicit-user-binds a typed causal strategy, recipe-bound expected observations, mechanical <code>requiredEvidenceMissing</code> falsifiers, and a requirement-owned plan with exact dependencies, scopes, capabilities, file/byte ceilings, and mutation-surface identity. Readiness now distinguishes exact read-only execution from mutation: a read-only contract can report zero blockers, while typed writable paths, nonzero file/byte budgets, or a write ceiling retain explicit pre-apply candidate-isolation and journaled preparation blockers. Production composition rejects mutation before preparation, and activation repeats the veto before <code>startAttempt</code>; no start control is offered</li>
+        <li>The manifest audit proved the existing desired-postimage byte authority is post-apply, while integration apply requires preflight. It therefore cannot be reused as the source of preflight without circular authority. Native worker activation also still binds <code>workspaceOnly</code> to the canonical workspace. Mutation-capable execution is now mechanically vetoed at readiness and both activation boundaries until a journal-owned pre-apply isolated candidate workspace and acyclic delta/content/manifest/preparation/rollback/proposal/preflight chain exist</li>
+        <li>A production-enrollment-bound pre-apply isolator now creates one owner-private writable candidate beneath an exact execution sibling of the journal tree from the complete ratified source revision. It uses descriptor-relative no-follow stable reads, bounded hashing, exclusive writes, atomic install, independent descriptor-tree verification, a self-digested receipt, and a non-Codable held root descriptor. Source drift, candidate tamper, decoded receipt tamper, closed authority, and pathname replacement fail closed. Issuance is intentionally inert: it appends no journal frame, advances no reducer state, clears neither mutation blocker, starts no process, and cannot impersonate post-apply or activation authority</li>
+        <li>The live pre-apply capability enters a dedicated pure-reducer/hash-journal acceptance boundary and is then consumed exactly once by production activation. Before first append, duplicate resolution, activation, and native spawn, LoopForge revalidates the held no-follow root descriptor, exact writable tree, path identity, run-private execution location, source manifest, counts, actor, and receipt. The session retains an independent descriptor; execution proof and provider invocation bind the same receipt; Darwin descriptor-relative spawn fchdir selects the candidate; and the stopped workspace-only sandbox gate must attest its exact device/inode before resume. Substituted or stale authority rejects before start, while candidate write authority remains disjoint from journal evidence</li>
+        <li>A bounded workspace source-revision collector hashes the canonical workspace/root/policy identity plus every sorted included regular-file path, permission mode, exact byte length, and content SHA-256 through descriptor-relative no-follow opens. Git state, timestamps, inode values, enumeration order, and model prose are not revision authority. Symlinks—including names covered by an excluded-directory policy—special files, traversal, concurrent change, and file/byte-budget overflow fail closed. Native authoring retains the exact policy and limits, re-captures the workspace at confirmation, rejects post-display source change, and binds the confirmed strategy and plan to that exact revision without inferring authority from the observation</li>
+        <li>Native Auto Graph authoring now exposes the source-revision directory exclusions as explicit user-visible typed authority. The parser accepts only comma/newline-separated directory names, canonicalizes ordering, and rejects duplicates, paths, traversal, or invalid names before capture. The complete policy and limits remain digest-bound to the source revision and confirmation-time recapture; an explicit generated <code>dist</code> tree with an internal symlink is excluded as authorized, while a symlink occupying an excluded name or any non-excluded symlink still fails closed</li>
+        <li>Native Auto Graph authoring imports one exact schema-constrained postimage-verifier manifest. No-follow stable-file reads hash the executable while code fixes transport, the sole candidate input, environment, capture, parser, disabled network, zero children, reject-unmatched behavior, and maximum resource ceilings. Confirmation paths are enrollment-import hints only: enrollment owns the content-addressed artifact and activation has no path input</li>
+        <li>Verification and independent-review reducer commands no longer accept caller-constructed Codable receipts in Release. Verification consumes only the first live post-release result capability and derives every v2 receipt field. A separately activated adversarial reviewer receives the descriptor-bound candidate plus the exact journal-resolved accepted/effective v2 evidence-set digest, must differ from both worker and original verifier, and produces a second live result that cannot mint verification. The journal runtime alone derives the review receipt and requires exact transaction readback. Integration verification then consumes the original verifier capability and exact durable v2 fact; independent integration acceptance separately consumes the original reviewer capability and exact durable review</li>
+        <li>The executable-verifier chain now binds an exact candidate postimage, descriptor-atomic candidate handoff, staged executable, canonical parser, deterministic native-exit/parser-result mapping, bounded read-only/offline runtime, retained-byte hashes, atomic schema-v4 result containment, derived ordinary v2 verification, separately activated independent review, and exact integration reliance. After admission, the complete sealed tree is enumerated and hashed through one held no-follow root descriptor; ordered spawn fchdir binds verifier input <code>.</code> to that object, CLOEXEC-default removes the descriptor, and stopped-process vnode attestation plus replay bind exact materialization device/inode and mechanism. Journal-first activation is crash-continuable before launch, latest red revokes matching green, and publication remains hard-false. Resident-memory enforcement is not falsely claimed: rejected ordinary-macOS primitives leave Release without an issuer and verifier/reviewer launch vetoed before lease admission. Native design-baseline confirmation, complete visual-evaluation authority, and final-completion authority are present; controller invocation, publication, and native start remain absent</li>
+        <li>Immutable-baseline and visual-evaluation commands require non-serializable authority in Release. Native authoring now selects a strict capture-source manifest, rehashes protected artifacts and bounded evidence through descriptor-bound no-follow reads, obtains one-shot native adapter receipts, binds a preservation-required baseline into the ratified contract, enrolls with zero workers, and displays a second exact confirmation. The explicit freeze action issues one single-use live capability that Release preparation accepts. Candidate capture, deterministic measurement, distinct independent-review authority, and the journal-bound kernel-evaluation issuer are present; production-controller invocation remains pending</li>
+        <li>Candidate visual measurement requires live non-Codable capture authority from the native adapter. A separate allow-listed deterministic measurement adapter binds the exact baseline/candidate pair, traits, capture and measurement protocols, protected dimensions, accepted debt, raw JSON evidence, and adapter-owned time; it rejects harness-selected receipts, incomplete debt/dimensions, nonfinite values, and stale or mismatched captures before minting its own live evidence</li>
+        <li>The native independent visual-review adapter requires every contracted live capture and applicable measurement, revalidates baseline and candidate pixels against their original receipts, enforces exact known-debt severity coverage, and activates only a distinct ratified read-only/offline/plugin-free reviewer with an exactly allow-listed provider/model/executable identity. The new production compositor resolves the exact run, completed attempt/start frame, frozen baseline, worker/reviewer profiles, four distinct lineages, candidate matrix, attestations, and evidence times; derives the command and receipt IDs; appends and re-reads one reducer-owned visual evaluation; resolves exact retry idempotently; rejects cross-wiring without a journal effect; and preserves reviewer veto as durable red evidence. Production controller invocation remains pending</li>
+        <li>All integration transitions now require non-serializable command authority. The completed-candidate preflight runtime can mint only the exact proposal and admitted preflight from the live journal-accepted rehearsal; the journaled workspace runtime can mint only apply/rollback transitions after exact live-lease validation and bounded executor results; and the journaled process runtime can mint only postimage verification and independent acceptance from the two original live result capabilities and exact journal facts. Every integration phase still denies publication. The deterministic final-completion coordinator now issues the only production completion capability against one exact hash-journal head and reducer-recomputed evidence digest; mandatory requirement, duration, runtime quiescence, external-dependency, latest native visual, integration, and actor-lineage vetoes cannot be averaged away. Production-controller invocation remains pending</li>
+        <li>Mutation preflight no longer accepts a decoded manifest plus caller-supplied accepted-ID sets as Release authority. The production issuer consumes the exact live journal-accepted rollback rehearsal, revalidates canonical affected paths and external objects, recaptures the complete worktree under the ratified policy, projects protected-baseline bindings, and journals the ordinary proposal plus rollbackPrepared preflight. A second boundary journals a workspace-wide exclusive lease and exact apply intent before persisting the complete request. The real startup recovery composition now dispatches that request in a synthetic registered workspace, applies the candidate bytes, recomputes the manifest-selected content-complete source revision, journals the exact apply receipt and candidate-postimage attestation with runtime-owned completion time, releases the lease, completes the outbox, and restarts with zero executor reentry. That same chain now materializes and activates the exact contract verifier, closes/reopens the journal, rematerializes the same sealed tree, and recovers the original activation capability; the missing resident-memory issuer then vetoes launch before a lease or verdict. Recovery keeps <code>appliedUnverified</code> visibly attention-required; verification, independent acceptance, and publication remain absent</li>
+        <li>The retained resident-memory defect is now closed at both lifecycle boundaries without inventing containment. Future apply requires exact non-Codable readiness for every ratified verifier/reviewer recipe before supervisor construction, lease admission, apply intent, or outbox persistence. Ordinary-macOS Release has no issuer, so the transaction stays <code>rollbackPrepared</code> with no effect. Historical already-applied journals replay the typed launch veto, exact completed apply envelope, and a fresh exclusive rollback lease to restore only the retained preimage, reach <code>rolledBack</code>, release authority, and restart with zero executor reentry. Identity mismatch or workspace drift quarantines instead of guessing</li>
+        <li>The five non-journal preparation classes no longer use bags of accepted IDs: write authority, mutation ceiling, rollback rehearsal, candidate-scoped quiescence, and per-operation path resolution now share an exact transaction/candidate/contract/plan/preimage/postimage binding. The worker protocol retains no authoritative operations or canonical preimage, so these durable schemas still cannot mint Release authority until a trusted capture runtime journals and replays them</li>
+        <li>The exact verified mutation-delta byte set can now be retained in an owner-private external content-addressed artifact: absolute descriptor-relative no-follow traversal, exclusive object creation and atomic install, read-only sealing, sync, exact enumeration, stable metadata, and independent rehash protect first materialization and reuse. Changed inputs, altered or extra artifact bytes, workspace overlap, permissive roots, and symlinked store/artifact entries fail closed. This store remains inert and proves neither trusted byte origin nor journal acceptance</li>
+        <li>HEAD, index, and all Git-untracked preimage planes now come from one production-enrollment-bound, read-only, repeated Git observation. A second stable observer binds the accepted commit/Git identities, object format, HEAD and shallow state, Git-resolved no-follow info/exclude bytes, all ratified worktree <code>.gitignore</code> entries, and an effective ignored/not-ignored classification for every untracked path. Global/system config is disabled; sparse checkout and external excludes reject. It composes those facts and the confirmed worktree artifact into one exact canonical <code>WorkspacePreimage</code>. Both hash-journal events retain only inert receipts; replay performs no Git or filesystem I/O, exact duplicates return retained evidence, and substitution or decoded tampering fails without advance. Manifest and proposal/preflight issuance remain absent</li>
+        <li>Separate non-Codable issuers prove both mutation byte origins. Baseline expected-preimage bytes require exact production registration/enrollment, reducer-owned contract replay, and complete baseline recapture around descriptor-stable no-follow reads. Candidate desired-postimage bytes require the held read-only descriptor-atomic materialization of the newest exact accepted apply. Both enter receipt-only hash-journal events. A journal-aware composition issuer resolves both exact accepted receipts, cross-binds candidate receipt and attestation, requires exact expected/desired derivation partitions, deduplicates only identical shared objects, rehashes the complete union, and rechecks candidate freshness before and after verification. A journal-first store coordinator now installs only that live non-Codable composition, re-resolves both origin receipts and candidate freshness before and after filesystem work, revalidates the sealed external artifact immediately before first append, and journals one inert exact receipt per derivation. Pure reducer/replay logic performs no filesystem I/O; exact duplicates return retained evidence, substitutions reject without journal advance, and a newer failed rollback stales new acceptance. No store receipt issues preflight or effect authority</li>
+        <li>Occurrence, external-dependency observation, runtime-drain, and quiescence commands no longer accept directly constructed Codable receipts in Release. The clock-owning occurrence recorder issues closed occurrences. A separate production lifecycle authority journals pause/complete/stop before entering supervisor drain, samples all clocks and live/failure/cleanup sets itself, leaves productive admission closed if the drain-event write fails, rejects duplicate journal receipts instead of mistaking ID idempotency for a new payload, and journals quiescence only from an empty draining supervisor; callers cannot provide those facts or the verdict. External-dependency activation stages exact observer bytes and a journal-bound immutable nonce request but deliberately starts no process. A new atomic two-event journal boundary binds one exact activation frame to its accepted native process identity, productive owned process-tree lease, staged executable, request, argv/environment, private I/O, sandbox attestation, and resident-memory ceiling; live authority remains non-Codable and replay retains only inert facts. If a trusted native runtime later produces that exact launch and release-bound result, the journal-owned observation coordinator alone derives and appends the provenance-bound observation. Durable event replay remains fail closed</li>
+        <li>Runtime admission, external process binding, release, and cleanup-failure commands likewise require non-serializable authority. Production factories require an issuer token constructible only inside the journaled process runtime or journaled workspace-mutation lease authority, and binding accepts only the process token. Journal-first crash cleanup, stale-writer ownership retention, absent-process reconciliation, and mutation release-failure evidence remain intact</li>
+        <li>After exact journaled natural exit, retained stdout/stderr are read through bounded no-follow descriptor-relative files and hashed exactly; only canonical known-key JSONL with continuous sequence, one thread, exact invocation and nonce, and one final terminal envelope can create a journaled proposal receipt, while prose, truncation, cross-wired releases, and terminal ambiguity fail closed without changing attempt disposition</li>
+        <li>Every journal-owned worker now enters a deny-default native Seatbelt profile through a signed self-stopping gate; before binding, the parent requires <code>sandbox_check == 1</code>, exact launcher/gate/profile/parameter digests, stable process-group identity, and successful close-on-exec target replacement. Read-only and exact workspace-only policies protect journal evidence; unsafe Full Access fails before admission, staging, or spawn</li>
+        <li>Spawn-failure cleanup uses <code>unlinkat</code> on the still-open original directory descriptor, so directory replacement and traversal cannot redirect deletion; reducer-owned execution derivation requires exact journaled exit plus retained-output/parser receipts and recovery rejects a disposition/evidence-tampered derived event</li>
+        <li>Production recovery and enrollment now share one private registry; only a compiler-sealed, user-ratified contract with no blocking ambiguity can be journaled and then registered through a file-private proof that persists exact confirmation and journal-frame provenance</li>
+        <li>A duration interval now opens only from an exact new productive owned process admission and PID/process-group binding, and closes only from the same native handle's exit plus the exact journaled lease release; cross-wired transactions and forged handles fail closed, outcome comes from native exit, and release latency is excluded from time</li>
+        <li>A non-Codable single-use runtime capability now owns occurrence boot, monotonic, and wall clocks; disposition and reboot/reset/sleep exclusions are derived rather than controller-supplied, and crash-lost open intervals count zero</li>
+        <li>Closed occurrences are hash-journal events; all causal-progress transactions and the accepted subset are separate reducer projections, so arbitrary processed commands, invented evidence, and recursive occurrence evidence cannot enter provenance; both completion stages reject <code>durationIncomplete</code> until replay-derived accepted duration reaches the contract</li>
+        <li>Equivalent kernel strategies now share one replay-stable budget across renamed observation IDs, falsification IDs, lesson receipts, attempts, nodes, threads, and models; only requirement ownership or one of nine causal axes contributes to the fingerprint</li>
+        <li>Every superseded node and every durable <code>supersededAt</code> record is now an anti-repeat tombstone even when a legacy checkpoint lacks its optional lesson or restored terminal status; new incremental and redundant repair retirements persist a default lesson and renamed same-topology final repairs fail closed</li>
+        <li>The third consecutive blocked turn now creates durable strategy-escalation state, detaches the rejected thread, and forces abandon/reframe/split/replace review; legacy warning-only checkpoints and later plan adjustments cannot revive the same exhausted node</li>
+        <li>Redundant final-repair cleanup retains superseded tombstones and never refunds round or cumulative node capacity; encoded/relaunched state stays exhausted</li>
+        <li>Fresh IDs and paraphrased objectives or verification prose can no longer revive a retired Graph strategy; only a normalized read/write-topology change can authorize one bounded legacy replacement, while malformed scope data fails closed</li>
+        <li>Ordinary and parallel isolated results are checked as a complete NUL-delimited tracked/untracked delta before Main Graph model review; violations are quarantined without canonical integration or automatic retry</li>
+        <li>Final audit cannot create a writer from missing scope or broaden a repair to <code>.</code>; direct and dependency-recovery proposals retain only exact scopes contained by already materialized graph authority</li>
+        <li>Executable exit-7 fixture rejected; successful live-fixture and packaged-process cleanup passed</li>
+        <li>Noisy, fenced, multiple-object, and trailing-text Graph decisions rejected; immediate Watcher recursion retired</li>
+        <li>Typed exact-implementation receipts reject forbidden substitutions without provider or brand matching</li>
+        <li>Watcher repairs and assessments require a fresh read-only lineage over exact artifact digests; legacy self-authored conclusions remain advisory</li>
+        <li>Watcher completion requires fresh completed/ok telemetry, successful issue-free runtime, checkpoint and verification digests, complete goal-anchor evidence, and an independently bound completion receipt; legacy or tampered completion fails closed</li>
+        <li>Heavy deterministic evidence uses canonical content/collector/parameter digests, coalesces identical misses, rejects tampered persistence, bounds retention, and retains report media once under full SHA-256 identities</li>
+        <li>Repository evidence now scans once per observation; only canonical-root/workspace/tree-generation/journal-frame receipts allow cross-observation hits, while legacy receipt-free calls are visibly uncached</li>
+        <li>WorkspaceAuditor's duplicate tree walker is retired; updated Loop, Graph, and report-review paths share one observation across audit, prompt, and evidence, and a failed observation is never retried into a different byte boundary</li>
+        <li>Only RunJournal can issue an opaque cross-observation generation from an exact accepted apply/restored rollback event; later ambiguity revokes older authority, and startup recovery exposes or withholds cache telemetry before work admission</li>
+        <li>Task contracts retain exact UTF-8 user bytes and source spans; stale, model-authored, ambiguity-downgraded, or unconfirmed candidates cannot gain mutation eligibility</li>
+        <li>Exact deliverable counts are opaque contract data, require explicit user-bound source authority, and accept only one evidence-digested stable member identity per required set member; nine, eleven, substitute, and duplicate-identity fixtures fail for a declared ten</li>
+        <li>External dependencies are opaque contract data with exact requirement, observer lineage, and one mandatory executable probe: direct transport, exact executable/parser digests, bounded shell-free argv with one private request token, minimal environment, explicit network policy, complete available/unavailable mappings, and zero-child resource ceilings. The strict parser accepts only one canonical newline-terminated six-key JSON result bound to fresh nonce, dependency, recipe, result identity, and evidence SHA-256; parsed bytes remain inert until a journal-owned runtime composes native exit and issues the observation</li>
+        <li>Capability words in objective prose and fake model JSON grant nothing; each opaque capability requires an exact non-Codable out-of-band user receipt bound to the complete authority ceiling. The native composer now issues that receipt only for explicitly selected <code>kernel.network-access</code>, while unknown and dormant grants fail closed</li>
+        <li>Registered new-kernel runs expose budget, strategy fingerprint, failure, lesson, mutation/evidence delta, replacement axes, source sequence, and projection digest through a read-only native sheet populated only by hash-journal reducer replay</li>
+        <li>The exact latest interactive package opened through Computer Use while unlocked, retained hash-bound 1160×768 main-window and 860×760 Kernel-diagnostics screenshots, left the historical EasyBusiness task stopped and untouched, and exited through a real UI quit with zero packaged processes or verification mounts. Source and reducer audit proved the stopped projection has no active execution attempt; the raw <code>active</code> word meant only that a strategy was never retired. Terminal diagnostics now label it <code>unretired history · run stopped</code> without rewriting the consistent immutable journal. The newer source-only policy package has no visible change and these screenshots were not relabeled. The complete trait/window/baseline/candidate matrix remains pending</li>
+        <li>39 supervisor admission, policy compatibility, queue, recovery, and cleanup-plan tests</li>
+        <li>5 runtime/journal integration tests</li>
+        <li>9 native process-group fault-injection and recovery tests</li>
+        <li>12 journal/native admission, race, compensation, and reconciliation tests</li>
+        <li>15 interval tests</li>
+        <li>16 journal/import, duration, and causal crash-replay tests</li>
+        <li>14 causal convergence and strategy retirement tests</li>
+        <li>35 immutable visual-baseline and adversarial review tests</li>
+        <li>14 visual journal authority and crash-replay tests</li>
+        <li>9 native capture attestation and adversarial evidence tests</li>
+        <li>11 legacy Graph/kernel shadow authority, node parity, and retained-replay tests</li>
+        <li>9 explicit shadow-contract mapping, authority, topology, and canonical-encoding tests</li>
+        <li>18 transactional preflight, exact-preparation-binding, capability, CAS, rollback, path, authority, and budget tests</li>
+        <li>8 journaled integration-state, lineage-separation, rollback, quarantine, and replay tests</li>
+        <li>14 real-filesystem executor and durable effect-outbox tests</li>
+        <li>1 end-to-end production startup-dispatch, attestation, cleanup, and no-reentry test</li>
+        <li>1 trusted workspace lease admission, forgery, exclusivity, and release integration test</li>
+        <li>5 durable recovery-registry/coordinator security, telemetry, empty-startup, and fail-closed tests</li>
+        <li>1 native-controller startup veto before Codex or legacy Graph work</li>
+        <li>5 journal-bound repository-generation, invalidation, root-mismatch, provenance, and symlink tests</li>
+        <li>18 audit/evidence, 84 Graph, and 5 Loop lifecycle shared-observation regressions</li>
+        <li>0 live LoopForge leases after quit</li>
+      </ul>
+    </section>
+
+    <section class="card full">
+      <span class="status green">Native matrix passed</span>
+      <h2>Independent red → red → green visual closure</h2>
+      <p>The current signed dirty-source package was compared with exact baseline commit <code>6e9b99d</code> in four real native cells: standard/accessibility and expanded/narrow. The first independent confidence-0.97 review vetoed redundant chrome, task-title demotion, density, accessibility reflow, and clipping. After a bounded hierarchy and whole-column correction, the second confidence-0.97 review retained only H-04 because three cells bisected lower cards. The whole-row, top-aligned correction added explicit <code>Next levels</code> and <code>More nodes below</code> boundaries. A third independent review passed H-04, H-05, H-06, H-07, and H-09 at confidence 0.94 with no required changes. Both red receipts remain preserved. Snapshot <code>3870639d…845</code> passed 874/8/0, Release packaging, strict signing, hashes, native capture, display restoration, and process cleanup. This closes the current matrix, not the clean-revision release gate.</p>
+    </section>
+
+    <section class="card full">
+      <span class="status amber">Not final</span>
+      <h2>Remaining cutover work</h2>
+      <p>All legacy controller execution ingress is now retired: direct start, startup recovery, explicit resume, and parallel candidate selection fail closed for every decoded historical mode, while the native authoring surface exposes only Journaled Auto Graph. The retained production execution session still reconstructs exact authority from the unchanged journal; mutation-capable activation retains the pre-apply isolation and journaled-preparation vetoes. Exact verifier selection, confirmation freshness, enrollment-owned executable import, external-observer containment, native capture and independent visual review, deterministic final completion, strict dependency parsing, native sandbox launch, V2 invocation transport, exact credentials, provider no-child/output ceilings, default-off worker-network authority, stop/crash/quit cleanup, truthful terminal strategy history, release-policy compatibility, and all production-session composition boundaries are present. The ordinary-macOS physical-footprint issuer strategy is disproven and retired. The ordinary-app “install a productive backend and cut over” strategy is also retired: this signed package is transport-veto-only, a forged internally consistent productive manifest cannot mint authority, and native diagnostics state that installation or relabeling cannot replace separately isolated and ratified architecture. The current native matrix independently passes. Remaining gaps are a clean-revision rebuild, final clean-package verification, commit, and push. Mutation-backed verifier/reviewer/observer execution requires a separately scoped privileged or virtualized isolation product; it is not unfinished ordinary-app packaging or a syscall wrapper. Passing the 20-hour threshold authorizes no shortcut.</p>
+    </section>
+
+    <section class="card full">
+      <h2>Primary forensic reports</h2>
+      <div class="links">
+        <a href="SYSTEMIC_ROOT_CAUSE_SYNTHESIS.md">Systemic root-cause synthesis</a>
+        <a href="TYPOGRAPHY_SHAPE_SPACING_FORENSIC.md">Typography, shape, and spacing forensic</a>
+        <a href="NATIVE_BASELINE_COMPARISON.html">Native Chinese/current-English comparison</a>
+        <a href="NATIVE_BASELINE_CANDIDATE_MATRIX_VERIFICATION.md">Current native baseline/candidate matrix</a>
+        <a href="NATIVE_BASELINE_CANDIDATE_MATRIX_SCORECARD.json">Current native matrix scorecard (JSON)</a>
+        <a href="STRATEGY_CHURN_AND_REVIEW_CAUSAL_MODEL.md">Strategy churn and review causal model</a>
+        <a href="REVIEW_PROVENANCE_AND_VISUAL_VETO_ARCHITECTURE.md">Independent review and visual veto</a>
+        <a href="RESOURCE_THERMAL_AND_QUIESCENCE_BUDGET_SPECIFICATION.md">Resource, thermal, and quiescence contract</a>
+        <a href="RUNTIME_RELEASE_POLICY_COMPATIBILITY_HARDENING.md">Runtime release-policy compatibility hardening</a>
+        <a href="RUNTIME_RELEASE_POLICY_COMPATIBILITY_SCORECARD.json">Runtime release-policy compatibility scorecard (JSON)</a>
+        <a href="UNIFIED_SCHEDULER_WATCHER_CADENCE_AND_INTERVAL_ACCOUNTING_SPECIFICATION.md">Unified scheduler and interval semantics</a>
+        <a href="REDESIGN_ACCEPTANCE_MATRIX.md">Mandatory redesign acceptance matrix</a>
+        <a href="NATIVE_DESIGN_BASELINE_CONFIRMATION_AUTHORITY_IMPLEMENTATION.md">Native design-baseline confirmation authority</a>
+        <a href="NATIVE_DESIGN_BASELINE_CONFIRMATION_AUTHORITY_SCORECARD.json">Native design-baseline confirmation scorecard (JSON)</a>
+        <a href="NATIVE_DESIGN_BASELINE_CAPTURE_SOURCE_UI_IMPLEMENTATION.md">Native design-baseline capture-source UI</a>
+        <a href="NATIVE_DESIGN_BASELINE_CAPTURE_SOURCE_UI_SCORECARD.json">Native capture-source UI scorecard (JSON)</a>
+        <a href="NATIVE_VISUAL_MEASUREMENT_AUTHORITY_IMPLEMENTATION.md">Native visual measurement authority</a>
+        <a href="NATIVE_VISUAL_MEASUREMENT_AUTHORITY_SCORECARD.json">Native visual measurement authority scorecard (JSON)</a>
+        <a href="NATIVE_INDEPENDENT_VISUAL_REVIEW_AUTHORITY_IMPLEMENTATION.md">Native independent visual-review authority</a>
+        <a href="NATIVE_INDEPENDENT_VISUAL_REVIEW_AUTHORITY_SCORECARD.json">Native independent visual-review authority scorecard (JSON)</a>
+        <a href="KERNEL_RATIFIED_BASELINE_CONTENT_JOURNAL_ACCEPTANCE_IMPLEMENTATION.md">Ratified baseline content journal acceptance</a>
+        <a href="KERNEL_RATIFIED_BASELINE_CONTENT_JOURNAL_ACCEPTANCE_SCORECARD.json">Ratified baseline journal scorecard (JSON)</a>
+        <a href="KERNEL_JOURNALED_MUTATION_CONTENT_COMPOSITION_IMPLEMENTATION.md">Journaled mutation content composition</a>
+        <a href="KERNEL_JOURNALED_MUTATION_CONTENT_COMPOSITION_SCORECARD.json">Mutation content composition scorecard (JSON)</a>
+        <a href="KERNEL_JOURNALED_MUTATION_CONTENT_STORE_ACCEPTANCE_IMPLEMENTATION.md">Journaled mutation content-store acceptance</a>
+        <a href="KERNEL_JOURNALED_MUTATION_CONTENT_STORE_ACCEPTANCE_SCORECARD.json">Mutation content-store acceptance scorecard (JSON)</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_CAPTURE_IMPLEMENTATION.md">Completed candidate capture and crash replay</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_CAPTURE_SCORECARD.json">Completed candidate capture scorecard (JSON)</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_CONTENT_STORE_IMPLEMENTATION.md">Completed candidate preflight-side content store</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_CONTENT_STORE_SCORECARD.json">Completed candidate content-store scorecard (JSON)</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_MANIFEST_PROPOSAL_IMPLEMENTATION.md">Completed candidate inert manifest proposal</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_MANIFEST_PROPOSAL_SCORECARD.json">Completed candidate manifest-proposal scorecard (JSON)</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_PREPARATION_FACTS_IMPLEMENTATION.md">Completed candidate descriptor-observed preparation facts</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_PREPARATION_FACTS_SCORECARD.json">Completed candidate preparation-facts scorecard (JSON)</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_ROLLBACK_REHEARSAL_IMPLEMENTATION.md">Completed candidate exact owner-private rollback rehearsal</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_ROLLBACK_REHEARSAL_SCORECARD.json">Completed candidate rollback-rehearsal scorecard (JSON)</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_EXECUTABLE_PREFLIGHT_IMPLEMENTATION.md">Completed candidate executable mutation preflight</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_EXECUTABLE_PREFLIGHT_SCORECARD.json">Completed candidate executable preflight scorecard (JSON)</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_APPLY_PREPARATION_IMPLEMENTATION.md">Completed candidate journal-first apply preparation</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_APPLY_PREPARATION_SCORECARD.json">Completed candidate apply-preparation scorecard (JSON)</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_EFFECT_DISPATCH_IMPLEMENTATION.md">Completed candidate production effect dispatch</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_EFFECT_DISPATCH_SCORECARD.json">Completed candidate effect-dispatch scorecard (JSON)</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_POSTIMAGE_ACTIVATION_REPLAY_IMPLEMENTATION.md">Completed candidate exact postimage activation and crash continuation</a>
+        <a href="KERNEL_COMPLETED_CANDIDATE_POSTIMAGE_ACTIVATION_REPLAY_SCORECARD.json">Completed candidate postimage-activation replay scorecard (JSON)</a>
+        <a href="KERNEL_RESIDENT_MEMORY_ROLLBACK_FORENSIC_DESIGN.md">Resident-memory veto and exact rollback forensic design</a>
+        <a href="KERNEL_RESIDENT_MEMORY_ROLLBACK_FORENSIC_DESIGN_SCORECARD.json">Resident-memory rollback design scorecard (JSON)</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_LAUNCH_VETO_RECEIPT_IMPLEMENTATION.md">Journaled postimage-verifier launch-veto receipt</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_LAUNCH_VETO_RECEIPT_SCORECARD.json">Postimage-verifier launch-veto scorecard (JSON)</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_VETO_ROLLBACK_RECOVERY_IMPLEMENTATION.md">Exact verifier-veto rollback recovery</a>
+        <a href="KERNEL_POSTIMAGE_VERIFIER_VETO_ROLLBACK_RECOVERY_SCORECARD.json">Verifier-veto rollback recovery scorecard (JSON)</a>
+        <a href="KERNEL_PREAPPLY_CONTAINMENT_READINESS_GATE_IMPLEMENTATION.md">Pre-apply verifier/reviewer containment readiness gate</a>
+        <a href="KERNEL_PREAPPLY_CONTAINMENT_READINESS_GATE_SCORECARD.json">Pre-apply containment-readiness scorecard (JSON)</a>
+        <a href="KERNEL_JOURNALED_CANONICAL_PREIMAGE_IMPLEMENTATION.md">Journaled canonical workspace preimage</a>
+        <a href="KERNEL_JOURNALED_CANONICAL_PREIMAGE_SCORECARD.json">Canonical workspace preimage scorecard (JSON)</a>
+      </div>
+    </section>
+  </div>
+</main>
+</body>
+</html>

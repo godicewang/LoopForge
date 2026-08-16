@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "status": "confirmation-time-verifier-selection-freshness-enforced-packaged-and-selector-inspected-activation-and-execution-pending",
+  "recordedAt": "2026-08-15T19:28:28Z",
+  "sourceSnapshotSHA256": "cd020030c179bc2dc5580c6f5f3bfa03a53c810d2a768242ca9c6e3b20034c3a",
+  "confirmationBoundary": {
+    "nonDebugRequiresNativeSelection": true,
+    "manifestReopenedNoFollow": true,
+    "executableReopenedNoFollow": true,
+    "completeSelectionEqualityRequired": true,
+    "selectionStableAcrossAsyncRevalidationRequired": true,
+    "compiledRecipeProbeEqualityRequired": true,
+    "mismatchTypedError": "selectionChanged",
+    "mismatchRatifiesContract": false,
+    "mismatchCreatesEnrollmentIdentity": false,
+    "mismatchCreatesJournal": false,
+    "mismatchRegistersRun": false,
+    "activationMustRestageAndRehash": true,
+    "displayPathIsAuthority": false
+  },
+  "tests": {
+    "selectionFocusedExecuted": 5,
+    "selectionFocusedFailures": 0,
+    "selectionFocusedSeconds": 0.017,
+    "enrollmentDriftExecuted": 1,
+    "enrollmentDriftFailures": 0,
+    "enrollmentDriftSeconds": 1.077,
+    "prepackageExecuted": 829,
+    "prepackageSkipped": 8,
+    "prepackageFailures": 0,
+    "prepackageSeconds": 59.565,
+    "packageExecuted": 829,
+    "packageSkipped": 8,
+    "packageFailures": 0,
+    "packageSeconds": 55.642,
+    "packageRealCodexBridgeSeconds": 9.866,
+    "failedIntermediateInvocations": 2,
+    "failedIntermediateInvocationsCounted": false
+  },
+  "package": {
+    "builtAtUTC": "2026-08-15T19:17:28Z",
+    "dirty": true,
+    "sourceSnapshotSHA256": "cd020030c179bc2dc5580c6f5f3bfa03a53c810d2a768242ca9c6e3b20034c3a",
+    "executableSHA256": "ebb1e8a96a93ecf6565607b06ae00ad591340e3727964755f17a2e27dc9ff8b7",
+    "signatureCDHash": "1f51eb4af0d3728c100b9cd42210de8b5a29287f",
+    "deepStrictSignaturePassed": true,
+    "sourceTestBindingPassed": true,
+    "zipIntegrityPassed": true,
+    "dmgIntegrityPassed": true,
+    "checksumManifestPassed": true,
+    "exactPackagedMachOStartupPassed": true,
+    "postInspectionPackagedProcessCount": 0
+  },
+  "nativeSelectorEvidence": {
+    "exactPackagedApplication": true,
+    "selectedExecutableSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "fixedArgumentCountVisible": 1,
+    "resultMappingCountVisible": 2,
+    "confirmationAttempted": false,
+    "enrollmentAttempted": false,
+    "productionVerifierExecutionClaimed": false,
+    "screenshot": {
+      "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-verifier-confirmation-freshness-20260815T192548Z.png",
+      "width": 1160,
+      "height": 768,
+      "sha256": "8f6d73d8c183760f1bc30df70fc5819aa5be2c135a1b77ce5e64c169481b8591"
+    }
+  },
+  "remaining": [
+    "activation-time executable staging and rehash",
+    "trusted Release containment or retained deterministic veto",
+    "production verifier execution and result issuance",
+    "complete native visual matrix",
+    "legacy Single and Parallel retirement",
+    "clean-commit rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false,
+  "easyBusinessMutated": false
+}

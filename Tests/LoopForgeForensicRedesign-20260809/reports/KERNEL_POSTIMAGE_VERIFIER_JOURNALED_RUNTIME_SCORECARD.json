@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T23:35:11Z",
+  "status": "activation-linked-journaled-verifier-native-runtime-implemented-hard-limits-result-review-and-start-vetoed",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "authority": {
+    "releaseTypedLaunchPath": true,
+    "genericDebugLaunchUsed": false,
+    "workerExecutionProofUsed": false,
+    "providerInvocationUsed": false,
+    "providerCredentialDelivered": false,
+    "activationJournalTransactionRequired": true,
+    "exactVerifierActorRequired": true,
+    "differentActorRejectedBeforeAdmission": true,
+    "oneLaunchPerActivation": true,
+    "ordinaryVerificationReceiptIssued": false,
+    "integrationPostimageVerificationIssued": false,
+    "integrationPhaseAfterLaunch": "appliedUnverified"
+  },
+  "admission": {
+    "requestConstructedByRuntime": true,
+    "ownedProcessTree": true,
+    "productivePurpose": true,
+    "gracefulThenTerminateRelease": true,
+    "attemptBound": true,
+    "processReservation": 1,
+    "networkReservation": 0,
+    "gpuReservation": 0,
+    "guiReservation": 0,
+    "residentMemoryReservationUsesRecipeMaximum": true,
+    "renewalDeadlineUsesRecipeWallClockMaximum": true,
+    "thermalSupervisorApplied": true
+  },
+  "revalidation": {
+    "candidateBeforeAdmission": true,
+    "candidateAfterAdmission": true,
+    "executableBeforeAdmission": true,
+    "executableAfterAdmission": true,
+    "adapterRehashesExecutableAtSpawn": true,
+    "adapterRehashesEnvironmentAtSpawn": true,
+    "adapterRehashesArgumentVectorAtSpawn": true,
+    "candidateDescriptorAtomicallyBoundAtSpawn": false
+  },
+  "nativeIsolation": {
+    "shellUsed": false,
+    "stdinPresent": false,
+    "minimalKernelEnvironment": true,
+    "sandbox": "readOnly",
+    "network": "disabled",
+    "plugins": "disabled",
+    "signedSandboxGateRequired": true,
+    "nativeSeatbeltAttested": true,
+    "targetExecHandshakeRequired": true,
+    "privateJournalStdout": true,
+    "privateJournalStderr": true
+  },
+  "journalChain": {
+    "runtimeAdmissionRecorded": true,
+    "externalBindingAndVerifierLaunchAtomicJournalTransaction": true,
+    "nativeExitRecorded": true,
+    "leaseReleaseRecorded": true,
+    "launchReplayable": true,
+    "duplicateLaunchRejected": true,
+    "zeroLiveHandlesAfterTest": true,
+    "zeroInDoubtResourcesAfterTest": true
+  },
+  "hardLimitBoundary": {
+    "wallClockContractRetained": true,
+    "wallClockAutomaticallyTerminatesLaunch": false,
+    "combinedOutputContractRetained": true,
+    "combinedOutputHardCapEnforced": false,
+    "residentMemoryContractRetained": true,
+    "residentMemoryHardCapEnforced": false,
+    "zeroChildContractRetained": true,
+    "zeroChildHardCapEnforced": false,
+    "outputReadOrParsed": false,
+    "oracleEvaluated": false,
+    "resultReceiptIssued": false,
+    "latestRedRevocationImplemented": false
+  },
+  "verification": {
+    "focusedTests": 1,
+    "discoveredSwiftTests": 702,
+    "completeSwiftTests": 702,
+    "environmentSkips": 8,
+    "failures": 0,
+    "releaseBuild": "passed",
+    "diffWhitespace": "passed",
+    "ownedSwiftProcessesRemaining": 0,
+    "exactSourceSnapshotSHA256": "4ef53f87676da9f8c0ada00f16ca0d56c30ac7b271c43a7bb220be22bc27a829",
+    "releaseArtifacts": {
+      "LoopForgeSHA256": "c10ff8d82a9b73cfcb1c2cdbf50e4a880ecce1e874ebd0de2cc15398af54bd3b",
+      "KernelSandboxGateSHA256": "0e29463be4377b4d21c463e7ddb63e6256dd76abf30ff1690f0c5a482e985227"
+    },
+    "sourceHashes": {
+      "KernelPostimageVerifierActivation.swift": "037e48190ee0c091c4aad69362a3ea92ed98e9dc935853a0a86b05cff1b6eb80",
+      "JournaledProcessRuntime.swift": "483cc97e93f7280d669cb50e30098bb498553b950459a104ef8b2578e2b9be64",
+      "ProcessGroupRuntimeAdapter.swift": "9ced94015c87839e49227078ca9dd980cd70c013900b635859f58cd630fafebc",
+      "RunReducer.swift": "fc5c41e40f775b6c7febe8a4022c776b3a8ad90d5f4df76b67f72699df684d06",
+      "RunJournal.swift": "5f0cc15a06e18adb9413b736dc595a598f95a044ea849a7d75cd5ce5ea00d36c",
+      "IntegrationTransactionStateMachineTests.swift": "910d092ede241029a80c0c336bf28a09a122a2c46943fcec43f2b57143167f48"
+    }
+  },
+  "remainingPrerequisites": [
+    "runtime-owned bounded join timeout and termination",
+    "hard combined stdout stderr cap",
+    "native resident-memory hard limit",
+    "native zero-child hard limit",
+    "candidate descriptor capability atomic at spawn",
+    "bounded output hashes and exact exit evidence",
+    "canonical parser and deterministic oracle",
+    "non-forgeable postimage result receipt",
+    "latest-red revocation and canonical evidence batch",
+    "separately activated independent read-only review"
+  ],
+  "finalAcceptance": false
+}

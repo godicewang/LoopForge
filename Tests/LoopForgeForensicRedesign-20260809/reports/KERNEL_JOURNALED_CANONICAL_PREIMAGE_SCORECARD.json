@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T10:42:53Z",
+  "status": "journal-accepted-repository-metadata-ignore-policy-four-plane-canonical-preimage",
+  "finalAcceptance": false,
+  "bindings": {
+    "productionEnrollment": true,
+    "acceptedGitPreimageReceipt": true,
+    "ratifiedSourceRevision": true,
+    "headCommitAndGitIdentities": true,
+    "repositoryMetadata": true,
+    "effectiveIgnorePolicySources": true,
+    "everyUntrackedPathClassification": true,
+    "explicitEmptyClassification": true,
+    "headIndexWorktreeUntracked": true,
+    "canonicalWorkspacePreimage": true
+  },
+  "controls": {
+    "globalAndSystemGitConfigDisabled": true,
+    "externalExcludesRejected": true,
+    "sparseCheckoutRejected": true,
+    "gitResolvedInfoExcludePath": true,
+    "descriptorNoFollowPolicyRead": true,
+    "stableDoublePolicyRead": true,
+    "gitAndWorkspaceObservationRepeated": true,
+    "receiptOnlyJournalEvent": true,
+    "pureDeterministicReducerReplay": true,
+    "exactDuplicateReplay": true,
+    "sameCommandSubstitutionRejected": true,
+    "issuesManifestAuthority": false,
+    "issuesPreflightAuthority": false,
+    "mutatesWorkspace": false,
+    "permitsPublication": false
+  },
+  "verification": {
+    "realRepositoryTests": 3,
+    "suiteTestsExecutedExcludingIndependentlyRunCase": 750,
+    "independentlyRunProcessGroupCase": 1,
+    "combinedTestsCovered": 751,
+    "intentionalEnvironmentSkips": 8,
+    "testFailures": 0,
+    "releaseLoopForgeSHA256": "c17a96a6b369563210ac8639be8591ef7a3b5b3286bdcf88a7e15c7a6210f125",
+    "releaseKernelSandboxGateSHA256": "1b7ba433fe915b0dd916aceafe62342d246bcf6bbddcfc5425b0d09fba0fbeaa",
+    "sourceSnapshotSHA256": "97d15fcf07edde857b714a543175e4ec096d6a950f155e7583032fbe0b67fcfd",
+    "canonicalPreimageSourceSHA256": "5975d13783c05955bd4d895c6cc258017db095e837d58c37b39253a7a3b50744",
+    "runJournalSourceSHA256": "0fb704979efbcdcf72a60c6ac46a19c72a8098f117ef3f6489e02cb8451741c8",
+    "runReducerSourceSHA256": "852bf6e680d26d738ce736d28a8361ea2e10ec4d298a78cfb3dd1dfbf3475c0f",
+    "transactionalKernelSourceSHA256": "8d265a4f1a5d4a4793fe0ff801a01d68de614acc7e5f4f1237634a5a222dbb3f",
+    "integrationTestsSHA256": "11c5122b311752d21f1dd651bb4b7d988a66b642b752a7ec68fd4e8625a21056"
+  },
+  "remainingPrerequisites": [
+    "journal-owned manifest and exact preparation-fact assembly",
+    "journal-owned proposal and preflight capability issuer",
+    "tested resident-memory enforcement issuer or retained verifier and reviewer veto",
+    "native immutable design baseline complete visual evidence final authorization and native start",
+    "current-source package sign unlocked native walkthrough clean commit and push"
+  ]
+}

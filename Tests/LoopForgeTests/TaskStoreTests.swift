@@ -4,7 +4,7 @@ import XCTest
 
 @MainActor
 final class TaskStoreTests: XCTestCase {
-    func testNewTaskDefaultsBothAgentsToLatestCodexAndFullAccess() throws {
+    func testNewTaskDefaultsReviewerReadOnlyAndWorkerWorkspaceOnly() throws {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: directory) }
@@ -14,17 +14,39 @@ final class TaskStoreTests: XCTestCase {
         XCTAssertEqual(model.draftSubProvider, .codex)
         XCTAssertEqual(model.draftControlModelReference, AppConstants.officialWorkerModel)
         XCTAssertEqual(model.draftSubModelReference, AppConstants.officialWorkerModel)
-        XCTAssertEqual(model.draftControlAccessMode, .fullAccess)
-        XCTAssertEqual(model.draftAccessMode, .fullAccess)
+        XCTAssertEqual(model.draftControlAccessMode, .readOnly)
+        XCTAssertEqual(model.draftAccessMode, .workspaceOnly)
+        XCTAssertEqual(model.accessModes(for: .control), [.readOnly])
+        XCTAssertEqual(
+            model.accessModes(for: .subAgent),
+            [.readOnly, .workspaceOnly, .fullAccess]
+        )
+        model.setAccessMode(.fullAccess, role: .control)
+        XCTAssertEqual(model.draftControlAccessMode, .readOnly)
+        model.setAccessMode(.readOnly, role: .subAgent)
+        XCTAssertEqual(model.draftAccessMode, .readOnly)
+        model.setAccessMode(.workspaceOnly, role: .subAgent)
+        XCTAssertEqual(model.draftExecutionMode, .autoGraph)
+        XCTAssertEqual(
+            model.draftSourceRevisionExcludedDirectoryNames,
+            ".build, .git, .loopforge, .swiftpm, DerivedData"
+        )
 
         model.draftControlProvider = .local
-        model.draftControlAccessMode = .workspaceOnly
+        model.draftControlAccessMode = .fullAccess
+        model.draftSourceRevisionExcludedDirectoryNames = "dist"
         model.resetDraft()
         XCTAssertEqual(model.draftControlProvider, .codex)
-        XCTAssertEqual(model.draftControlAccessMode, .fullAccess)
+        XCTAssertEqual(model.draftControlAccessMode, .readOnly)
+        XCTAssertEqual(model.draftAccessMode, .workspaceOnly)
+        XCTAssertEqual(model.draftExecutionMode, .autoGraph)
+        XCTAssertEqual(
+            model.draftSourceRevisionExcludedDirectoryNames,
+            ".build, .git, .loopforge, .swiftpm, DerivedData"
+        )
     }
 
-    func testParallelCandidateDraftDefaultsToThreeAndAgentSelection() throws {
+    func testRetiredDraftModesRemainHistoricalSettingsOnly() throws {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: directory) }
@@ -34,14 +56,75 @@ final class TaskStoreTests: XCTestCase {
 
         XCTAssertEqual(model.draftParallelCandidateCount, 3)
         XCTAssertEqual(model.draftParallelSelectionMode, .agent)
+        XCTAssertEqual(model.draftExecutionMode, .autoGraph)
+
         model.setParallelCandidatesEnabled(true)
+        XCTAssertEqual(model.draftExecutionMode, .autoGraph)
+        XCTAssertTrue(
+            model.alertMessage?.contains("Parallel Candidates creation is retired") == true
+        )
+
         model.setParallelCandidateCount(9)
-        XCTAssertEqual(model.draftExecutionMode, .parallelCandidates)
         XCTAssertEqual(model.draftParallelCandidateCount, 8)
+
+        model.selectSingleLoop()
+        XCTAssertEqual(model.draftExecutionMode, .autoGraph)
+        XCTAssertTrue(
+            model.alertMessage?.contains("Single Loop creation is retired") == true
+        )
+
         model.resetDraft()
-        XCTAssertEqual(model.draftExecutionMode, .singleLoop)
+        XCTAssertEqual(model.draftExecutionMode, .autoGraph)
         XCTAssertEqual(model.draftParallelCandidateCount, 3)
         XCTAssertEqual(model.draftParallelSelectionMode, .agent)
+    }
+
+    func testStartupRecoveryBlocksEveryHistoricalExecutionMode() throws {
+        for mode in LoopExecutionMode.allCases {
+            let directory = FileManager.default.temporaryDirectory
+                .appendingPathComponent(UUID().uuidString)
+            try FileManager.default.createDirectory(
+                at: directory,
+                withIntermediateDirectories: true
+            )
+            defer { try? FileManager.default.removeItem(at: directory) }
+            let store = TaskStore(
+                storageURL: directory.appendingPathComponent("tasks.json")
+            )
+            let now = Date()
+            var historical = LoopTask(
+                id: UUID(), title: mode.title, request: "Historical checkpoint",
+                quality: .lightweight, category: .script,
+                workspacePath: directory.path, targetSeconds: 60,
+                accumulatedCodexSeconds: 10, model: .visualAuditor,
+                status: .paused, stage: "Saved", iteration: 1, threadID: nil,
+                auditScore: 0, auditSummary: "", lastAgentMessage: "",
+                consecutiveFailures: 0, createdAt: now, updatedAt: now,
+                completedAt: nil, logs: []
+            )
+            historical.executionMode = mode
+            historical.resumeOnNextLaunch = true
+            store.add(historical)
+
+            _ = AppModel(store: store)
+
+            let blocked = try XCTUnwrap(store.task(id: historical.id))
+            XCTAssertEqual(blocked.status, .blocked, mode.title)
+            XCTAssertEqual(
+                blocked.stage,
+                LegacyTaskExecutionRetirementPolicy.stage(for: mode),
+                mode.title
+            )
+            XCTAssertEqual(blocked.resumeOnNextLaunch, false, mode.title)
+            XCTAssertTrue(
+                blocked.logs.contains(where: {
+                    $0.kind == .warning
+                        && $0.message.contains("startup recovery")
+                        && $0.message.contains("no timer, agent, process, mutation")
+                }),
+                mode.title
+            )
+        }
     }
 
     func testTaskSummaryDescribesWorkInsteadOfReturningInitials() {
@@ -276,6 +359,30 @@ final class TaskStoreTests: XCTestCase {
         XCTAssertEqual(model.draftSubModelReference, recommended.slug)
         XCTAssertEqual(model.draftControlReasoningEffort, strongest)
         XCTAssertEqual(model.draftReasoningEffort, strongest)
+        XCTAssertEqual(model.draftControlAccessMode, .readOnly)
+        XCTAssertEqual(model.draftAccessMode, .workspaceOnly)
+    }
+
+    func testRecommendationAndCategoryInferenceNeverEscalateExplicitAuthority() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let model = AppModel(
+            store: TaskStore(storageURL: directory.appendingPathComponent("tasks.json"))
+        )
+
+        model.adoptRecommendedCodexDefaults()
+        XCTAssertEqual(model.draftControlAccessMode, .readOnly)
+        XCTAssertEqual(model.draftAccessMode, .workspaceOnly)
+
+        model.draftControlAccessMode = .fullAccess
+        model.draftAccessMode = .fullAccess
+        model.draftProjectMode = .existing
+        model.draftWorkspacePath = directory.path
+        model.draftRequest = "Use my already signed-in Google Chrome window to open 10 windows and generate 10 images in ChatGPT."
+        model.calculateEstimate()
+
+        XCTAssertEqual(model.estimate?.category, .desktopAutomation)
         XCTAssertEqual(model.draftControlAccessMode, .fullAccess)
         XCTAssertEqual(model.draftAccessMode, .fullAccess)
     }
@@ -412,5 +519,100 @@ final class TaskStoreTests: XCTestCase {
         XCTAssertTrue(restored.tasks[0].externalBlockerMessage?.contains("usage limit") == true)
         XCTAssertFalse(restored.tasks[0].externalBlockerMessage?.contains("infrastructure failures") == true)
         XCTAssertFalse(restored.tasks[0].resumeOnNextLaunch == true)
+    }
+
+    func testStreamingGraphLogsBatchPublicationWithoutHidingReviewEvidence() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let url = directory.appendingPathComponent("tasks.json")
+        let store = TaskStore(storageURL: url)
+        let now = Date()
+        let nodeID = "streaming-node"
+        let node = GraphLoopNode(
+            id: nodeID,
+            title: "Streaming node",
+            objective: "Retain real command evidence.",
+            dependencies: [],
+            writeScopes: ["Sources"],
+            verification: ["Run tests"],
+            readOnly: false,
+            status: .running,
+            iteration: 1,
+            accumulatedActiveSeconds: 0,
+            accumulatedBlockedSeconds: 0,
+            activeStartedAt: now,
+            blockedAt: nil,
+            threadID: "thread",
+            workspacePath: directory.path,
+            isolationRootPath: nil,
+            workspaceStrategy: .gitWorktree,
+            integrationBaseCommit: nil,
+            currentInstruction: "Run tests",
+            lastAgentMessage: "",
+            lastReview: "",
+            consecutiveFailures: 0,
+            createdAt: now,
+            completedAt: nil,
+            logs: []
+        )
+        var task = LoopTask(
+            id: UUID(), title: "Graph", request: "Run a graph", quality: .high,
+            category: .nativeApp, workspacePath: directory.path,
+            targetSeconds: 3_600, accumulatedCodexSeconds: 0,
+            model: .advancedVisualAuditor, status: .running, stage: "Working",
+            iteration: 1, threadID: nil, auditScore: 0, auditSummary: "",
+            lastAgentMessage: "", consecutiveFailures: 0,
+            createdAt: now, updatedAt: now, completedAt: nil, logs: []
+        )
+        task.executionMode = .autoGraph
+        task.graphState = GraphLoopState(
+            phase: .executing,
+            planSummary: "One node",
+            nodes: [node],
+            mainInteractionCount: 0,
+            mainLastReview: "",
+            maxConcurrentNodes: 1,
+            supportsParallelWorktrees: true,
+            finalRepairRounds: 0,
+            createdAt: now,
+            completedAt: nil
+        )
+        store.add(task)
+
+        store.appendGraphNodeLog(
+            taskID: task.id,
+            nodeID: nodeID,
+            kind: .command,
+            "pytest started"
+        )
+        store.appendGraphNodeLog(
+            taskID: task.id,
+            nodeID: nodeID,
+            kind: .agent,
+            "pytest passed"
+        )
+
+        XCTAssertEqual(TaskStore.graphLogPublicationInterval, 30)
+        XCTAssertEqual(store.pendingGraphLogCount, 2)
+        XCTAssertTrue(store.tasks[0].graphState?.nodes[0].logs.isEmpty == true)
+        XCTAssertEqual(
+            store.task(id: task.id)?.graphState?.nodes[0].logs.map(\.message),
+            ["pytest started", "pytest passed"],
+            "Main Graph review must see buffered evidence before UI publication."
+        )
+
+        store.flushPendingGraphLogs(taskID: task.id)
+
+        XCTAssertEqual(store.pendingGraphLogCount, 0)
+        XCTAssertEqual(
+            store.tasks[0].graphState?.nodes[0].logs.map(\.message),
+            ["pytest started", "pytest passed"]
+        )
+        let restored = TaskStore(storageURL: url)
+        XCTAssertEqual(
+            restored.tasks[0].graphState?.nodes[0].logs.prefix(2).map(\.message),
+            ["pytest started", "pytest passed"]
+        )
     }
 }

@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "finding": "Thermal, process, and persistence lifecycle failure",
+  "status": "confirmed_systemic_defects_redesign_incomplete",
+  "taskID": "1ED2180F-FBE1-4BCA-9E79-701F40CC3483",
+  "easyBusinessHandling": "read_only",
+  "runtimeSample": {
+    "build": 133,
+    "sampledAt": "2026-08-09T13:03:40.724Z",
+    "sampleIntervalMilliseconds": 1,
+    "sampleCount": 2370,
+    "physicalFootprintMB": 129.7,
+    "peakPhysicalFootprintMB": 685.6,
+    "capturedBrokerPollingStacks": true
+  },
+  "brokerPolling": {
+    "intervalMillisecondsPerActiveScope": 50,
+    "directoryScansPerSecondPerNode": 20,
+    "normalNonLocalMaxConcurrentNodes": 3,
+    "estimatedDirectoryScansPerSecondAtCap": 60,
+    "eventDriven": false
+  },
+  "stoppedTaskCommandEvidence": {
+    "retainedCommandEntries": 4124,
+    "entryCountIncludesStartAndCompletionDuplicates": true,
+    "simulatorLifecycleMentions": 104,
+    "simctlBootMentions": 58,
+    "simctlShutdownMentions": 41,
+    "openCommandMentions": 32,
+    "launchctlMentions": 14,
+    "nohupMentions": 2
+  },
+  "persistence": {
+    "tasksJSONBytes": 10734766,
+    "backupJSONBytes": 10734531,
+    "taskNodeCount": 19,
+    "taskNodeLogCount": 5486,
+    "saveRunsOnMainActor": true,
+    "saveReadsAndDecodesPreviousFullStore": true,
+    "saveWritesFullBackup": true,
+    "saveEncodesAndWritesAllTasks": true,
+    "streamingLogBatchIntervalSeconds": 30,
+    "appendOnlyJournal": false
+  },
+  "evidenceCollection": {
+    "graphCollectorCallSites": 5,
+    "callSitesPassingEmptyBeforeFingerprint": 5,
+    "maximumSelectedImages": 12,
+    "visionOCRPerSelectedImage": true,
+    "contentAddressedCache": false,
+    "heavyToolConcurrencyBudget": false
+  },
+  "ollama": {
+    "configuredKeepAlive": "5m",
+    "maximumLoadedModels": 1,
+    "maximumParallelRequests": 1,
+    "ownedServerStopWaitsForExit": false,
+    "ownedServerStopEscalates": false,
+    "ownedServerStopVerifiesRunnerExit": false,
+    "ordinarySupervisorRequestOverridesKeepAlive": false
+  },
+  "processCleanup": {
+    "dirtyRepairSignalsDescendantSnapshot": true,
+    "escalationIsAwaited": false,
+    "usesPIDBirthIdentity": false,
+    "blocksSchedulerUntilQuiescent": false,
+    "coversDoubleForkOrLaunchdActivation": false,
+    "returnsCleanupReceipt": false
+  },
+  "thermalGovernor": {
+    "observesThermalState": false,
+    "observesLowPowerMode": false,
+    "observesOwnedCPU": false,
+    "budgetsHeavySubsystems": false,
+    "reducesConcurrencyUnderPressure": false,
+    "idleSystemSleepDisabledDuringActiveTask": true
+  },
+  "pointInTimeSafetyCheck": {
+    "checkedAt": "2026-08-09T15:01:11Z",
+    "loopForgePID": 68656,
+    "loopForgeCPUPercent": 0.0,
+    "codexWorkersFound": 0,
+    "xcodebuildProcessesFound": 0,
+    "ollamaProcessesFound": 0,
+    "openHostResourceScopes": 0,
+    "activeHostResourceLeases": 0,
+    "releasedHostResourceLeases": 37,
+    "loopForgePowerAssertionFound": false,
+    "interpretation": "instantaneous_stopped_state_only"
+  },
+  "defects": [
+    {"id": "F-014", "severity": "high", "name": "per_node_20hz_resource_broker_polling"},
+    {"id": "F-015", "severity": "critical", "name": "fire_and_forget_process_reaping"},
+    {"id": "F-016", "severity": "critical", "name": "prompt_only_full_access_resource_discipline"},
+    {"id": "F-017", "severity": "high", "name": "unverified_ollama_model_and_server_release"},
+    {"id": "F-018", "severity": "high", "name": "full_store_main_actor_checkpoint_rewrite"},
+    {"id": "F-019", "severity": "high", "name": "uncached_repo_image_and_ocr_evidence_work"},
+    {"id": "F-020", "severity": "critical", "name": "missing_thermal_and_load_governor"},
+    {"id": "F-021", "severity": "high", "name": "invisible_worker_after_last_window_close"}
+  ],
+  "acceptanceGates": [
+    "event_driven_single_task_resource_broker",
+    "awaited_process_cleanup_receipt_and_quiescence",
+    "typed_host_resources_beyond_simulator_boot",
+    "mechanical_resource_enforcement_under_full_access",
+    "append_only_journal_and_background_snapshot_compaction",
+    "content_addressed_evidence_cache",
+    "thermal_and_heavy_subsystem_load_governor",
+    "verified_ollama_model_unload_and_server_tree_reap",
+    "native_stop_exit_and_crash_recovery_tests"
+  ],
+  "evidence": [
+    "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/evidence/build133-cpu-spike.sample.txt",
+    "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/evidence/task-snapshot-20260809T131753Z.json",
+    "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/THERMAL_PROCESS_AND_PERSISTENCE_ROOT_CAUSE.md",
+    "/Users/godice/Coding/LoopForge/Sources/LoopForge/HostResourceLeases.swift",
+    "/Users/godice/Coding/LoopForge/Sources/LoopForge/ProcessRunner.swift",
+    "/Users/godice/Coding/LoopForge/Sources/LoopForge/TaskStore.swift",
+    "/Users/godice/Coding/LoopForge/Sources/LoopForge/AuditEvidence.swift",
+    "/Users/godice/Coding/LoopForge/Sources/LoopForge/OllamaManager.swift"
+  ]
+}

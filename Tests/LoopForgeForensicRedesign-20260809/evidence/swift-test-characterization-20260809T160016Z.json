@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Pre-refactor characterization baseline",
+  "command": "nice -n 10 swift test",
+  "workingDirectory": "/Users/godice/Coding/LoopForge",
+  "startedAt": "2026-08-09T16:00:16Z",
+  "endedAt": "2026-08-09T16:01:01Z",
+  "wallSeconds": 45,
+  "exitCode": 0,
+  "xctest": {
+    "executed": 281,
+    "skipped": 6,
+    "failures": 0,
+    "reportedDurationSeconds": 44.652
+  },
+  "interpretation": "The current suite is internally green. This is a characterization baseline only; it does not prove domain generality, convergence, visual quality, reviewer independence, or safe runtime behavior."
+}

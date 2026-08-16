@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T05:51:20Z",
+  "status": "initial-worktree-plane-content-addressed-other-required-planes-explicitly-missing",
+  "finalAcceptance": false,
+  "projection": {
+    "source": "user-confirmed-content-complete-workspace-source-revision",
+    "acceptedPlane": "worktree",
+    "entryKind": "regularFile",
+    "ownership": "userExisting",
+    "contentAddressed": true,
+    "deduplicatedContentSizeReferences": true,
+    "modelProseUsed": false,
+    "gitPorcelainUsed": false
+  },
+  "requiredPlaneAssessment": {
+    "required": ["head", "index", "untracked", "worktree"],
+    "accepted": ["worktree"],
+    "missing": ["head", "index", "untracked"],
+    "complete": false,
+    "emptyPlanesInferred": false
+  },
+  "controls": {
+    "canonicalArtifactDigest": true,
+    "exactWorkspaceRootSourcePolicyBinding": true,
+    "uniquePathSortedEntries": true,
+    "exactContentReferenceCoverage": true,
+    "duplicatePlaneRejection": true,
+    "crossIdentityPlaneRejection": true,
+    "constructsWorkspacePreimage": false,
+    "containsJournalReceiptIDs": false,
+    "authorizesFilesystemEffects": false,
+    "productionPreflightIssuerAvailable": false,
+    "publicationPermitted": false,
+    "nativeStartAuthorized": false
+  },
+  "verification": {
+    "focusedPlaneTests": 4,
+    "suiteTestsExecutedExcludingIndependentlyRunCase": 729,
+    "independentlyRunProcessGroupCase": 1,
+    "combinedTestsCovered": 730,
+    "intentionalEnvironmentSkips": 8,
+    "testFailures": 0,
+    "releaseLoopForgeSHA256": "8472a2ea03722764ed904c39dc5941ad70d4167f51c1f17e519eb82d06faa567",
+    "releaseKernelSandboxGateSHA256": "1b7ba433fe915b0dd916aceafe62342d246bcf6bbddcfc5425b0d09fba0fbeaa",
+    "sourceSnapshotSHA256": "07ec6f286430a6918dc27b1ebee79762de18fe0c0f103cb98c96aecd8e65fa60"
+  },
+  "remainingPrerequisites": [
+    "journal-owned content-complete HEAD tree plane",
+    "journal-owned content-complete Git index plane including stage semantics",
+    "journal-owned untracked classification plane",
+    "repository-metadata and ignored-path-policy authority",
+    "journal-owned WorkspacePreimage assembly and replay",
+    "candidate content-object byte capture and descriptor-bound attestation",
+    "journal-owned manifest assembly proposal and preflight capability issuer",
+    "tested production resident-memory enforcement issuer or retained verifier and reviewer veto",
+    "native immutable design baseline complete visual evidence final authorization and executable external-dependency observation",
+    "legacy Single and Parallel retirement",
+    "current-source package sign unlocked native walkthrough clean commit and push"
+  ]
+}

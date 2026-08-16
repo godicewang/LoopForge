@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T06:37:47Z",
+  "status": "journaled-duration-completion-gate-package-verified-production-cutover-pending",
+  "acceptanceRowsAdvanced": ["F-02"],
+  "priorDefect": {
+    "occurrencesOutsideJournalState": true,
+    "completionIgnoredRequiredDuration": true,
+    "replayCouldNotReconstructCoverage": true
+  },
+  "enforcementBoundary": {
+    "occurrencesJournaled": true,
+    "acceptedProgressAuthorityInReducerState": true,
+    "coverageDerivedFromReplay": true,
+    "missingProgressExcluded": true,
+    "stagnantProgressExcluded": true,
+    "forgedProgressRejected": true,
+    "completionDurationVeto": true,
+    "nativeDiagnosticProjectionAdded": true,
+    "productionControllerEnrolled": false
+  },
+  "verification": {
+    "reducerTestsExecuted": 31,
+    "reducerFailures": 0,
+    "journalTestsExecuted": 16,
+    "journalFailures": 0,
+    "fullTestsExecuted": 601,
+    "fullTestsSkipped": 8,
+    "fullFailures": 0,
+    "packagingOwnedTestsExecuted": 601,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "sourceSnapshotSHA256": "f23bee59c7f7f3fec4dfb2a472c4e3485bd9226ccc31fc6f224181a9a258c11c",
+    "reducerSourceSHA256": "42c4375f198cde5abcf886786c293d241de607f5bb9cf085e98bb88038c3ff39",
+    "journalSourceSHA256": "a0f71b8d6abe2f8ec8ddd321508bf027052906f0aeac794cadd169c2dc8687f6",
+    "intervalSourceSHA256": "31e9a73b8c4f8e9d1c6815ba0ef1dd47647a67f48fe2df9a49ba8d5f1bc2b819",
+    "nativeViewSourceSHA256": "ff771a56a4522fc13c2871f1932c3cc02e9e8d8eaada00f23041e991b978f7fd",
+    "reducerTestsSHA256": "5e27702d3bc1656650c45677d53a096f8e2718bd3aae38c751f62bb08d9e0dd9",
+    "journalTestsSHA256": "b56d9de7c3f02bf3bda3d173f3205724eb80a8acaa40119583fefeb9d20372e4",
+    "fullTestLogSHA256": "a9ef99ab2cb3cee839ceddce8ae70c3acc43de98e432402bbd3aadf0d5593bbd",
+    "packageTestLogSHA256": "80c931ac698a5090f79db4992767da37d593f2de91be70442af3cb7d73d5431c",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "buildManifestSHA256": "b66e3d785e2613c82a0c7bd7ddd41381ccc5b22486bef32e8dce8002124c8492",
+    "executableSHA256": "61b231ae5c8eec133c15c9e668dc0c301f40e3b723ce5e04323b0f31e699d788",
+    "zipSHA256": "a0ea12b9a2e1ee4d1faa9bfab65d316b9f6a0440b00344d89eb96b43e6f13927",
+    "dmgSHA256": "40fc09027d03986423b9afa817debcdbcf998cc8031d1b404c8c207160d4e2d2",
+    "cdHash": "316a6612b23dc331762ff8c2b1bd6a8ed65549a0",
+    "residualPackagedProcessCount": 0
+  },
+  "nativeVerification": {
+    "attemptedThroughComputerUse": true,
+    "currentScreenshotCaptured": false,
+    "blockedReason": "macOS locked and automatic unlock paused after physical input",
+    "blockedIntervalCounted": false
+  },
+  "knownBoundary": {
+    "productionKernelEnrollmentPending": true,
+    "trustedOccurrenceIssuerPending": true,
+    "legacyControllerCutoverPending": true,
+    "currentNativeUICapturePending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

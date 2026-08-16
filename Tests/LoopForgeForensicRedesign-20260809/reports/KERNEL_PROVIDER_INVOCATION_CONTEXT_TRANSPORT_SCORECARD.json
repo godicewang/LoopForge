@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "status": "kernel-owned-provider-invocation-context-transport-v2-present-production-harness-and-network-authority-pending",
+  "recordedAt": "2026-08-15T17:05:00Z",
+  "protocol": {
+    "current": "loopForgeProviderHarnessV2",
+    "historicalV1Decodable": true,
+    "historicalV1CurrentEvidenceValid": false,
+    "fixedInvocationContextDescriptor": 196,
+    "callerSuppliesContextBytes": false,
+    "callerSuppliesInvocationDigest": false,
+    "callerSuppliesRequestNonce": false,
+    "invocationDigestInArguments": false,
+    "invocationDigestInEnvironment": false,
+    "canonicalSortedKeyJSON": true,
+    "finalLineFeedRequired": true,
+    "maximumPayloadBytes": 4096,
+    "fullyStagedBeforeSpawn": true,
+    "cloexecPipe": true
+  },
+  "payload": {
+    "fields": [
+      "schemaVersion",
+      "runID",
+      "attemptID",
+      "invocationDigest",
+      "requestNonce"
+    ],
+    "derivedSolelyFromAuthorizedInvocation": true,
+    "providerArgumentsContainDescriptorOnly": true
+  },
+  "receipt": {
+    "targetDescriptorBound": true,
+    "contentDigestBound": true,
+    "byteCountBound": true,
+    "stagingMonotonicTimeBound": true,
+    "launchReceiptRequiresExactTransport": true,
+    "journaledRuntimeRevalidatesBeforeParse": true,
+    "provesExactBytesStaged": true,
+    "claimsUntrustedChildConsumption": false
+  },
+  "adversarialProof": {
+    "missingContextRejected": true,
+    "wrongDescriptorRejected": true,
+    "changedDigestRejected": true,
+    "changedNonceRejected": true,
+    "lateStagingRejected": true,
+    "substitutedLaunchRejected": true,
+    "decodedLiveAuthorityRejected": true,
+    "historicalV1RejectedForCurrentLaunch": true,
+    "realSandboxFixtureConsumedExactContext": true,
+    "strictParserAndDerivationPassed": true
+  },
+  "verification": {
+    "focusedRuns": [
+      {
+        "executed": 14,
+        "failures": 0,
+        "seconds": 1.047
+      },
+      {
+        "executed": 1,
+        "failures": 0,
+        "purpose": "historical-v1-decode-remains-invalid-evidence"
+      }
+    ],
+    "exactSourceSuite": {
+      "executed": 819,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 63.145
+    },
+    "packageOwnedFullSuite": {
+      "executed": 819,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 64.873,
+      "realCodexChildBridgeSeconds": 19.135,
+      "logSHA256": "18e7f19e0051a104ee488921d4f9065b9cb93c5f4165720cf41f9980efb807ab"
+    },
+    "sourceSnapshotSHA256": "bff4173a795286a7b895f053a990692982905f1211e44d655d94b5fe5f059f6f",
+    "packagedLoopForgeSHA256": "b2e4c9463676fdd8c6151da83d1e64be21d27dc645b64e7fec6ddf70a53e3647",
+    "packagedKernelSandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "signatureVerifiedDeepStrict": true,
+    "exactPackagedMachOStartupPassed": true,
+    "postSmokePackagedProcessCount": 0
+  },
+  "sourceDigests": {
+    "taskContract": "a8022c054661cd7743270a46994b3791e6f6f3b6b91229cd935e5f76b7a0bc6b",
+    "providerInvocation": "e23922624cd5c9a0c90bb5df7cc84dc817ad2f827298052108b229f65690605e",
+    "processRuntimeAdapter": "4c4101a054c3e313f9c3bfe1df2b9b9ed6f19324d6071901585cda3df6552db3",
+    "journaledProcessRuntime": "f6e4b5c0f05cd968e804769686501c7aa0ef87cf502fe741cbdf77ed65da9f7c",
+    "productionExecutionCoordinator": "2e7abb32812150115c71d8f5185a6788a4c5a86a2263fc6929011a222403d89b",
+    "nativeFixture": "27c525659e7e3170c252cca4e3a76ed305b4885eb65fe1f0ff6b9059b2fe6b9d",
+    "providerTests": "e4643a0d35bd5e8ca48a11817d5ee7d39a80290e34a4c6f2983797761a1fb540",
+    "sandboxTests": "9bc10c2dcdc9a03fdf1fb10f5d12f4888a2d146ab8fdc7e771da70417c0468f8",
+    "journaledRuntimeTests": "eaccd458f86139d58bea09c9e81b1df234f9916589fad957ca9051a7b017d5f0",
+    "productionSessionTests": "270bfccca543016c16354af52e2cbd3386beb7f2c2f5b23f4bd2642f74238060"
+  },
+  "easyBusiness": {
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "statusFingerprintSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a",
+    "readOnly": true,
+    "mutatedByThisInterval": false
+  },
+  "remaining": [
+    "package and independently ratify a real LoopForge V2 provider harness",
+    "issue exact network authority or retain the launch veto",
+    "native mutation preparation and trusted containment issuer or retained veto",
+    "trusted Release external-observer containment or retained veto",
+    "legacy Single and Parallel retirement",
+    "unlocked native screenshots",
+    "clean-commit rebuild",
+    "commit and push"
+  ],
+  "productionProviderLaunch": false,
+  "finalRelease": false
+}

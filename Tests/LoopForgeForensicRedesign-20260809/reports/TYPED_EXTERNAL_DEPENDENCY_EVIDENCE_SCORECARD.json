@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T03:43:12Z",
+  "status": "typed-external-dependency-contract-authority-observation-blocker-and-package-verified-native-authoring-and-enrollment-pending",
+  "acceptanceRowsAdvanced": [
+    "B-06"
+  ],
+  "contract": {
+    "opaqueDependencyIdentity": true,
+    "typedDependencyKind": true,
+    "exactRequirementSetRequired": true,
+    "evidenceRecipeRequired": true,
+    "authorizedObserverLineageRequired": true,
+    "verticalKeywordPolicy": false,
+    "legacyContractDecodesWithoutDependencies": true
+  },
+  "compilerAuthority": {
+    "exactDependencyBindingSetRequired": true,
+    "oneBindingPerDependencyRequired": true,
+    "explicitEpistemicStateRequired": true,
+    "userOrAcceptedAmendmentSourceRequired": true,
+    "inferenceCanMintDependency": false,
+    "candidateDigestBindsDependencies": true,
+    "legacyCandidateDecodesWithoutBindings": true
+  },
+  "observation": {
+    "journalEventRequired": true,
+    "exactActiveAttemptRequired": true,
+    "exactRequirementIntersectionRequired": true,
+    "observerMustEqualCommandActor": true,
+    "observerMustDifferFromWorkerLineage": true,
+    "contractAuthorizedObserverRequired": true,
+    "exactEvidenceRecipeRequired": true,
+    "nonemptyEvidenceDigestRequired": true,
+    "exactCommandTimestampRequired": true,
+    "availableAndUnavailableAreDistinct": true,
+    "rejectedObservationStored": false
+  },
+  "blocker": {
+    "ordinaryInternalBlockerPreserved": true,
+    "externalBlockerRequiresStoredReceipt": true,
+    "sameAttemptRequired": true,
+    "unavailableObservationRequired": true,
+    "availableObservationCanBlockAsUnavailable": false,
+    "inventedDependencyCanBlock": false,
+    "workerSelfObservationCanBlock": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 45,
+    "focusedFailures": 0,
+    "fullTestsExecuted": 580,
+    "fullTestsSkipped": 8,
+    "fullFailures": 0,
+    "packagingOwnedTestsExecuted": 580,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "sourceSnapshotSHA256": "8cbfcdba71e73cfd0102e18e6d8db28c4de23b879c734ce2da6e217efd4665ad",
+    "focusedLogSHA256": "e03905f6b58a923edcfedac7afc41473b73a45adbd7ae94c7246e3b72a82a8ff",
+    "fullLogSHA256": "c036330f12e97a7015d97c536dc974091d3c0e01ef10b2ccd348a2c126860941",
+    "packageTestLogSHA256": "a111d7716e6d8c4ea917a7de8c8e45f7858b20c7985e77a4887eee871d315004",
+    "packageLogSHA256": "1c1f1d6fd32571c2fb70f530ba6919331b79055b3eab2cd0ac0cc794f6795797",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "buildManifestSHA256": "eb6db72f1eedaf5bef49e546d4766549c93adab10f858dd81c1c28bda2a8058a",
+    "executableSHA256": "c4476cbe7a4b1204f98ecffd0285cc57be078a7d171c24126cffd305aa74d78d",
+    "zipSHA256": "cb54f2ce4d8ad55a10cc65fc40fbf17d58c16ee938317ec821e8fcbe582fa789",
+    "dmgSHA256": "71c0b9d454347c09ab64c5b7dda9e1fcc927816295675a51925653573871580e",
+    "cdHash": "2cf331654ee38696debb7229e149fd04c5dac715",
+    "residualPackagedProcessCount": 0
+  },
+  "knownBoundary": {
+    "nativeDependencyAuthoringPending": true,
+    "userConfirmationIssuerPending": true,
+    "productionEnrollmentPending": true,
+    "controllerCutoverPending": true,
+    "currentNativeUICapturePending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

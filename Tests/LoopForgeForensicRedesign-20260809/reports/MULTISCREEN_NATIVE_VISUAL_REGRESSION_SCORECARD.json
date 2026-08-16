@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "title": "Multiscreen Native Visual Regression and False-Acceptance Scorecard",
+  "status": "fail",
+  "findingRange": [
+    "F-055",
+    "F-062"
+  ],
+  "controlledComparison": {
+    "baselineCommit": "301ef23a8698c3544c097895980248284f9189bb",
+    "candidateCommit": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "sameDevice": true,
+    "sameOS": true,
+    "appearance": "light",
+    "appearancePinnedBeforeEachRun": true,
+    "baselineTests": {
+      "selected": 1,
+      "passed": 1,
+      "failed": 0,
+      "seconds": 58.302
+    },
+    "candidateTests": {
+      "selected": 2,
+      "passed": 2,
+      "failed": 0,
+      "seconds": 73.58
+    },
+    "pngs": 21,
+    "uniquePNGs": 19,
+    "ocrGeometryFiles": 21
+  },
+  "observedRegressions": {
+    "industryVisibleTitles": 6,
+    "baselineWrappedIndustryTitles": 0,
+    "candidateWrappedIndustryTitles": 4,
+    "categoryVisibleTitles": 6,
+    "baselineWrappedCategoryTitles": 0,
+    "candidateWrappedCategoryTitles": 2,
+    "baselineCategoryMinHeightPoints": 130,
+    "candidateCategoryMinHeightPoints": 104,
+    "baselineFullyVisibleSuggestionPills": 4,
+    "candidateFullyVisibleSuggestionPills": 2,
+    "candidateVisibleClippedFragment": "Brazilia",
+    "candidateVisibleTruncatedPlaceholder": "For example: American barbecue, Kor..."
+  },
+  "coverageIntegrity": {
+    "namedCandidateCaptures": 13,
+    "uniqueCandidateFrames": 11,
+    "duplicateFrameGroups": 2,
+    "uniqueFrameAssertion": false,
+    "expectedCheckpointContentAssertion": false
+  },
+  "testContract": {
+    "navigationExistenceAndHittability": true,
+    "pixelOrPerceptualBaseline": false,
+    "ocrClippingGate": false,
+    "typographyTokenGate": false,
+    "shapeMetricGate": false,
+    "spacingGate": false,
+    "independentDesignReview": false
+  },
+  "historicalFalseAcceptance": {
+    "screenshot": "../evidence/runtime-baselines/english-2ae4045/.loopforge/evidence/us-round1/xcuitest-runtime/screenshots/03-assessment-category-details.png",
+    "sha256": "76c58e4377680e34abacde978355813bef56649d9b4024c5029234a2d920cdf5",
+    "visibleFragment": "Brazilia",
+    "ledgerClaimedVisuallyReviewedTwice": true,
+    "ledgerDisposition": "accepted",
+    "mainGraphCompletedEvidenceNode": true,
+    "mainGraphCompletionBasis": "passing XCUITest plus artifact provenance and behavior semantics"
+  },
+  "scopeBoundary": {
+    "universalStandardSizeStructuralFailure": false,
+    "friendsEntryStructurallyEquivalent": true,
+    "profileTopStructurallyEquivalent": true,
+    "confirmedHighImpactRegression": true
+  },
+  "requiredGates": [
+    "commit-bound immutable before image",
+    "device/OS/scale/appearance/locale/content-size receipt",
+    "OCR completeness and clipping veto",
+    "typography/icon/container/spacing metric diff",
+    "checkpoint semantic-content assertion",
+    "unique-frame hash assertion",
+    "independent product-design authority",
+    "immediate rollback and strategy retirement after damaging visual delta"
+  ],
+  "evidence": [
+    "../evidence/runtime-baselines/primary-flow-light-comparison.json",
+    "../evidence/runtime-baselines/primary-flow-light-image-sha256.txt",
+    "../evidence/runtime-baselines/chinese-primary-flows-light-301ef23.xcresult",
+    "../evidence/runtime-baselines/english-primary-flows-light-2ae4045.xcresult",
+    "../evidence/runtime-baselines/chinese-primary-flows-light-attachments/manifest.json",
+    "../evidence/runtime-baselines/english-primary-flows-light-attachments/manifest.json",
+    "../evidence/runtime-baselines/english-2ae4045/EasyBusinessUITests/EasyBusinessUITests.swift",
+    "../evidence/task-snapshot-20260809T131753Z.json"
+  ]
+}

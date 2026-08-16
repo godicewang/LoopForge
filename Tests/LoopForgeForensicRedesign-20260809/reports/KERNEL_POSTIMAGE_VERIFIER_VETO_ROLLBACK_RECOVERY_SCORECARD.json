@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-14T13:05:24Z",
+  "status": "already-applied-verifier-veto-rollback-recovery-implemented-and-crash-replayed",
+  "finalAcceptance": false,
+  "easyBusinessMutated": false,
+  "controls": {
+    "requiresAppliedUnverified": true,
+    "requiresExactlyOneAcceptedVeto": true,
+    "requiresExactRetainedActivation": true,
+    "rejectsLaunchAfterVeto": true,
+    "requiresExactlyOneCompletedApplyEnvelope": true,
+    "exactRegistrationWorkspaceActorBinding": true,
+    "exactPreflightManifestIntentReceiptBinding": true,
+    "derivesBytesOnlyFromRetainedApplyEnvelope": true,
+    "freshExclusiveRollbackLease": true,
+    "deterministicCrashReplayIdentities": true,
+    "rollbackIntentJournaledBeforeFilesystemEffect": true,
+    "fullSourceRevisionCASForCompletedCandidate": true,
+    "driftQuarantines": true,
+    "exactPreimageRestored": true,
+    "nextRecoveryZeroEffect": true,
+    "noSyntheticVerification": true
+  },
+  "systemicCorrections": {
+    "canonicalDurableReceiptDigest": true,
+    "candidatePostimageRollbackDigestDomainAligned": true,
+    "releasedResourceFreshLeaseRestoreAllowed": true,
+    "vetoedActivationTerminal": true,
+    "zombieExecutableProbeFalsePassRetired": true
+  },
+  "verification": {
+    "swiftTestsExecuted": 767,
+    "swiftTestsSkipped": 8,
+    "swiftTestFailures": 0,
+    "swiftTestSeconds": 63.824,
+    "releaseBuildSeconds": 97.55,
+    "releaseExecutableSHA256": "06cfe1ce175f77a8c1e01e1851ab7956a56d3d951bb2bff9dafed5de3b6c497e",
+    "failedRunsCounted": 0,
+    "excludedDiagnosticFullSuiteRuns": 2,
+    "ownedProcessesRemaining": 0
+  },
+  "sourceHashes": {
+    "WorkspacePostimageVerifierVetoRollbackPreparation.swift": "3d2f9cb312dbe1ff9896ada01e5fa88ac77df004724a477b1416a21be5fbc7c3",
+    "WorkspaceMutationRecoveryCoordinator.swift": "338efae91ed0de277d3bb04ffff59cf0612452e41dc3f1c8ab453d923c7f9407",
+    "WorkspaceMutationEffectOutbox.swift": "1e95899d9daec8564b3c4f80a4bcd3cc36d1d26ba892d8e14d1e1c69285c5968",
+    "JournaledWorkspaceMutationRuntime.swift": "2821e651411d46acea7a61a53384702583cad79636023f2f7175d2164a60e75f",
+    "WorkspaceMutationFilesystemExecutor.swift": "348e59ac130046f227bbcd4faac72caac38f7138b5bae78e8585bb7b8c86a71f",
+    "RuntimeSupervisor.swift": "ca1ee26d4ecf2517ae3c5de301e7ca8b9a5fb98791a5a68390c80325dec1ffa7",
+    "RunReducer.swift": "bad6f7001091a46dc8ea44f75469858dc875d6d03426914aa95918d2d80dc480",
+    "JournaledProcessRuntime.swift": "31530b666438bd2f875339409111f6e22821bec83e7aec32d99ba455f4f40bec",
+    "probe_executable_startup.sh": "f77b60991b2313c5567c6d3570a47c56646b2fbe58c1e040554d56b8d7e64f2a",
+    "KernelRunEnrollmentCoordinatorTests.swift": "d38152a3316bfd81f9c100e6b81e8d5bc2ee9b178ebe5406a8f233293da945c6",
+    "RuntimeSupervisorTests.swift": "e2da152996e75dd7d6d2574c855f663242a200e71ccc8ae2e0e620351925c225",
+    "IntegrationTransactionStateMachineTests.swift": "1e1b7df0860b9264a926dbb0f68f48de503c9dd0bc95316ce2c4b1e9c52420fe"
+  },
+  "easyBusinessReadOnlyHead": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+  "remaining": [
+    "pre-apply exact verifier and reviewer containment-readiness gate",
+    "tested production resident-memory issuer or retained pre-apply launch veto",
+    "native immutable design baseline and complete current visual authority",
+    "production kernel cutover and legacy retirement",
+    "current-source package sign hash native UI clean commit and push"
+  ]
+}

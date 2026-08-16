@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T07:27:30Z",
+  "status": "exact-live-workspace-mutation-normal-quit-join-and-package-verification-passed-final-release-pending",
+  "defect": {
+    "durableApplyPreviouslyPrepared": true,
+    "exactLiveJoinHandlePreviouslyRetainedByCompositionRoot": false,
+    "normalQuitCouldRaceStartupRecovery": true,
+    "normalQuitCouldProveExactJoinCompletion": false
+  },
+  "repair": {
+    "exactNonCodableJoinRetainedByRun": true,
+    "completePlanSetPreflightBeforeFirstEffect": true,
+    "processSessionsPreflightedBeforeWorkspaceEffect": true,
+    "onlyAlreadyAuthorizedEnvelopeDispatched": true,
+    "journalLeaseAndSupervisorIdentityRequired": true,
+    "outboxEnvelopeIdentityRequired": true,
+    "exactReleaseReceiptAndFrameRequired": true,
+    "appliedUnverifiedPhaseRequired": true,
+    "handleRemovedOnlyAfterDurableCompletion": true,
+    "startupRecoveryTaskAwaitedByQuit": true,
+    "safePersistedAttentionSeparatedFromUnsafeRuntimeOwnership": true
+  },
+  "adversarial": {
+    "duplicatePreparationRetainsIdempotentExactHandle": true,
+    "substitutedPayloadDigestRejectedBeforeEffect": true,
+    "canonicalBaselineUnchangedAfterRejectedPlan": true,
+    "pendingEnvelopeUnchangedAfterRejectedPlan": true,
+    "startupReplayScansZeroAfterSuccessfulNormalQuitJoin": true
+  },
+  "verification": {
+    "focusedExactJoin": {
+      "executed": 1,
+      "failures": 0,
+      "seconds": 1.378
+    },
+    "workspaceRecoveryRegistry": {
+      "executed": 5,
+      "failures": 0,
+      "seconds": 0.026
+    },
+    "kernelRunEnrollmentCompleteRerun": {
+      "executed": 44,
+      "failures": 0,
+      "seconds": 7.163
+    },
+    "nativeKernelEnrollmentFlow": {
+      "executed": 14,
+      "failures": 0,
+      "seconds": 17.917
+    },
+    "loopControllerLifecycle": {
+      "executed": 7,
+      "failures": 0,
+      "seconds": 0.272
+    },
+    "packageOwnedFullSuite": {
+      "executed": 867,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 87.345,
+      "wallSeconds": 87.397
+    },
+    "failedCompileAndTransientRunsCountedSeconds": 0,
+    "deepStrictSignature": true,
+    "checksumManifestPassed": true,
+    "directStartupPassed": true,
+    "mountedDMGAllThreeMachOIdentityPassed": true,
+    "mountedDMGStartupPassed": true,
+    "postVerificationProcessCount": 0,
+    "postVerificationMountCount": 0
+  },
+  "package": {
+    "sourceRevision": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
+    "sourceDirty": true,
+    "sourceSnapshotSHA256": "348535debd90099b4b7ad9d4bcdec24dc06dfef4d4299c1e1058b605c5a11d3b",
+    "builtAtUTC": "2026-08-16T07:23:37Z",
+    "testLogSHA256": "523f0aa95501350ea3dbd078bccd0bca6842bd66d47a612a080118f78c48ff5f",
+    "executable": {
+      "bytes": 26301888,
+      "sha256": "f09bcf83206f9a82a50e04ebaf3b3e1811c2e1c1bfb7547ed6a12d966c4f5fdf",
+      "cdHash": "0ba16766a1b3e10519ac28d0ae77ede4bff0dc39"
+    },
+    "kernelSandboxGate": {
+      "bytes": 78512,
+      "sha256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd"
+    },
+    "providerHarness": {
+      "bytes": 145952,
+      "sha256": "d4de4d8b38a59186f8f184ddf1c54ea7f63bd5084d18df0bb37fa7edd19154ac"
+    },
+    "zip": {
+      "bytes": 253460848,
+      "sha256": "5e8494a571ffa365a9a85aac9d0c91aed051f3c0b9ab83c6456bddaf4c674464"
+    },
+    "dmg": {
+      "bytes": 285778379,
+      "sha256": "8c59188c6f28426b777dee96649787938f4a3025b29a00709166b1a8f7b1c335"
+    },
+    "packageTestLog": {
+      "bytes": 248583,
+      "sha256": "523f0aa95501350ea3dbd078bccd0bca6842bd66d47a612a080118f78c48ff5f"
+    },
+    "checksumManifest": {
+      "bytes": 278,
+      "sha256": "9fee9bef493036c8187ddba0dfcd532b5494e0430a9a6f514164ff99e78469df"
+    },
+    "buildManifest": {
+      "bytes": 352,
+      "sha256": "f30001bdf6fdc6f89827e203de6e4324ebcbf05578ff2a4f2c99e0218f7ab60a"
+    }
+  },
+  "nativeUI": {
+    "visibleChange": false,
+    "currentPackageScreenshotCaptured": false,
+    "priorPackageScreenshotsRelabeledAsCurrent": false,
+    "latestInteractiveEvidenceSourceSnapshotSHA256": "0e42de365702528200d97a174537d1b05d0aaf3d1a99b5a6854dce87a5821da7"
+  },
+  "easyBusiness": {
+    "mutated": false,
+    "branch": "codex/USA_Version",
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "nulDelimitedStatusSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a"
+  },
+  "remainingGaps": [
+    "trusted Release resident-memory containment issuer",
+    "productive provider backend ratification and native launch cutover",
+    "complete native trait window baseline and candidate matrix",
+    "clean-commit package rebuild",
+    "commit and push"
+  ],
+  "finalRelease": false
+}

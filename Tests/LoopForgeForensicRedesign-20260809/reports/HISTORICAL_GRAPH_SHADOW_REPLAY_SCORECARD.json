@@ -1,0 +1,785 @@
+{
+  "acceptedLegacyReceiptCount" : 0,
+  "acceptedLegacySeconds" : 0,
+  "blocksCutover" : true,
+  "comparison" : {
+    "blocksCutover" : true,
+    "comparisonDigest" : "7907d7052f141c9708930723a2d017054a9a4b1d88f9b0a0bc6184fe398befc5",
+    "divergences" : [
+      {
+        "code" : "legacy-active-node-missing-kernel-contract",
+        "kernelValue" : "missing",
+        "legacyValue" : "commit-integrated-bailian-contract",
+        "severity" : "critical"
+      },
+      {
+        "code" : "legacy-active-node-missing-kernel-contract",
+        "kernelValue" : "missing",
+        "legacyValue" : "community-entry-external-watchdog-v1",
+        "severity" : "critical"
+      },
+      {
+        "code" : "legacy-active-node-missing-kernel-contract",
+        "kernelValue" : "missing",
+        "legacyValue" : "implement-bailian-json-contract",
+        "severity" : "critical"
+      },
+      {
+        "code" : "legacy-active-node-missing-kernel-contract",
+        "kernelValue" : "missing",
+        "legacyValue" : "integrate-community-watchdog-main-v1",
+        "severity" : "critical"
+      },
+      {
+        "code" : "legacy-active-node-missing-kernel-contract",
+        "kernelValue" : "missing",
+        "legacyValue" : "integrate-operations-regression-v1",
+        "severity" : "critical"
+      },
+      {
+        "code" : "legacy-active-node-missing-kernel-contract",
+        "kernelValue" : "missing",
+        "legacyValue" : "inventory-prior-us-evidence",
+        "severity" : "critical"
+      },
+      {
+        "code" : "legacy-active-node-missing-kernel-contract",
+        "kernelValue" : "missing",
+        "legacyValue" : "repair-integrated-analysis-runtime-contrac",
+        "severity" : "critical"
+      },
+      {
+        "code" : "legacy-active-node-missing-kernel-contract",
+        "kernelValue" : "missing",
+        "legacyValue" : "repair-maximum-dynamic-type-safe-areas-v1",
+        "severity" : "critical"
+      },
+      {
+        "code" : "legacy-active-node-missing-kernel-contract",
+        "kernelValue" : "missing",
+        "legacyValue" : "repair-primary-action-bars-max-dynamic-typ",
+        "severity" : "critical"
+      },
+      {
+        "code" : "legacy-active-node-missing-kernel-contract",
+        "kernelValue" : "missing",
+        "legacyValue" : "repair-us-category-direct-substitute-ontol",
+        "severity" : "critical"
+      },
+      {
+        "code" : "legacy-active-node-missing-kernel-contract",
+        "kernelValue" : "missing",
+        "legacyValue" : "repair-us-financial-report-contracts",
+        "severity" : "critical"
+      },
+      {
+        "code" : "legacy-active-node-missing-kernel-contract",
+        "kernelValue" : "missing",
+        "legacyValue" : "reproduce-backend-us-baseline",
+        "severity" : "critical"
+      },
+      {
+        "code" : "legacy-active-node-missing-kernel-contract",
+        "kernelValue" : "missing",
+        "legacyValue" : "reproduce-ios-us-baseline",
+        "severity" : "critical"
+      },
+      {
+        "code" : "legacy-active-node-missing-kernel-contract",
+        "kernelValue" : "missing",
+        "legacyValue" : "verify-us-ios-xcuitest-runtime-evidence-v1",
+        "severity" : "critical"
+      },
+      {
+        "code" : "legacy-node-approval-exceeds-kernel-evidence",
+        "kernelValue" : "0",
+        "legacyValue" : "12",
+        "severity" : "critical"
+      },
+      {
+        "code" : "legacy-stop-without-kernel-quiescence",
+        "kernelValue" : "not-quiescent",
+        "legacyValue" : "stopped",
+        "severity" : "critical"
+      }
+    ],
+    "kernelRunID" : "shadow-run",
+    "kernelSequence" : 7,
+    "legacyTaskDigest" : "fdd78fa6457b14532f877df67801af9b52f82a77ec73882e8ded1a0dac5dcc30",
+    "writeBackPermitted" : false
+  },
+  "completedNodeClaimCount" : 12,
+  "criticalDivergenceCount" : 16,
+  "divergenceCount" : 16,
+  "inputByteCount" : 8465712,
+  "inputSHA256" : "bfc2a0749c1ba15ca17aed226df7d98c854ee6817f096fe192b10a7e1ba0ac29",
+  "inputUnchanged" : true,
+  "legacyNodeCount" : 19,
+  "schemaVersion" : 1,
+  "snapshot" : {
+    "acceptedReceiptIDs" : [
+
+    ],
+    "graphPhaseClaim" : "executing",
+    "historicalTaskID" : "1ED2180F-FBE1-4BCA-9E79-701F40CC3483",
+    "mayAuthorizeEffects" : false,
+    "mayAutoResume" : false,
+    "mayWriteLegacyState" : false,
+    "nodeObservations" : [
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+
+        ],
+        "historicalNodeID" : "inventory-prior-us-evidence",
+        "iterationObservation" : 6,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "作为既有工作与重复项台账的唯一负责人，确认 codex\/USA_Version 的 HEAD 和初始状态，完整检查已有三轮美国版提交及现有审计文档，逐轮记录提交 SHA、变更范围、已验证声明、未决问题和可复用证据；不检查当前运行表现，不提出或实施修复。共享交接接口为 us-r1-evidence-v1 JSON：必须包含 schema、owner、branch、head、startedAt、checks、artifacts、blockers、graphObservations；每个 check 必须包含 id、surface、commandOrAction、exitCode、evidence、observed、expected、severity（pass\/low\/medium\/high\/blocker）和 priorCoverage（unknown\/new\/partial\/duplicate）；每条 graphObservations 必须包含 time、node、symptom、evidence、impact、improvement。使用任务专属临时文件 US_R1_HANDOFF 执行校验，并将校验通过的 JSON 原样交给持久化图。不得修改 EasyBusiness 或 \/Users\/godice\/Coding\/LoopForge。",
+        "rawActiveSeconds" : 1596.1617920398712,
+        "rawNodeDigest" : "487c964e332b5edb25e9cb67365ced28a6296a8cf2767a2d9d0a70be480c552e",
+        "readOnlyClaim" : true,
+        "reviewClaim" : "三轮美国版提交与四份既有审计文档已完整盘点；最终 us-r1-evidence-v1 载荷具备文件式校验、唯一哈希、字节一致性交付和干净工作区证据。分离 HEAD 的验证副本限制被准确记录，不影响原始分支身份结论；截图不属于本节点目标。",
+        "statusClaim" : "completed",
+        "verificationClaims" : [
+          "分支与 codex\/USA_Version 的 HEAD 均为 88a2bdf9c5af4ac0ef97a6814d894fe58b50ba0b，等值检查 exit 0。",
+          "两条 git log、三个冻结 SHA 和定向 git ls-tree 已支持三轮提交及四份审计文档盘点。",
+          "三轮变更范围、历史验证声明、未决问题和可复用证据已有保留证据。",
+          "最终 porcelain 为 0 bytes，git diff --quiet 与 git diff --cached --quiet 均 exit 0。",
+          "三个 US_R1_* 变量的 printenv 均 exit 1，mktemp_exit=1；没有文件式 jq、cmp 或原样交付成功证据。",
+          "9386da… 已废弃，8778c08f… 仅对应上一轮内存载荷；最终文件仍无可验证哈希。",
+          "截图不属于本节点目标，不构成拒绝理由。"
+        ],
+        "writeScopeClaims" : [
+
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+
+        ],
+        "historicalNodeID" : "reproduce-ios-us-baseline",
+        "iterationObservation" : 5,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "作为 iOS 当前可执行行为证据的唯一负责人，发现权威 Xcode 容器、scheme 和测试目标，将 DerivedData 与结果包放入任务专属临时目录，运行真实 Swift 测试和模拟器构建；启动可用的 iOS 17+ iPhone 模拟器，使用正式运行入口走项目簿、品类、位置、经营参数、快速检查、小易Agent深度研判、社区与私信，并检查无数据、权限拒绝、网络\/服务失败、动态字体、VoiceOver 标签和非纯颜色状态表达。严禁 Preview、Mock、演示 JSON、假点位或伪造成功；真实服务不可用时必须保留原生不可用状态和阻塞证据。原始模拟器 PNG 不得裁剪或改写，须登记设备、系统、时间、操作路径和 SHA-256，并作为持久化节点证据返回。本节点只复现和记录，不评价翻译质量或修改代码。共享交接接口为 us-r1-evidence-v1 JSON：必须包含 schema、owner、branch、head、startedAt、checks、artifacts、blockers、graphObservations；每个 check 必须包含 id、surface、commandOrAction、exitCode、evidence、observed、expected、severity（pass\/low\/medium\/high\/blocker）和 priorCoverage（unknown\/new\/partial\/duplicate）；每个 artifact 必须包含 kind、locator、sha256；每条 graphObservations 必须包含 time、node、symptom、evidence、impact、improvement。使用任务专属临时文件 US_R1_HANDOFF 执行校验，并将校验通过的 JSON 原样交给持久化图。不得修改 EasyBusiness 或 \/Users\/godice\/Coding\/LoopForge。",
+        "rawActiveSeconds" : 2586.8889820575714,
+        "rawNodeDigest" : "7396436b4f6464fb5f7d94d63c06f7eb539526edb6fbfe38a81362ce70d5fecd",
+        "readOnlyClaim" : true,
+        "reviewClaim" : "该基线复现节点已完成其证据审计职责；三项未遍历能力均被直接证明为外部执行依赖，未伪造成功，也不代表整体美国版审计已完成。",
+        "statusClaim" : "completed",
+        "verificationClaims" : [
+          "保留：EasyBusiness project、EasyBusiness scheme，以及 App、unit-test、UI-test 三个 target 已发现。",
+          "保留：模拟器构建 exit 0 且包含 BUILD SUCCEEDED。",
+          "保留：Swift 测试 exit 0，观测结果为 99\/99。",
+          "保留：正式 @main 启动 exit 0。",
+          "未满足：经营参数、快速检查和“小易Agent深度研判”未完成真实运行遍历。",
+          "未满足：VoiceOver 实际朗读顺序和 rotor 未验证；设置页截图只证明 Simulator 不提供该能力。",
+          "未满足：UI 测试 exit 143、连续出现 no debugger version，Test Case 启动数为 0。",
+          "证据完整性缺口：当前 Visual Evidence 仅列出并检查 2 张 PNG，而节点声明 11 张；最终 manifest\/handoff 联合校验未出现在所示命令账本中。",
+          "工作区完整性仍需由最终精确比较证明 .loopforge-runtime 仅为图证据注入目录，而非 EasyBusiness 产品变更。"
+        ],
+        "writeScopeClaims" : [
+
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+
+        ],
+        "historicalNodeID" : "reproduce-backend-us-baseline",
+        "iterationObservation" : 2,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "作为后端当前可执行状态和服务端业务契约证据的唯一负责人，发现权威 Python 服务根目录及项目规定的测试命令，记录 Python\/依赖环境，运行真实后端测试并区分纯函数单测、契约测试和真实授权集成测试；不得把测试替身或固定输入宣称为端到端成功。若数据库、地图、数据源或百炼凭据不可用，验证并记录明确的无数据或服务不可用边界，不调用缓存、规则或自由文本伪造成功。只做带 file:line 证据的当前契约清单，覆盖模型指令与 JSON Schema、五路投票、分类本体、行业默认值、财务与税费用工字段、许可\/隐私建议、报告以及社区\/私信 API；不进行美国化改写或源码修改。共享交接接口为 us-r1-evidence-v1 JSON：必须包含 schema、owner、branch、head、startedAt、checks、artifacts、blockers、graphObservations；每个 check 必须包含 id、surface、commandOrAction、exitCode、evidence、observed、expected、severity（pass\/low\/medium\/high\/blocker）和 priorCoverage（unknown\/new\/partial\/duplicate）；每个 artifact 必须包含 kind、locator、sha256；每条 graphObservations 必须包含 time、node、symptom、evidence、impact、improvement。使用任务专属临时文件 US_R1_HANDOFF 执行校验，并将校验通过的 JSON 原样交给持久化图。不得输出密钥、精确位置或经营参数，不得修改 EasyBusiness 或 \/Users\/godice\/Coding\/LoopForge。",
+        "rawActiveSeconds" : 1382.251275062561,
+        "rawNodeDigest" : "aa37f8285a8cb95d89ac046cc1a4497c54cb4f8d8595f4f8d75785eeb41e5dbe",
+        "readOnlyClaim" : true,
+        "reviewClaim" : "该后端能力与契约审计节点已实质完成。新增证据补齐了此前唯一的节点内缺口：32 项写依赖测试已进入产品断言并全部通过，任务专属 US_R1_HANDOFF 已文件化、校验并保留哈希，前后状态快照完全一致。缺少授权 live\/integration\/e2e 入口及百炼适配器冲突已被准确证明并保留为下游约束，不构成本审计节点失败；真实 UI 截图也不属于该后端节点目标。",
+        "statusClaim" : "completed",
+        "verificationClaims" : [
+          "已证明分支为codex\/USA_Version、HEAD为88a2bdf9c5af4ac0ef97a6814d894fe58b50ba0b。",
+          "已证明只读兼容套件546 passed、纯函数套件343 passed、契约套件101 passed、合规相关套件57 passed。",
+          "已证明未配置地图、模型及社区存储时返回明确503，未生成替代报告。",
+          "已证明未发现授权live\/integration\/e2e入口；该不可用能力应作为后续规划约束保留。",
+          "已证明当前实现采用OpenAI Responses而非要求的百炼qwen3.7-plus；该契约冲突应保留为下游工作。",
+          "尚未证明32项写依赖测试的产品断言通过，也没有文件化US_R1_HANDOFF及状态cmp的成功退出码证据。"
+        ],
+        "writeScopeClaims" : [
+
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+          "inventory-prior-us-evidence",
+          "reproduce-backend-us-baseline"
+        ],
+        "historicalNodeID" : "implement-bailian-json-contract",
+        "iterationObservation" : 11,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "将默认模型路径改为阿里云百炼中国通用端点的 qwen3.7-plus 非思考原生 JSON Mode，同时保留可替换适配器、严格 Schema 校验、五路独立投票和真实失败语义。共享边界契约：业务层传入调用方生成的严格 JSON Schema，供应商适配器只返回解析后的 JSON 对象且不得拥有业务字段；任何无效 JSON、Schema 不符、超时或限流都明确失败，不得回退自由文本、缓存或规则结果；该路径不得设置输出 token 上限。",
+        "rawActiveSeconds" : 143.2375010251999,
+        "rawNodeDigest" : "40001845c642a74ca347cffb809ad454dfcf08e51bf1adf2088cdff93e115bd8",
+        "readOnlyClaim" : false,
+        "reviewClaim" : "百炼 JSON 契约节点已实质完成。默认路径、严格调用方 Schema、可替换适配器、非思考原生 JSON Mode、五路并发投票及无降级失败语义均有代码和测试证据；Git 元数据只读仅影响主图集成，不构成节点实现缺口。该纯后端节点无需 UI 截图。",
+        "statusClaim" : "completed",
+        "verificationClaims" : [
+          "已证明四个定向测试文件 47 passed，退出码 0",
+          "完整套件已观察到 622 passed、1 failed，退出码 1",
+          "修复后 backend\/tests\/test_us_language_audit.py 相关测试退出码 0",
+          "修复后 cd backend && .venv\/bin\/python -m pytest -q -p no:cacheprovider 退出码 0且无失败",
+          "git diff --check 退出码 0",
+          "差异仅包含原声明的 11 个文件及 backend\/tests\/test_us_language_audit.py",
+          "新增内容敏感信息扫描无匹配"
+        ],
+        "writeScopeClaims" : [
+          "backend\/.env.example",
+          "backend\/README.md",
+          "backend\/app\/config.py",
+          "backend\/app\/model_provider.py",
+          "backend\/app\/reasoning.py",
+          "backend\/tests\/test_config.py",
+          "backend\/tests\/test_model_provider.py",
+          "backend\/tests\/test_reasoning.py",
+          "backend\/tests\/test_reasoning_votes.py",
+          "backend\/app\/main.py",
+          "backend\/tests\/test_api_health.py",
+          "backend\/tests\/test_us_language_audit.py"
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+          "inventory-prior-us-evidence",
+          "reproduce-backend-us-baseline"
+        ],
+        "historicalNodeID" : "repair-us-financial-report-contracts",
+        "iterationObservation" : 2,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "由一个端到端责任节点同时更新后端权威模型和 iOS 消费端：为可见可编辑的经营默认值补齐真实来源、as-of 和独立规则版本；分别表达销售税传递处理、工资税与福利负担、workers’ compensation、商业保险、CAM\/NNN 等占用附加费及周期性许可成本，不再隐入含糊的 labor 或 other cost；为报告增加真实 data_version 和由锁定特征\/原子分唯一推导且带证据键的前三影响因素，并为每个空间 FeatureValue 补齐 coordinate_reference 与 quality。共享边界契约：业务 Schema 是字段唯一来源，供应商适配器仅消费调用方严格 JSON Schema并保持字段无关；缺少必需版本、来源、证据键或空间追溯信息时明确拒绝报告，不得硬编码、猜测或生成伪精确值。",
+        "rawActiveSeconds" : 1259.616949081421,
+        "rawNodeDigest" : "0f7327e303d56e64ca3d0f087922d8cd1d92cc219f5e4396a2c357510110137e",
+        "readOnlyClaim" : false,
+        "reviewClaim" : "节点目标已实质完成：后端与 iOS 财务报告契约由完整及聚焦测试验证并已推送；新增账本保留了 \/readyz 的 HTTP 503 provider_not_configured 边界，原生不可用状态 PNG 已提交。真实报告页无法生成属于已证实的外部 Apple Maps Server API 配置依赖，不是可在当前工作区继续修复的缺口。",
+        "statusClaim" : "completed",
+        "verificationClaims" : [
+          "后端完整 pytest 命令退出码 0，账本记录 626 passed、1 warning，未报告失败。",
+          "iOS EasyBusinessTests 命令退出码 0，xcresult 摘要记录 106 passed、0 failed、0 skipped。",
+          "聚焦后端契约测试退出码 0，记录 37 passed。",
+          "提交 7977c43 已由推送命令成功发送至 origin\/main。",
+          "四个 PNG 文件的存在和字节数已由命令证明，但没有保留的真实报告页截图或其视觉内容验证。",
+          "所列命令账本没有直接保留 \/readyz 的 HTTP 503 provider_not_configured 输出。"
+        ],
+        "writeScopeClaims" : [
+          "backend\/app\/schemas.py",
+          "backend\/app\/service.py",
+          "backend\/app\/research.py",
+          "backend\/tests\/test_schema.py",
+          "backend\/tests\/test_financial_uncertainty.py",
+          "backend\/tests\/test_forecast_rubric.py",
+          "backend\/tests\/test_research.py",
+          "backend\/tests\/test_us_financial_report_contract.py",
+          "EasyBusiness\/**",
+          "EasyBusinessTests\/**",
+          "EasyBusiness.xcodeproj\/project.pbxproj"
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+          "reproduce-ios-us-baseline"
+        ],
+        "historicalNodeID" : "retain-ios-baseline-screenshots",
+        "iterationObservation" : 7,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "把 reproduce-ios-us-baseline 已审核 manifest 中的 11 张原始模拟器 PNG 和原始 manifest 逐字节复制到仓库可发现的 `.loopforge\/evidence\/iteration-1\/ios-baseline\/`，并生成仅含路径、状态、尺寸和 SHA-256 的证据索引；不得重绘、编辑、补造或用源代码资源替代运行中产品截图。",
+        "rawActiveSeconds" : 0,
+        "rawNodeDigest" : "c92ac88f22c2c32e08912f4bbf5ffed1374277438d3eeef60d9dafa0daf683eb",
+        "readOnlyClaim" : false,
+        "reviewClaim" : "发布目标未完成。已保留原始 manifest SHA-256 与 cmp、候选 PNG 解码尺寸、索引字段约束及 git diff --check 的既有成功证据，也已充分证明当前宿主未挂载两个缺失原件；但现有 11 张 PNG 是新捕获集合，无法证明与已审核原始 manifest 的 11 个字节对象一致。",
+        "statusClaim" : "superseded",
+        "verificationClaims" : [
+          "保留原始 manifest SHA-256 `00615b84e7e73bbb9476dcc841c43fe060658eb310c3548c54c5979ad6b40b53` 且源到目标 cmp=0 的既有证据。",
+          "保留当前 11 张候选 PNG 均可解码为 1206×2622 RGBA、manifest\/index 可解析、索引仅含 path、status、dimensions、sha256，以及 git diff --check=0 的既有证据。",
+          "恢复后精确核验两个缺失原件的 SHA-256，且不重复既有位置扫描。",
+          "全部 11 张目标 PNG 分别与独立原始审核源 cmp=0。",
+          "目标文件名集合、SHA-256、字节数和尺寸与原始 manifest 完全一致。",
+          "最终索引逐项由原始 manifest 投影，每项恰含 path、status、dimensions、sha256，无额外字段。",
+          "每张交付 PNG 均可解码、尺寸非零，并由清单记录当前 commit SHA、模拟器型号与系统版本、捕获时间、页面\/状态、原始 simctl 捕获命令和 SHA-256",
+          "git ls-files 能列出交付 PNG、清单及证据索引，且工作区截图扫描结果不再为 0",
+          "至少一张运行中的 EasyBusiness 主要路径画面和一张真实失败或不可用状态画面可人工查看；任何仅用于证明外部依赖的系统画面必须单独标注且不得计作产品截图",
+          "docs\/us-graph-round1-audit.md 引用实际交付路径并区分已验证路径与外部依赖；不存在 Mock 数据或伪造商业结论",
+          "git diff --check 退出码为 0，提交中不包含 DerivedData、临时捕获目录或无关文件"
+        ],
+        "writeScopeClaims" : [
+          ".loopforge\/evidence\/iteration-1\/ios-baseline\/**"
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+          "implement-bailian-json-contract",
+          "repair-us-financial-report-contracts"
+        ],
+        "historicalNodeID" : "commit-integrated-bailian-contract",
+        "iterationObservation" : 2,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "从已完成节点的交接清单确认主工作区遗留的 12 个百炼 backend 改动与已推送财务提交组合兼容；不重写已验证实现，只暂存这些相关文件，按 AGENTS.md 使用中文前缀提交并推送 origin\/main。",
+        "rawActiveSeconds" : 39.91665995121002,
+        "rawNodeDigest" : "5b0659d01106b311c68fff31d364bf65b742e3905848d95736b14ac03a8aa95a",
+        "readOnlyClaim" : false,
+        "reviewClaim" : "百炼后端契约提交已完整集成并推送；所有节点要求均有命令证据支持。截图门槛与该后端提交节点无关，缺少重复性的完成声明不构成实质缺口。",
+        "statusClaim" : "completed",
+        "verificationClaims" : [
+          "已证明提交 c9046f0e7d37376d4d093411c5fe35b1ddf46a3d 的父提交为 6685005，祖先检查退出码 0",
+          "已证明暂存集合与交接补丁的 12 个路径完全一致，且补丁字节比较退出码 0",
+          "已证明 diff 检查退出码 0，密钥模式扫描无匹配",
+          "已证明百炼契约与 readiness 聚焦回归为 60 passed，退出码 0",
+          "已证明完整后端套件为 643 passed、0 failed、0 skipped，退出码 0",
+          "已证明提交信息为 `【小功能】集成百炼原生 JSON 推理契约`",
+          "尚需命令证据证明推送后 HEAD 与 origin\/main 完全一致，并且无 tracked 或 staged 改动"
+        ],
+        "writeScopeClaims" : [
+          "backend\/app\/",
+          "backend\/tests\/"
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+          "reproduce-ios-us-baseline"
+        ],
+        "historicalNodeID" : "verify-us-ios-xcuitest-runtime-evidence-v1",
+        "iterationObservation" : 1,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "在当前集成 HEAD 的全新 en_US、iOS 17+ 模拟器上执行现有真实 UI 可达性场景，仅从本次 xcresult 导出与通过测试活动直接关联的原生 EasyBusiness 截图，生成行为覆盖矩阵、附件来源清单和接受\/拒绝账本。验证项目主路径、真实权限或服务不可用状态、社区与私信空状态及最大动态字体表现；不交付或匹配历史 11 图集合，既有候选图仅用于发现遗漏。",
+        "rawActiveSeconds" : 2275.8385639190674,
+        "rawNodeDigest" : "7af4492d1d68f6264ed73052fcd77d5956872b4a47e75a02aeb68c075fa540ed",
+        "readOnlyClaim" : false,
+        "reviewClaim" : "该节点的证据驱动目标已完成：在 caf9deb0b33fbb76ab5c0857991b1217dba909bd 上以全新 en_US iPhone 16 Pro 模拟器完成 4 个定向 XCUITest，结果为 4 通过、0 失败；9 张接受截图均来自当次通过测试的 xcresult 附件并已提交为 23210d6f68209625767e0b4e183b1257acfd7e87。远端非快进仅是后续图集成约束，不否定本节点完成度。",
+        "statusClaim" : "completed",
+        "verificationClaims" : [
+          "记录当前 commit、scheme、模拟器型号、系统版本、locale 及完整 xcodebuild 调用；真实 UI 测试进程退出码为 0，并记录当前实际通过与失败总数，不设置历史固定计数门槛。",
+          "使用 xcresulttool 将每张接受的 PNG 关联到本次通过测试的测试标识和 activity\/attachment 标识；无法关联的手工候选图不得进入交付清单。",
+          "覆盖矩阵必须证明运行中的 EasyBusiness 可到达项目主路径、至少一个真实权限拒绝或服务不可用产品状态、社区与私信空状态以及系统最大动态字体状态；Apple Maps、签名或执行器边界只引用既有审计，不重新探测。",
+          "逐张执行 PNG 解码、非零尺寸和 SHA-256 复算；清单记录路径、页面或状态、commit、捕获时间、模拟器与系统版本、测试标识和哈希，且不得包含 Mock 数据或伪造商业结论。",
+          "人工检查接受附件均为 EasyBusiness 前台画面；系统设置、第三方界面和未关联截图必须列为 rejected，且不得计入产品覆盖。",
+          "git ls-files --error-unmatch 能列出接受的 PNG、覆盖矩阵和清单；git diff --check 退出码为 0，提交范围不含 DerivedData、xcresult、临时捕获目录或无关文件。"
+        ],
+        "writeScopeClaims" : [
+          ".loopforge\/evidence\/us-round1\/xcuitest-runtime\/"
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+          "commit-integrated-bailian-contract",
+          "verify-us-ios-xcuitest-runtime-evidence-v1"
+        ],
+        "historicalNodeID" : "integrate-xcuitest-evidence-current-main",
+        "iterationObservation" : 2,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "以当前 origin\/main 为基线，在不强推或改写历史的前提下移植本轮 XCUITest 源码与证据，在最终候选 HEAD 上重跑相同行为并更新可追溯工件，随后使用中文规范提交并推送；若本地提交包含范围外产品改动或出现不可安全解决的冲突，停止并报告。",
+        "rawActiveSeconds" : 1581.6680929660797,
+        "rawNodeDigest" : "5407e41a1145744916d5d15eae2e44632da1f59d1282a48a720a30349da8f183",
+        "readOnlyClaim" : false,
+        "reviewClaim" : "集成、证据溯源和推送检查均有保留证据支持，但运行记录明确披露 Community 点击后约 15 分钟无响应，相关测试耗时 980.887 秒。测试仅在 tap() 返回后执行 8 秒等待，因此通过结果不能证明该核心路径响应正常，也没有证据将延迟归因于模拟器或执行器。",
+        "statusClaim" : "superseded",
+        "verificationClaims" : [
+          "git fetch origin main 退出码为 0；记录 origin\/main 与 23210d6f68209625767e0b4e183b1257acfd7e87 的文件清单和共同祖先，确认待移植内容仅属于声明范围且不含密钥、私有数据或构建产物",
+          "从干净的 origin\/main 候选执行首页\/评估及真实失败状态、社区\/好友空状态、最大动态字体动作等既有 en_US XCUITest；每条 xcodebuild 退出码均为 0，并记录当前实际通过、失败和跳过总数",
+          "所有接受的 PNG 均来自本次通过测试的 xcresult，能够解码且非空白；manifest 中的 SHA-256、activity UUID 和 attachment UUID 可逐项复算，失败试跑或冗余附件不得进入接受集合",
+          "确认测试启动参数只选择真实空状态、权限拒绝或服务不可用边界，不注入虚构店址、报告、商业分析或其他 Mock 成功结果",
+          "git diff --check 退出码为 0；git ls-files .derived-data 无输出；后端及非声明产品源码相对集成基线无意外差异",
+          "提交信息使用规定的中文前缀并正常推送 origin\/main，不强推；随后 git fetch origin main 退出码为 0，HEAD 与 origin\/main SHA 完全一致，git status --short --branch 无待提交或未跟踪的本轮文件"
+        ],
+        "writeScopeClaims" : [
+          ".loopforge\/evidence\/us-round1\/xcuitest-runtime\/**",
+          "EasyBusinessUITests\/**",
+          "EasyBusiness.xcodeproj\/project.pbxproj"
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+          "commit-integrated-bailian-contract",
+          "verify-us-ios-xcuitest-runtime-evidence-v1"
+        ],
+        "historicalNodeID" : "repair-community-entry-responsiveness-v1",
+        "iterationObservation" : 1,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "基于当前 origin\/main，用全新 en_US 模拟器独立复现 Community 入口的墙钟延迟并采集主线程、导航和 XCTest quiescence 证据；判定是产品阻塞还是测试执行器等待，实施最小范围修复，并新增从输入动作之前计时、可在同步 tap 阻塞时失败的聚焦回归。社区页面外壳或真实空态\/错误态必须在 10 秒内可访问；不得生成 Mock 内容。将根因、实际耗时和 LoopForge 完成判定缺陷更新到两份本轮审计文档，随后按 AGENTS.md 检查、中文提交并正常推送。",
+        "rawActiveSeconds" : 59.58105993270874,
+        "rawNodeDigest" : "6a9ec2c5d029945d4d7092a27dfa8fba02a64a5cda41f39e36ea5413c114cf6b",
+        "readOnlyClaim" : false,
+        "statusClaim" : "superseded",
+        "verificationClaims" : [
+          "在全新 en_US iPhone 模拟器上运行仅包含 Community 响应回归的 xcodebuild 测试，命令退出码为 0；计时从发送输入动作前开始，到 Community 页面外壳或明确的真实空态\/错误态可访问为止，记录实际耗时且必须小于等于 10 秒",
+          "回归用例显式断言 tap 调用自身耗时和目标状态出现时间，证明旧有约 980.887 秒同步阻塞会导致失败；从当前 xcresult 记录实际通过、失败、跳过总数，不要求历史固定数量",
+          "保留同次运行的时间戳日志或性能采样，能够区分产品主线程阻塞、持续动画\/quiescence 等待和外部服务等待；若结论为测试执行器问题，需以独立 UI 状态时间线证明产品行为正确后才能只修测试",
+          "检查测试启动参数与运行状态，确认只选择真实空态、权限拒绝或服务不可用边界，未注入店址、报告、商业分析或其他 Mock 成功结果",
+          "执行 git diff --check 并确认无范围外产品、后端、密钥、私有数据、构建产物或 xcresult 被提交；正常推送后 fetch origin\/main，确认 HEAD 与 origin\/main 一致且工作区无本轮残留"
+        ],
+        "writeScopeClaims" : [
+          "iOS 客户端中 Community 入口、直接路由及经采样证明造成阻塞的生命周期任务文件",
+          "iOS UI Test 中仅与 Community 响应计时和真实空态\/错误态相关的用例与辅助代码",
+          "docs\/us-graph-round1-audit.md",
+          "docs\/loopforge-graph-round1-audit.md",
+          ".loopforge\/evidence\/us-round1\/community-entry-responsiveness\/"
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+          "commit-integrated-bailian-contract",
+          "verify-us-ios-xcuitest-runtime-evidence-v1"
+        ],
+        "historicalNodeID" : "community-entry-external-watchdog-v1",
+        "iterationObservation" : 1,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "仅修复 Community 响应验证与取证机制：为一次真实 en_US Community 导航建立从发送输入前开始的单调时钟信号和进程外 10 秒看门狗，使同步 tap 或 XCTest quiescence 卡住时仍能按时失败、截取模拟器画面、采集 App 主线程样本与相关日志，并据此明确分类为产品阻塞、测试执行器阻塞或尚无充分证据。既有截图和耗时只作为待独立验证的输入；不得修改 Community 产品实现、注入 Mock 成功数据或宣称未完成的产品修复。将实际耗时、分类证据和后续最小修复前沿写入两份本轮审计文档。",
+        "rawActiveSeconds" : 2154.768618941307,
+        "rawNodeDigest" : "7c95b1be43220c60e1e48ec530acfa48a33230cad46ecd439c641089dad79984",
+        "readOnlyClaim" : false,
+        "reviewClaim" : "节点目标已实质完成。真实 en_US Community 路径由输入前单调时钟与进程外看门狗验证：页面 1.789 秒可见、命令退出 0，当前计数为通过 1、失败 0、跳过 0。确定性阻塞自检在 10.003 秒触发截止、10.752 秒以 124 退出，并保留完整 PNG 截图、App 与 runner 主线程样本、时间戳及相关日志；证据支持 Community 产品未阻塞，额外等待属于 XCTest Tear Down，而非猜测。启动契约检查未发现 Mock、假点位或伪造分析注入；变更范围、diff、密钥和构建产物扫描均通过。远端 non-fast-forward 已按要求保留为图集成边界，本地提交和干净工作树不构成节点失败。确定性审计所称“无截图”与已留存并校验尺寸、结尾及 SHA-256 的原生 PNG 证据冲突，无需重复运行。",
+        "statusClaim" : "completed",
+        "verificationClaims" : [
+          "在全新 en_US iPhone 模拟器上仅运行新的 Community 看门狗路径；输入前记录单调时间，Community 页面外壳或真实空态、错误态在 10 秒内可访问时命令才退出 0，并记录当前实际通过、失败和跳过总数，不固定历史数量。",
+          "用仅存在于测试基础设施中的确定性阻塞闭包验证看门狗：即使输入调用线程不返回，也必须在不晚于 11 秒时以非零状态结束并留下截止时刻截图、App 主线程样本和时间戳日志；该自检不得向 App 展示任何店址、报告或商业分析数据。",
+          "分类必须采用进程外截止证据：若 UI 在 10 秒内已出现而 XCTest 调用仍阻塞，记录为执行器或 quiescence 问题；若 UI 未出现且主线程样本显示产品路径阻塞，记录为待建产品修复；证据不足时明确失败，不得猜测根因。",
+          "检查启动参数和运行状态，确认只使用真实 Community 外壳、真实空态、权限拒绝或服务不可用状态，未注入 Mock 内容、假点位或伪造分析结果。",
+          "执行 git diff --check；git diff --name-only 只能包含声明的 writeScopes，且提交中不得包含密钥、私有数据、构建产物、DerivedData 或 xcresult。",
+          "按 AGENTS.md 使用中文提交信息正常推送；推送成功后 fetch origin\/main，并确认 HEAD 与 origin\/main 一致且 git status --short --branch 无本轮残留。若非快进或认证失败，保留本地提交并把它作为图集成边界报告，不改写历史或强推。"
+        ],
+        "writeScopeClaims" : [
+          "EasyBusinessUITests\/**",
+          "scripts\/us-audit\/**",
+          "docs\/us-graph-round1-audit.md",
+          "docs\/loopforge-graph-round1-audit.md"
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+          "community-entry-external-watchdog-v1"
+        ],
+        "historicalNodeID" : "integrate-community-watchdog-main-v1",
+        "iterationObservation" : 1,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "在最新 origin\/main 上无强推、无历史改写地集成本地提交 274d206 与 4ef8196，解决必要冲突并记录集成结果；随后在最终候选提交复验真实 en_US Community 响应看门狗及受控阻塞自检，提交并推送仅与本轮相关的测试、脚本、证据和审计文档。",
+        "rawActiveSeconds" : 1470.8913980722427,
+        "rawNodeDigest" : "84423f6e86f6d3c3e0918aad8c67528794adb72a0710a7889de36d1ce434c825",
+        "readOnlyClaim" : false,
+        "reviewClaim" : "节点目标已由可复核证据完成：两笔本地提交安全集成，真实 Community 看门狗与阻塞自检达到预期，相关证据和审计文档已提交并正常推送，最终 HEAD 与 origin\/main 一致且工作区干净。",
+        "statusClaim" : "completed",
+        "verificationClaims" : [
+          "git fetch origin main 退出码为 0；从最新 origin\/main 集成 274d206、4ef8196，不使用强推、rebase 或历史改写。",
+          "最终候选提交执行真实 en_US Community 看门狗：命令退出码为 0，manifest 证明 tap 返回和 onboarding 可见均早于配置的 10 秒截止；启动参数与测试代码不存在 Mock、假点位或伪造报告注入。",
+          "执行确定性阻塞自检：截止触发后命令退出码为 124；manifest、原生 PNG、App\/runner 样本和相关日志齐全，PNG 可解码且 SHA-256 与清单一致。",
+          "相关 iOS 构建与 XCUITest 在最终集成 HEAD 上退出码为 0，并记录实际通过、失败和跳过结果，不要求历史固定数量。",
+          "docs\/us-graph-round1-audit.md 与 docs\/loopforge-graph-round1-audit.md 均记录本节点时间、症状、证据、影响、可执行改进及 non-fast-forward 的最终解决状态；git diff --check 退出码为 0。",
+          "git diff --name-only origin\/main...HEAD 仅包含声明范围；git ls-files .derived-data 无输出，且无密钥、令牌、构建产物或私有数据进入提交。",
+          "推送 origin\/main 后再次 git fetch origin main；git rev-parse HEAD 与 git rev-parse origin\/main 完全一致，git status --short --branch 显示干净且正确跟踪远端。"
+        ],
+        "writeScopeClaims" : [
+          "EasyBusinessUITests\/**",
+          "scripts\/us-audit\/**",
+          "docs\/us-graph-round1-audit.md",
+          "docs\/loopforge-graph-round1-audit.md"
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+          "verify-us-ios-xcuitest-runtime-evidence-v1",
+          "integrate-community-watchdog-main-v1"
+        ],
+        "historicalNodeID" : "repair-maximum-dynamic-type-safe-areas-v1",
+        "iterationObservation" : 1,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "在最终集成 HEAD 上修复 Home 与 Advisor\/Actions 最大动态字体状态下的状态栏文字碰撞，并确保滚动末端可将 Workspace 和主要操作完整移出悬浮标签栏遮挡；保留完整文本、动态字体和 VoiceOver 语义，不通过缩小字体或截断规避问题，同时补充真实 XCUITest 回归与原生证据。",
+        "rawActiveSeconds" : 2888.655881047249,
+        "rawNodeDigest" : "62359cb4dfcb9dec89c0507bcf8e1150a21d0dc4af47fcdf663f7145cf747112",
+        "readOnlyClaim" : false,
+        "reviewClaim" : "节点目标已实质完成：当前原生截图显示 Home 与 Operations Advisor 在系统最大动态字体下不再侵入状态栏，Home 末端内容及 Add Store、View Chats 均可完整滚动至悬浮标签栏上方；完整文本、按钮\/标题语义与动态字体均保留。提交 f82ff2d 已推送并与 origin\/main 对齐。",
+        "statusClaim" : "completed",
+        "verificationClaims" : [
+          "在全新 en_US iPhone 16 Pro 模拟器设置系统最大动态字体，分别捕获 Home 初始位置、Home 末端滚动位置和 Advisor actions 位置的当次 xcresult 原生 PNG；应用文字和控件不得与状态栏 frame 相交，末端滚动时目标控件必须能完整位于悬浮标签栏上方。",
+          "XCUITest 必须通过滚动找到并确认“Choose a Workspace”“Add Store”“View Chats”均存在、可点击且具有完整辅助功能标签；Community 导航继续满足现有 10 秒进程外看门狗，xcodebuild 退出码为 0，并记录当前实际通过、失败和跳过结果。",
+          "运行最终候选 HEAD 的规范 iOS 单元测试和模拟器构建，两者退出码均为 0；执行 git diff --check 并确认退出码为 0，同时确认未引入 Mock、假点位或伪造商业结果。",
+          "校验新增 PNG 可解码、尺寸非零、SHA-256 与 xcresult attachment 来源可追溯；在两份审计文档记录时间、节点、修复前后证据、影响和验证结果。",
+          "只暂存声明范围内文件，以中文规定前缀提交并无强推地推送；最终确认 HEAD 与 origin\/main 相同，且 git status --short --branch 无工作区改动。"
+        ],
+        "writeScopeClaims" : [
+          "EasyBusiness\/",
+          "EasyBusinessUITests\/",
+          ".loopforge\/evidence\/us-round1\/xcuitest-runtime\/",
+          "docs\/us-graph-round1-audit.md",
+          "docs\/loopforge-graph-round1-audit.md"
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+          "repair-maximum-dynamic-type-safe-areas-v1"
+        ],
+        "historicalNodeID" : "repair-1",
+        "iterationObservation" : 4,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "先安全对齐 codex\/USA_Version 与 origin\/main，再修复列表失败态和地图手势文案，最后在同一干净提交上完成全量契约复验、整合两份首轮审计文档并普通推送；不得复用已退役的历史截图 manifest、固定截图数量或旧四项宽泛 XCUITest 来替代新缺陷的定向证据。",
+        "rawActiveSeconds" : 2762.9863499403,
+        "rawNodeDigest" : "979b033aa395ab6b49727292bc93fe722437d791d3b2570ec1d1850d0257d4f7",
+        "readOnlyClaim" : false,
+        "reviewClaim" : "修复、两项定向 XCUITest、Swift 107\/0\/0、pytest 643 passed、Simulator 构建、两张 PNG 身份校验及推送 68e65ef 均已有证据，应全部保留且不得重跑。但目标工作树尚未完成：实际节点仍位于 repair-1；canonical codex\/USA_Version 仍为 88d53be、落后 origin\/main 2 个提交、含 14 项待保存内容，且缺少新安全 stash，因此不满足同一干净提交和最终分支验收条件。",
+        "statusClaim" : "superseded",
+        "verificationClaims" : [
+          "Retain without rerunning the two focused XCUITests at 1 passed\/0 failed\/0 skipped each, Swift 107\/0\/0, pytest 643 passed, successful Simulator build, and both PNG byte\/hash identity checks.",
+          "In the target worktree, `git branch --show-current` must output `codex\/USA_Version`.",
+          "`git rev-parse HEAD codex\/USA_Version origin\/main` must output `68e65efab7c4de2b3182b3a6e099c4ac6d447ab2` for all three refs.",
+          "`git rev-list --left-right --count codex\/USA_Version...origin\/main` must output `0 0`.",
+          "`git status --porcelain` must be empty, and `git status --short --branch` must show codex\/USA_Version normally tracking origin\/main.",
+          "`git stash list` must show both the newly created safety backup and the pre-existing LoopForge integration safety backup."
+        ],
+        "writeScopeClaims" : [
+          "."
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+          "repair-maximum-dynamic-type-safe-areas-v1"
+        ],
+        "historicalNodeID" : "repair-integrated-analysis-runtime-contrac",
+        "iterationObservation" : 1,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "将报告生成收敛到唯一异步任务通道；让就绪状态覆盖 Apple Maps、百炼及强制公开资料服务；消除可能泄露异常正文的日志调用，并校正供应商与数据流审计文档。",
+        "rawActiveSeconds" : 1316.008584022522,
+        "rawNodeDigest" : "2cf6a98db478a697aa280eb2d07282d0701e683b42f34a2fe58bed8798f725bb",
+        "readOnlyClaim" : false,
+        "reviewClaim" : "节点目标已由代码、测试与 Git 账本共同证明完成：同步报告入口和 iOS createReport 已移除，唯一启动通道为 POST \/api\/v1\/analysis\/jobs；\/readyz 对 Apple Maps、百炼和强制 OpenAI 公开资料配置实施逐项 503\/全量 200 契约；日志 AST 与 caplog 覆盖异常栈及敏感正文泄露；审计文档准确保留生产凭据、供应商连通性、许可与跨境合规外部门槛。缺少某种固定格式的“完成声明”不构成实质缺口。提交 2ae4045 已推送，HEAD 与 origin\/main 一致且工作区干净。",
+        "statusClaim" : "completed",
+        "verificationClaims" : [
+          "证明只有 POST \/api\/v1\/analysis\/jobs 能启动报告，移除同步生成入口及未使用的 iOS createReport 实现。",
+          "逐项缺失 Apple Maps、百炼或强制 OpenAI 公开资料配置时，\/readyz 均返回安全的 HTTP 503；全部配置存在时才返回 200。",
+          "AST 测试拒绝 logger.exception、exc_info 及异常正文记录；caplog 金丝雀证明位置、提示词、经营输入和模型输出片段不会出现。",
+          "更新文档以准确描述百炼结构化投票、OpenAI 公开资料链路及跨境\/生产凭据外部门槛，不宣称已可发布。",
+          "运行完整 pytest、相关 Swift 测试和模拟器构建，提交推送后确认分支与 origin\/main 对齐且工作区干净。"
+        ],
+        "writeScopeClaims" : [
+          "backend\/app\/main.py",
+          "backend\/app\/jobs.py",
+          "backend\/app\/advisor.py",
+          "backend\/app\/operations.py",
+          "backend\/tests\/test_api_health.py",
+          "backend\/tests\/test_us_language_audit.py",
+          "backend\/tests\/test_jobs.py",
+          "EasyBusiness\/AnalysisAPIClient.swift",
+          "backend\/README.md",
+          "backend\/.env.example",
+          "docs\/us-graph-round1-audit.md",
+          "docs\/loopforge-graph-round1-audit.md",
+          "docs\/us-final-product-audit-2026-07-30.md",
+          "docs\/us-release-audit-2026-07-29.md"
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+          "repair-integrated-analysis-runtime-contrac"
+        ],
+        "historicalNodeID" : "repair-us-category-direct-substitute-ontol",
+        "iterationObservation" : 1,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "将语义不兼容的组合品类拆成版本化美国子类并保持 iOS、Pydantic、公开资料工作流和供应商查询一致。直接竞品只能来自用户明确选择的子类；未取得授权替代范围时 substitute pressure 继续固定为 50。旧组合草稿必须要求重新选择或明确降级，不能静默重解释；既有不可变报告保留原始本体版本。",
+        "rawActiveSeconds" : 1731.1263140439987,
+        "rawNodeDigest" : "ff715c8fd422cfe9e719f2be30a87edadcca69ac8be7e44173c9571354d5de48",
+        "readOnlyClaim" : false,
+        "reviewClaim" : "节点目标已由提交 a2df137 实质完成：8 个声明范围内文件实现 v3 子类、旧组合重选约束、跨端本体\/查询一致性、替代压力固定 50、预算与到店\/获客解耦及真实供应商失败传播。远端推送仅因预期的分叉基线被 non-fast-forward 拒绝，应由 Main Graph 集成后推送，不构成本节点实现缺口。",
+        "statusClaim" : "completed",
+        "verificationClaims" : [
+          "纯契约测试证明 halal 不把 vegetarian\/vegan、American Grill 不把 Italian\/French、Liquor 不把 Tobacco、Japanese 不把 Korean、Gas 不把 EV 计为直接竞品。",
+          "验证无授权替代范围时替代压力仍为 50，预算不进入客流或获客评分。",
+          "运行相关 pytest、Swift 编解码及 API 契约测试；供应商不可用时保留真实失败，不用假地点或 stub 成功补齐。"
+        ],
+        "writeScopeClaims" : [
+          "EasyBusiness\/BusinessTaxonomy.swift",
+          "EasyBusiness\/Models.swift",
+          "EasyBusinessTests\/OpeningPlanValidationTests.swift",
+          "backend\/app\/providers.py",
+          "backend\/app\/research.py",
+          "backend\/app\/schemas.py",
+          "backend\/app\/service.py",
+          "backend\/tests\/test_us_category_ontology.py"
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+          "repair-integrated-analysis-runtime-contrac"
+        ],
+        "historicalNodeID" : "repair-operations-us-financial-language-v1",
+        "iterationObservation" : 1,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "在公式仍为收入减七类经营成本的前提下，全链路统一使用 operating profit 和 operating margin，不再称 true net profit、net profit 或 Net Balance；把 Advisor 建议问题改为自然、明确的第一人称美国商业英语，不增加未经证据支持的经营结论。",
+        "rawActiveSeconds" : 1213.091616988182,
+        "rawNodeDigest" : "134a388be0a8e2dd4851618609c438753f5bc051aa329d6cc0aa30ac3297be84",
+        "readOnlyClaim" : false,
+        "reviewClaim" : "已证明 Simulator 构建成功，Operations 定向 XCTest 6\/6 通过，覆盖七类成本恒等式、operating profit\/margin、Advisor 问句及无障碍契约；测试实际执行也证明两个新测试文件已进入 Test Target，因此无需仅因 project.pbxproj 无显式文件名而修改工程文件。但 OpeningPlanValidationTests.swift:1395 仍断言旧文案，当前全量 EasyBusinessTests 未被证明可通过，节点尚未完成集成收口。",
+        "statusClaim" : "superseded",
+        "verificationClaims" : [
+          "字符串契约测试覆盖所有 Operations 运行时文案，证明 operatingProfit 不再被标成净利润或真实净利润。",
+          "纯函数测试复算七类成本、operating profit 和 operating margin，确认修文案没有改变财务恒等式。",
+          "定向 Swift 测试验证建议问题自然完整、无中式疑问句和过度承诺，并检查动态字体与 VoiceOver 标签未退化。"
+        ],
+        "writeScopeClaims" : [
+          "EasyBusiness\/OperationsModels.swift",
+          "EasyBusiness\/OperationsStore.swift",
+          "EasyBusiness\/OperationsViews.swift",
+          "EasyBusinessTests\/OperationsProfitabilityTests.swift",
+          "EasyBusinessTests\/OperationsStoreTests.swift"
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+          "repair-integrated-analysis-runtime-contrac"
+        ],
+        "historicalNodeID" : "repair-primary-action-bars-max-dynamic-typ",
+        "iterationObservation" : 1,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "仅修复品类选择的 Next: Choose Location 操作栏和经营参数页的深度研判操作栏：移除 xxxLarge 封顶、缩字和截断依赖，改为可换行、可纵向扩展且始终位于安全区和悬浮标签栏上方的布局。该节点不得重做已完成的 Home\/Advisor 安全区目标。",
+        "rawActiveSeconds" : 3114.6326379776,
+        "rawNodeDigest" : "62a9c03c74e0f227aea97e05acc8972aa2f4a807c182014c2bcfd2470fe97a79",
+        "readOnlyClaim" : false,
+        "statusClaim" : "waiting",
+        "verificationClaims" : [
+          "源码检查证明两个操作栏不再使用 .dynamicTypeSize(...xxxLarge)、minimumScaleFactor 或单行截断规避系统最大字号。",
+          "在全新 en_US iPhone 模拟器的系统最大辅助功能字号下，仅运行两个缺陷专用 XCUITest，断言完整标签、验证消息、至少 44 点命中区域以及不被标签栏\/安全区遮挡。",
+          "从当次通过的 xcresult 提取新原生截图并记录 SHA-256；禁止复用旧 manifest、固定截图数量或重跑已废弃的宽泛套件充当证明。"
+        ],
+        "writeScopeClaims" : [
+          "EasyBusiness\/InputComponents.swift",
+          "EasyBusiness\/InvestmentPlanView.swift",
+          "EasyBusinessUITests\/USLocalizationUITests.swift",
+          "EasyBusinessUITests\/USFinancialContractUITests.swift",
+          ".loopforge\/evidence\/us-round1\/primary-action-bars-max-type\/"
+        ]
+      },
+      {
+        "acceptedActiveSeconds" : 0,
+        "acceptedReceiptIDs" : [
+
+        ],
+        "dependencyClaims" : [
+          "repair-integrated-analysis-runtime-contrac"
+        ],
+        "historicalNodeID" : "integrate-operations-regression-v1",
+        "iterationObservation" : 1,
+        "mayIntegrate" : false,
+        "maySchedule" : false,
+        "objectiveClaim" : "On the current codex\/USA_Version branch, independently inspect the untrusted diffs from commits 7e5bb18 and 43045bf, integrate only the applicable completed Operations changes, update the stale OpeningPlanValidationTests assertion to the resulting runtime contract, and prove the current complete iOS unit-test target passes without re-performing the retired terminology audit or changing financial behavior.",
+        "rawActiveSeconds" : 907.9217851161957,
+        "rawNodeDigest" : "5b63b6429df083a785dee998841d0f91810e72df2b323f37166674326822de6f",
+        "readOnlyClaim" : false,
+        "statusClaim" : "waiting",
+        "verificationClaims" : [
+          "git diff --check exits 0.",
+          "rg -n -i 'true net profit|net profit|Net Balance' EasyBusiness\/OperationsModels.swift EasyBusiness\/OperationsStore.swift EasyBusiness\/OperationsViews.swift returns no runtime-label matches.",
+          "xcodebuild test -project EasyBusiness.xcodeproj -scheme EasyBusiness -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:EasyBusinessTests exits 0 with TEST SUCCEEDED and no failed tests; record observed totals without requiring a historical count.",
+          "xcodebuild build -project EasyBusiness.xcodeproj -scheme EasyBusiness -destination 'platform=iOS Simulator,name=iPhone 17' exits 0 with BUILD SUCCEEDED.",
+          "Inspect the final diff to confirm the seven-cost operating-profit identity is unchanged and OpeningPlanValidationTests asserts the actual current runtime wording."
+        ],
+        "writeScopeClaims" : [
+          "EasyBusiness\/OperationsModels.swift",
+          "EasyBusiness\/OperationsStore.swift",
+          "EasyBusiness\/OperationsViews.swift",
+          "EasyBusinessTests\/OperationsProfitabilityTests.swift",
+          "EasyBusinessTests\/OperationsStoreTests.swift",
+          "EasyBusinessTests\/OpeningPlanValidationTests.swift"
+        ]
+      }
+    ],
+    "objectiveClaim" : "第一轮目标：对 \/Users\/godice\/Coding\/EasyBusiness 当前 codex\/USA_Version 分支做一次证据驱动、发布级的美国市场适配审计与实现。\n\n不要只做逐字翻译；以美国个体创业者、小型零售、餐饮和服务业经营者的真实心智、美国商业英语、美国选址\/选品\/预算\/税费\/用工\/许可\/隐私\/社区交流习惯为准，系统检查并修正 iOS 客户端、后端模型指令、分类本体、默认值、建议、报告、社区\/私信、空状态、错误提示、辅助功能和真实交互。\n\n重点消除中式英语、不准确或啰嗦表达、不必要解释、美国用户不熟悉的概念、错误单位\/货币\/地址\/时间格式、失真的品类与商品建议、过度承诺和不合规陈述。保留真实数据、禁止 Mock、不伪造商业结论的项目原则。先检查已有三轮美国版提交和现有审计文档，避免重复劳动，优先找剩余的高价值缺口。\n\n必须运行真实 Swift\/后端测试、构建并用 iPhone 模拟器走主要路径，保留原生截图和可复核证据；不得仅靠文本搜索宣称完成。将本轮发现的 LoopForge Auto Graph 编排问题（任务拆分、依赖、重复劳动、上下文、并发冲突、验证、恢复、可观测性、完成判定）单独记录到 docs\/loopforge-graph-round1-audit.md，包含时间、节点、症状、证据、影响和可执行改进，但本轮不要修改 \/Users\/godice\/Coding\/LoopForge。将美国适配报告写入 docs\/us-graph-round1-audit.md。\n\n只提交并推送与本轮相关的 EasyBusiness 文件，遵循 AGENTS.md。完成前检查 git diff、构建、测试、真实 UI、截图与远端状态。",
+    "rawTaskDigest" : "fdd78fa6457b14532f877df67801af9b52f82a77ec73882e8ded1a0dac5dcc30",
+    "structureIssues" : [
+
+    ],
+    "taskStatusClaim" : "stopped",
+    "visualApprovalClaim" : false
+  },
+  "structuralIssueCount" : 0,
+  "workingNodeClaimCount" : 0,
+  "writeBackPermitted" : false
+}

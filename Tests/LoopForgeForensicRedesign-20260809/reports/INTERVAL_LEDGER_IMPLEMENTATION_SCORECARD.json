@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "status": "implemented-side-by-side",
+  "legacyExecutionCutover": false,
+  "easyBusinessMutated": false,
+  "cumulativeAndCurrentSeparated": true,
+  "monotonicElapsedAuthority": true,
+  "bootSessionBound": true,
+  "wallClockUsedForElapsed": false,
+  "typedInvocationKinds": 6,
+  "typedIntervalDispositions": 12,
+  "targetedTests": {
+    "executed": 14,
+    "failed": 0
+  },
+  "fullSwiftTests": {
+    "executed": 354,
+    "skipped": 6,
+    "failed": 0
+  },
+  "productionHashes": {
+    "IntervalLedger.swift": "d29096786f5cc30a79e6cfe35b6bc6cb7ab59f52c761d91d85ec2286c2af1aec",
+    "KernelIdentity.swift": "def00daa6b0d582c583d6b5fd433ce07322629ede96147d61438ee25db6cde22"
+  },
+  "testHash": "f319b0eb4fd94d3c401849acf6605e8144607033d45d63b9c2b048e5c85727a0",
+  "nextGate": "scheduler-and-runtime-adapter-cutover"
+}

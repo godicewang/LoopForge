@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T00:31:03Z",
+  "status": "canonical-parser-identity-authority-implemented-parser-execution-result-review-and-start-vetoed",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "priorGap": {
+    "arbitraryParserIDAccepted": true,
+    "arbitraryPositiveSchemaAccepted": true,
+    "arbitrarySHA256Accepted": true,
+    "identifiedExecutableGrammar": false
+  },
+  "currentAuthority": {
+    "newProbeSchemaVersion": 2,
+    "supportedParserFormat": "canonicalJSONResultV1",
+    "supportedParserSchemaVersion": 1,
+    "implementationIdentityDigest": "0f692d4a089b7aa5e15818edf46cdaf7d4c4dd03743ed8b1d0603c07d44930c1",
+    "nativeAuthoringRechecksSchema": true,
+    "activationRechecksFormatAndDigest": true,
+    "arbitraryDigestShapedParserRejected": true,
+    "legacyParserDecodable": true,
+    "legacyParserCanAuthorizeNewWork": false
+  },
+  "execution": {
+    "outputEnvelopeImplemented": false,
+    "canonicalParserExecuted": false,
+    "exitResultMappingEvaluated": false,
+    "verificationResultIssued": false,
+    "integrationPhase": "appliedUnverified"
+  },
+  "verification": {
+    "focusedTests": 3,
+    "completeSwiftTests": 704,
+    "environmentSkips": 8,
+    "failures": 0,
+    "releaseLoopForgeBuild": "passed",
+    "releaseKernelSandboxGateBuild": "passed",
+    "diffWhitespace": "passed",
+    "exactSourceSnapshotSHA256": "66f642ab87104717842ef374dd5b9966bad3ac101aed67f2ac1e76b352564054",
+    "releaseArtifacts": {
+      "LoopForgeSHA256": "d4a05d79c4d1a1f233f5dc97efa9accdb3847cf2f95e058d328ac474562b2ed2",
+      "KernelSandboxGateSHA256": "21731107c0b85e03933bac526d5f0a705394579e9eb02a7665c950fe49949b99"
+    },
+    "sourceHashes": {
+      "TaskContractCompiler.swift": "8ea9db3d0ef7d047a45661111fd126a058880ce26fbe863deb8ce449f9548a87",
+      "NativeTaskContractAuthoring.swift": "0f166d34b6f70afb8bbecf3bcbef6615d76554bbd5f9d6d6a6366f4615046d28",
+      "KernelPostimageVerifierActivation.swift": "174185ed999af759259ac7ad117781578d731e7b00033017093ce8e2b6fe8f03",
+      "NativeTaskContractAuthoringTests.swift": "b67f72b980809e73e65bc52c3ffb53057a75b2ec23b0a27929ac5782b8441c89",
+      "TaskContractCompilerTests.swift": "6a9fca24984a4a34a9e90ce125e8ded9a0b1055478ee8f4c159dd6237d989fe6",
+      "NativeKernelEnrollmentFlowTests.swift": "f60906d5a42be8f1db812dfb5840fc60fbc9b044a99db232047edc7dc794cb0a",
+      "IntegrationTransactionStateMachineTests.swift": "57bef37558f98868b149667976b549097584094888dddbf18e79134cd79eaade",
+      "KernelRunEnrollmentCoordinatorTests.swift": "6b5cc633d06deb9a1f2c6d41294866701c5976707327ac850a9bd7bd26145cd6"
+    }
+  },
+  "remainingPrerequisites": [
+    "canonical output result envelope and strict parser execution",
+    "exit and parser-result mapping evaluation",
+    "non-forgeable postimage result receipt",
+    "latest-red revocation and canonical evidence batch",
+    "truthful native resident-memory enforcement",
+    "candidate descriptor capability atomic at spawn",
+    "separately activated adversarial read-only review",
+    "integration acceptance and native start",
+    "current-source package sign native walkthrough commit and push"
+  ],
+  "finalAcceptance": false
+}

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "executablePath": "/Users/godice/Coding/LoopForge/dist/LoopForge.app/Contents/MacOS/KernelSandboxGate",
+  "fixedArguments": [
+    "@loopforge-input:candidate-postimage"
+  ],
+  "resultMappings": [
+    {
+      "exitCode": 0,
+      "parserResultCode": "accepted",
+      "outcome": "accepted"
+    },
+    {
+      "exitCode": 1,
+      "parserResultCode": "rejected",
+      "outcome": "rejected"
+    }
+  ],
+  "maximumWallClockSeconds": 30,
+  "maximumCapturedOutputBytes": 1048576,
+  "maximumResidentBytes": 134217728
+}

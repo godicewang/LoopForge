@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T05:39:21Z",
+  "status": "content-addressed-regular-file-delta-derived-effect-authority-absent",
+  "finalAcceptance": false,
+  "inputAuthority": {
+    "validatedContentCompleteBaseArtifact": true,
+    "validatedContentCompleteCandidateArtifact": true,
+    "exactWorkspaceIdentityRequired": true,
+    "exactCanonicalRootRequired": true,
+    "exactCapturePolicyRequired": true,
+    "exactRequirementAuthorityRequired": true,
+    "exactAuthorizedPathsRequired": true,
+    "modelProseUsed": false
+  },
+  "supportedOperations": {
+    "regularFileCreateWithExistingParent": true,
+    "regularFileDelete": true,
+    "contentModifyWithStableMode": true,
+    "modeChangeWithStableContent": true,
+    "renameInference": false,
+    "newDirectoryTopology": false,
+    "simultaneousContentAndModeChange": false,
+    "symbolicLinks": false,
+    "submodules": false,
+    "specialFiles": false
+  },
+  "controls": {
+    "contentAddressedInertReceipt": true,
+    "canonicalPathOrdering": true,
+    "contiguousSequence": true,
+    "digestSortedContentSizeReferences": true,
+    "caseFoldedCollisionRejection": true,
+    "typedUnsupportedTopologyRejection": true,
+    "containsJournalReceiptIDs": false,
+    "authorizesFilesystemEffects": false,
+    "productionManifestAssemblerAvailable": false,
+    "productionPreflightIssuerAvailable": false,
+    "publicationPermitted": false,
+    "nativeStartAuthorized": false
+  },
+  "verification": {
+    "focusedDerivationTests": 5,
+    "suiteTestsExecutedExcludingIndependentlyRunCase": 725,
+    "independentlyRunProcessGroupCase": 1,
+    "combinedTestsCovered": 726,
+    "intentionalEnvironmentSkips": 8,
+    "testFailures": 0,
+    "releaseLoopForgeSHA256": "c37d268ff262b0a235c98f60178b471881826a04fafe3c7d45d26ba2174f68a9",
+    "releaseKernelSandboxGateSHA256": "1b7ba433fe915b0dd916aceafe62342d246bcf6bbddcfc5425b0d09fba0fbeaa",
+    "sourceSnapshotSHA256": "1a16627ade603bb9cf5cce3ed7f5d4ce990de6b1a726bb0b2af601960ce6881f"
+  },
+  "remainingPrerequisites": [
+    "content-complete canonical multi-plane preimage capture",
+    "candidate content-object byte capture and descriptor-bound attestation",
+    "journal events and reducer replay for derivation and every preparation fact",
+    "journal-owned manifest assembly proposal and preflight capability issuer",
+    "tested production resident-memory enforcement issuer or retained verifier and reviewer veto",
+    "native immutable design baseline complete visual evidence final authorization and executable external-dependency observation",
+    "legacy Single and Parallel retirement",
+    "current-source package sign unlocked native walkthrough clean commit and push"
+  ]
+}

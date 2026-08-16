@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "comparisonID": "easybusiness-primary-flows-light-301ef23-vs-2ae4045",
+  "generatedAt": "2026-08-09T15:54:00Z",
+  "sourcePolicy": "EasyBusiness working repository remained read-only; both sources are exported exact-commit snapshots inside LoopForge evidence.",
+  "baseline": {
+    "language": "zh-Hans",
+    "commit": "301ef23a8698c3544c097895980248284f9189bb",
+    "snapshot": "./chinese-301ef23",
+    "resultBundle": "./chinese-primary-flows-light-301ef23.xcresult",
+    "attachments": "./chinese-primary-flows-light-attachments",
+    "selectedTests": 1,
+    "passedTests": 1,
+    "failedTests": 0,
+    "testSeconds": 58.302,
+    "xcodebuildTestOperationSeconds": 105.453,
+    "pngCount": 8
+  },
+  "candidate": {
+    "language": "en-US",
+    "commit": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "snapshot": "./english-2ae4045",
+    "resultBundle": "./english-primary-flows-light-2ae4045.xcresult",
+    "attachments": "./english-primary-flows-light-attachments",
+    "selectedTests": 2,
+    "passedTests": 2,
+    "failedTests": 0,
+    "testSeconds": 73.58,
+    "xcodebuildTestOperationSeconds": 92.587,
+    "pngCount": 13
+  },
+  "environment": {
+    "deviceName": "iPhone 17 Pro",
+    "deviceUDID": "A03E785D-8E88-4B54-BCA1-B609824B1FF6",
+    "simulatorOS": "iOS 26.5",
+    "appearance": "light",
+    "appearancePinnedBeforeEachRun": true,
+    "contentSize": "standard system default used by the selected tests"
+  },
+  "artifactAccounting": {
+    "totalPNGs": 21,
+    "uniquePNGs": 19,
+    "duplicateGroups": 2,
+    "duplicateCandidateFrames": [
+      {
+        "sha256": "b68a719c04ee686af6d9b487cbff4ac7642c1aa82dcc7add15d7f5b64da73593",
+        "captureNames": [
+          "06-assessment-category-details",
+          "07-assessment-details-bottom"
+        ]
+      },
+      {
+        "sha256": "d9b6b5985e6612492d9ce730e3194e671a654f8a83d87878b2ba3051c3dc4f7a",
+        "captureNames": [
+          "20-profile-middle",
+          "21-profile-bottom"
+        ]
+      }
+    ],
+    "sha256Ledger": "./primary-flow-light-image-sha256.txt"
+  },
+  "measurements": {
+    "industryScreen": {
+      "visibleComparedSectorCount": 6,
+      "baselineWrappedSectorTitles": 0,
+      "candidateWrappedSectorTitles": 4,
+      "candidateWrappedTitles": [
+        "Cafes & Bakeries",
+        "Local Services",
+        "Health & Wellness",
+        "Fitness & Recreation"
+      ],
+      "sharedSectorCardMinHeightPoints": 76
+    },
+    "categoryScreen": {
+      "visibleComparedCategoryCount": 6,
+      "baselineWrappedCategoryTitles": 0,
+      "candidateWrappedCategoryTitles": 2,
+      "candidateWrappedTitles": [
+        "Sichuan / Hunan Restaurant",
+        "Regional Chinese Restaurant"
+      ],
+      "baselineCardMinHeightPoints": 130,
+      "candidateCardMinHeightPoints": 104
+    },
+    "businessDetailsScreen": {
+      "baselineSuggestionCount": 4,
+      "baselineFullyVisibleSuggestions": 4,
+      "candidateSuggestionCount": 4,
+      "candidateFullyVisibleSuggestions": 2,
+      "candidatePartiallyVisibleSuggestion": "Brazilian barbecue",
+      "candidateObservedOCRFragment": "Brazilia",
+      "candidatePlaceholderObservedOCR": "For example: American barbecue, Kor...",
+      "horizontalScrollIndicators": false,
+      "historicalAcceptedScreenshotSHA256": "76c58e4377680e34abacde978355813bef56649d9b4024c5029234a2d920cdf5"
+    },
+    "communityHero": {
+      "baselineTitleMetric": "system size 30, bold, serif",
+      "candidateTitleMetric": "largeTitle, bold, serif",
+      "metricChangeCommit": "ceb075201bffcf09c1efa3ac9a7b9c6ebf0c8d4e",
+      "copyChangeCommit": "88a2bdf9c5af4ac0ef97a6814d894fe58b50ba0b"
+    }
+  },
+  "testContract": {
+    "captureHelperBehavior": [
+      "sleep 0.7 seconds",
+      "take app screenshot",
+      "attach keepAlways"
+    ],
+    "pixelBaselineComparison": false,
+    "ocrClippingAssertion": false,
+    "typographyTokenAssertion": false,
+    "shapeMetricAssertion": false,
+    "spacingMetricAssertion": false,
+    "uniqueFrameAssertion": false,
+    "independentVisualReviewer": false,
+    "navigationExistenceAndHittabilityAssertions": true
+  },
+  "commitLineage": [
+    {
+      "commit": "ac7b02cbe08eedd331cad678f7f1c138a67367d0",
+      "title": "完成美国版全链路适配",
+      "filesChanged": 113,
+      "insertions": 12243,
+      "deletions": 18068
+    },
+    {
+      "commit": "ceb075201bffcf09c1efa3ac9a7b9c6ebf0c8d4e",
+      "title": "完成美国版深度审计与发布加固",
+      "filesChanged": 49,
+      "insertions": 1500,
+      "deletions": 426
+    },
+    {
+      "commit": "88a2bdf9c5af4ac0ef97a6814d894fe58b50ba0b",
+      "title": "完成全页面英文视觉密度优化",
+      "filesChanged": 30,
+      "insertions": 879,
+      "deletions": 450
+    }
+  ],
+  "scopeBoundary": {
+    "claimsUniversalVisualFailure": false,
+    "standardSizeScreensWithoutCatastrophicStructuralRegression": [
+      "Friends entry",
+      "Profile top"
+    ],
+    "confirmedHighImpactSurfaces": [
+      "maximum Dynamic Type Home hierarchy",
+      "industry and category density",
+      "business details suggestion geometry",
+      "visual evidence acceptance integrity"
+    ]
+  }
+}

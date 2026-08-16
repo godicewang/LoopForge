@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "status": "passed-current-source",
+  "recordedAt": "2026-08-10T21:53:16Z",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "outbox": {
+    "schemaVersion": 5,
+    "maximumDispatchAttempts": 3,
+    "attemptCountDurable": true,
+    "lastFailureDigestDurable": true,
+    "lastAttemptTimestampDurable": true,
+    "restartResetsBudget": false,
+    "thirdRetryableFailureQuarantines": true,
+    "fourthOrdinaryDispatchPossible": false,
+    "schemaVersion3MigrationTested": true,
+    "schemaVersion4AcceptedBeforeNormalization": true,
+    "schemaVersionAfterSuccessfulRewrite": 5
+  },
+  "dispatcherPolicy": {
+    "deterministicPreEffectFailuresQuarantineImmediately": true,
+    "journaledExecutorFailuresQuarantineImmediately": true,
+    "failedOwnershipQuarantinesImmediately": true,
+    "expiredAuthorityQuarantinesImmediately": true,
+    "journalWriteFailureConsumesRetry": true,
+    "journalProjectionDivergenceConsumesRetry": true,
+    "authorityReleaseFailureConsumesRetry": true,
+    "quarantineClaimsCompletion": false,
+    "automaticAuthorityRenewal": false
+  },
+  "verification": {
+    "focusedTests": 21,
+    "focusedFailures": 0,
+    "focusedLog": "/tmp/loopforge-dispatch-retirement-focused.log",
+    "focusedLogSHA256": "db77c385af5d4d4fbbb7045c90afa7d9daf881727472f9b229b3b3e9bf65b451",
+    "fullTests": 506,
+    "skipped": 8,
+    "failures": 0,
+    "fullLog": "/tmp/loopforge-full-tests-dispatch-retirement.log",
+    "fullLogSHA256": "4ddf34a741b69b5a04270907f5b08f0575fb21bc32cd27706aa3f924dfc4ac4d",
+    "packageVerified": true,
+    "nativeUIVerified": false,
+    "nativeUIBlockedReason": "macOS locked"
+  },
+  "sourceSHA256": {
+    "JournaledWorkspaceMutationRuntime.swift": "6f3481c3876e1f324012913eb056fc327d82fdeae1c5ea2bfc1d9ec60e45e9dc",
+    "WorkspaceMutationEffectOutbox.swift": "27c1c58ded2a8810b9e6a4be33d603ecf658af14c90c775b0b1c5b17e49da699",
+    "IntegrationTransactionStateMachineTests.swift": "d3c7fe2a6658c38e2b9faf58c85e90bf977b2fd43edcc116fd6be1650b8685e1",
+    "WorkspaceMutationFilesystemExecutorTests.swift": "c398d92e06d7b155c70dc6a43a92b5f7de0f953e544b484804ef0d7aaba9e2de"
+  },
+  "remainingVetoes": [
+    "explicit evidence-bound repair and replan API",
+    "production dispatcher startup ownership",
+    "receipt-native quarantine UI",
+    "legacy controller cutover",
+    "current native UI capture",
+    "revision-bound commit and push"
+  ],
+  "finalRelease": false
+}

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "report": "DETERMINISTIC_REPLAY_AND_FAULT_INJECTION_PLAN.md",
+  "status": "pre-implementation-contract",
+  "productionRefactorAuthorized": false,
+  "historicalCorpusEvents": 5758,
+  "historicalIterations": 51,
+  "scenarioGroups": [
+    {"id": "R", "name": "historical-replay", "scenarioCount": 5},
+    {"id": "A", "name": "authority-and-workspace", "scenarioCount": 8},
+    {"id": "E", "name": "evidence-and-review", "scenarioCount": 8},
+    {"id": "C", "name": "causal-convergence", "scenarioCount": 8},
+    {"id": "L", "name": "lifecycle-persistence-thermal", "scenarioCount": 8},
+    {"id": "V", "name": "visual-system", "scenarioCount": 8},
+    {"id": "W", "name": "watcher", "scenarioCount": 5},
+    {"id": "P", "name": "release", "scenarioCount": 4}
+  ],
+  "totalScenarios": 54,
+  "requiredHarnessProperties": [
+    "deterministic clock and IDs",
+    "no wall-clock sleeps",
+    "adapter fault injection",
+    "exact expected event and rejection sequence",
+    "stable final state digest",
+    "accepted and excluded time oracle",
+    "resource and quiescence oracle",
+    "artifact and review receipt oracle",
+    "machine-readable scenario receipts"
+  ],
+  "acceptanceRule": "All mandatory scenarios pass on the exact packaged revision; legacy tests, Agent prose, elapsed time, and aggregate score cannot substitute for a scenario receipt."
+}

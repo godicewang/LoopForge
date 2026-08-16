@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T06:01:30Z",
+  "status": "exact-delta-content-byte-set-verified-provenance-and-effect-authority-absent",
+  "finalAcceptance": false,
+  "binding": {
+    "derivationDigest": true,
+    "baseSourceRevision": true,
+    "candidateSourceRevision": true,
+    "exactDigestSizeReferences": true,
+    "executorCompatibleObjectSetDigest": true,
+    "countAndTotalBytes": true,
+    "configuredLimits": true,
+    "canonicalReceiptDigest": true
+  },
+  "controls": {
+    "exactSetEquality": true,
+    "missingObjectRejected": true,
+    "unexpectedObjectRejected": true,
+    "duplicateDigestRejected": true,
+    "wrongSizeRejected": true,
+    "corruptBytesRejected": true,
+    "countLimit": true,
+    "perObjectLimit": true,
+    "totalByteLimit": true,
+    "overflowRejected": true,
+    "orderIndependentIdentity": true,
+    "provesByteOrigin": false,
+    "provesDurableStorage": false,
+    "containsJournalReceiptIDs": false,
+    "authorizesFilesystemEffects": false,
+    "productionPreflightIssuerAvailable": false,
+    "publicationPermitted": false,
+    "nativeStartAuthorized": false
+  },
+  "verification": {
+    "focusedContentSetTests": 4,
+    "suiteTestsExecutedExcludingIndependentlyRunCase": 733,
+    "independentlyRunProcessGroupCase": 1,
+    "combinedTestsCovered": 734,
+    "intentionalEnvironmentSkips": 8,
+    "testFailures": 0,
+    "excludedFailedFixtureRuns": 1,
+    "releaseLoopForgeSHA256": "8472a2ea03722764ed904c39dc5941ad70d4167f51c1f17e519eb82d06faa567",
+    "releaseKernelSandboxGateSHA256": "1b7ba433fe915b0dd916aceafe62342d246bcf6bbddcfc5425b0d09fba0fbeaa",
+    "sourceSnapshotSHA256": "1eb3e8b7cb3fecfbff2c844e399d5580f8f3da1f1a17630024334f8f4f9795ec"
+  },
+  "remainingPrerequisites": [
+    "descriptor-relative content-addressed base and candidate byte storage with origin provenance",
+    "journal capture and replay for exact content-object set evidence",
+    "journal-owned content-complete HEAD index and untracked preimage planes",
+    "repository-metadata and ignored-path-policy authority",
+    "journal-owned WorkspacePreimage and manifest assembly",
+    "journal-owned proposal and preflight capability issuer",
+    "tested production resident-memory enforcement issuer or retained verifier and reviewer veto",
+    "native immutable design baseline complete visual evidence final authorization and executable external-dependency observation",
+    "legacy Single and Parallel retirement",
+    "current-source package sign unlocked native walkthrough clean commit and push"
+  ]
+}

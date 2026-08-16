@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "baselineRevision": "6e9b99d12e61c5a4fce2d867d7986cb56c75a1a0",
+  "candidateSourceSnapshotSHA256": "3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845",
+  "alignment": "native pixels centered on an unscaled maximum-size canvas",
+  "cells": [
+    {
+      "name": "standard-expanded",
+      "baseline": {
+        "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/baseline-6e9b99d-loopforge-native-matrix-standard-expanded-20260816T084900Z.jpeg",
+        "fileSHA256": "4fe7d1345341150cca141c700c5e59041579bb677698c5c4027635ecd2981a09",
+        "pixelSHA256": "b629297c5891f68af0caee55fa05685ce952b78eea932469d533cbba1e188d33",
+        "width": 1175,
+        "height": 768
+      },
+      "candidate": {
+        "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-native-matrix-whole-row-standard-expanded-20260816T095900Z.jpeg",
+        "fileSHA256": "9dbdbe3bb65fa12e1a9881f1bc350404967bb9e17f294d64e5d29982fbf3cec2",
+        "pixelSHA256": "aae726249e5f80523ecb2912d26687c94d34ede83a71f357c0d65715a85d32d3",
+        "width": 1173,
+        "height": 768
+      },
+      "comparisonCanvas": {
+        "width": 1175,
+        "height": 768
+      },
+      "meanAbsoluteChannelDelta": 8.765522,
+      "changedPixelRatio": 0.55208112,
+      "visibleDifference": {
+        "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/loopforge-native-matrix-whole-row-20260816T100000Z-diff-standard-expanded.png",
+        "fileSHA256": "934217a4679895b5a1112d58be904066c6d51f8842bfc024edf45bc87bfd1fc5",
+        "pixelSHA256": "8bcab95c04171274ef33932b13142c1587aba8827dc3c60b3f4305541baa595c",
+        "width": 1175,
+        "height": 768
+      }
+    },
+    {
+      "name": "standard-narrow",
+      "baseline": {
+        "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/baseline-6e9b99d-loopforge-native-matrix-standard-narrow-20260816T084800Z.jpeg",
+        "fileSHA256": "a3ed568bfe06bba969a58b3cf5e61fa5a77ce304e972c68a29a9d6239d4446eb",
+        "pixelSHA256": "53f3ac67198e649c76b567270485b359727975603e2d1b046d7d680f607b9511",
+        "width": 1060,
+        "height": 752
+      },
+      "candidate": {
+        "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-native-matrix-whole-row-standard-narrow-20260816T095800Z.jpeg",
+        "fileSHA256": "bc88e75b0a8df7b4711eff2318d176023d0eaaf5e286f5bf8f100ac14305139c",
+        "pixelSHA256": "20c0fbbbadf9f92273a1f18066c0682cc293845f6a1d0a64014be8027c0b81b1",
+        "width": 1060,
+        "height": 752
+      },
+      "comparisonCanvas": {
+        "width": 1060,
+        "height": 752
+      },
+      "meanAbsoluteChannelDelta": 13.058939,
+      "changedPixelRatio": 0.85733641,
+      "visibleDifference": {
+        "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/loopforge-native-matrix-whole-row-20260816T100000Z-diff-standard-narrow.png",
+        "fileSHA256": "1cf7f3e29eddb44ef89b3b22f89830dc56adeb535b3b5529ed1274b68407419c",
+        "pixelSHA256": "2c349cc46f904d8a64b365dbd9e8cd5a9ff4daf8fa2daec9bfb9f20e08a8b514",
+        "width": 1060,
+        "height": 752
+      }
+    },
+    {
+      "name": "accessibility-expanded",
+      "baseline": {
+        "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/baseline-6e9b99d-loopforge-native-matrix-accessibility-display-scale-20260816T085100Z.jpeg",
+        "fileSHA256": "002dbcb2febb4bc567b7e2a9a232986fbf9aa21f1776408e38a946eef9db4f18",
+        "pixelSHA256": "3706f637c9cfa9c8401e93e1cd053091d4db65adabfc7cded9827d140cb1932b",
+        "width": 1098,
+        "height": 752
+      },
+      "candidate": {
+        "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-native-matrix-whole-row-accessibility-expanded-20260816T095500Z.jpeg",
+        "fileSHA256": "c517f92e132233c2d99927cda0319e58b7f72586ab953aa38977fb0b051fde05",
+        "pixelSHA256": "82d89f960f5952c933c6d52e18f4883d53cd1ca6ac905503f0508cf3ad1b8df7",
+        "width": 1098,
+        "height": 752
+      },
+      "comparisonCanvas": {
+        "width": 1098,
+        "height": 752
+      },
+      "meanAbsoluteChannelDelta": 16.456008,
+      "changedPixelRatio": 0.55158073,
+      "visibleDifference": {
+        "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/loopforge-native-matrix-whole-row-20260816T100000Z-diff-accessibility-expanded.png",
+        "fileSHA256": "30182ec583d159d4b28601820fa523cbf0b4b3ca3d227231391a6c9b6059ffa7",
+        "pixelSHA256": "c86a47e7191e76b722a0d1467fa3f27efdae09745acba17c6d7987b78c66b044",
+        "width": 1098,
+        "height": 752
+      }
+    },
+    {
+      "name": "accessibility-narrow",
+      "baseline": {
+        "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/baseline-6e9b99d-loopforge-native-matrix-accessibility-narrow-matched-20260816T085800Z.jpeg",
+        "fileSHA256": "657fb85b7b9e3323d810aca39e52cb6a0cae17871144125e4ffd292b8f369db9",
+        "pixelSHA256": "09733a76b8f25732deb3e54012ed1774e9fd8c7093497eaedef1309106dfdbe6",
+        "width": 1060,
+        "height": 752
+      },
+      "candidate": {
+        "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-native-matrix-whole-row-accessibility-narrow-20260816T095600Z.jpeg",
+        "fileSHA256": "09eb378203ac385e1dde475e4640943ce028f85d94b23e0a460d982c293f364c",
+        "pixelSHA256": "48b42eb573db7036691bfacc11ddd05c7fcfd7e13c8808984247c6a4d394a8da",
+        "width": 1060,
+        "height": 752
+      },
+      "comparisonCanvas": {
+        "width": 1060,
+        "height": 752
+      },
+      "meanAbsoluteChannelDelta": 10.702959,
+      "changedPixelRatio": 0.57242071,
+      "visibleDifference": {
+        "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/loopforge-native-matrix-whole-row-20260816T100000Z-diff-accessibility-narrow.png",
+        "fileSHA256": "fedda1cf8af3d17f2daf2f489cade3ce784f752650cccc09dce68bbce8ce9e0c",
+        "pixelSHA256": "7501499ff089450f5c7e7086bade251cf5f6782ec494016e23242f48662b70ec",
+        "width": 1060,
+        "height": 752
+      }
+    }
+  ],
+  "contactSheet": {
+    "path": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/loopforge-native-matrix-whole-row-20260816T100000Z-contact-sheet.jpg",
+    "fileSHA256": "0c8e84353eeb1851d18548955a2a213378c1c59031d476b9d76a4920c4d8f7f5",
+    "pixelSHA256": "a1f35feb141f9a508dd4ab4ef6c399c0b46e38c06daed481644e8606ac67ae0b",
+    "width": 1792,
+    "height": 1537
+  }
+}

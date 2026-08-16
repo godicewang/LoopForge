@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-14T15:20:14Z",
+  "status": "live-candidate-capture-and-deterministic-measurement-authority-present-matrix-and-independent-review-pending",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "captureAuthority": {
+    "durableAttestationRemainsReplayable": true,
+    "liveCaptureAuthorityCodable": false,
+    "decodedCaptureCanRecreateAuthority": false,
+    "adapterOwnsAuthorityIssuance": true
+  },
+  "measurementAuthority": {
+    "liveCandidateCaptureRequired": true,
+    "baselineCandidateCellTraitsAndProtocolBound": true,
+    "allowListedHarnessRequired": true,
+    "protectedDimensionsBound": true,
+    "adapterOwnsMeasurementTime": true,
+    "adapterOwnsEvidenceReceiptID": true,
+    "rawEvidenceBound": true,
+    "requiredDimensionCompletenessChecked": true,
+    "nonfiniteAndNegativeMaximumsRejected": true,
+    "liveMeasurementAuthorityCodable": false,
+    "createsJournalOrMutationAuthority": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 5,
+    "focusedFailures": 0,
+    "developmentTestsExecuted": 778,
+    "developmentTestsSkipped": 8,
+    "developmentFailures": 0,
+    "developmentTestSeconds": 60.577,
+    "releaseBuildPassed": true,
+    "releaseBuildSeconds": 92.60,
+    "diffCheckPassed": true,
+    "residualExactExecutableCount": 0
+  },
+  "sourceSHA256": {
+    "NativeVisualCaptureAdapter.swift": "55a7096484be92bff73e7cdf16e45056c72ad47d6a500e9c6c667faa2cb5197f",
+    "NativeVisualMeasurementAdapter.swift": "2728f2bc9a603e1681e0d554e359775fe8ef1d491b8015c8fc80e5865bee80d5",
+    "NativeVisualMeasurementAdapterTests.swift": "051bc6fc8cb9a45a9e1054d6816d1b6cbe716ec8cc3df32ffd581b92ddd56ce5"
+  },
+  "sourceSnapshotSHA256": "b1554e9e428970dcad2566a617c4119a0ba3f80ff51d8cd6ede4968704a9c19e",
+  "remainingVetoes": {
+    "completeVisualMatrixCompositor": false,
+    "independentVisualReviewerRuntimeIssuer": false,
+    "authorizedKernelVisualEvaluationIssuer": false,
+    "trustedReleaseContainmentIssuer": false,
+    "externalDependencyRuntimeObserver": false,
+    "finalCompletionAuthorization": false,
+    "legacyControllerCutover": false,
+    "currentNativeScreenshots": false,
+    "currentSourcePackage": false,
+    "cleanCommitAndPush": false
+  },
+  "finalAcceptance": false
+}

@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-14T11:33:49Z",
+  "status": "completed-candidate-postimage-activation-crash-replayable-resident-memory-veto-retained",
+  "finalAcceptance": false,
+  "easyBusinessMutated": false,
+  "controls": {
+    "exactAppliedReceiptRequired": true,
+    "independentVerifierLineageRequired": true,
+    "contractExecutableRecipeRequired": true,
+    "candidateAttestationRequired": true,
+    "freshNonCodableCandidateInputRequiredOnReplay": true,
+    "immutableSnapshotIdentityReplayBound": true,
+    "existingArtifactRepresentationAcceptedOnlyForSameSnapshot": true,
+    "stagedExecutableIdentityReplayBound": true,
+    "sameActivationCommandAndReceiptRequired": true,
+    "duplicateActivationFrameAppended": false,
+    "launchedActivationReplayable": false,
+    "productionResidentMemoryAuthorityAvailable": false,
+    "verifierLeaseCreatedAfterVeto": false,
+    "verifierLaunchReceiptCreatedAfterVeto": false,
+    "postimageVerificationIssued": false,
+    "independentAcceptanceIssued": false,
+    "integrationPhase": "appliedUnverified",
+    "publicationPermitted": false
+  },
+  "verification": {
+    "syntheticWorkspaceOnly": true,
+    "focusedCompletedCandidateTests": 1,
+    "enrollmentMaterializerAndIntegrationTests": 48,
+    "swiftTestsExecuted": 766,
+    "intentionalEnvironmentSkips": 8,
+    "swiftTestFailures": 0,
+    "swiftTestSeconds": 60.132,
+    "swiftTestWallSeconds": 60.180,
+    "releaseBuildPassed": true,
+    "releaseBuildSeconds": 88.41,
+    "sourceHashes": {
+      "KernelPostimageVerifierActivation.swift": "ec9552ad697a49cdb8b6b93f65b251cc8afce6a905195245e032ba5a0fc3b6d9",
+      "WorkspaceCandidatePostimageMaterializer.swift": "fcc52e7a6b1705df440c3eefc544b6a128a78b7b338237bf0789b82e6d645dda",
+      "KernelRunEnrollmentCoordinatorTests.swift": "0cf48543f00674dab775f22cec5b9caf6e1fde1d6587698b5bb4f8922f2bda4f"
+    },
+    "easyBusinessHEAD": "2ae40452e6d8661c46db466c43ea40bba3bfab04"
+  },
+  "ledger": {
+    "acceptedIntervalID": "kernel-completed-candidate-postimage-activation-replay-201",
+    "coveredSecondsAdded": 600,
+    "coveredActiveSeconds": 162570,
+    "acceptedIntervals": 201,
+    "failedRunsTestsBuildsWaitsAndReportsCountedSeconds": 0
+  },
+  "remainingPrerequisites": [
+    "provide tested production resident-memory enforcement or retain the verifier and reviewer launch veto",
+    "run the exact independent verifier and distinct reviewer or execute exact rollback/failure cleanup",
+    "compose native immutable design baseline complete visual evidence final authorization and native UI start",
+    "retire remaining legacy Single and Parallel paths",
+    "complete current-source package sign hash unlocked native walkthrough clean commit and push"
+  ]
+}

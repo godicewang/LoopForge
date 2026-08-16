@@ -40,7 +40,8 @@ struct CompletionReportGenerator {
             )
         let statusTitle = isFinal ? "Completed and verified" : task.status.title
         let statusClass = isFinal ? "ok" : (task.status.isWorking ? "working" : "hold")
-        let generated = ISO8601DateFormatter().string(from: Date())
+        let generatedAt = Date()
+        let generated = ISO8601DateFormatter().string(from: generatedAt)
 
         let groundedNarrative = narrative ?? deterministicNarrative(task: task, audit: audit)
         let graphLogs = task.graphState?.nodes.flatMap(\.logs) ?? []
@@ -71,11 +72,14 @@ struct CompletionReportGenerator {
                         ? "blocked"
                         : "working"
                 )
+            let currentIterationActive = node.liveCurrentIterationActiveSeconds(
+                at: generatedAt
+            ).compactDuration
             return """
             <article class="graph-node \(statusClass)">
               <div class="graph-node-head"><strong>\(html(node.title))</strong><span>\(html(node.status.title))</span></div>
               <p>\(html(node.objective))</p>
-              <div class="graph-node-meta"><span>Iterations \(node.iteration)</span><span>\(node.accumulatedActiveSeconds.compactDuration) active</span><span>\(html(node.workspaceStrategy?.title ?? "Workspace"))</span></div>
+              <div class="graph-node-meta"><span>Iterations \(node.iteration)</span><span>All iterations \(node.liveActiveSeconds(at: generatedAt).compactDuration)</span><span>This iteration \(currentIterationActive)</span><span>\(html(node.workspaceStrategy?.title ?? "Workspace"))</span></div>
               \(node.lastReview.isEmpty ? "" : "<small>\(html(node.lastReview))</small>")
               \(node.supersededReason.map { "<small>Replanned: \(html($0))</small>" } ?? "")
               \((node.supersededByNodeIDs ?? []).isEmpty ? "" : "<small>Replacement: \(html((node.supersededByNodeIDs ?? []).joined(separator: ", ")))</small>")
@@ -85,8 +89,13 @@ struct CompletionReportGenerator {
         let graphPerformanceHTML: String
         if let graph = task.graphState, !graph.nodes.isEmpty {
             let totalIterations = graph.nodes.reduce(0) { $0 + $1.iteration }
-            let totalActive = graph.nodes.reduce(0) { $0 + $1.accumulatedActiveSeconds }
-            let criticalPath = criticalPathActiveSeconds(nodes: graph.nodes)
+            let totalActive = graph.nodes.reduce(0) {
+                $0 + $1.liveActiveSeconds(at: generatedAt)
+            }
+            let criticalPath = criticalPathActiveSeconds(
+                nodes: graph.nodes,
+                at: generatedAt
+            )
             let parallelFactor = criticalPath > 0 ? totalActive / criticalPath : 1
             graphPerformanceHTML = """
             <section><div class="card"><h2>\(task.resolvedExecutionMode == .parallelCandidates ? "Candidate performance" : "Graph performance")</h2><div class="grid graph-metrics">
@@ -201,7 +210,10 @@ struct CompletionReportGenerator {
         return destination.path
     }
 
-    private func criticalPathActiveSeconds(nodes: [GraphLoopNode]) -> TimeInterval {
+    private func criticalPathActiveSeconds(
+        nodes: [GraphLoopNode],
+        at date: Date
+    ) -> TimeInterval {
         let byID = Dictionary(uniqueKeysWithValues: nodes.map { ($0.id, $0) })
         var memo: [String: TimeInterval] = [:]
         var visiting = Set<String>()
@@ -211,7 +223,7 @@ struct CompletionReportGenerator {
             guard let node = byID[id], visiting.insert(id).inserted else { return 0 }
             let predecessor = node.dependencies.map(visit).max() ?? 0
             visiting.remove(id)
-            let total = predecessor + node.accumulatedActiveSeconds
+            let total = predecessor + node.liveActiveSeconds(at: date)
             memo[id] = total
             return total
         }
@@ -271,16 +283,25 @@ struct CompletionReportGenerator {
 
     private func copiedGallery(task: LoopTask, media: URL) throws -> [(name: String, relativePath: String)] {
         var gallery: [(String, String)] = []
-        for (index, path) in (task.visualEvidencePaths ?? []).prefix(12).enumerated() {
+        var retainedDigests = Set<ContentDigest>()
+        for path in (task.visualEvidencePaths ?? []).prefix(12) {
             let source = URL(fileURLWithPath: path)
             guard FileManager.default.fileExists(atPath: source.path) else { continue }
-            let ext = source.pathExtension.isEmpty ? "png" : source.pathExtension.lowercased()
-            let filename = String(format: "evidence-%02d.%@", index + 1, ext)
+            let digest = try HeavyEvidenceCache.digest(fileAt: source)
+            guard retainedDigests.insert(digest).inserted else { continue }
+            let sourceExtension = source.pathExtension.lowercased()
+            let ext = ["png", "jpg", "jpeg", "webp"].contains(sourceExtension)
+                ? sourceExtension
+                : "bin"
+            let filename = "\(digest.rawValue).\(ext)"
             let destination = media.appendingPathComponent(filename)
             if FileManager.default.fileExists(atPath: destination.path) {
-                try FileManager.default.removeItem(at: destination)
+                guard try HeavyEvidenceCache.digest(fileAt: destination) == digest else {
+                    throw HeavyEvidenceCacheError.corruptEntry(destination.path)
+                }
+            } else {
+                try FileManager.default.copyItem(at: source, to: destination)
             }
-            try FileManager.default.copyItem(at: source, to: destination)
             gallery.append((evidenceDisplayName(source), "media/\(filename)"))
         }
         return gallery

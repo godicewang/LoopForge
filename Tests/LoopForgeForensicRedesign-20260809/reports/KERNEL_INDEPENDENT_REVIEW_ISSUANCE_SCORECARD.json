@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T04:11:21Z",
+  "status": "independent-review-production-issuer-implemented-integration-still-unadvanced",
+  "finalAcceptance": false,
+  "controls": {
+    "separateReviewerActivationRequired": true,
+    "candidateObjectDescriptorBound": true,
+    "journalResolvesReviewedVerification": true,
+    "acceptedEffectiveV2VerificationRequired": true,
+    "exactEvidenceSetDigestBoundIntoArgv": true,
+    "reviewerDistinctFromWorker": true,
+    "reviewerDistinctFromOriginalVerifier": true,
+    "reviewResultCannotIssueOrdinaryVerification": true,
+    "reviewReceiptFieldsRuntimeDerived": true,
+    "exactTransactionReadbackRequired": true,
+    "integrationAdvancedByReview": false,
+    "productionResidentMemoryIssuerAvailable": false
+  },
+  "verification": {
+    "resultAuthorityTests": 5,
+    "journaledRuntimeTests": 28,
+    "focusedNativeJournalScenarios": 1,
+    "suiteTestsExecutedExcludingIndependentlyRunCase": 717,
+    "independentlyRunProcessGroupCase": 1,
+    "combinedTestsCovered": 718,
+    "intentionalEnvironmentSkips": 8,
+    "testFailures": 0,
+    "interruptedSuiteOrderRunCountedAsPass": false,
+    "releaseLoopForgeSHA256": "9fae7152bdc4e9831eca7c64cc2e3d1cad2f3fa3cc8727c5cca24a54411ea361",
+    "releaseKernelSandboxGateSHA256": "1b7ba433fe915b0dd916aceafe62342d246bcf6bbddcfc5425b0d09fba0fbeaa",
+    "sourceSnapshotSHA256": "f0ac41f51f63e748555ee4536156822c3b585f1ae10f4da2a4361546bb9da59d"
+  },
+  "remainingPrerequisites": [
+    "tested production resident-memory enforcement issuer or retained veto",
+    "integration postimage-verification and independent-acceptance issuers",
+    "native immutable design-baseline selection and complete visual evidence",
+    "final authorization and executable external-dependency observation",
+    "legacy Single and Parallel retirement",
+    "current-source package sign unlocked native walkthrough clean commit and push"
+  ]
+}

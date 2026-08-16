@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T04:31:30Z",
+  "status": "pure-probe-owned-non-git-candidate-isolation-binary-integration-and-cleanup-package-verified-production-cutover-pending",
+  "acceptanceRowsAdvanced": [
+    "C-03",
+    "D-08",
+    "C-04-partial"
+  ],
+  "probeBoundary": {
+    "emptyNonGitWorkspaceMutated": false,
+    "nonemptyNonGitWorkspaceMutated": false,
+    "cleanGitIndexBytesChanged": false,
+    "cleanGitPathManifestChanged": false,
+    "gitOptionalLocksDisabled": true,
+    "capabilityProbeCanInitializeRepository": false,
+    "capabilityProbeCanCreateCommit": false
+  },
+  "parallelNonGitBoundary": {
+    "canonicalWorkspaceImplicitlyInitialized": false,
+    "nodeLaunchedWithoutIsolation": false,
+    "failsClosedBeforeGraphCreation": true,
+    "loopForgeOwnedIsolationImplemented": true,
+    "ownedRepositoryOutsideCanonicalWorkspace": true,
+    "ownedRepositoryReusedForPersistedGraph": true,
+    "missingPersistedRepositoryFailsClosed": true,
+    "binarySafePatchIntegrationVerified": true,
+    "canonicalWorkspaceGitMetadataCreated": false,
+    "ownedRepositoryRemovedAfterIntegration": true,
+    "failedIsolationLeavesStagingRepository": false
+  },
+  "verification": {
+    "focusedTestsExecuted": 4,
+    "focusedFailures": 0,
+    "fullTestsExecuted": 589,
+    "fullTestsSkipped": 8,
+    "fullFailures": 0,
+    "packagingOwnedTestsExecuted": 589,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "sourceSnapshotSHA256": "a85be17828fae3463d23d314c4032f7d21387a0f7f4c0b41d3a55e7d00f3350e",
+    "focusedLogSHA256": "5daa3191b27e136776b75b3e795442bcce1ae733144f052eb679f19d9b75f734",
+    "fullLogSHA256": "8a7a38249b7972e4891f6ab671dab2adc04913ef60b800380c33cad36ba8cebb",
+    "packageTestLogSHA256": "0aa774ec7a0206464388572b8920f098134adc3d8138fc0fb3e865cce068551a",
+    "packageLogSHA256": "1102c14f0e6f61f0b8818d1a49daeeea318bef0e067269df787612e66e76a3f3",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "buildManifestSHA256": "60ee87086fbb99f601adcce248ab76a462ceb0edda6b3fce3f769cd33262608a",
+    "executableSHA256": "e91ea9d58f02017a7e1e2f2601f85eeed25cf0519e205e09903652f244953258",
+    "zipSHA256": "6b4b6dc96aef341d2547744169ee23c516831e2f6112d41e8badea465fccbd97",
+    "dmgSHA256": "86f4e90d98e11766122614d107edcf200d6c8da9b704b31be1912dbe8a765c56",
+    "cdHash": "a822489070f01bcd0d0274b8dd60caee6e4ac465",
+    "residualPackagedProcessCount": 0
+  },
+  "knownBoundary": {
+    "journaledOwnedIsolationLifecyclePending": true,
+    "productionKernelEnrollmentPending": true,
+    "currentNativeUICapturePending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "status": "journal_integrated_not_cut_over",
+  "component": "CausalConvergenceGovernor",
+  "source": {
+    "path": "Sources/LoopForge/Kernel/ConvergenceGovernor.swift",
+    "lineCount": 617,
+    "sha256": "5cca24f544c6c7658ca7d7cdb4dd466f4fd68279bbd3326afcfb885705599767"
+  },
+  "tests": {
+    "path": "Tests/LoopForgeTests/ConvergenceGovernorTests.swift",
+    "lineCount": 455,
+    "sha256": "df3f87b2c98810aa5732183d18e20e967ea48d4a016f55174b2c468ab25dece4",
+    "focusedExecuted": 14,
+    "focusedFailures": 0,
+    "fullExecuted": 394,
+    "fullSkipped": 6,
+    "fullFailures": 0
+  },
+  "enforced": {
+    "typedCausalFingerprint": true,
+    "displayProseExcludedFromFingerprint": true,
+    "attemptTokensConsumedAtAdmission": true,
+    "predictionAndFalsificationRequired": true,
+    "rollbackPointRequired": true,
+    "equivalentConcurrentAttemptRejected": true,
+    "deterministicFailureRetiresStrategy": true,
+    "replacementRequiresCausalDeltaReceipt": true,
+    "equivalentFailureCeiling": 3,
+    "topologyMismatchAutomaticWorkerRetries": 0,
+    "authoritativeEvidenceAbsenceAutomaticWorkerRetries": 0,
+    "visualRegressionAutomaticWorkerRetries": 0,
+    "reviewerFailureRelaunchesWorker": false,
+    "reviewerFailureCeiling": 3,
+    "externalWaitConsumesAttempt": false,
+    "planExpansionMintsBudget": false,
+    "protectedRegressionHardVeto": true,
+    "codableRecoveryPreservesRetirementAndBudget": true,
+    "journalReplayPreservesRetirementAndBudget": true,
+    "duplicateCommandConsumesBudgetTwice": false,
+    "staleWriterCanForkBudget": false,
+    "journalFramesContainGovernorSnapshots": false
+  },
+  "excludedFailure": {
+    "count": 1,
+    "reason": "focused test exposed damage-freeze gate priority",
+    "countedTowardActiveLedger": false,
+    "repairedAndRerun": true
+  },
+  "cutover": {
+    "legacyGraphUsesGovernor": false,
+    "journalIntegrated": true,
+    "shadowReplayComplete": false,
+    "nativeUIExposesCausalState": false,
+    "latestSourcePackaged": false,
+    "commitAndPushComplete": false
+  },
+  "easyBusinessMutated": false
+}

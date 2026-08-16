@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-09T16:45:34Z",
+  "status": "specified-not-implemented",
+  "authoritativePrimitives": [
+    "TaskContract",
+    "RunJournal",
+    "RunReducer",
+    "NodeContract",
+    "CapabilityAdapter",
+    "CapabilityLease",
+    "MutationTransaction",
+    "EvidenceArtifact",
+    "VerificationReceipt",
+    "ReviewReceipt",
+    "StrategyFingerprint",
+    "ProgressVector",
+    "ResourceLedger",
+    "QuiescenceReceipt",
+    "VisualBaselineManifest",
+    "RunProjection"
+  ],
+  "hardInvariants": [
+    "only-journal-events-change-authoritative-state",
+    "contract-frozen-before-mutating-agent-turn",
+    "missing-or-invalid-scope-never-widens",
+    "isolation-failure-never-falls-back-to-canonical-workspace",
+    "reviewers-and-reporters-default-read-only",
+    "verification-and-review-receipts-expire-on-identity-change",
+    "blocked-or-rejected-time-never-counts-as-accepted-active-time",
+    "retired-strategy-budget-persists-across-renames-and-restarts",
+    "publication-is-separately-authorized-after-acceptance",
+    "completion-requires-resource-quiescence",
+    "visual-dimensions-cannot-waive-one-another",
+    "legacy-state-is-never-silently-upgraded-to-proof"
+  ],
+  "implementationSlices": 11,
+  "productionRefactorAuthorized": false,
+  "remainingForensicAnalysisSecondsAtSpecification": 25021
+}

@@ -4,11 +4,42 @@ import SwiftUI
 final class LoopForgeApplicationDelegate: NSObject, NSApplicationDelegate {
     static weak var controller: LoopController?
     static weak var watcherController: WatcherController?
+    static weak var appModel: AppModel?
+    private var terminationPending = false
 
-    // Closing a window must not silently stop a multi-hour worker. Quitting from
-    // the app menu still reaches applicationWillTerminate and checkpoints the
-    // active-runtime ledger before the child process is cancelled.
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { false }
+    // A closed last window must behave like an exit. Continuing an autonomous
+    // worker invisibly after the user closes LoopForge is surprising and can
+    // leave the Mac hot with no visible way to pause it.
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
+
+    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        guard !terminationPending else { return .terminateLater }
+        let watcherWasActive = !(Self.watcherController?.runningWatcherIDs.isEmpty ?? true)
+        let loopWasActive = Self.controller?.runningTaskID != nil
+        terminationPending = true
+        Task { @MainActor in
+            let kernelReadyToTerminate = await Self.appModel?
+                .prepareKernelSessionsForApplicationTermination() ?? true
+            guard kernelReadyToTerminate else {
+                terminationPending = false
+                sender.reply(toApplicationShouldTerminate: false)
+                return
+            }
+            Self.watcherController?.shutdown()
+            if let controller = Self.controller {
+                await controller.prepareForApplicationTermination(
+                    timeout: watcherWasActive || loopWasActive ? 4 : 1,
+                    forceProcessCleanupGrace: watcherWasActive
+                )
+            } else {
+                if watcherWasActive {
+                    try? await Task.sleep(nanoseconds: 3_250_000_000)
+                }
+            }
+            sender.reply(toApplicationShouldTerminate: true)
+        }
+        return .terminateLater
+    }
 
     func applicationShouldHandleReopen(
         _ sender: NSApplication,
@@ -32,10 +63,16 @@ struct LoopForgeApp: App {
     @StateObject private var appModel: AppModel
 
     init() {
-        let model = AppModel()
+        let kernelRuntime = KernelProductionRuntime.startDefault()
+        let model = AppModel(
+            workspaceMutationRecoveryTask: kernelRuntime.recoveryTask,
+            kernelRunEnrollmentCoordinator: kernelRuntime.enrollmentCoordinator,
+            kernelExecutionCoordinator: kernelRuntime.executionCoordinator
+        )
         _appModel = StateObject(wrappedValue: model)
         LoopForgeApplicationDelegate.controller = model.controller
         LoopForgeApplicationDelegate.watcherController = model.watcherController
+        LoopForgeApplicationDelegate.appModel = model
     }
 
     var body: some Scene {

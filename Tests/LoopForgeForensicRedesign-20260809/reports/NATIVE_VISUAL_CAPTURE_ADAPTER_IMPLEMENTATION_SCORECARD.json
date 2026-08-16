@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "status": "adapter_verified_not_connected",
+  "component": "NativeVisualCaptureAttestationBoundary",
+  "authorityBoundary": {
+    "workerSuppliesReceiptDigests": false,
+    "workerSuppliesCaptureTime": false,
+    "workerSelectsSourceOrArtifactRevision": false,
+    "harnessMustBeAllowListed": true,
+    "requestBindsExpectedTraitMatrix": true,
+    "requestBindsAuthorityTimeBoundary": true,
+    "artifactPathsAccepted": false,
+    "decodedPixelDigestComputedByAdapter": true,
+    "encodedArtifactDigestRetained": true,
+    "decodedDimensionsVerified": true,
+    "cleanInstallRequiresEvidence": true,
+    "malformedSemanticEvidenceAccepted": false,
+    "unknownOrFailureAccepted": false
+  },
+  "resourceBounds": {
+    "encodedImageBytesBounded": true,
+    "decodedPixelCountBounded": true,
+    "dimensionBounded": true,
+    "semanticEvidenceBytesBounded": true,
+    "multiFrameImageAccepted": false,
+    "nonPngImageAccepted": false
+  },
+  "tests": {
+    "focusedExecuted": 9,
+    "focusedFailures": 0,
+    "focusedWarnings": 0,
+    "fullExecuted": 453,
+    "fullSkipped": 6,
+    "fullFailures": 0,
+    "fullWarnings": 0
+  },
+  "sources": [
+    {
+      "path": "Sources/LoopForge/Kernel/NativeVisualCaptureAdapter.swift",
+      "lineCount": 371,
+      "sha256": "64a967513cec2b3d63079fb4660fb215683cd6b3439b34a12857677d019a307e"
+    },
+    {
+      "path": "Tests/LoopForgeTests/NativeVisualCaptureAdapterTests.swift",
+      "lineCount": 326,
+      "sha256": "ba00a152a921fb0b69cabd024ae692cbdbcc3f61dfe25f8c63cc9f5b871f22e8"
+    }
+  ],
+  "excludedVerificationInvocations": {
+    "count": 1,
+    "reason": "initial focused run emitted repaired concurrency warnings",
+    "countedTowardActiveLedger": false
+  },
+  "cutover": {
+    "adapterImplemented": true,
+    "concreteProductionHarnessConnected": false,
+    "legacyGraphUsesAdapter": false,
+    "attestationJournalConnected": false,
+    "transactionalPublicationGateConnected": false,
+    "latestSourcePackaged": false,
+    "commitAndPushComplete": false
+  },
+  "easyBusinessMutated": false
+}

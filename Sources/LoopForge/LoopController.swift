@@ -4,6 +4,11 @@ import Foundation
 
 @MainActor
 final class LoopController: ObservableObject {
+    private enum RequestedTerminalAction {
+        case pause
+        case stop
+    }
+
     @Published private(set) var runningTaskID: UUID?
     @Published private(set) var activeTurnStartedAt: Date?
     @Published private(set) var clock = Date()
@@ -26,6 +31,17 @@ final class LoopController: ObservableObject {
     private var timer: AnyCancellable?
     private var activityToken: NSObjectProtocol?
     private var activeTurnCheckpointedSeconds: TimeInterval = 0
+    private let workspaceMutationRecoveryTask: Task<
+        WorkspaceMutationRecoveryStartupReport,
+        Never
+    >?
+    private var workspaceMutationRecoveryReport: WorkspaceMutationRecoveryStartupReport?
+    private var hostResourceRecoveryTask: Task<GraphHostResourceRecoveryReport, Never>?
+    /// User intent must outlive concurrent Graph status writes. A final audit
+    /// can finish or retry while cancellation is propagating and temporarily
+    /// overwrite `.pausing`/`.stopping`; the controller still owns the terminal
+    /// transition after the process tree is reaped.
+    private var requestedTerminalAction: (taskID: UUID, action: RequestedTerminalAction)?
 
     init(
         store: TaskStore,
@@ -39,7 +55,12 @@ final class LoopController: ObservableObject {
         permissionAutomator: SystemPermissionAutomator? = nil,
         permissionCenter: PermissionCenter? = nil,
         agentCatalog: AgentCatalog? = nil,
-        auxiliaryRouter: AuxiliaryModelRouter = AuxiliaryModelRouter()
+        auxiliaryRouter: AuxiliaryModelRouter = AuxiliaryModelRouter(),
+        hostResources: any GraphHostResourceLeaseManaging = GraphHostResourceLeaseRegistry(),
+        workspaceMutationRecoveryTask: Task<
+            WorkspaceMutationRecoveryStartupReport,
+            Never
+        >? = nil
     ) {
         self.store = store
         self.ollama = ollama
@@ -53,6 +74,7 @@ final class LoopController: ObservableObject {
         self.permissionCenter = permissionCenter ?? PermissionCenter()
         self.agentCatalog = agentCatalog ?? AgentCatalog()
         self.auxiliaryRouter = auxiliaryRouter
+        self.workspaceMutationRecoveryTask = workspaceMutationRecoveryTask
         self.graphEngine = GraphLoopEngine(
             store: store,
             codex: codex,
@@ -60,17 +82,89 @@ final class LoopController: ObservableObject {
             evidenceCollector: evidenceCollector,
             reportGenerator: reportGenerator,
             agentCatalog: self.agentCatalog,
-            router: auxiliaryRouter
+            router: auxiliaryRouter,
+            hostResources: hostResources
         )
-        timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] date in
+        let graphEngine = self.graphEngine
+        let kernelRecovery = workspaceMutationRecoveryTask
+        self.hostResourceRecoveryTask = Task {
+            if let kernelRecovery {
+                let report = await kernelRecovery.value
+                guard !report.requiresAttention else { return .empty }
+            }
+            return await graphEngine.recoverDanglingHostResources()
+        }
+    }
+
+    /// Runtime checkpoints and visible duration labels have different needs.
+    /// Keep the lightweight timer frequent enough to checkpoint a long turn,
+    /// but publish the shared SwiftUI clock much less often: every publication
+    /// invalidates the complete task detail, including large Graph and log trees.
+    /// The timer remains dormant while no task is running.
+    static let clockRefreshInterval: TimeInterval = 5
+    static let clockPublicationInterval: TimeInterval = 30
+
+    var isClockTickerActive: Bool { timer != nil }
+
+    /// Every stored `LoopTask` checkpoint was authorized by the retired
+    /// narrative controller rather than a ratified journal-kernel contract.
+    /// Keep its evidence inspectable, but never let a resume flag, direct
+    /// start, or candidate-selection call cross the production boundary.
+    @discardableResult
+    func blockRetiredTaskExecution(
+        taskID: UUID,
+        source: String
+    ) -> Bool {
+        guard let task = store.task(id: taskID) else { return false }
+
+        let mode = task.resolvedExecutionMode
+        let stage = LegacyTaskExecutionRetirementPolicy.stage(for: mode)
+        let message = "Retired \(mode.title) execution was blocked at the controller boundary (\(source)). Its workspace, logs, graph or candidate evidence, and checkpoints remain unchanged; no timer, agent, process, mutation, integration, selection, or automatic retry started. Create and confirm a new journaled Auto Graph contract before future execution."
+        let alreadyBlocked = task.status == .blocked
+            && task.stage == stage
+            && task.resumeOnNextLaunch == false
+        store.update(id: taskID) {
+            $0.status = .blocked
+            $0.stage = stage
+            $0.resumeOnNextLaunch = false
+            $0.externalBlockerKind = nil
+            $0.externalBlockerMessage =
+                LegacyTaskExecutionRetirementPolicy.blocker(for: mode)
+            $0.externalBlockerRetryAfter = nil
+            $0.checkpointedAt = Date()
+        }
+        if !alreadyBlocked {
+            store.appendLog(id: taskID, kind: .warning, message)
+        }
+        return true
+    }
+
+    private func startClockTicker() {
+        guard timer == nil else { return }
+        clock = Date()
+        timer = Timer.publish(
+            every: Self.clockRefreshInterval,
+            on: .main,
+            in: .common
+        )
+        .autoconnect()
+        .sink { [weak self] date in
             guard let self else { return }
-            self.clock = date
+            if date.timeIntervalSince(self.clock) >= Self.clockPublicationInterval {
+                self.clock = date
+            }
             if let taskID = self.runningTaskID,
                let started = self.activeTurnStartedAt,
                date.timeIntervalSince(started) >= 15 {
                 self.checkpointActiveTurn(taskID: taskID, preserveRunning: true, now: date)
             }
         }
+    }
+
+    private func stopClockTicker() {
+        timer?.cancel()
+        timer = nil
+        clock = Date()
     }
 
     func liveAccumulatedSeconds(for task: LoopTask) -> TimeInterval {
@@ -82,9 +176,25 @@ final class LoopController: ObservableObject {
     }
 
     func start(taskID: UUID) {
+        _ = blockRetiredTaskExecution(
+            taskID: taskID,
+            source: "direct start request"
+        )
+    }
+
+#if DEBUG
+    /// Characterization-only access to the retired controller lifecycle. This
+    /// symbol is absent from non-DEBUG builds and cannot authorize production.
+    func startRetiredExecutionForTesting(taskID: UUID) {
+        startRetiredExecution(taskID: taskID)
+    }
+
+    private func startRetiredExecution(taskID: UUID) {
         guard runningTaskID == nil, let task = store.task(id: taskID) else { return }
         guard task.canResume || task.status == .preparing else { return }
         runningTaskID = taskID
+        requestedTerminalAction = nil
+        startClockTicker()
         activityToken = ProcessInfo.processInfo.beginActivity(
             options: [.userInitiated, .idleSystemSleepDisabled, .automaticTerminationDisabled],
             reason: "LoopForge is supervising an autonomous agent task"
@@ -101,10 +211,14 @@ final class LoopController: ObservableObject {
         }
         job = Task { [weak self] in await self?.runLoop(taskID: taskID) }
     }
+#endif
 
     func pause(taskID: UUID) {
         guard runningTaskID == taskID else { return }
+        requestedTerminalAction = (taskID, .pause)
+        store.flushPendingGraphLogs(taskID: taskID)
         checkpointActiveTurn(taskID: taskID, preserveRunning: false)
+        stopClockTicker()
         store.update(id: taskID) {
             $0.status = .pausing
             $0.stage = "Pausing safely · saving progress and ending the active agent process"
@@ -119,7 +233,10 @@ final class LoopController: ObservableObject {
     func stop(taskID: UUID) {
         guard let task = store.task(id: taskID), task.status != .completed else { return }
         if runningTaskID == taskID {
+            requestedTerminalAction = (taskID, .stop)
+            store.flushPendingGraphLogs(taskID: taskID)
             checkpointActiveTurn(taskID: taskID, preserveRunning: false)
+            stopClockTicker()
             store.update(id: taskID) {
                 $0.status = .stopping
                 $0.stage = "Ending the task safely · saving progress and stopping the active agent process"
@@ -138,56 +255,20 @@ final class LoopController: ObservableObject {
             $0.checkpointedAt = Date()
         }
         store.appendLog(id: taskID, kind: .warning, "Task ended by the user. Progress and project files were preserved.")
+        Task { [graphEngine] in
+            _ = await graphEngine.releaseHostResources(
+                taskID: taskID,
+                reason: "Task ended while no Graph worker was active"
+            )
+        }
     }
 
     func chooseParallelCandidate(taskID: UUID, candidateID: String) {
-        guard runningTaskID == nil,
-              let task = store.task(id: taskID),
-              task.status == .awaitingSelection else { return }
-        runningTaskID = taskID
-        activityToken = ProcessInfo.processInfo.beginActivity(
-            options: [.userInitiated, .idleSystemSleepDisabled, .automaticTerminationDisabled],
-            reason: "LoopForge is applying and auditing a selected parallel candidate"
+        _ = candidateID
+        _ = blockRetiredTaskExecution(
+            taskID: taskID,
+            source: "parallel candidate selection"
         )
-        store.update(id: taskID) {
-            $0.status = .auditing
-            $0.stage = "Applying the selected candidate safely"
-            $0.resumeOnNextLaunch = true
-            $0.checkpointedAt = Date()
-        }
-        job = Task { [weak self] in
-            guard let self else { return }
-            defer {
-                self.runningTaskID = nil
-                self.job = nil
-                self.endActivity()
-            }
-            do {
-                try await self.graphEngine.integrateUserSelectedCandidate(
-                    taskID: taskID,
-                    candidateID: candidateID
-                )
-                try await self.graphEngine.run(taskID: taskID, desktopContext: "")
-            } catch is CancellationError {
-                self.store.update(id: taskID) {
-                    $0.status = .paused
-                    $0.stage = "Paused · candidate selection and project files are saved"
-                    $0.resumeOnNextLaunch = false
-                }
-            } catch {
-                self.store.update(id: taskID) {
-                    $0.status = .failed
-                    $0.stage = "Selected candidate could not be applied safely"
-                    $0.externalBlockerMessage = sanitizedLogText(error.localizedDescription)
-                    $0.resumeOnNextLaunch = false
-                }
-                self.store.appendLog(
-                    id: taskID,
-                    kind: .error,
-                    sanitizedLogText(error.localizedDescription)
-                )
-            }
-        }
     }
 
     func discardParallelCandidateWorkspaces(for task: LoopTask) {
@@ -198,6 +279,7 @@ final class LoopController: ObservableObject {
     }
 
     func shutdown() {
+        store.flushPendingGraphLogs()
         if let id = runningTaskID {
             checkpointActiveTurn(taskID: id, preserveRunning: false)
             let status = store.task(id: id)?.status
@@ -221,19 +303,53 @@ final class LoopController: ObservableObject {
         job?.cancel()
         graphEngine.cancel()
         ollama.stopOwnedServer()
+        stopClockTicker()
         endActivity()
+    }
+
+    /// Gives ProcessRunner's interrupt/terminate/kill escalation enough time to
+    /// reap the active Codex process tree before macOS tears down LoopForge.
+    /// The task checkpoint is written synchronously by `shutdown()` first.
+    func prepareForApplicationTermination(
+        timeout: TimeInterval = 4,
+        forceProcessCleanupGrace: Bool = false
+    ) async {
+        let hadActiveRuntime = runningTaskID != nil || forceProcessCleanupGrace
+        let minimumGraceDeadline = hadActiveRuntime
+            ? Date().addingTimeInterval(min(3.25, max(0, timeout)))
+            : Date()
+        shutdown()
+        let deadline = Date().addingTimeInterval(max(0, timeout))
+        while Date() < deadline,
+              runningTaskID != nil || Date() < minimumGraceDeadline {
+            try? await Task.sleep(nanoseconds: 50_000_000)
+        }
+        if workspaceMutationRecoveryReport == nil,
+           let workspaceMutationRecoveryTask {
+            workspaceMutationRecoveryReport = await workspaceMutationRecoveryTask.value
+        }
+        _ = await graphEngine.releaseAllHostResources(
+            reason: "LoopForge application termination"
+        )
     }
 
     private func runLoop(taskID: UUID) async {
         defer {
             let finishingStatus = store.task(id: taskID)?.status
+            let requestedAction = requestedTerminalAction?.taskID == taskID
+                ? requestedTerminalAction?.action
+                : nil
             activeTurnStartedAt = nil
             activeTurnCheckpointedSeconds = 0
             runningTaskID = nil
             job = nil
+            if requestedTerminalAction?.taskID == taskID {
+                requestedTerminalAction = nil
+            }
             permissionAutomator.stop()
+            stopClockTicker()
             endActivity()
-            if finishingStatus == .pausing {
+            if requestedAction == .pause || finishingStatus == .pausing {
                 store.update(id: taskID) {
                     $0.status = .paused
                     $0.stage = "Paused · progress saved and no agent process is running"
@@ -241,7 +357,7 @@ final class LoopController: ObservableObject {
                     $0.checkpointedAt = Date()
                 }
                 store.appendLog(id: taskID, kind: .system, "Pause complete. No agent process is running; this task can now be resumed or deleted safely.")
-            } else if finishingStatus == .stopping {
+            } else if requestedAction == .stop || finishingStatus == .stopping {
                 store.update(id: taskID) {
                     $0.status = .stopped
                     $0.stage = "Stopped · progress and project files are saved"
@@ -249,6 +365,25 @@ final class LoopController: ObservableObject {
                     $0.checkpointedAt = Date()
                 }
                 store.appendLog(id: taskID, kind: .system, "Task ended safely. No agent process is running; the saved task can still be resumed or deleted.")
+            }
+            Task { [graphEngine, store] in
+                let report = await graphEngine.releaseHostResources(
+                    taskID: taskID,
+                    reason: "Loop task runtime ended"
+                )
+                guard report.failedTaskIDs.contains(taskID) else { return }
+                store.update(id: taskID) {
+                    $0.status = .blocked
+                    $0.stage = "Host resource cleanup needs attention"
+                    $0.externalBlockerMessage = "LoopForge could not restore a host resource owned by this task. The durable lease will be retried at the next cleanup or app launch."
+                    $0.resumeOnNextLaunch = false
+                    $0.checkpointedAt = Date()
+                }
+                store.appendLog(
+                    id: taskID,
+                    kind: .error,
+                    "A host resource could not be restored after the task runtime ended. LoopForge stopped automatic continuation and retained the lease for recovery."
+                )
             }
         }
         guard !Task.isCancelled else { return }
@@ -260,6 +395,35 @@ final class LoopController: ObservableObject {
         var desktopWorkerContext = ""
 
         do {
+            guard await allowWorkAfterWorkspaceMutationRecovery(taskID: taskID) else {
+                return
+            }
+            if let recoveryTask = hostResourceRecoveryTask {
+                let report = await recoveryTask.value
+                hostResourceRecoveryTask = nil
+                if report.failedTaskIDs.contains(taskID) {
+                    store.update(id: taskID) {
+                        $0.status = .blocked
+                        $0.stage = "Host resource cleanup needs attention"
+                        $0.externalBlockerMessage = "LoopForge could not restore a host resource left by an interrupted Graph node. Resolve the recorded resource before resuming this task."
+                        $0.resumeOnNextLaunch = false
+                        $0.checkpointedAt = Date()
+                    }
+                    store.appendLog(
+                        id: taskID,
+                        kind: .error,
+                        "Startup recovery could not restore one or more host resources owned by this Graph task. The task was not restarted, preventing another resource leak."
+                    )
+                    return
+                }
+                if !report.releasedLeaseIDs.isEmpty {
+                    store.appendLog(
+                        id: taskID,
+                        kind: .system,
+                        "Recovered \(report.releasedLeaseIDs.count) host resource lease\(report.releasedLeaseIDs.count == 1 ? "" : "s") left by an interrupted Graph execution."
+                    )
+                }
+            }
             store.appendLog(
                 id: taskID,
                 kind: .system,
@@ -395,7 +559,8 @@ final class LoopController: ObservableObject {
                 if preparedPrompt == nil {
                     let deterministic: String
                     let phase: String
-                    let audit = auditor.audit(task: task)
+                    let observation = auditor.observe(task: task)
+                    let audit = auditor.audit(task: task, snapshot: observation.snapshot)
                     if task.threadID == nil {
                         deterministic = promptCompiler.initialPrompt(for: task)
                         phase = "Initial task planning"
@@ -403,7 +568,7 @@ final class LoopController: ObservableObject {
                         deterministic = promptCompiler.continuationPrompt(
                             for: task,
                             audit: audit,
-                            snapshot: auditor.snapshot(workspacePath: task.workspacePath, logs: task.logs)
+                            snapshot: observation.snapshot
                         )
                         phase = "Recovered or resumed evidence audit"
                     }
@@ -415,7 +580,9 @@ final class LoopController: ObservableObject {
                         task: task,
                         workerFeedback: task.lastAgentMessage,
                         audit: audit,
-                        before: [:]
+                        before: [:],
+                        repositoryIndex: observation.repositoryIndex,
+                        repositoryIndexError: observation.repositoryIndexError
                     )
                     let decision = await supervisorDecision(
                         taskID: taskID,
@@ -645,14 +812,21 @@ final class LoopController: ObservableObject {
                 // The preliminary scan deliberately omits the visual-approval gate: the
                 // local VLM is the component about to make that decision. The final scan
                 // below reinstates the gate, preventing a circular approval dependency.
-                let preliminaryAudit = auditor.audit(task: postTurnTask, requireVisualApproval: false)
+                let observation = auditor.observe(task: postTurnTask)
+                let preliminaryAudit = auditor.audit(
+                    task: postTurnTask,
+                    snapshot: observation.snapshot,
+                    requireVisualApproval: false
+                )
                 let evidence = await evidenceCollector.collect(
                     task: postTurnTask,
                     workerFeedback: turn.lastAgentMessage,
                     audit: preliminaryAudit,
-                    before: before
+                    before: before,
+                    repositoryIndex: observation.repositoryIndex,
+                    repositoryIndexError: observation.repositoryIndexError
                 )
-                let snapshot = auditor.snapshot(workspacePath: postTurnTask.workspacePath, logs: postTurnTask.logs)
+                let snapshot = observation.snapshot
                 let deterministic = promptCompiler.continuationPrompt(for: postTurnTask, audit: preliminaryAudit, snapshot: snapshot)
                 store.update(id: taskID) {
                     $0.status = .auditing
@@ -685,7 +859,7 @@ final class LoopController: ObservableObject {
                 }
 
                 guard let reviewedTask = store.task(id: taskID) else { return }
-                let finalAudit = auditor.audit(task: reviewedTask)
+                let finalAudit = auditor.audit(task: reviewedTask, snapshot: snapshot)
                 if finalAudit.score <= previousAuditScore { stagnantRounds += 1 } else { stagnantRounds = 0 }
                 previousAuditScore = finalAudit.score
                 store.update(id: taskID) {
@@ -702,10 +876,7 @@ final class LoopController: ObservableObject {
                 guard let audited = store.task(id: taskID) else { return }
                 let supervisorApproved = audited.supervisorCompletionApproved == true
                 let visualGatePassed = !audited.needsVisualAudit || audited.visualAuditPassed == true
-                let currentSnapshot = auditor.snapshot(
-                    workspacePath: audited.workspacePath,
-                    logs: audited.logs
-                )
+                let currentSnapshot = snapshot
                 do {
                     let statusPath = try reportGenerator.generate(
                         task: audited,
@@ -735,10 +906,7 @@ final class LoopController: ObservableObject {
                 ) {
                     store.update(id: taskID) { $0.stage = "Creating the model-authored evidence report" }
                     var reportTask = store.task(id: taskID) ?? audited
-                    let reportSnapshot = auditor.snapshot(
-                        workspacePath: reportTask.workspacePath,
-                        logs: reportTask.logs
-                    )
+                    let reportSnapshot = snapshot
                     let authored = await completionNarrative(
                         task: reportTask,
                         audit: finalAudit,
@@ -1101,6 +1269,54 @@ final class LoopController: ObservableObject {
             ProcessInfo.processInfo.endActivity(activityToken)
             self.activityToken = nil
         }
+    }
+
+    private func allowWorkAfterWorkspaceMutationRecovery(taskID: UUID) async -> Bool {
+        let report: WorkspaceMutationRecoveryStartupReport
+        if let workspaceMutationRecoveryReport {
+            report = workspaceMutationRecoveryReport
+        } else if let workspaceMutationRecoveryTask {
+            report = await workspaceMutationRecoveryTask.value
+            self.workspaceMutationRecoveryReport = report
+        } else {
+            return true
+        }
+
+        guard report.requiresAttention else {
+            if report.registeredRunCount > 0 {
+                let recoveredIntentCount = report.runReports.reduce(0) {
+                    $0 + $1.completedIntentIDs.count
+                }
+                let runLabel = report.registeredRunCount == 1 ? "run" : "runs"
+                let intentLabel = recoveredIntentCount == 1 ? "intent" : "intents"
+                store.appendLog(
+                    id: taskID,
+                    kind: .system,
+                    "New-kernel startup recovery completed for \(report.registeredRunCount) registered \(runLabel); \(recoveredIntentCount) durable workspace \(intentLabel) completed before agent work was admitted."
+                )
+            }
+            return true
+        }
+
+        let attentionRunCount = report.runReports.filter(\.requiresAttention).count
+        let reason = report.startupFailure?.rawValue
+            ?? (!report.ownershipAcquired ? "recovery ownership unavailable" : "registered run requires attention")
+        let attentionRunLabel = attentionRunCount == 1 ? "run" : "runs"
+        store.update(id: taskID) {
+            $0.status = .blocked
+            $0.stage = "New-kernel workspace recovery needs attention"
+            $0.externalBlockerKind = nil
+            $0.externalBlockerMessage = "LoopForge blocked all agent and legacy Graph work because startup workspace recovery did not finish cleanly (\(reason); \(attentionRunCount) registered \(attentionRunLabel) need attention)."
+            $0.externalBlockerRetryAfter = nil
+            $0.resumeOnNextLaunch = false
+            $0.checkpointedAt = Date()
+        }
+        store.appendLog(
+            id: taskID,
+            kind: .error,
+            "Startup workspace recovery failed closed before any Codex or legacy Graph work began. Resolve the typed new-kernel recovery report before resuming this task."
+        )
+        return false
     }
 
     private func handleRuntimeEligibilityChange(taskID: UUID, eligible: Bool, reason: String) {

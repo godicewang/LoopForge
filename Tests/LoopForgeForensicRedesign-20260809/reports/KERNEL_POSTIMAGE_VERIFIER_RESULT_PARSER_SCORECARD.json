@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T00:39:45Z",
+  "status": "canonical-byte-parser-implemented-runtime-composition-result-review-and-start-vetoed",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "grammar": {
+    "format": "canonicalJSONResultV1",
+    "encoding": "UTF-8",
+    "objectCount": 1,
+    "lineCount": 1,
+    "finalLineFeedRequired": true,
+    "sortedKeyCanonicalEncodingRequired": true,
+    "exactKeys": ["evidenceDigest", "resultCode", "schemaVersion"],
+    "schemaVersion": 1,
+    "stderrMustBeEmpty": true
+  },
+  "binding": {
+    "run": true,
+    "activation": true,
+    "launch": true,
+    "resource": true,
+    "lease": true,
+    "parserImplementation": true,
+    "stdoutDigest": true,
+    "stderrDigest": true,
+    "terminalEnvelopeDigest": true,
+    "nonSerializableParseCapability": true
+  },
+  "adversarialRejections": {
+    "unknownKey": true,
+    "whitespaceVariant": true,
+    "semanticTail": true,
+    "nonemptyStderr": true,
+    "outputDigestSubstitution": true,
+    "parserIdentitySubstitution": true,
+    "unsupportedSchema": true,
+    "invalidEvidenceDigest": true
+  },
+  "runtime": {
+    "composedIntoCompletion": false,
+    "journaled": false,
+    "exitResultMappingEvaluated": false,
+    "verificationResultIssued": false,
+    "integrationPhase": "appliedUnverified"
+  },
+  "verification": {
+    "focusedTests": 4,
+    "completeSwiftTests": 708,
+    "environmentSkips": 8,
+    "failures": 0,
+    "releaseLoopForgeBuild": "passed",
+    "releaseKernelSandboxGateBuild": "passed",
+    "diffWhitespace": "passed",
+    "exactSourceSnapshotSHA256": "b1a2154a4df10e394f13b3401942006cb80b6e9e1c007ea710de7e77dbdbcf03",
+    "releaseArtifacts": {
+      "LoopForgeSHA256": "4d68c765974e48e8b698fd0413d0861503e4154045845fedeb3cc1ec64f03dc7",
+      "KernelSandboxGateSHA256": "21731107c0b85e03933bac526d5f0a705394579e9eb02a7665c950fe49949b99"
+    },
+    "sourceHashes": {
+      "KernelPostimageVerifierResultParser.swift": "4e1137db6f0eb4c134a1930fdcdfb42d3b4beca13485a6b073c769b2bdc1bd65",
+      "KernelPostimageVerifierResultParserTests.swift": "5e15c0e5b3910623171f0bcf63eb2dd0015b2165cfa20e2e56772987ab54417f"
+    }
+  },
+  "remainingPrerequisites": [
+    "atomic runtime parse and durable parse failure evidence",
+    "exact exit and parser-result mapping evaluation",
+    "non-forgeable postimage result receipt",
+    "latest-red revocation and canonical evidence batch",
+    "truthful native resident-memory enforcement",
+    "candidate descriptor capability atomic at spawn",
+    "separately activated adversarial read-only review",
+    "integration acceptance and native start",
+    "current-source package sign native walkthrough commit and push"
+  ],
+  "finalAcceptance": false
+}

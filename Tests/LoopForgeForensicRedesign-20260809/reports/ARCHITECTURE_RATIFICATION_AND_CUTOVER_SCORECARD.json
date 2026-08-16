@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "report": "ARCHITECTURE_RATIFICATION_AND_CUTOVER_PLAN.md",
+  "status": "ratified-for-incremental-implementation",
+  "uniqueFindingIdentifiers": 227,
+  "preExistingMandatoryAcceptanceRows": 81,
+  "auditedSourceFiles": 64,
+  "auditedSourceLines": 37444,
+  "forensicEventCount": 5758,
+  "resolvedCrossSpecificationConflicts": 9,
+  "cutoverGateCount": 11,
+  "firstProductionSlice": "pure-kernel-types-reducer-projection",
+  "easyBusinessMutationAuthorized": false,
+  "legacyAutoResumeAuthorized": false,
+  "coreVerticalSpecialCasesAllowed": false,
+  "shadowStateMayAuthorizeEffects": false,
+  "implementationStyle": "side-by-side, test-first, receipt-gated, incremental-cutover",
+  "completionClaimed": false,
+  "requiredTotalActiveSeconds": 72000
+}

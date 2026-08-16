@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "report": "WORKSPACE_MUTATION_AUTHORITY_GAP_AUDIT.md",
+  "status": "issuer-implemented-automatic-release-and-crash-reconciliation-pending",
+  "findings": {
+    "callerConstructibleLease": true,
+    "receiptIDProvesTrustedOrigin": false,
+    "journalLeaseCrossCheck": true,
+    "supervisorLeaseCrossCheck": true,
+    "canonicalRootExclusiveAdmission": true,
+    "runtimeLeaseReleaseLifecycle": "automatic-for-success-and-recorded-recovery",
+    "historicalTimestampReplayPreviouslyAccepted": true,
+    "actualWallClockCheckedBeforeNewEffect": true,
+    "recordedReceiptRecoveryRequiresLiveLease": false,
+    "dispatcherCanRenewAuthority": false
+  },
+  "requiredCutoverWork": [
+    "failure and quarantine lease disposition",
+    "production lifecycle invocation of reconciliation and bounded dispatch",
+    "fresh-effect end-to-end authority/outbox/executor/release proof"
+  ],
+  "focusedVerification": {
+    "logPath": "/tmp/loopforge-runtime-actual-lease-time-tests-clean.log",
+    "sha256": "4c46d3ad7c2c0dc1e4270094dbe5eaa59fb486e3110b22a3cd95ce929ebc8339",
+    "testCount": 1,
+    "warnings": 0,
+    "failures": 0
+  },
+  "completeVerification": {
+    "logPath": "/tmp/loopforge-full-tests-actual-lease-time.log",
+    "sha256": "a5872b5020d7683fad20288a2f59f3f456c8d1771486ff4c841bebc5a88cdba2",
+    "testCount": 505,
+    "skippedCount": 8,
+    "failureCount": 0,
+    "xctestSeconds": 32.235
+  },
+  "sourceEvidence": {
+    "path": "Sources/LoopForge/Kernel/JournaledWorkspaceMutationRuntime.swift",
+    "lineCount": 330,
+    "sha256": "aefc3122db8ec8d1e7da064eb24961a02665af30d737753dcb938f6de56c6df6"
+  },
+  "safetyClaims": {
+    "mutatedEasyBusiness": false,
+    "legacyGraphConnected": false,
+    "cutoverEligible": false
+  }
+}

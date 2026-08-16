@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-14T16:46:06Z",
+  "status": "source-authority-replay-and-current-dirty-source-package-receipts-present-production-controller-invocation-pending",
+  "finalRelease": false,
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "authority": {
+    "modelExecutionCount": 0,
+    "completionProseTrusted": false,
+    "deterministicKernelAuthorizer": true,
+    "productionCapabilityNonCodable": true,
+    "issuerMarkerFilePrivate": true,
+    "exactJournalHeadRequired": true,
+    "reducerRecomputesEvidenceDigest": true,
+    "legacyCompletionPromoted": false
+  },
+  "vetoes": {
+    "mandatoryRequirementClosure": true,
+    "ratifiedDuration": true,
+    "activeAttempt": true,
+    "liveOrFailedRuntimeResources": true,
+    "executedRuntimeTerminalQuiescence": true,
+    "declaredExternalDependencyEvidence": true,
+    "preservationRequiredFrozenDesignAuthority": true,
+    "latestProtectedNativeVisualEvidence": true,
+    "unfinishedOrQuarantinedIntegration": true,
+    "mutationBackedIndependentIntegrationAcceptance": true,
+    "independentFinalAuthorizerLineage": true
+  },
+  "durability": {
+    "orderedEventCount": 2,
+    "receiptRecordedBeforeTerminalPhase": true,
+    "exactDuplicateRecovery": true,
+    "conflictingCommandReuseRejected": true,
+    "tamperedReplayRejected": true,
+    "projectionExposesAuthorizationReceiptID": true
+  },
+  "verification": {
+    "focusedTests": {
+      "executed": 5,
+      "failures": 0
+    },
+    "fullSuite": {
+      "executed": 794,
+      "skipped": 8,
+      "failures": 0,
+      "seconds": 56.074
+    },
+    "releaseBuild": {
+      "passed": true,
+      "seconds": 102.12,
+      "architecture": "arm64"
+    },
+    "sourceSnapshotSHA256": "ad26dc732c706074efa5ef1f17eec65431a5d4a448e6fce2d30b741b1bb162db",
+    "releaseLoopForgeSHA256": "19575d089f3c62435e1281cd576279c1db75d2d6423910cc630bf08857365a98",
+    "releaseKernelSandboxGateSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "currentDirtySourcePackageVerified": true
+  },
+  "remaining": [
+    "production controller invocation",
+    "executable production external-dependency observer",
+    "trusted Release containment issuer or retained pre-apply veto",
+    "legacy Single and Parallel retirement",
+    "current unlocked native UI verification and screenshots",
+    "clean-commit rebuild",
+    "commit and push"
+  ]
+}

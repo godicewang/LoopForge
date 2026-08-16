@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T04:36:46Z",
+  "status": "journal-derived-integration-reliance-implemented-publication-hard-denied",
+  "finalAcceptance": false,
+  "controls": {
+    "originalVerifierLiveCapabilityConsumed": true,
+    "sourceVerificationReceiptJournalResolved": true,
+    "verificationReleaseAndBatchReconstructed": true,
+    "originalReviewerLiveCapabilityConsumed": true,
+    "sourceIndependentReviewJournalResolved": true,
+    "reviewResultAndReviewedBatchReconstructed": true,
+    "workspaceMutationIssuerCannotVerifyOrAccept": true,
+    "processRuntimeIssuerCannotApplyOrRollback": true,
+    "reducerReconstructsDurableReliance": true,
+    "laterEffectiveRedRequiresRollback": true,
+    "independentlyAcceptedPhaseReachedAndReplayed": true,
+    "publicationPermitted": false,
+    "finalCompletionAuthorized": false,
+    "productionResidentMemoryIssuerAvailable": false
+  },
+  "verification": {
+    "resultAuthorityTests": 5,
+    "integrationStateMachineTests": 8,
+    "journaledRuntimeTests": 28,
+    "kernelReducerTests": 40,
+    "suiteTestsExecutedExcludingIndependentlyRunCase": 718,
+    "independentlyRunProcessGroupCase": 1,
+    "combinedTestsCovered": 719,
+    "intentionalEnvironmentSkips": 8,
+    "testFailures": 0,
+    "releaseLoopForgeSHA256": "597ba7dd98995f5b8aeb873beb09d9efcfd77ea66d9f421d3cb1915ec696288a",
+    "releaseKernelSandboxGateSHA256": "1b7ba433fe915b0dd916aceafe62342d246bcf6bbddcfc5425b0d09fba0fbeaa",
+    "sourceSnapshotSHA256": "c4341edbd0d89ee81fcdc9b300d8728918deaba9d3433a3d780bf7b9c8005318"
+  },
+  "remainingPrerequisites": [
+    "tested production resident-memory enforcement issuer or retained verifier/reviewer veto",
+    "integration proposal and preflight production issuers",
+    "native immutable design-baseline selection and complete visual evidence",
+    "final authorization and executable external-dependency observation",
+    "legacy Single and Parallel retirement",
+    "current-source package sign unlocked native walkthrough clean commit and push"
+  ]
+}

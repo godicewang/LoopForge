@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-09T14:14:58Z",
+  "taskID": "1ED2180F-FBE1-4BCA-9E79-701F40CC3483",
+  "status": "failed",
+  "findings": [
+    {
+      "id": "F-010",
+      "severity": "critical",
+      "title": "Simulator GUI ownership is lost after PID detachment",
+      "recordedLauncherPID": 40779,
+      "durableSimulatorPID": 40917,
+      "launcherRecordedAt": "2026-08-02T16:45:19Z",
+      "durableProcessStartedAt": "2026-08-02T16:45:25Z",
+      "durableProcessObservedAt": "2026-08-09T14:12:27Z",
+      "durableProcessPPID": 1,
+      "cleanupClaim": "ownedPidAbsent=40779",
+      "result": "fail"
+    },
+    {
+      "id": "F-011",
+      "severity": "critical",
+      "title": "Simulator device creation and deletion are outside the lease model",
+      "remainingTaskNamedDevices": 19,
+      "remainingBootedDevices": 0,
+      "remainingShutdownDevices": 19,
+      "providerReleaseOperation": "xcrun simctl shutdown <exact-uuid>",
+      "missingLifecycleOperation": "xcrun simctl delete <owned-exact-uuid>",
+      "result": "fail"
+    },
+    {
+      "id": "F-012",
+      "severity": "high",
+      "title": "Ownership is node-local instead of task-durable",
+      "evidence": "A later node labeled PID 40917 pre-existing even though the same task launched its predecessor six seconds before PID 40917 started.",
+      "result": "fail"
+    },
+    {
+      "id": "F-013",
+      "severity": "high",
+      "title": "Cleanup validates a proxy PID instead of durable host state",
+      "evidence": "The stored launcher PID was absent, but the Simulator application and task-created device records remained.",
+      "result": "fail"
+    }
+  ],
+  "currentSafetyState": {
+    "auditOwnedTemporaryDeviceDeleted": true,
+    "bootedTaskNamedDevices": 0,
+    "priorTaskNamedDevicesPreservedForEvidence": 19,
+    "provenTaskOwnedSimulatorProcessTerminated": 40917,
+    "provenTaskOwnedSimulatorProcessAbsentAt": "2026-08-09T14:14:58Z"
+  },
+  "sourceAudit": {
+    "resourceKinds": [
+      "iosSimulatorBoot"
+    ],
+    "brokerOperations": [
+      "declareIOSSimulatorBoot",
+      "markAcquired"
+    ],
+    "releaseSemantics": "shutdown-only",
+    "coversDeviceCreation": false,
+    "coversDeviceDeletion": false,
+    "coversDetachedGUIApplication": false,
+    "coversCrossNodeOwnership": false
+  },
+  "acceptance": {
+    "typedDeviceLifecycle": false,
+    "durableGUIIdentity": false,
+    "crossNodeOwnership": false,
+    "crashRecovery": "partial",
+    "lowThermalPostStopGate": false,
+    "overall": "fail"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T21:14:30Z",
+  "status": "bounded-content-complete-revision-evidence-native-user-binding-integrated-execution-authority-absent",
+  "easyBusinessMutated": false,
+  "legacyGraphResumed": false,
+  "artifact": {
+    "gitMetadataIsAuthority": false,
+    "timestampsAreRevisionAuthority": false,
+    "enumerationOrderIsRevisionAuthority": false,
+    "workspaceIdentityBound": true,
+    "canonicalRootBound": true,
+    "excludedDirectoryPolicyBound": true,
+    "sortedRelativePathsBound": true,
+    "permissionModesBound": true,
+    "exactSizesBound": true,
+    "contentSHA256Bound": true,
+    "aggregateBytesBound": true,
+    "canonicalRevisionDigestPresent": true
+  },
+  "filesystemSafety": {
+    "openCanonicalRootDescriptor": true,
+    "descriptorRelativeParentTraversal": true,
+    "noFollowEveryOpen": true,
+    "regularFilesOnly": true,
+    "fileCountBounded": true,
+    "singleFileBytesBounded": true,
+    "aggregateBytesBounded": true,
+    "beforeAfterIdentityChecked": true,
+    "excludedNameSymlinkRejectedBeforeExclusion": true,
+    "concurrentChangeFailsClosed": true
+  },
+  "authority": {
+    "evidenceOnly": false,
+    "sourceArtifactAuthority": "workspaceObservation",
+    "nativeCaptureWorkflowPresent": true,
+    "displayedForUserConfirmation": true,
+    "recapturedBeforeConfirmation": true,
+    "postDisplayChangeRejected": true,
+    "userConfirmationReceiptPresent": true,
+    "retainedInRatifiedContractOrJournal": true,
+    "causalStrategyAuthorityPresent": false,
+    "executionPlanAuthorityPresent": false,
+    "nativeStartActionPresent": false,
+    "typedMissingAuthorityCount": 2
+  },
+  "verification": {
+    "focusedTestsExecuted": 3,
+    "focusedFailures": 0,
+    "developmentTestsExecuted": 693,
+    "developmentTestsSkipped": 8,
+    "developmentFailures": 0,
+    "releaseAuthorityAuditBuildPassed": true,
+    "diffCheckPassed": true,
+    "residualExactProcessCount": 0,
+    "easyBusinessStatusMatchedPriorEvidence": true,
+    "collectorSHA256": "271375bda759598807dbf43c2b0e4adaacccb849b251f227c569e4069800ee14",
+    "testsSHA256": "7fb545cb64ee0f88ef60a9edc504ac10651155136cf6b5344b75cfc17e4a05d0"
+  },
+  "remainingVetoes": {
+    "userBoundSourceRevision": true,
+    "authorizedCausalStrategy": false,
+    "authorizedExecutionPlan": false,
+    "nativePlanStart": false,
+    "remainingRuntimeIssuersAndCutover": false,
+    "currentSourcePackagedSignedHashed": false,
+    "currentNativeScreenshots": false,
+    "cleanCommitAndPush": false
+  },
+  "finalAcceptance": false
+}

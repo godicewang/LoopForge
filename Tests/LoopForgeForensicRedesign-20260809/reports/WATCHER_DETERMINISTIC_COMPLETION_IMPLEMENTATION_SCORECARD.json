@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T00:20:50Z",
+  "status": "implemented-and-regression-package-verified-not-final",
+  "acceptanceRowsAdvanced": ["I-06"],
+  "rootCause": {
+    "agentMarkerPreviouslyPromotedCompletion": true,
+    "latestTelemetryCompletionPreviouslyRequired": false,
+    "physicalCheckpointDigestPreviouslyBound": false,
+    "zeroActiveIssuesPreviouslyRequired": false,
+    "goalAnchorCoveragePreviouslyRequired": false,
+    "persistedDeterministicReceiptPreviouslyRequired": false
+  },
+  "productionEnforcement": {
+    "freshCompletedOKTelemetryRequired": true,
+    "successfulCurrentRunRequired": true,
+    "zeroActiveIssuesRequired": true,
+    "boundedJSONObjectCheckpointRequired": true,
+    "telemetrySHA256Bound": true,
+    "checkpointSHA256Bound": true,
+    "pipelineRevisionAndRunBound": true,
+    "verificationPlanSHA256Bound": true,
+    "assessmentSHA256Bound": true,
+    "noConfirmedAssessmentIssuesRequired": true,
+    "allGoalAnchorsRequireEvidence": true,
+    "independentReviewBindsCompletionReceipt": true,
+    "startupRehashesPhysicalCheckpoint": true,
+    "legacyOrTamperedCompletion": "demote-to-needs-attention-without-auto-resume-or-workspace-mutation"
+  },
+  "verification": {
+    "watcherTestsPassed": 42,
+    "fullTestsExecuted": 529,
+    "fullTestsSkipped": 8,
+    "fullTestFailures": 0,
+    "packagingOwnedTestsExecuted": 529,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "packageSmokePassed": true,
+    "residualPackagedProcessCount": 0,
+    "sourceSnapshotSHA256": "e3c8cbfd323ffece35f55bda06693b91fb6bf3edf484c4105d8c906185dbe2dc",
+    "executableSHA256": "ae8fb93dfba3a32a5941e367d01e6ba0f5f1cd125cd4620295edfa22d2e4e5de",
+    "zipSHA256": "fcc8edb1e024e78e27368e914a4bc7929af040e29e19a26a1c4756eeeb764d44",
+    "dmgSHA256": "55dd772854cf9e5ccb7480e840d0a0d84d1a16072db62673dea1e2468a0b5ed6",
+    "packageTestLogSHA256": "8f6f773daa4a031672829dcd8eab1378fc04dc7422f95907646e03c7b7ed29dd",
+    "sourceFullTestLogSHA256": "75ec4d895b4ef50a2e997486064599e83751db9cf1475a2e23b5a350aeab0c97",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "cdHash": "b3d8b73b6aa7d29cb58b2c44e81a09da895d72e7"
+  },
+  "excluded": {
+    "failedTargetedCompileCount": 1,
+    "failedRunTimeCounted": false
+  },
+  "knownBoundary": {
+    "nativeUnlockedMatrixPending": true,
+    "legacyCutoverPending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

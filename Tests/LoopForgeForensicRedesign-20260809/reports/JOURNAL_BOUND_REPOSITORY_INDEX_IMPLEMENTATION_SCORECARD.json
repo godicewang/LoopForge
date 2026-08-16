@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-11T01:19:08Z",
+  "status": "implemented-source-package-verified-legacy-snapshot-cutover-native-telemetry-pending",
+  "acceptanceRowsAdvanced": [
+    "G-08"
+  ],
+  "rootCause": {
+    "sameEvidenceCollectionRepositoryEnumerationsBefore": 3,
+    "sameEvidenceCollectionRepositoryEnumerationsAfter": 1,
+    "enumerationErrorsPreviouslySwallowed": true,
+    "pathOrMtimeCanProveDirtyTreeGeneration": false,
+    "gitHeadCanProveDirtyOrUntrackedTreeGeneration": false
+  },
+  "authorityContract": {
+    "workspaceIdentityRequired": true,
+    "canonicalRootBindingRequired": true,
+    "treeGenerationSHA256Required": true,
+    "journalFrameSHA256Required": true,
+    "journalEventsRequired": true,
+    "journalSequenceArithmeticValidated": true,
+    "acceptedAuthorities": [
+      "journaledMutationCommit",
+      "journaledRecoveryReconciliation"
+    ],
+    "pathInCacheIdentity": false,
+    "mtimeInCacheIdentity": false,
+    "modelProseInCacheIdentity": false,
+    "missingReceiptDisposition": "uncachedObservation",
+    "missingReceiptCanReportCacheHit": false
+  },
+  "repositoryProjection": {
+    "sortedRelativeEntries": true,
+    "canonicalRootDigest": true,
+    "observedMetadataDigest": true,
+    "generatedDirectoriesExcluded": true,
+    "symbolicLinksExcluded": true,
+    "pathEscapeRejected": true,
+    "enumerationErrorFailsClosed": true,
+    "afterFingerprintUsesProjection": true,
+    "recentSourceSelectionUsesProjection": true,
+    "screenshotSelectionUsesProjection": true
+  },
+  "verification": {
+    "newFocusedTestsPassed": 5,
+    "existingAuditorTestsPassed": 17,
+    "focusedFailures": 0,
+    "fullTestsExecuted": 546,
+    "fullTestsSkipped": 8,
+    "fullTestFailures": 0,
+    "packagingOwnedTestsExecuted": 546,
+    "packagingOwnedTestsSkipped": 8,
+    "packagingOwnedFailures": 0,
+    "packageSmokePassed": true,
+    "residualPackagedProcessCount": 0,
+    "sourceSnapshotSHA256": "3b22d84b331d8966812bfc2d6e28646915f7dd04675c21e9deefcd98e0ac376f",
+    "executableSHA256": "afffd372ff9e9456c77b9d399090776b546c788c3ccae8400fb4d06552ef10e3",
+    "zipSHA256": "d204ca1fa1d77e90c819e2485ff3e6d5c39451ada187574f1785054f5aabfd94",
+    "dmgSHA256": "2c7ce251e0296fcfafc9760ddb6b1d8dfd3af5f42bf943a8e1e6db2aded3beb0",
+    "packageTestLogSHA256": "f388166e5e11ef2583f7dd274bdb7e96d5d4968afb09909807e82a827c3017ca",
+    "sourceFullTestLogSHA256": "bc6775e9d0e47532beef4eaa81a3426f8a1efd8bfd5a58ba2f80c62b6d9315f4",
+    "focusedIndexTestLogSHA256": "2462dc7f99bca4f382ceb758406ded5347718112f9ca1bf99fc6b1684d2f772f",
+    "auditorTestLogSHA256": "b00013003754d7717c4df5cd692c5f978e9bf4e87c7c38b3cb0ac14cae0b0190",
+    "runtimeSmokeLogSHA256": "19ca5a88d6b8dd555765052c62cf3c3759d72f65575e98d8ced40f79d76e6fc5",
+    "cdHash": "3be754b3bfed7265c8de4da2b54310e70c218d5a"
+  },
+  "excluded": {
+    "zeroTestSelectorRuns": 1,
+    "zeroTestSelectorCountedAsVerification": false,
+    "zeroTestSelectorTimeCounted": false
+  },
+  "knownBoundary": {
+    "legacyWorkspaceAuditorStillEnumeratesSeparately": true,
+    "legacyLoopAndGraphCallersHaveAuthoritativeGenerationReceipt": false,
+    "newKernelMutationAndRecoveryReceiptPopulationPending": true,
+    "currentNativeCacheTelemetryPending": true,
+    "cleanCommitPending": true,
+    "pushPending": true
+  },
+  "finalAcceptance": false,
+  "easyBusinessMutated": false
+}

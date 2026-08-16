@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T16:16:32Z",
+  "status": "completed-candidate-before-after-bytes-verified-stored-journaled-and-replayable",
+  "finalAcceptance": false,
+  "controls": {
+    "distinctPreflightSideChain": true,
+    "postApplyCandidatePathNotReused": true,
+    "exactCompletedCandidateJournalTransactionRequired": true,
+    "acceptedRatifiedBaselineCapabilityRequired": true,
+    "beforeAfterPartitionsDerivedFromExactDelta": true,
+    "completeContentSetRehashed": true,
+    "contentLimitsEnforced": true,
+    "storeOutsideCanonicalWorkspace": true,
+    "immutableArtifactRevalidatedBeforeAppend": true,
+    "duplicateReplayRevalidatesArtifact": true,
+    "pureReducerChecksRequirementsAndWritablePaths": true,
+    "captureJournalFrameDigestBound": true,
+    "crashReplayIsReceiptOnly": true,
+    "manifestAuthorityIssued": false,
+    "preflightAuthorityIssued": false,
+    "canonicalWorkspaceMutationAuthorityIssued": false
+  },
+  "verification": {
+    "affectedTestsExecuted": 52,
+    "swiftTestsExecuted": 764,
+    "intentionalEnvironmentSkips": 8,
+    "swiftTestFailures": 0,
+    "swiftTestWallSeconds": 60.807,
+    "completedCandidateContentStoreSHA256": "8e734ac276352981557f0759f18e5afe54712a1f0e1e23cc48cbcef63641f85e",
+    "runReducerSHA256": "9c84ef3e03f33b275da3de8e66b8e1e381323904f29d55473342d6a0fd56cb20",
+    "runJournalSHA256": "01cf441f66fdddaebde3ff9d3f2e1569756aabc6cf029e460629a9915b321a11",
+    "enrollmentTestsSHA256": "8673cc96fd28e28d18189be816356d4c1fc7ffa4946f0114e7f2e2d09cee7cb2",
+    "fullTestLogSHA256": "9c8390d9cf177ffafae2f49475703ea8a5963fc1d63b0d212607a741add07996"
+  },
+  "ledger": {
+    "acceptedIntervalID": "kernel-completed-candidate-content-store-194",
+    "coveredSecondsAdded": 600,
+    "coveredActiveSeconds": 158370,
+    "acceptedIntervals": 194,
+    "failedDiagnosticsTestsBuildsWaitsAndReportsCountedSeconds": 0
+  },
+  "remainingPrerequisites": [
+    "issue an acyclic mutation manifest from the completed-candidate store receipt",
+    "issue exact preparation facts rollback rehearsal proposal and preflight authority",
+    "provide tested resident-memory enforcement or retain verifier and reviewer veto",
+    "compose native immutable design baseline complete visual evidence final authorization and native UI start",
+    "retire remaining legacy Single and Parallel paths",
+    "complete current-source package sign hash unlocked native walkthrough clean commit and push"
+  ]
+}

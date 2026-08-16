@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "status": "journal_integrated_not_cut_over",
+  "component": "VisualGateJournalAuthorityAndStableFrameV2",
+  "authorityPath": {
+    "baselineFrozenBeforeAnyAttempt": true,
+    "baselineBoundToTaskContract": true,
+    "baselineBoundToPreservationRequiredArtifact": true,
+    "redDecisionJournaled": true,
+    "redDecisionBlocksCompletion": true,
+    "latestRedRevokesOlderGreen": true,
+    "acceptanceRequiresSameAttempt": true,
+    "acceptanceRequiresSameSourceRevision": true,
+    "actualWorkerLineageIsAuthoritative": true,
+    "malformedReplayAdvancesState": false
+  },
+  "journalFrameV2": {
+    "schemaVersion": 2,
+    "eventsEncodedOnce": true,
+    "exactEventBytesHashBound": true,
+    "decodedCollectionsReencodedForIdentity": false,
+    "validJsonByteTamperingAccepted": false,
+    "versionOneReadCompatibility": true,
+    "fullStateSnapshotsStored": false,
+    "duplicateCommandIsIdempotent": true,
+    "staleWriterCanFork": false
+  },
+  "tests": {
+    "visualJournalIntegrationExecuted": 14,
+    "visualJournalIntegrationFailures": 0,
+    "runJournalExecuted": 14,
+    "runJournalFailures": 0,
+    "reducerExecuted": 12,
+    "reducerFailures": 0,
+    "fullExecuted": 444,
+    "fullSkipped": 6,
+    "fullFailures": 0
+  },
+  "sources": [
+    {
+      "path": "Sources/LoopForge/Kernel/DesignBaselineGate.swift",
+      "lineCount": 736,
+      "sha256": "34cc44ce9401b383dc45d1fb7b2eae53f15cc85106d1c9e59240dfbd2531cb87"
+    },
+    {
+      "path": "Sources/LoopForge/Kernel/RunReducer.swift",
+      "lineCount": 1342,
+      "sha256": "6b9019a93c3d5e688a4f63ce2de81bd0812369b2aa13edfd8e8801f8c3180b5b"
+    },
+    {
+      "path": "Sources/LoopForge/Kernel/RunJournal.swift",
+      "lineCount": 430,
+      "sha256": "91d3f0950bc7ff02169bc21016cb2b908caaa84c320c9e6e540248310decec2e"
+    }
+  ],
+  "excludedFailedInvocations": {
+    "count": 5,
+    "countedTowardActiveLedger": false,
+    "allRepairedAndRerun": true
+  },
+  "cutover": {
+    "legacyGraphUsesAuthorityPath": false,
+    "trustedNativeCaptureAdapterConnected": false,
+    "transactionalPublicationGateConnected": false,
+    "historicalShadowReplayComplete": false,
+    "nativeUIExposesReceipts": false,
+    "latestSourcePackaged": false,
+    "commitAndPushComplete": false
+  },
+  "easyBusinessMutated": false
+}
+

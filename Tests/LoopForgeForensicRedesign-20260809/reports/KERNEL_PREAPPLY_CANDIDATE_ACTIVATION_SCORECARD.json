@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-12T15:07:14Z",
+  "status": "preapply-candidate-descriptor-consumed-session-retained-and-native-cwd-attested",
+  "finalAcceptance": false,
+  "controls": {
+    "acceptedReceiptRecognizedAsJournalHead": true,
+    "readinessStillRequiresLiveCapability": true,
+    "originalNonCodableCapabilityRequired": true,
+    "capabilityConsumedExactlyOnce": true,
+    "sessionRetainsIndependentDescriptor": true,
+    "executionProofBindsIsolationReceipt": true,
+    "providerInvocationBindsIsolationReceipt": true,
+    "candidateStoredOutsideJournalTree": true,
+    "completePristineTreeRehashedImmediatelyBeforeSpawn": true,
+    "candidatePathReplacementRejected": true,
+    "spawnUsesDescriptorRelativeFchdir": true,
+    "nativeCwdDeviceAndInodeAttested": true,
+    "canonicalWorkspaceMutationAuthorityIssued": false,
+    "postBindingLeaseResolvedFromJournal": true,
+    "boundedExactPIDTestCleanup": true
+  },
+  "verification": {
+    "newActivationTests": 2,
+    "nativeProductionSessionLaunches": 1,
+    "affectedTestsExecuted": 97,
+    "affectedTestSkips": 0,
+    "affectedTestFailures": 0,
+    "swiftTestsExecuted": 761,
+    "intentionalEnvironmentSkips": 8,
+    "swiftTestFailures": 0,
+    "workspaceCandidateMaterializerSHA256": "68f6a049be89f163b1a189905ecccc8ef279da91f5097293419e5cad5a18bdbb",
+    "kernelPreparationCoordinatorSHA256": "999ed56fe12f3fbb25b3173f2a8d026d426773097629bdfaa4bd592be56fb80f",
+    "kernelProductionCoordinatorSHA256": "0b2790aabfe2e5cc1994c99b7a1d49f75d521ad0d2fd31f29f83afd9ee05b9b0",
+    "kernelProviderInvocationSHA256": "b10780d2ecfd74748cbcf870272b73b5a2a2728e0b392761ff794b7747fd2f53",
+    "processAdapterSHA256": "d724050441cebb1e2321ef2e14d120bb98f5a3ff71ea761aebec97c8b8ea69a3",
+    "journaledProcessRuntimeSHA256": "7ef28ff3bfc29123e3dc591e628a9611aa97f6d5393512e03f7a87c34ede21f6",
+    "runJournalSHA256": "21d85be238885bb6633fb8e6d1f3a9dcd0f9bedb4656c55606fb24a928abb565",
+    "enrollmentTestsSHA256": "67ba673f5dd2d48dd32a3dbe1e65d7db2c5e9079b5e2b68ecd2c671782b0ddc7",
+    "processAdapterTestsSHA256": "883896e1694c891acfb0a44ef9639425ce0a8e01ba2ffa539d47a46390a66eaf"
+  },
+  "ledger": {
+    "acceptedIntervalID": "kernel-preapply-candidate-activation-192",
+    "coveredSecondsAdded": 600,
+    "coveredActiveSeconds": 157170,
+    "acceptedIntervals": 192,
+    "failedDiagnosticsTestsBuildsWaitsAndReportsCountedSeconds": 0
+  },
+  "remainingPrerequisites": [
+    "post-worker content-complete candidate revision with logical ratified workspace identity and physical isolation proof",
+    "acyclic delta content-store manifest preparation rollback proposal and preflight issuance",
+    "tested resident-memory enforcement issuer or retained verifier and reviewer veto",
+    "native immutable design baseline complete visual evidence final authorization and native UI start",
+    "remaining legacy Single and Parallel retirement",
+    "current-source package sign hash unlocked native walkthrough clean commit and push"
+  ]
+}

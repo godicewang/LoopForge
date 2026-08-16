@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "report": "ADVERSARIAL_CONTROL_PLANE_THREAT_MODEL.md",
+  "status": "forensic-design-complete",
+  "productionRefactorAuthorized": false,
+  "findingRange": [168, 178],
+  "findingCount": 11,
+  "trustZones": 6,
+  "primaryConclusion": "Model prose, mutable workspace artifacts, command text, screenshots, reviewer JSON, and report narrative cross trust boundaries without typed provenance, allowing self-reinforcing false approval and non-convergence.",
+  "confirmedRisks": {
+    "untrustedContentSharesReviewerInstructionChannel": true,
+    "embeddedJSONObjectAccepted": true,
+    "completionDerivedFromAccumulatedSubstring": true,
+    "verificationDerivedFromLogLexicon": true,
+    "laterUnrelatedSuccessCanClearFailure": true,
+    "workerInfluencesEvidenceSelection": true,
+    "visualRevisionBindingRequired": true,
+    "middleCommandEvidenceCanBeOmitted": true,
+    "modelNarrativePromotedByDeterministicReport": true,
+    "reviewerIndependenceNotEnforced": true,
+    "aggregateScoreNotRequirementProof": true,
+    "strategyDifferenceNotTyped": true
+  },
+  "requiredPrimitives": [
+    "TaskContract",
+    "ClaimReceipt",
+    "CommandExecutionReceipt",
+    "VerificationReceipt",
+    "VisualCaptureReceipt",
+    "ReviewReceipt",
+    "ActorLineage",
+    "StrategyFingerprint",
+    "RunReducer"
+  ],
+  "governingRule": "Model prose proposes; typed receipts prove; the reducer decides.",
+  "sourceEvidence": [
+    "Sources/LoopForge/GraphLoopEngine.swift:5937",
+    "Sources/LoopForge/GraphLoopEngine.swift:6096",
+    "Sources/LoopForge/AuditEvidence.swift:90",
+    "Sources/LoopForge/AuditEvidence.swift:446",
+    "Sources/LoopForge/WorkspaceAuditor.swift:101",
+    "Sources/LoopForge/CompletionReportGenerator.swift:250",
+    "Sources/LoopForge/LocalSupervisor.swift:568",
+    "Sources/LoopForge/AuxiliaryModelRouter.swift:209"
+  ]
+}

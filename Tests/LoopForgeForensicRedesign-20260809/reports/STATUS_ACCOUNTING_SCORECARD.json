@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "findingId": "F-008",
+  "title": "Blocked worker outcomes were counted, retried, and approved as successful work",
+  "status": "confirmed",
+  "sourceTaskId": "1ED2180F-FBE1-4BCA-9E79-701F40CC3483",
+  "historicalMetrics": {
+    "nodeCount": 19,
+    "iterationCount": 51,
+    "nodesWithBlockedSummaries": 11,
+    "completedNodesWithBlockedSummaries": 8,
+    "storedActiveSecondsOnThoseCompletedNodes": 13129.889996170998,
+    "storedBlockedSecondsOnThoseCompletedNodes": 73.07508599758148,
+    "completedNodesWithBlockedApprovedTurn": [
+      "reproduce-ios-us-baseline",
+      "reproduce-backend-us-baseline",
+      "implement-bailian-json-contract",
+      "repair-us-financial-report-contracts",
+      "verify-us-ios-xcuitest-runtime-evidence-v1",
+      "community-entry-external-watchdog-v1"
+    ]
+  },
+  "causalChain": [
+    "process exit 0 treated as successful execution",
+    "free-form BLOCKED marker not represented as typed worker outcome",
+    "Main review could emit continueWork or approve despite worker blocker",
+    "active time and failure counters lost the blocker semantics",
+    "same thread and strategy remained eligible for relaunch",
+    "completion and duration displays became misleading"
+  ],
+  "currentDirtyRepairAudit": {
+    "improvementsPresent": [
+      "blocked marker excluded from provisional accumulatedActiveSeconds",
+      "rejected clean exits can be subtracted after review",
+      "three consecutive blocked continuations can freeze a node",
+      "replacement plan can detach from stale thread"
+    ],
+    "openDefects": [
+      "blocked plus approved adds eligible duration back",
+      "per-iteration activeSeconds is stored before semantic review",
+      "liveActiveSeconds sums rejected blocked superseded and pending iteration durations",
+      "blocker detection remains free-form string parsing",
+      "historical contradictory checkpoints have no migration flag"
+    ]
+  },
+  "acceptanceRequirements": [
+    "typed execution review and time-disposition states",
+    "no ordinary approval of blocked execution",
+    "accepted active total excludes rejected blocked failed and idle intervals",
+    "current eligible live time displayed separately",
+    "causal strategy fingerprints and bounded retirement",
+    "migration and visible quarantine for contradictory legacy records"
+  ],
+  "evidence": [
+    "../evidence/node-iteration-metrics.json",
+    "../evidence/task-snapshot-20260809T131753Z.json",
+    "../../../Sources/LoopForge/CodexRunner.swift",
+    "../../../Sources/LoopForge/GraphLoopEngine.swift",
+    "../../../Sources/LoopForge/Models.swift",
+    "../../../Tests/LoopForgeTests/GraphLoopTests.swift"
+  ]
+}
