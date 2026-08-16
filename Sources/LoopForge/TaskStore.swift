@@ -365,6 +365,9 @@ final class TaskStore: ObservableObject {
     }
 
     nonisolated static func applicationSupportDirectory() -> URL {
+        if let isolated = LoopForgeLaunchProfile.current.applicationSupportDirectory {
+            return isolated
+        }
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
         return base.appendingPathComponent(AppConstants.appName, isDirectory: true)
     }

@@ -2,6 +2,86 @@ import XCTest
 @testable import LoopForge
 
 final class WatcherTests: XCTestCase {
+    func testLaunchProfileRequiresExplicitInspectionArgument() {
+        let temporary = URL(fileURLWithPath: "/private/tmp/loopforge-profile-tests")
+
+        XCTAssertEqual(
+            LoopForgeLaunchProfile.resolve(
+                arguments: ["LoopForge"],
+                temporaryDirectory: temporary,
+                processIdentifier: 42
+            ),
+            .standard
+        )
+        XCTAssertEqual(
+            LoopForgeLaunchProfile.resolve(
+                arguments: ["LoopForge", "--isolated-inspection-profile"],
+                temporaryDirectory: temporary,
+                processIdentifier: 42
+            ),
+            .isolatedInspection(
+                applicationSupportDirectory: temporary
+                    .appendingPathComponent("LoopForgeInspection", isDirectory: true)
+                    .appendingPathComponent("Process-42", isDirectory: true)
+            )
+        )
+    }
+
+    @MainActor
+    func testIsolatedInspectionProfileDoesNotStartOrMutatePersistedWatcher() {
+        let root = temporaryDirectory()
+        let watcherStore = WatcherStore(
+            storageURL: root.appendingPathComponent("watchers.json")
+        )
+        var watcher = makeWatcher(workspace: root)
+        watcher.runtime.nextRunAt = Date(timeIntervalSince1970: 0)
+        watcherStore.add(watcher)
+
+        let defaultsName = "LoopForgeInspectionTests-\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: defaultsName)!
+        addTeardownBlock { defaults.removePersistentDomain(forName: defaultsName) }
+        let model = AppModel(
+            store: TaskStore(storageURL: root.appendingPathComponent("tasks.json")),
+            watcherStore: watcherStore,
+            codexConnection: CodexConnectionManager(defaults: defaults),
+            permissionCenter: PermissionCenter(
+                defaults: defaults,
+                probe: PermissionProbe(
+                    screenCaptureGranted: { true },
+                    accessibilityGranted: { true },
+                    photoLibraryStatus: { .authorized }
+                )
+            ),
+            agentCatalog: AgentCatalog(
+                storageURL: root.appendingPathComponent("agents.json")
+            ),
+            launchProfile: .isolatedInspection(
+                applicationSupportDirectory: root.appendingPathComponent(
+                    "inspection-support",
+                    isDirectory: true
+                )
+            )
+        )
+
+        model.beginStartup()
+
+        XCTAssertEqual(watcherStore.watcher(id: watcher.id), watcher)
+        XCTAssertTrue(model.watcherController.runningWatcherIDs.isEmpty)
+        XCTAssertTrue(model.watcherController.testOnlyScheduledWatcherIDs.isEmpty)
+
+        model.watcherDraftRequest = "Must not start"
+        model.watcherDraftWorkspacePath = root.path
+        model.watcherDraftProjectMode = .existing
+        model.buildWatcher()
+        XCTAssertEqual(watcherStore.watchers.count, 1)
+        XCTAssertTrue(model.alertMessage?.contains("Isolated inspection mode") == true)
+
+        model.draftRequest = "Must not enroll"
+        model.requestStartLoop()
+        XCTAssertNil(model.pendingNativeContractConfirmation)
+        XCTAssertTrue(model.alertMessage?.contains("Isolated inspection mode") == true)
+    }
+
     func testModuleNamesExposeAutoLoopAndContinuumWatcher() {
         XCTAssertEqual(LoopForgeModule.allCases.map(\.title), [
             "Auto Loop",

@@ -74,16 +74,36 @@ struct RootView: View {
     @EnvironmentObject private var model: AppModel
 
     var body: some View {
-        ZStack {
-            if !model.permissionCenter.isReady {
-                PermissionOnboardingView()
-                    .transition(.opacity.combined(with: .scale(scale: 0.985)))
-            } else if model.codexConnection.shouldBlockInterface {
-                CodexConnectionView()
-                    .transition(.opacity.combined(with: .scale(scale: 0.985)))
-            } else {
-                WorkspaceShell(store: model.store, controller: model.controller)
-                    .transition(.opacity)
+        VStack(spacing: 0) {
+            if model.launchProfile.isIsolatedInspection {
+                HStack(spacing: 8) {
+                    Image(systemName: "eye.circle.fill")
+                    Text("Isolated inspection profile")
+                        .fontWeight(.semibold)
+                    Text("Persisted work and startup automation are not loaded.")
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                }
+                .font(.caption)
+                .padding(.horizontal, 14)
+                .frame(minHeight: 32)
+                .background(Color.orange.opacity(0.12))
+                .overlay(alignment: .bottom) { Divider() }
+                .accessibilityIdentifier("isolated-inspection-profile")
+            }
+            ZStack {
+                if !model.permissionCenter.isReady
+                    && !model.launchProfile.isIsolatedInspection {
+                    PermissionOnboardingView()
+                        .transition(.opacity.combined(with: .scale(scale: 0.985)))
+                } else if model.codexConnection.shouldBlockInterface
+                    && !model.launchProfile.isIsolatedInspection {
+                    CodexConnectionView()
+                        .transition(.opacity.combined(with: .scale(scale: 0.985)))
+                } else {
+                    WorkspaceShell(store: model.store, controller: model.controller)
+                        .transition(.opacity)
+                }
             }
         }
         .animation(.easeInOut(duration: 0.28), value: model.permissionCenter.isReady)

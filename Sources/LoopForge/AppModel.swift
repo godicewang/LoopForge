@@ -107,6 +107,7 @@ final class AppModel: ObservableObject {
     let codexConnection: CodexConnectionManager
     let permissionCenter: PermissionCenter
     let agentCatalog: AgentCatalog
+    let launchProfile: LoopForgeLaunchProfile
     /// Explicit new-kernel enrollment capability. No legacy task or Graph
     /// path calls this service; a future native confirmation flow must supply
     /// a sealed `RatifiedTaskContract` before enrollment is possible.
@@ -154,9 +155,11 @@ final class AppModel: ObservableObject {
 
     init(
         store: TaskStore? = nil,
+        watcherStore: WatcherStore? = nil,
         codexConnection: CodexConnectionManager? = nil,
         permissionCenter: PermissionCenter? = nil,
         agentCatalog: AgentCatalog? = nil,
+        launchProfile: LoopForgeLaunchProfile = .current,
         workspaceMutationRecoveryTask: Task<
             WorkspaceMutationRecoveryStartupReport,
             Never
@@ -168,7 +171,7 @@ final class AppModel: ObservableObject {
         let actualPermissionCenter = permissionCenter ?? PermissionCenter()
         let actualAgentCatalog = agentCatalog ?? AgentCatalog()
         let actualCodexConnection = codexConnection ?? CodexConnectionManager()
-        let actualWatcherStore = WatcherStore()
+        let actualWatcherStore = watcherStore ?? WatcherStore()
         self.selectedModule = LoopForgeModule(
             rawValue: UserDefaults.standard.string(forKey: "LoopForge.SelectedModule") ?? ""
         ) ?? .autoLoop
@@ -188,6 +191,7 @@ final class AppModel: ObservableObject {
         self.codexConnection = actualCodexConnection
         self.permissionCenter = actualPermissionCenter
         self.agentCatalog = actualAgentCatalog
+        self.launchProfile = launchProfile
         self.kernelRunEnrollmentCoordinator = kernelRunEnrollmentCoordinator
         self.kernelExecutionCoordinator = kernelExecutionCoordinator
         self.workspaceMutationRecoveryTask = workspaceMutationRecoveryTask
@@ -392,6 +396,7 @@ final class AppModel: ObservableObject {
     }
 
     func beginStartup() {
+        guard !launchProfile.isIsolatedInspection else { return }
         permissionCenter.beginOnboarding()
         watcherController.beginStartup()
         if permissionCenter.isReady {
@@ -401,6 +406,7 @@ final class AppModel: ObservableObject {
     }
 
     func permissionStateChanged() {
+        guard !launchProfile.isIsolatedInspection else { return }
         permissionCenter.refresh()
         if permissionCenter.isReady {
             codexConnection.start()
@@ -409,6 +415,7 @@ final class AppModel: ObservableObject {
     }
 
     func connectionStateChanged() {
+        guard !launchProfile.isIsolatedInspection else { return }
         guard codexConnection.phase == .ready else { return }
         if draftProjectMode == nil { adoptRecommendedCodexDefaults() }
         if !watcherAgentWasCustomized { adoptRecommendedWatcherCodexDefault() }
@@ -1042,6 +1049,10 @@ final class AppModel: ObservableObject {
     }
 
     func buildWatcher() {
+        guard !launchProfile.isIsolatedInspection else {
+            alertMessage = "Isolated inspection mode cannot build or resume work. Relaunch LoopForge normally to create a Watcher."
+            return
+        }
         let request = watcherDraftRequest.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !request.isEmpty else {
             alertMessage = "Describe the target Continuum Watcher should monitor or process."
@@ -1228,6 +1239,10 @@ final class AppModel: ObservableObject {
     }
 
     func requestStartLoop() {
+        guard !launchProfile.isIsolatedInspection else {
+            alertMessage = "Isolated inspection mode cannot enroll or start work. Relaunch LoopForge normally to create a task."
+            return
+        }
         guard draftExecutionMode == .autoGraph else {
             rejectRetiredLegacyAuthoring(draftExecutionMode)
             return
@@ -1830,6 +1845,10 @@ final class AppModel: ObservableObject {
     /// Missing mutation or design authority rejects before legacy execution
     /// can be reached.
     func activateLatestEnrolledKernelRun() async {
+        guard !launchProfile.isIsolatedInspection else {
+            alertMessage = "Isolated inspection mode cannot activate a native run. Relaunch LoopForge normally to execute work."
+            return
+        }
         guard !kernelExecutionStartInProgress,
               let enrollment = latestKernelEnrollmentReceipt,
               let coordinator = kernelExecutionCoordinator else { return }

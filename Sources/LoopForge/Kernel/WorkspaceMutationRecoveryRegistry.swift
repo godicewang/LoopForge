@@ -124,14 +124,12 @@ actor WorkspaceMutationRecoveryRegistry {
     }
 
     static func defaultRoot(fileManager: FileManager = .default) throws -> URL {
-        let support = try fileManager.url(
-            for: .applicationSupportDirectory,
-            in: .userDomainMask,
-            appropriateFor: nil,
-            create: true
+        let support = TaskStore.applicationSupportDirectory()
+        try fileManager.createDirectory(
+            at: support,
+            withIntermediateDirectories: true
         )
         return support
-            .appendingPathComponent("LoopForge", isDirectory: true)
             .appendingPathComponent("KernelRecovery", isDirectory: true)
     }
 

@@ -121,6 +121,12 @@ final class WatcherController: ObservableObject {
     private var operationTokens: [UUID: UUID] = [:]
     private var lastAgentProgressAt: [UUID: Date] = [:]
 
+    #if DEBUG
+    var testOnlyScheduledWatcherIDs: Set<UUID> {
+        Set(schedulerTasks.keys)
+    }
+    #endif
+
     init(
         store: WatcherStore,
         codexConnection: CodexConnectionManager,

@@ -63,8 +63,10 @@ struct LoopForgeApp: App {
     @StateObject private var appModel: AppModel
 
     init() {
+        let launchProfile = LoopForgeLaunchProfile.current
         let kernelRuntime = KernelProductionRuntime.startDefault()
         let model = AppModel(
+            launchProfile: launchProfile,
             workspaceMutationRecoveryTask: kernelRuntime.recoveryTask,
             kernelRunEnrollmentCoordinator: kernelRuntime.enrollmentCoordinator,
             kernelExecutionCoordinator: kernelRuntime.executionCoordinator
