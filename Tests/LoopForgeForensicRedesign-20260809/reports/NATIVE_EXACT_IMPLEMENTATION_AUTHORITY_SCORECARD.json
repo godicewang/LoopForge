@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-08-16T11:04:44Z",
-  "status": "native-authoring-confirmation-enrollment-activation-retention-source-pass-current-package-native-proof-pending",
+  "recordedAt": "2026-08-16T11:25:09Z",
+  "status": "native-authoring-confirmation-enrollment-activation-retention-clean-package-and-real-native-confirmation-pass",
   "acceptanceRowAdvanced": "B-05",
   "implementationCommit": "c8dd03edcc8ba33d1b9e1ad5bec5c57ec97c5dd4",
   "forensicCorrection": {
@@ -37,9 +37,58 @@
     "taskContractCompilerTests": { "executed": 24, "failures": 0 },
     "diffCheckPassed": true
   },
-  "currentSourceFullSuitePassed": false,
-  "currentSourcePackagePassed": false,
-  "currentNativeComposerWalkthroughPassed": false,
+  "cleanPackage": {
+    "sourceRevision": "4bd9bf90272e575fa5d86fd80c4bbfc9cccb6610",
+    "sourceDirty": false,
+    "sourceSnapshotSHA256": "9671afb3d2aa99990dab2163e122ac3597a0f4567f0b204318713b63f246dab1",
+    "testsExecuted": 875,
+    "testsSkipped": 8,
+    "testFailures": 0,
+    "testLogSHA256": "9b74c22714e66e2862ea70415610095e017a3d8673a4fe4025f751b0504cd361",
+    "embeddedManifestSHA256": "5a9f952a8b0f06053857804947709e4f8875ee125df079f9b6bf0f0f759744d6",
+    "executableSHA256": "570cb5a93eabe3faa00446389d85ce60563af9c7ca2eb9a30d442db95a51b214",
+    "zipSHA256": "b456a0c1dd3b94cbd397ef9b574b64c103a0d255ee489c236f421e2a6e4e41dd",
+    "dmgSHA256": "5c47116f5fa0f4f11444a1c6f0743fe12450f169bfe8732fb601f7dd577012d4",
+    "deepStrictSignaturePassed": true,
+    "zipIntegrityPassed": true,
+    "dmgVerificationPassed": true,
+    "boundedExactExecutableStartupPassed": true,
+    "smokePassed": true
+  },
+  "realNativeWalkthrough": {
+    "exactPackagedApplication": "/Users/godice/Coding/LoopForge/dist/LoopForge.app",
+    "selectedWorkspace": "/Users/godice/Coding/LoopForge/Sources/KernelSandboxGate",
+    "workerAccess": "readOnly",
+    "reviewerAccess": "readOnly",
+    "workerNetworkAccess": false,
+    "canonicalExactImplementationIdentities": [
+      "kernel-contract-v2",
+      "loopforge-native-authority-v1"
+    ],
+    "postimageVerifierSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "sourceRevisionCaptureSHA256": "72db4966a5d07d0684b3899c71c62061415c0e3eb6902ba9cd0bb977b252c516",
+    "candidateDigest": "3c236de133657c5377bcf7a3d8bb977b09d79fdfda522e77f69a50e2d1b2bdd8",
+    "mutationCeilingFiles": 0,
+    "mutationCeilingBytes": 0,
+    "composerScreenshot": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-native-exact-implementation-composer-20260816T111721Z.png",
+    "composerScreenshotSHA256": "cc0cb69e22b376c551614de04ef08e6a399635e418b895efc943c17fc7022fae",
+    "confirmationScreenshot": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-native-exact-implementation-confirmation-20260816T112509Z.jpg",
+    "confirmationScreenshotSHA256": "bc34607c78caca20b5f4dff327964b467186345447a10166ca82b48afb5d5c38",
+    "immutableConfirmationDisplayed": true,
+    "confirmationCancelledBeforeEnrollment": true,
+    "readyRunEnrolled": false,
+    "taskCreated": false,
+    "sidebarTaskCountBefore": 2,
+    "sidebarTaskCountAfter": 2,
+    "postQuitPackagedProcessCount": 0
+  },
+  "excludedAttempts": [
+    "LoopForge-root source capture rejected a symlink under dist before task creation",
+    "LoopForge-root source capture with dist excluded rejected a symlink in unrelated historical WatcherMatrix evidence before task creation"
+  ],
+  "currentSourceFullSuitePassed": true,
+  "currentSourcePackagePassed": true,
+  "currentNativeComposerWalkthroughPassed": true,
   "finalAcceptance": false,
   "easyBusinessMutated": false
 }

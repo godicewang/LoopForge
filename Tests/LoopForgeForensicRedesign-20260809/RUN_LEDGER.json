@@ -3,7 +3,7 @@
   "project": "LoopForge Forensic Redesign 20h",
   "startedAt": "2026-08-09T13:13:58Z",
   "requiredActiveSeconds": 72000,
-  "coveredActiveSeconds": 198693,
+  "coveredActiveSeconds": 199293,
   "remainingActiveSeconds": 0,
   "requiredForensicAnalysisBeforeImplementationSeconds": 36000,
   "coveredForensicAnalysisSeconds": 39370,
@@ -5564,7 +5564,32 @@
         "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NATIVE_EXACT_IMPLEMENTATION_AUTHORITY_IMPLEMENTATION.md",
         "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NATIVE_EXACT_IMPLEMENTATION_AUTHORITY_SCORECARD.json"
       ]
+    },
+    {
+      "id": "clean-package-native-exact-implementation-confirmation-264",
+      "startedAt": "2026-08-16T11:07:04Z",
+      "endedAt": "2026-08-16T11:31:50Z",
+      "coveredSeconds": 600,
+      "status": "accepted",
+      "excludedFailures": [
+        "full-suite, build, package, signing, hashing, smoke, and Computer Use wait duration count zero",
+        "two whole-root source-capture attempts rejected symlink entries before task creation and count zero",
+        "all native navigation, process polling, mount polling, and time beyond the 600-second accepted active-work cap count zero"
+      ],
+      "activity": "Built the exact clean LoopForge revision 4bd9bf90272e575fa5d86fd80c4bbfc9cccb6610 containing exact-implementation commit c8dd03edcc8ba33d1b9e1ad5bec5c57ec97c5dd4. The package-owned suite passed 875/8/0, sourceDirty was false, the source snapshot and test log were manifest-bound, and Release packaging, deep-strict signing, ZIP integrity, DMG verification, checksum verification, exact-executable startup, and smoke passed. Computer Use opened the exact packaged app, selected a bounded LoopForge-only workspace, retained read-only worker and reviewer access with network off, and reached the immutable confirmation sheet. It displayed the sorted exact IDs kernel-contract-v2 and loopforge-native-authority-v1, the exact verifier digest, and a zero-file/zero-byte mutation ceiling. The sheet was canceled before enrollment: no task or ready run was created, the sidebar remained at two historical tasks, and Cmd-Q left zero packaged processes. Reports, scorecards, screenshots, and the strict ledger were advanced while global release remained false. EasyBusiness remained read-only.",
+      "evidence": [
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NATIVE_EXACT_IMPLEMENTATION_AUTHORITY_SCORECARD.json",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NATIVE_EXACT_IMPLEMENTATION_AUTHORITY_IMPLEMENTATION.md",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/PACKAGE_AND_NATIVE_VERIFICATION_SCORECARD.json",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/PACKAGE_AND_NATIVE_VERIFICATION.md",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-native-exact-implementation-composer-20260816T111721Z.png",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-native-exact-implementation-confirmation-20260816T112509Z.jpg",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge.app",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-macOS-arm64.zip",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
+      ]
     }
   ],
-  "lastUpdatedAt": "2026-08-16T11:00:33Z"
+  "lastUpdatedAt": "2026-08-16T11:31:50Z"
 }

@@ -1,44 +1,33 @@
 {
-  "schemaVersion": 34,
-  "status": "prior-clean-package-native-and-remote-integration-pass-newer-exact-implementation-source-package-pending",
-  "recordedAt": "2026-08-16T11:04:44Z",
-  "currentSourcePackage": false,
-  "newerCurrentSource": {
-    "purpose": "native exact-implementation authority population and confirmation",
-    "implementationCommit": "c8dd03edcc8ba33d1b9e1ad5bec5c57ec97c5dd4",
-    "changedProductionFiles": 3,
-    "changedTestFiles": 3,
-    "targetedTestsExecuted": 75,
-    "targetedTestFailures": 0,
-    "fullSuitePending": true,
-    "packagePending": true,
-    "nativeComposerAndConfirmationWalkthroughPending": true
-  },
-  "currentSourceSnapshotSHA256": "3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845",
+  "schemaVersion": 35,
+  "status": "current-clean-package-and-native-exact-implementation-confirmation-pass-global-gates-pending",
+  "recordedAt": "2026-08-16T11:25:09Z",
+  "currentSourcePackage": true,
+  "currentSourceSnapshotSHA256": "9671afb3d2aa99990dab2163e122ac3597a0f4567f0b204318713b63f246dab1",
   "currentSourceVerification": {
-    "executed": 874,
+    "executed": 875,
     "skipped": 8,
     "failures": 0,
-    "seconds": 79.956,
-    "wallSeconds": 80.01,
+    "seconds": 78.967,
+    "wallSeconds": 79.021,
     "releaseBuildPassed": true,
     "packaged": true
   },
   "packagingOwnedFullSuite": {
-    "executed": 874,
+    "executed": 875,
     "skipped": 8,
     "failures": 0,
-    "seconds": 79.956,
-    "wallSeconds": 80.01,
+    "seconds": 78.967,
+    "wallSeconds": 79.021,
     "logPath": "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log",
-    "logSHA256": "1daa3cbd9781f49e8732fd7e7acdb0efe8d707c9ebd4838798c774d4b79e7717"
+    "logSHA256": "9b74c22714e66e2862ea70415610095e017a3d8673a4fe4025f751b0504cd361"
   },
   "sourceBinding": {
-    "gitRevision": "65d050f7300ae62073ed8ac36eeeda5f30f9e5ec",
+    "gitRevision": "4bd9bf90272e575fa5d86fd80c4bbfc9cccb6610",
     "dirty": false,
-    "builtAtUTC": "2026-08-16T10:25:27Z",
-    "snapshotSHA256": "3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845",
-    "embeddedManifestSHA256": "5f0848a067a58c0b9bbb02439c1ccd96fdff5e1c976a5034850ad8adfc2e9148",
+    "builtAtUTC": "2026-08-16T11:10:58Z",
+    "snapshotSHA256": "9671afb3d2aa99990dab2163e122ac3597a0f4567f0b204318713b63f246dab1",
+    "embeddedManifestSHA256": "5a9f952a8b0f06053857804947709e4f8875ee125df079f9b6bf0f0f759744d6",
     "embeddedManifestVerified": true,
     "smokeRecomputedSnapshot": true,
     "revisionBoundToCleanCommit": true,
@@ -46,8 +35,8 @@
   },
   "signature": {
     "kind": "adhoc",
-    "applicationCDHash": "d94a4b674e02a2247ae2eef8cbdf7238089a279c",
-    "gateCDHash": "4b3adb6a0857dddc3f323f853cc24a1f8ceab563",
+    "applicationCDHash": "940d62871535d6ed3cdd1d42f1c2a96e076386b6",
+    "gateCDHash": "138982f66022e1d20d76823282ff6a9fc507d3b6",
     "verifiedDeepStrict": true
   },
   "integrity": {
@@ -64,15 +53,15 @@
     "postVerificationMountCount": 0
   },
   "artifacts": {
-    "executable": {"bytes": 26402864, "sha256": "bf857623a683aed3da556148e0548d63f39227c2e7516a7f13881a04ea83447b"},
-    "sandboxGate": {"bytes": 78528, "sha256": "908a44d3f1383504aa42c104652749e665569f0872870fb7b0f366d1f36ad272"},
-    "providerHarness": {"bytes": 145968, "sha256": "cd646318d35786098ab7b4170c4f21e6041d9079be0f023913a45bd5b3044ffb"},
-    "zip": {"bytes": 253473443, "sha256": "7a51e174cdb8df4db96bf7e21c3ffdcbf1b65ab42a63bbe2465b5f5292fc3443"},
-    "dmg": {"bytes": 285775478, "sha256": "85f89b3e8b1598ae966de98f1ec91ce99f4b5ce48d34e91233ab46ae4f0efd91"},
-    "checksumManifest": {"bytes": 278, "sha256": "414ab2336ce336651c4a8d53c19b55f16df5d7260a5f5cb9ee818534d3cc0df9"},
-    "packageTestLog": {"bytes": 250903, "sha256": "1daa3cbd9781f49e8732fd7e7acdb0efe8d707c9ebd4838798c774d4b79e7717"},
-    "buildManifest": {"bytes": 353, "sha256": "5f0848a067a58c0b9bbb02439c1ccd96fdff5e1c976a5034850ad8adfc2e9148"},
-    "providerHarnessManifest": {"bytes": 356, "sha256": "8cf0c44ba55d5cfa9c39bed9273634e6fb47d6b840e20b5a319e3f1d3ba662a8"}
+    "executable": {"bytes": 26424752, "sha256": "570cb5a93eabe3faa00446389d85ce60563af9c7ca2eb9a30d442db95a51b214"},
+    "sandboxGate": {"bytes": 78512, "sha256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd"},
+    "providerHarness": {"bytes": 145952, "sha256": "d4de4d8b38a59186f8f184ddf1c54ea7f63bd5084d18df0bb37fa7edd19154ac"},
+    "zip": {"bytes": 253482706, "sha256": "b456a0c1dd3b94cbd397ef9b574b64c103a0d255ee489c236f421e2a6e4e41dd"},
+    "dmg": {"bytes": 285806879, "sha256": "5c47116f5fa0f4f11444a1c6f0743fe12450f169bfe8732fb601f7dd577012d4"},
+    "checksumManifest": {"bytes": 278, "sha256": "7215a0f597f59f7d5f7f07e067ad1fd78af67b98273f8148dd0d5e46a1710391"},
+    "packageTestLog": {"bytes": 251147, "sha256": "9b74c22714e66e2862ea70415610095e017a3d8673a4fe4025f751b0504cd361"},
+    "buildManifest": {"bytes": 353, "sha256": "5a9f952a8b0f06053857804947709e4f8875ee125df079f9b6bf0f0f759744d6"},
+    "providerHarnessManifest": {"bytes": 356, "sha256": "b20dee7cf778ce88de3eeb8c52b46eed7df413d8691d1bcfbf3812fd3ea22dac"}
   },
   "readyEnrollmentRecovery": {
     "registryAndJournalProofRequired": true,
@@ -279,7 +268,7 @@
     "journalQuarantineRequired": false,
     "evidence": "CURRENT_PACKAGED_NATIVE_UI_VERIFICATION_SCORECARD.json"
   },
-  "currentPackageNativeUI": {
+  "priorCleanPackageNativeMatrixUI": {
     "sourceSnapshotSHA256": "3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845",
     "visibleChange": true,
     "exactPackagedMachOStartupPassed": true,
@@ -302,7 +291,7 @@
     "postVerificationMountCount": 0,
     "evidence": "NATIVE_BASELINE_CANDIDATE_MATRIX_SCORECARD.json"
   },
-  "cleanPackageNativeConfirmation": {
+  "priorCleanPackageNativeConfirmation": {
     "sourceRevision": "65d050f7300ae62073ed8ac36eeeda5f30f9e5ec",
     "sourceDirty": false,
     "sourceSnapshotSHA256": "3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845",
@@ -314,6 +303,36 @@
     "screenshotPath": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-clean-65d050f-native-confirmation-20260816T102827Z.jpeg",
     "screenshotSHA256": "46b0b08c6de2c7f839933ea579e80cb8007e3db7a848b9f83eec8467b358797a",
     "postInspectionPackagedProcessCount": 0
+  },
+  "currentNativeExactImplementationConfirmation": {
+    "sourceRevision": "4bd9bf90272e575fa5d86fd80c4bbfc9cccb6610",
+    "sourceDirty": false,
+    "sourceSnapshotSHA256": "9671afb3d2aa99990dab2163e122ac3597a0f4567f0b204318713b63f246dab1",
+    "exactPackagedApplicationInspected": true,
+    "selectedWorkspace": "/Users/godice/Coding/LoopForge/Sources/KernelSandboxGate",
+    "workerAccess": "readOnly",
+    "reviewerAccess": "readOnly",
+    "workerNetworkAccess": false,
+    "exactImplementationIdentities": [
+      "kernel-contract-v2",
+      "loopforge-native-authority-v1"
+    ],
+    "verifierExecutableSHA256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd",
+    "immutableConfirmationDisplayed": true,
+    "mutationCeilingFiles": 0,
+    "mutationCeilingBytes": 0,
+    "confirmationCancelledBeforeEnrollment": true,
+    "readyRunEnrolled": false,
+    "taskCreated": false,
+    "sidebarTaskCountBefore": 2,
+    "sidebarTaskCountAfter": 2,
+    "composerScreenshotPath": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-native-exact-implementation-composer-20260816T111721Z.png",
+    "composerScreenshotSHA256": "cc0cb69e22b376c551614de04ef08e6a399635e418b895efc943c17fc7022fae",
+    "confirmationScreenshotPath": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-native-exact-implementation-confirmation-20260816T112509Z.jpg",
+    "confirmationScreenshotSHA256": "bc34607c78caca20b5f4dff327964b467186345447a10166ca82b48afb5d5c38",
+    "postQuitPackagedProcessCount": 0,
+    "rootCaptureAttemptsRejectedBeforeTaskCreation": 2,
+    "evidence": "NATIVE_EXACT_IMPLEMENTATION_AUTHORITY_SCORECARD.json"
   },
   "priorPackageProviderProfileDiagnostics": {
     "sourceSnapshotSHA256": "c5f368373f837697f161fbc6692fc80b7f53319edf943901f80e735266730111",
@@ -384,13 +403,12 @@
   "gitIntegration": {
     "branch": "main",
     "remote": "origin",
-    "implementationCommit": "65d050f7300ae62073ed8ac36eeeda5f30f9e5ec",
-    "cleanPackageEvidenceCommit": "5cf32293304130d353025774e5d0996d4a06777d",
-    "bothCommitsObservedOnRemote": true,
+    "exactImplementationCommit": "c8dd03edcc8ba33d1b9e1ad5bec5c57ec97c5dd4",
+    "cleanPackageSourceRevision": "4bd9bf90272e575fa5d86fd80c4bbfc9cccb6610",
+    "sourceRevisionObservedOnRemote": true,
     "closureReceipt": "the commit containing this scorecard must equal origin/main after publication"
   },
   "remainingGaps": [
-    "clean current-source full-suite/package proof and a real native exact-implementation composer/confirmation walkthrough",
     "journaled production-session visual and final-completion authority plus current Watcher and repository-generation telemetry walkthroughs",
     "a separately ratified productive-provider isolation architecture or an explicitly non-productive release classification",
     "trusted Release containment and mutation isolation remain typed vetoes, so mutation-backed execution is intentionally unavailable"

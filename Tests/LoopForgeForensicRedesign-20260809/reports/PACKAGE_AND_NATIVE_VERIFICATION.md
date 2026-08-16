@@ -1,27 +1,47 @@
 # Package and Native Verification
 
-Status: **clean-source commit package, native confirmation, and remote integration passed; global production cutover remains blocked**
+Status: **current clean-source package and native exact-implementation confirmation passed; global production cutover remains blocked**
 
-Recorded: `2026-08-16T10:31:38Z`
+Recorded: `2026-08-16T11:25:09Z`
 
 ## Current package result
 
-Packaging ran in a detached clean worktree at implementation commit `65d050f7300ae62073ed8ac36eeeda5f30f9e5ec`. The embedded manifest records `sourceDirty: false`, source snapshot `3870639da9fa122df044658f68608fbfed8385fccd341fb7ee2d872d2be57845`, and package-owned **874-test, 8-skip, 0-failure** log digest `1daa3cbd9781f49e8732fd7e7acdb0efe8d707c9ebd4838798c774d4b79e7717`. Smoke verification independently recomputed the same clean source snapshot and test-log digest from the package. Two preceding package attempts each reported one unexpected failure but did not retain a complete diagnostic log; they count zero and are not acceptance evidence. The isolated full-suite rerun and the final package-owned suite were green.
+Packaging ran from clean source revision `4bd9bf90272e575fa5d86fd80c4bbfc9cccb6610`, which contains exact-implementation commit `c8dd03edcc8ba33d1b9e1ad5bec5c57ec97c5dd4`. The embedded manifest records `sourceDirty: false`, source snapshot `9671afb3d2aa99990dab2163e122ac3597a0f4567f0b204318713b63f246dab1`, and package-owned **875-test, 8-skip, 0-failure** log digest `9b74c22714e66e2862ea70415610095e017a3d8673a4fe4025f751b0504cd361`. Smoke verification independently recomputed the same clean source snapshot and test-log digest from the package.
 
-The accepted package-owned suite completed in 79.956 test seconds (80.010 wall). All three non-DEBUG arm64 products built. Strict deep ad-hoc signature verification, plist parsing, ZIP integrity, DMG verification, every checksum-manifest entry, embedded source/test binding, exact signed-harness manifest identity, model-weight exclusion, direct and mounted exact packaged Mach-O bounded startup, mounted-DMG byte identity for all three Mach-O files, detach, and cleanup passed.
+The accepted package-owned suite completed in 78.967 test seconds (79.021 wall). All three non-DEBUG arm64 products built. Strict deep ad-hoc signature verification, plist parsing, ZIP integrity, DMG verification, every checksum-manifest entry, embedded source/test binding, exact signed-harness manifest identity, model-weight exclusion, direct and mounted exact packaged Mach-O bounded startup, mounted-DMG byte identity for all three Mach-O files, detach, and cleanup passed.
 
 Artifacts:
 
-- executable: 26,402,864 bytes, `bf857623a683aed3da556148e0548d63f39227c2e7516a7f13881a04ea83447b`;
-- sandbox gate: 78,528 bytes, `908a44d3f1383504aa42c104652749e665569f0872870fb7b0f366d1f36ad272`;
-- provider harness: 145,968 bytes, `cd646318d35786098ab7b4170c4f21e6041d9079be0f023913a45bd5b3044ffb`;
-- ZIP: 253,473,443 bytes, `7a51e174cdb8df4db96bf7e21c3ffdcbf1b65ab42a63bbe2465b5f5292fc3443`;
-- DMG: 285,775,478 bytes, `85f89b3e8b1598ae966de98f1ec91ce99f4b5ce48d34e91233ab46ae4f0efd91`;
-- package test log: 250,903 bytes, `1daa3cbd9781f49e8732fd7e7acdb0efe8d707c9ebd4838798c774d4b79e7717`;
-- checksum manifest: 278 bytes, `414ab2336ce336651c4a8d53c19b55f16df5d7260a5f5cb9ee818534d3cc0df9`;
-- build manifest: 353 bytes, `5f0848a067a58c0b9bbb02439c1ccd96fdff5e1c976a5034850ad8adfc2e9148`;
-- app CDHash: `d94a4b674e02a2247ae2eef8cbdf7238089a279c`;
-- gate CDHash: `4b3adb6a0857dddc3f323f853cc24a1f8ceab563`.
+- executable: 26,424,752 bytes, `570cb5a93eabe3faa00446389d85ce60563af9c7ca2eb9a30d442db95a51b214`;
+- sandbox gate: 78,512 bytes, `85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd`;
+- provider harness: 145,952 bytes, `d4de4d8b38a59186f8f184ddf1c54ea7f63bd5084d18df0bb37fa7edd19154ac`;
+- ZIP: 253,482,706 bytes, `b456a0c1dd3b94cbd397ef9b574b64c103a0d255ee489c236f421e2a6e4e41dd`;
+- DMG: 285,806,879 bytes, `5c47116f5fa0f4f11444a1c6f0743fe12450f169bfe8732fb601f7dd577012d4`;
+- package test log: 251,147 bytes, `9b74c22714e66e2862ea70415610095e017a3d8673a4fe4025f751b0504cd361`;
+- checksum manifest: 278 bytes, `7215a0f597f59f7d5f7f07e067ad1fd78af67b98273f8148dd0d5e46a1710391`;
+- build manifest: 353 bytes, `5a9f952a8b0f06053857804947709e4f8875ee125df079f9b6bf0f0f759744d6`;
+- app CDHash: `940d62871535d6ed3cdd1d42f1c2a96e076386b6`;
+- gate CDHash: `138982f66022e1d20d76823282ff6a9fc507d3b6`.
+
+## Native exact-implementation confirmation
+
+Computer Use opened the exact current package and populated the real Journaled
+Auto Graph composer with two opaque IDs. The immutable confirmation sheet sorted
+and displayed `kernel-contract-v2` and `loopforge-native-authority-v1`, bound the
+exact verifier digest
+`85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd`,
+kept both worker and reviewer read-only, kept worker networking off, and displayed
+a zero-file/zero-byte mutation ceiling. The bounded workspace was
+`/Users/godice/Coding/LoopForge/Sources/KernelSandboxGate`.
+
+The sheet was canceled before **Confirm & Enroll Ready Run**. The sidebar retained
+the same two historical tasks; no task or ready run was created. The composer and
+[immutable confirmation](../screenshots/packaged-loopforge-native-exact-implementation-confirmation-20260816T112509Z.jpg)
+screenshots have SHA-256 values
+`cc0cb69e22b376c551614de04ef08e6a399635e418b895efc943c17fc7022fae` and
+`bc34607c78caca20b5f4dff327964b467186345447a10166ca82b48afb5d5c38`.
+Two whole-root source-capture attempts rejected symlink entries before task
+creation; they count zero. Cmd-Q left zero exact packaged processes.
 
 ## Provider Harness V2 transport-veto package
 
@@ -138,4 +158,4 @@ Computer Use then launched the exact clean-revision package, inspected its macOS
 
 ## Boundary
 
-Native read-only authoring, explicit activation, receipt-proven stop closure, exact bound-process execution and recovery of nonempty cleanup plans, cleanup-only full-app relaunch ownership, exact crash auto-interruption without productive-authority reconstruction, fail-closed retention of ambiguous ownership, the dedicated live-provider test path, typed production postimage-verifier veto/live-launch composition, production mutation-preparation veto/exact-authority composition, exact workspace-mutation live-handle-aware normal-quit join, truthful terminal strategy-history presentation, current packaged architecture-veto inspection/quit, current direct and mounted startup, worker-network authority authoring, provider no-child/output-file ceilings, the V2 transport-veto package spine, productive-mode enforcement, environment-policy enforcement before prompt issuance, shared resource/release-policy compatibility, explicit ordinary-macOS in-process containment-strategy retirement, explicit ordinary-app productive-provider architecture-scope retirement, the current four-cell native baseline/candidate matrix, the exact clean-commit package/native binding, and remote publication of commits `65d050f` and `5cf3229` are closed. Final release is still false: gate-specific receipts retain mandatory native production-controller cutover and full unlocked authoring/activation/Watcher/repository-telemetry walkthrough gaps. The current product also retains both typed containment/provider vetoes; mutation-backed execution requires a separately scoped privileged or virtualized isolation product. EasyBusiness remained stopped and read-only at observed HEAD `2ae40452e6d8661c46db466c43ea40bba3bfab04`.
+Native read-only authoring, explicit activation, exact-implementation confirmation, receipt-proven stop closure, exact bound-process execution and recovery of nonempty cleanup plans, cleanup-only full-app relaunch ownership, exact crash auto-interruption without productive-authority reconstruction, fail-closed retention of ambiguous ownership, the dedicated live-provider test path, typed production postimage-verifier veto/live-launch composition, production mutation-preparation veto/exact-authority composition, exact workspace-mutation live-handle-aware normal-quit join, truthful terminal strategy-history presentation, current direct and mounted startup, worker-network authority authoring, provider no-child/output-file ceilings, the V2 transport-veto package spine, productive-mode enforcement, environment-policy enforcement before prompt issuance, shared resource/release-policy compatibility, explicit ordinary-macOS in-process containment-strategy retirement, explicit ordinary-app productive-provider architecture-scope retirement, the prior four-cell native baseline/candidate matrix, and the current exact clean-source package/native binding are closed. Final release is still false: gate-specific receipts retain mandatory native production-controller cutover and full unlocked authoring/activation/Watcher/repository-telemetry walkthrough gaps. The current product also retains both typed containment/provider vetoes; mutation-backed execution requires a separately scoped privileged or virtualized isolation product. EasyBusiness remained stopped and read-only at observed HEAD `2ae40452e6d8661c46db466c43ea40bba3bfab04`.
