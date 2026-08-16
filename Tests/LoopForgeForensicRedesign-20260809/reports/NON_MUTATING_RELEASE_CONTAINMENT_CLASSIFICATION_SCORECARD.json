@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T14:48:15Z",
+  "status": "source-classification-pass-package-native-rebinding-pending-final-release-false",
+  "source": {
+    "commit": "4c6bbf8694f4b7caaf9723e2bca6e2a96d1010ba",
+    "commitPatchSHA256": "ee437699f78720af2e24734fe4f2e4d2bfe3e5b91b0be2402364e4090965873b",
+    "nativeProviderHarnessSelectionSHA256": "3d28073c78e5afd0944830327f72f684816827346b8fe199adf52a2f43d51c40",
+    "appModelSHA256": "89c34b92291fbf654f7da203a55738a5225dc24ce78394e7059e2079978bc3ec",
+    "viewsSHA256": "b00ca4d652e99317f4f3edf7ebeb6b141a51af2cda07314f230ac5088589c49e",
+    "selectionTestsSHA256": "96dd2d7d4710a4f4787ec856c14009a62b56c519bb41313068a61d62821047ab",
+    "packageScriptSHA256": "ccef3cf1425895e4c642cce8bb4ec762b077e51f4529f61de28e354e0fed9837",
+    "smokeScriptSHA256": "463cce6eb7c6d409722a1606c687795d87fd5e74544235791607491e75413199"
+  },
+  "classification": {
+    "rawValue": "nonMutatingContainmentVeto",
+    "workspaceMutationAvailable": false,
+    "mutationCapableCaseExistsInOrdinaryAppEnum": false,
+    "unavailableStateFailsClosed": true,
+    "buildManifestFieldRequired": true,
+    "providerManifestFieldRequired": true,
+    "forgedMutationAvailabilityRejected": true,
+    "relabeledClassificationRejected": true,
+    "missingOrInvalidMetadataFailsClosed": true
+  },
+  "productionBoundary": {
+    "ordinaryMacOSResolution": "containmentReadinessUnavailable",
+    "durableVetoReceipt": "KernelProductionMutationApplyVetoReceipt",
+    "integrationPhaseAfterVeto": "rollbackPrepared",
+    "journaledBeforeWorkspaceLease": true,
+    "journaledBeforeApplyIntent": true,
+    "journaledBeforeOutboxPersistence": true,
+    "journaledBeforeCanonicalFilesystemEffect": true,
+    "ordinaryReleaseIssuerAvailable": false,
+    "ordinaryReleaseIssuerInventedByThisChange": false
+  },
+  "tests": {
+    "focusedManifestClassification": {"executed": 8, "failures": 0, "seconds": 0.013},
+    "completeCandidateProductionVeto": {"executed": 1, "failures": 0, "seconds": 1.486},
+    "completeSourceSuite": {"executed": 886, "skipped": 8, "failures": 0, "seconds": 81.035}
+  },
+  "nativeDisclosure": {
+    "accessibilityIdentifier": "release-mutation-capability-classification",
+    "expectedTitle": "Workspace mutation vetoed",
+    "expectedDetail": "No privileged or container containment issuer is packaged; canonical workspace writes are denied.",
+    "packageVerified": false,
+    "nativeVerified": false
+  },
+  "easyBusiness": {
+    "mutated": false,
+    "branch": "codex/USA_Version",
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "nulDelimitedStatusSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a"
+  },
+  "closedGate": "release-containment-and-mutation-isolation-authority-via-explicit-retained-veto",
+  "remainingGates": [
+    "resolved repository-generation telemetry disposition for the explicit non-mutating release"
+  ],
+  "finalAcceptance": false
+}
