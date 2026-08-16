@@ -2,6 +2,37 @@ import CryptoKit
 import Darwin
 import Foundation
 
+/// Product-level capability classification for this ordinary macOS bundle.
+///
+/// There is deliberately no productive case here. A productive provider must
+/// ship as a separately isolated and ratified product, not as a manifest edit
+/// or a relabeled executable inside this bundle.
+enum LoopForgeReleaseCapabilityClassification: String, Codable, Equatable,
+    Sendable {
+    case nonProductiveTransportVeto
+    case unavailableFailClosed
+
+    var productiveExecutionAvailable: Bool { false }
+
+    var title: String {
+        switch self {
+        case .nonProductiveTransportVeto:
+            return "Non-productive safety build"
+        case .unavailableFailClosed:
+            return "Execution unavailable"
+        }
+    }
+
+    var detail: String {
+        switch self {
+        case .nonProductiveTransportVeto:
+            return "Transport-veto only · no productive provider is installed or authorized."
+        case .unavailableFailClosed:
+            return "No ratified provider identity is available; productive execution is denied."
+        }
+    }
+}
+
 struct NativeProviderHarnessManifest: Codable, Equatable, Sendable {
     var schemaVersion: Int
     var protocolVersion: Int
@@ -10,6 +41,9 @@ struct NativeProviderHarnessManifest: Codable, Equatable, Sendable {
     var executableByteCount: UInt64
     var operationalMode: KernelProviderHarnessMode
     var productiveProviderBackends: [KernelExecutionProvider]
+    var releaseCapabilityClassification:
+        LoopForgeReleaseCapabilityClassification
+    var productiveExecutionAvailable: Bool
     var selfTestSHA256: ContentDigest
 }
 
@@ -71,7 +105,8 @@ enum NativeProviderHarnessSelectionLoader {
               Set(object.keys) == [
                 "executableByteCount", "executableFileName",
                 "executableSHA256", "operationalMode",
-                "productiveProviderBackends", "protocolVersion",
+                "productiveExecutionAvailable", "productiveProviderBackends",
+                "protocolVersion", "releaseCapabilityClassification",
                 "schemaVersion", "selfTestSHA256",
               ],
               let decoded = try? JSONDecoder().decode(
@@ -83,7 +118,12 @@ enum NativeProviderHarnessSelectionLoader {
                 KernelProviderInvocationCompiler.protocolVersion,
               decoded.executableFileName == executableFileName,
               decoded.operationalMode == .transportVetoOnly,
-              decoded.productiveProviderBackends.isEmpty else {
+              decoded.productiveProviderBackends.isEmpty,
+              decoded.releaseCapabilityClassification ==
+                .nonProductiveTransportVeto,
+              decoded.productiveExecutionAvailable == false,
+              decoded.releaseCapabilityClassification
+                .productiveExecutionAvailable == false else {
             throw NativeProviderHarnessSelectionError.manifestInvalid
         }
 

@@ -75,6 +75,20 @@ struct RootView: View {
 
     var body: some View {
         VStack(spacing: 0) {
+            HStack(spacing: 8) {
+                Image(systemName: "lock.shield.fill")
+                Text(model.releaseCapabilityClassification.title)
+                    .fontWeight(.semibold)
+                Text(model.releaseCapabilityClassification.detail)
+                    .foregroundStyle(.secondary)
+                Spacer()
+            }
+            .font(.caption)
+            .padding(.horizontal, 14)
+            .frame(minHeight: 32)
+            .background(Color.red.opacity(0.09))
+            .overlay(alignment: .bottom) { Divider() }
+            .accessibilityIdentifier("release-capability-classification")
             if model.launchProfile.isIsolatedInspection {
                 HStack(spacing: 8) {
                     Image(systemName: "eye.circle.fill")

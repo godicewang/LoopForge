@@ -17,6 +17,11 @@ final class NativeProviderHarnessSelectionTests: XCTestCase {
         XCTAssertEqual(selection.manifest.operationalMode, .transportVetoOnly)
         XCTAssertTrue(selection.manifest.productiveProviderBackends.isEmpty)
         XCTAssertEqual(
+            selection.manifest.releaseCapabilityClassification,
+            .nonProductiveTransportVeto
+        )
+        XCTAssertFalse(selection.manifest.productiveExecutionAvailable)
+        XCTAssertEqual(
             selection.manifest.selfTestSHA256,
             NativeProviderHarnessSelectionLoader.expectedSelfTestSHA256
         )
@@ -77,6 +82,34 @@ final class NativeProviderHarnessSelectionTests: XCTestCase {
         }
     }
 
+    func testProductiveAvailabilityClaimCannotMintNativeAuthority() throws {
+        var fixture = try makeFixture()
+        defer { try? FileManager.default.removeItem(at: fixture.root) }
+        fixture.manifest.productiveExecutionAvailable = true
+        try write(fixture.manifest, to: fixture.manifestURL)
+
+        XCTAssertThrowsError(try NativeProviderHarnessSelectionLoader.load(
+            manifestURL: fixture.manifestURL,
+            executableURL: harnessURL
+        )) { error in
+            XCTAssertEqual(
+                error as? NativeProviderHarnessSelectionError,
+                .manifestInvalid
+            )
+        }
+    }
+
+    func testMissingHarnessClassificationFailsClosed() {
+        XCTAssertFalse(
+            LoopForgeReleaseCapabilityClassification.unavailableFailClosed
+                .productiveExecutionAvailable
+        )
+        XCTAssertEqual(
+            LoopForgeReleaseCapabilityClassification.unavailableFailClosed.title,
+            "Execution unavailable"
+        )
+    }
+
     func testSymlinkedManifestIsNeverTrusted() throws {
         let fixture = try makeFixture()
         defer { try? FileManager.default.removeItem(at: fixture.root) }
@@ -128,6 +161,8 @@ final class NativeProviderHarnessSelectionTests: XCTestCase {
             ).uint64Value,
             operationalMode: .transportVetoOnly,
             productiveProviderBackends: [],
+            releaseCapabilityClassification: .nonProductiveTransportVeto,
+            productiveExecutionAvailable: false,
             selfTestSHA256:
                 NativeProviderHarnessSelectionLoader.expectedSelfTestSHA256
         )

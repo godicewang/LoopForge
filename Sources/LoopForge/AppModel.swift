@@ -108,6 +108,14 @@ final class AppModel: ObservableObject {
     let permissionCenter: PermissionCenter
     let agentCatalog: AgentCatalog
     let launchProfile: LoopForgeLaunchProfile
+    /// Visible product capability, derived only from the exact packaged
+    /// harness manifest. Missing or invalid metadata fails closed.
+    var releaseCapabilityClassification:
+        LoopForgeReleaseCapabilityClassification {
+        NativeProviderHarnessSelectionLoader.bundled()?
+            .manifest.releaseCapabilityClassification
+            ?? .unavailableFailClosed
+    }
     /// Explicit new-kernel enrollment capability. No legacy task or Graph
     /// path calls this service; a future native confirmation flow must supply
     /// a sealed `RatifiedTaskContract` before enrollment is possible.

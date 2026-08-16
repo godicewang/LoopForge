@@ -29,6 +29,11 @@ fi
 [[ "$(/usr/bin/plutil -extract protocolVersion raw "$PROVIDER_HARNESS_MANIFEST")" == "2" ]]
 [[ "$(/usr/bin/plutil -extract operationalMode raw "$PROVIDER_HARNESS_MANIFEST")" == "transportVetoOnly" ]]
 [[ "$(/usr/bin/plutil -extract productiveProviderBackends json -o - "$PROVIDER_HARNESS_MANIFEST")" == "[]" ]]
+[[ "$(/usr/bin/plutil -extract releaseCapabilityClassification raw "$PROVIDER_HARNESS_MANIFEST")" == "nonProductiveTransportVeto" ]]
+[[ "$(/usr/bin/plutil -extract productiveExecutionAvailable raw "$PROVIDER_HARNESS_MANIFEST")" == "false" ]]
+[[ "$(/usr/bin/plutil -extract releaseCapabilityClassification raw "$BUILD_MANIFEST")" == "nonProductiveTransportVeto" ]]
+[[ "$(/usr/bin/plutil -extract productiveExecutionAvailable raw "$BUILD_MANIFEST")" == "false" ]]
+[[ "$(/usr/bin/plutil -extract providerHarnessOperationalMode raw "$BUILD_MANIFEST")" == "transportVetoOnly" ]]
 EXPECTED_HARNESS_SHA="$(/usr/bin/plutil -extract executableSHA256 raw "$PROVIDER_HARNESS_MANIFEST")"
 ACTUAL_HARNESS_SHA="$(/usr/bin/shasum -a 256 "$PROVIDER_HARNESS" | /usr/bin/awk '{print $1}')"
 [[ "$ACTUAL_HARNESS_SHA" == "$EXPECTED_HARNESS_SHA" ]]
