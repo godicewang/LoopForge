@@ -67,4 +67,39 @@ final class KernelConvergenceDiagnosticPresentationTests: XCTestCase {
             )
         )
     }
+
+    func testDiagnosticRunIDsUnionKernelAndRecoveryEvidenceExactlyOnce() {
+        let shared = KernelRunID("run-shared")
+        let kernelOnly = KernelRunID("run-kernel-only")
+        let recoveryOnly = KernelRunID("run-recovery-only")
+
+        XCTAssertEqual(
+            KernelConvergenceDiagnosticPresentation.orderedRunIDs(
+                kernelRunIDs: [shared, kernelOnly],
+                recoveryRunIDs: [recoveryOnly, shared]
+            ).map(\.rawValue),
+            ["run-kernel-only", "run-recovery-only", "run-shared"]
+        )
+    }
+
+    func testRepositoryStatusTitlesDoNotImplyMissingAuthority() {
+        XCTAssertEqual(
+            KernelConvergenceDiagnosticPresentation.repositoryStatusTitle(nil),
+            "Unavailable in current session"
+        )
+        XCTAssertEqual(
+            KernelConvergenceDiagnosticPresentation.repositoryStatusTitle(.notApplicable),
+            "No accepted workspace transition"
+        )
+        XCTAssertEqual(
+            KernelConvergenceDiagnosticPresentation.repositoryStatusTitle(.resolved),
+            "Resolved journal generation"
+        )
+        XCTAssertEqual(
+            KernelConvergenceDiagnosticPresentation.repositoryStatusTitle(
+                .withheldPendingEffects
+            ),
+            "Withheld · pending effects"
+        )
+    }
 }

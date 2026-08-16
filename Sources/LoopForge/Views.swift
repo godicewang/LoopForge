@@ -479,13 +479,9 @@ private struct ModuleContextLabel: View {
         [KernelRunID: KernelProviderInvocationProfileReadinessAssessment]
     @State private var showingKernelDiagnostics = false
 
-    private var repositoryRuns: [WorkspaceMutationRecoveryRunReport] {
-        recoveryRuns.filter { $0.repositoryIndexStatus != .notApplicable }
-    }
-
     private var diagnosticRunCount: Int {
         Set(
-            kernelRuns.map(\.runID.rawValue) + repositoryRuns.map(\.runID.rawValue)
+            kernelRuns.map(\.runID.rawValue) + recoveryRuns.map(\.runID.rawValue)
         ).count
     }
 
@@ -526,7 +522,7 @@ private struct ModuleContextLabel: View {
         .sheet(isPresented: $showingKernelDiagnostics) {
             KernelConvergenceDiagnosticsView(
                 runs: kernelRuns,
-                recoveryRuns: repositoryRuns,
+                recoveryRuns: recoveryRuns,
                 executionReadiness: executionReadiness,
                 providerReadiness: providerReadiness
             )
@@ -539,6 +535,35 @@ private struct ModuleContextLabel: View {
 /// execute. Once the run is terminal it remains immutable history, not an
 /// "active" process, attempt, or authority.
 enum KernelConvergenceDiagnosticPresentation {
+    static func orderedRunIDs(
+        kernelRunIDs: [KernelRunID],
+        recoveryRunIDs: [KernelRunID]
+    ) -> [KernelRunID] {
+        Dictionary(
+            (kernelRunIDs + recoveryRunIDs).map { ($0.rawValue, $0) },
+            uniquingKeysWith: { _, newest in newest }
+        ).values.sorted { $0.rawValue < $1.rawValue }
+    }
+
+    static func repositoryStatusTitle(
+        _ status: WorkspaceRepositoryIndexRecoveryStatus?
+    ) -> String {
+        switch status {
+        case .resolved:
+            return "Resolved journal generation"
+        case .notApplicable:
+            return "No accepted workspace transition"
+        case .withheldAmbiguousGeneration:
+            return "Withheld · ambiguous generation"
+        case .withheldPendingEffects:
+            return "Withheld · pending effects"
+        case .resolutionFailed:
+            return "Resolution failed"
+        case nil:
+            return "Unavailable in current session"
+        }
+    }
+
     static func strategyLifecycleLabel(
         _ lifecycle: ConvergenceStrategyLifecycle,
         runPhase: KernelRunPhase
@@ -581,6 +606,13 @@ private struct KernelConvergenceDiagnosticsView: View {
     let providerReadiness:
         [KernelRunID: KernelProviderInvocationProfileReadinessAssessment]
 
+    private var orderedRunIDs: [KernelRunID] {
+        KernelConvergenceDiagnosticPresentation.orderedRunIDs(
+            kernelRunIDs: runs.map(\.runID),
+            recoveryRunIDs: recoveryRuns.map(\.runID)
+        )
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             HStack {
@@ -598,15 +630,32 @@ private struct KernelConvergenceDiagnosticsView: View {
             Divider()
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 18) {
-                    ForEach(runs, id: \.runID.rawValue) { run in
-                        if let diagnosis = run.convergenceDiagnosis {
-                            runSection(run: run, diagnosis: diagnosis)
-                        } else {
-                            enrolledRunSection(run)
+                    ForEach(orderedRunIDs, id: \.rawValue) { runID in
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Exact native run · \(runID.rawValue)")
+                                .font(.caption)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.secondary)
+                                .textSelection(.enabled)
+                            if let run = runs.first(where: { $0.runID == runID }) {
+                                if let diagnosis = run.convergenceDiagnosis {
+                                    runSection(run: run, diagnosis: diagnosis)
+                                } else {
+                                    enrolledRunSection(run)
+                                }
+                            }
+                            if let report = recoveryRuns.first(where: {
+                                $0.runID == runID
+                            }) {
+                                repositoryIndexSection(report)
+                            } else {
+                                unavailableRepositoryIndexSection(runID)
+                            }
                         }
-                    }
-                    ForEach(recoveryRuns, id: \.runID.rawValue) { report in
-                        repositoryIndexSection(report)
+                        .accessibilityElement(children: .contain)
+                        .accessibilityIdentifier(
+                            "kernel-run-diagnostic-\(runID.rawValue)"
+                        )
                     }
                 }
                 .padding(20)
@@ -748,7 +797,10 @@ private struct KernelConvergenceDiagnosticsView: View {
                         .font(.caption).foregroundStyle(.secondary)
                 }
                 Spacer()
-                Text(report.repositoryIndexStatus.rawValue)
+                Text(
+                    KernelConvergenceDiagnosticPresentation
+                        .repositoryStatusTitle(report.repositoryIndexStatus)
+                )
                     .font(.caption).fontWeight(.semibold)
                     .foregroundStyle(
                         report.repositoryIndexStatus == .resolved
@@ -784,7 +836,7 @@ private struct KernelConvergenceDiagnosticsView: View {
                 .font(.caption2).foregroundStyle(.tertiary)
                 .textSelection(.enabled)
             } else {
-                Text("Cache reuse authority was withheld; inspect the typed recovery status before admitting work.")
+                Text(repositoryStatusExplanation(report.repositoryIndexStatus))
                     .font(.caption).foregroundStyle(.secondary)
             }
         }
@@ -793,6 +845,58 @@ private struct KernelConvergenceDiagnosticsView: View {
         .overlay(RoundedRectangle(cornerRadius: 12).stroke(ForgeStyle.hairline))
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("kernel-repository-index-telemetry")
+    }
+
+    private func unavailableRepositoryIndexSection(
+        _ runID: KernelRunID
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(runID.rawValue)
+                        .font(.headline)
+                        .textSelection(.enabled)
+                    Text("Repository generation")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Text(
+                    KernelConvergenceDiagnosticPresentation
+                        .repositoryStatusTitle(nil)
+                )
+                .font(.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(.secondary)
+            }
+            Text(
+                "No startup recovery report is retained for this exact run. Repository cache authority remains unavailable until a journal-accepted workspace transition is recovered."
+            )
+            .font(.caption)
+            .foregroundStyle(.secondary)
+        }
+        .padding(16)
+        .background(ForgeStyle.panel, in: RoundedRectangle(cornerRadius: 12))
+        .overlay(RoundedRectangle(cornerRadius: 12).stroke(ForgeStyle.hairline))
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("kernel-repository-index-unavailable")
+    }
+
+    private func repositoryStatusExplanation(
+        _ status: WorkspaceRepositoryIndexRecoveryStatus
+    ) -> String {
+        switch status {
+        case .notApplicable:
+            return "This exact run has no journal-accepted workspace transition, so no repository generation or cache reuse authority exists."
+        case .withheldAmbiguousGeneration:
+            return "The latest workspace transition is ambiguous; repository cache reuse authority is withheld."
+        case .withheldPendingEffects:
+            return "Pending or unreleased effects block repository cache reuse authority."
+        case .resolutionFailed:
+            return "Repository generation resolution failed closed; no cache reuse authority exists."
+        case .resolved:
+            return "Resolved status requires typed repository telemetry."
+        }
     }
 
     private func runSection(
@@ -2855,9 +2959,7 @@ private struct TaskDetailView: View {
     private var task: LoopTask? { store.task(id: taskID) }
 
     private var repositoryRecoveryRuns: [WorkspaceMutationRecoveryRunReport] {
-        model.kernelRecoveryRunReports.filter {
-            $0.repositoryIndexStatus != .notApplicable
-        }
+        model.kernelRecoveryRunReports
     }
 
     private var diagnosticRunCount: Int {
