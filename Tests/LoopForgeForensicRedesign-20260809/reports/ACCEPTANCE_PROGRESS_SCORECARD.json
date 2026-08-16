@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-08-16T11:00:33Z",
+  "recordedAt": "2026-08-16T11:04:44Z",
   "contract": "REDESIGN_ACCEPTANCE_MATRIX.md",
   "totalMandatoryGates": 81,
   "finalAcceptedGates": 0,
@@ -8,7 +8,7 @@
   "reasonFinalAcceptedIsZero": "package, native matrix, terminal quiescence, clean source binding, and remote integration pass, but mandatory native production-controller cutover and full unlocked runtime walkthrough gates remain explicitly pending; this all-or-nothing metric must not convert strong partial evidence into final acceptance",
   "latestCrossCuttingUpdate": {
     "status": "native-exact-implementation-authority-source-and-targeted-tests-pass-current-package-native-proof-pending",
-    "result": "Forensic tracing corrected an overbroad cutover claim: the Release app already constructs and invokes the journaled production coordinator for explicit native activation. The genuine B-05 gap was native exact-implementation population. The composer now accepts optional opaque IDs, binds their canonical bytes to user source and a typed prohibit-substitution constraint, displays the exact set for confirmation, and retains it through enrollment and activation. Authoring 17/0, enrollment 14/0, store 20/0, and compiler 24/0 targeted suites passed.",
+    "result": "Forensic tracing corrected an overbroad cutover claim: the Release app already constructs and invokes the journaled production coordinator for explicit native activation. The genuine B-05 gap was native exact-implementation population. Commit c8dd03edcc8ba33d1b9e1ad5bec5c57ec97c5dd4 makes the composer accept optional opaque IDs, bind their canonical bytes to user source and a typed prohibit-substitution constraint, display the exact set for confirmation, and retain it through enrollment and activation. Authoring 17/0, enrollment 14/0, store 20/0, and compiler 24/0 targeted suites passed.",
     "remaining": "rebuild and run the current full package-owned suite, capture the exact composer and confirmation surfaces through the real native UI, then continue the unrelated mandatory Watcher, visual/final-completion, repository-telemetry, provider, containment, and mutation-isolation gates",
     "evidence": "NATIVE_EXACT_IMPLEMENTATION_AUTHORITY_SCORECARD.json"
   },

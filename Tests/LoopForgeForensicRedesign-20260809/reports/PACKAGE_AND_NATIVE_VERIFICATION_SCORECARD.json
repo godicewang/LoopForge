@@ -1,10 +1,11 @@
 {
   "schemaVersion": 34,
   "status": "prior-clean-package-native-and-remote-integration-pass-newer-exact-implementation-source-package-pending",
-  "recordedAt": "2026-08-16T11:00:33Z",
+  "recordedAt": "2026-08-16T11:04:44Z",
   "currentSourcePackage": false,
   "newerCurrentSource": {
     "purpose": "native exact-implementation authority population and confirmation",
+    "implementationCommit": "c8dd03edcc8ba33d1b9e1ad5bec5c57ec97c5dd4",
     "changedProductionFiles": 3,
     "changedTestFiles": 3,
     "targetedTestsExecuted": 75,
