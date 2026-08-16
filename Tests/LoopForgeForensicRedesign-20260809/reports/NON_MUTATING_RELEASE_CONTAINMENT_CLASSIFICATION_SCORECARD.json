@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "recordedAt": "2026-08-16T14:48:15Z",
-  "status": "source-classification-pass-package-native-rebinding-pending-final-release-false",
+  "status": "source-package-native-non-mutating-containment-classification-pass-final-release-false",
   "source": {
     "commit": "4c6bbf8694f4b7caaf9723e2bca6e2a96d1010ba",
     "commitPatchSHA256": "ee437699f78720af2e24734fe4f2e4d2bfe3e5b91b0be2402364e4090965873b",
@@ -37,14 +37,52 @@
   "tests": {
     "focusedManifestClassification": {"executed": 8, "failures": 0, "seconds": 0.013},
     "completeCandidateProductionVeto": {"executed": 1, "failures": 0, "seconds": 1.486},
-    "completeSourceSuite": {"executed": 886, "skipped": 8, "failures": 0, "seconds": 81.035}
+    "completeSourceSuite": {"executed": 886, "skipped": 8, "failures": 0, "seconds": 81.035},
+    "packageOwnedSuite": {"executed": 886, "skipped": 8, "failures": 0, "seconds": 83.689, "logSHA256": "e8dfa695cff6b5dec1231da11973c3894db88dee361b134826909930ade28b4a"}
+  },
+  "package": {
+    "sourceRevision": "6fabd99e94d73d6e21faf17e9e576515843b362a",
+    "sourceDirty": false,
+    "sourceSnapshotSHA256": "7db21a46bdfe9f2795695eafc91c91af71e1163c4557c6620905b92e64253c39",
+    "builtAtUTC": "2026-08-16T14:52:38Z",
+    "buildManifestClassification": "nonMutatingContainmentVeto",
+    "providerManifestClassification": "nonMutatingContainmentVeto",
+    "buildManifestWorkspaceMutationAvailable": false,
+    "providerManifestWorkspaceMutationAvailable": false,
+    "buildManifestSHA256": "5e0d0a98fecf02f880ed4197a76db7185449e097eb168b0a357b41dfbbdd8f25",
+    "providerManifestSHA256": "ffc0b5638a1d688e5328760fdf0758d197e4be25ab7bf4decb25b4281916ca31",
+    "executable": {"bytes": 26681152, "sha256": "8b942f4262f76b2967801d7762c36c78c196d2a6dd259ffd47b0fdc748e57a23", "cdHash": "7caba8ffcf4695a6947bbb975a2d0e08dfc3cc21"},
+    "zip": {"bytes": 253530709, "sha256": "7941e7380658e6ba02ec1659065b792e1c0863ac5d3d1577cec68a83d413a66e"},
+    "dmg": {"bytes": 285833367, "sha256": "fc2f6a90680daf582be9e59a36bc91353aaf3d72d8ee54ec378409ca8214c7d0"},
+    "checksumManifest": {"bytes": 278, "sha256": "131f7ae83f2c80efa987305e08f76ba43e2e8454f37586ebb57cc7be518478ec"},
+    "deepStrictSignaturePassed": true,
+    "checksumValidationPassed": true,
+    "isolatedStartupSmokePassed": true
   },
   "nativeDisclosure": {
     "accessibilityIdentifier": "release-mutation-capability-classification",
     "expectedTitle": "Workspace mutation vetoed",
     "expectedDetail": "No privileged or container containment issuer is packaged; canonical workspace writes are denied.",
-    "packageVerified": false,
-    "nativeVerified": false
+    "packageVerified": true,
+    "nativeVerified": true,
+    "launchArgument": "--isolated-inspection-profile",
+    "accessibilityValue": "Workspace mutation vetoed No privileged or container containment issuer is packaged; canonical workspace writes are denied.",
+    "nonProductiveClassificationVisible": true,
+    "isolatedProfileVisible": true,
+    "persistedWatcherCountLoaded": 0,
+    "authorityCompletionContractVisible": true,
+    "buildWatcherEnabled": false,
+    "screenshotPath": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-nonmutating-release-containment-20260816T1455Z.png",
+    "screenshotSHA256": "b0129b04db012154429b1ece2a7424ae8970490aca3f96637c60eebad8e55063",
+    "screenshotPixelWidth": 1060,
+    "screenshotPixelHeight": 752,
+    "userWatcherStoreChanged": false,
+    "userWatcherStoreSHA256": "a59ca5375c6ee3c78de63773df68b20e80106ef15ad1fd7b85776ba78a584d71",
+    "userWatcherStoreByteCount": 891807,
+    "userWatcherStoreMtimeEpoch": 1786885277,
+    "postQuitPackagedProcessCount": 0,
+    "postQuitHelperProcessCount": 0,
+    "postVerificationMountCount": 0
   },
   "easyBusiness": {
     "mutated": false,

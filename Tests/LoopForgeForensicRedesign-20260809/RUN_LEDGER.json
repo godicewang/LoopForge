@@ -3,7 +3,7 @@
   "project": "LoopForge Forensic Redesign 20h",
   "startedAt": "2026-08-09T13:13:58Z",
   "requiredActiveSeconds": 72000,
-  "coveredActiveSeconds": 203193,
+  "coveredActiveSeconds": 203793,
   "remainingActiveSeconds": 0,
   "requiredForensicAnalysisBeforeImplementationSeconds": 36000,
   "coveredForensicAnalysisSeconds": 39370,
@@ -5773,7 +5773,35 @@
         "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
         "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
       ]
+    },
+    {
+      "id": "nonmutating-release-containment-classification-272",
+      "startedAt": "2026-08-16T14:40:06Z",
+      "endedAt": "2026-08-16T14:55:56Z",
+      "coveredSeconds": 600,
+      "status": "accepted",
+      "excludedFailures": [
+        "focused, complete-candidate, complete-source, and package-owned test execution and polling time count zero",
+        "Release compilation, signing, hashing, archive generation, startup smoke, Computer Use inspection, screenshot capture, quit, process/mount polling, and shell/Git inspection count zero",
+        "the 350 seconds beyond the 600-second accepted active-work cap count zero"
+      ],
+      "activity": "Closed the Release containment/mutation-isolation alternative for the ordinary app without inventing an unsafe issuer. Commit 4c6bbf8 adds a product-level nonMutatingContainmentVeto classification with no mutation-capable enum case, binds workspaceMutationAvailable=false into both exact package manifests, rejects forged availability and relabeled classifications, preserves the journaled pre-effect production-controller veto, and exposes the denied canonical-write boundary in native UI. Focused classification tests passed 8/0, the complete-candidate controller path passed 1/0, and the complete source suite passed 886/8/0. Clean evidence revision 6fabd99 passed package-owned 886/8/0, Release build, deep-strict signing, ZIP/DMG/checksum validation, source/test binding, provider self-test, and isolated smoke. Computer Use inspected the exact signed package and observed the non-productive, workspace-mutation-veto, and isolated banners, zero persisted Watchers, the authority/completion contract, and disabled Build. The user Watcher store retained its exact digest, size, and mtime; quit left zero packaged/helper processes and mounts. EasyBusiness retained its exact branch, HEAD, and status digest. Final release remains false because repository-generation telemetry still needs a disposition consistent with the immutable non-mutation policy.",
+      "evidence": [
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/Kernel/NativeProviderHarnessSelection.swift",
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/AppModel.swift",
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/Views.swift",
+        "/Users/godice/Coding/LoopForge/Scripts/package_app.sh",
+        "/Users/godice/Coding/LoopForge/Scripts/smoke_test.sh",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeTests/NativeProviderHarnessSelectionTests.swift",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NON_MUTATING_RELEASE_CONTAINMENT_CLASSIFICATION.md",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NON_MUTATING_RELEASE_CONTAINMENT_CLASSIFICATION_SCORECARD.json",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-nonmutating-release-containment-20260816T1455Z.png",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge.app",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-macOS-arm64.zip",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
+      ]
     }
   ],
-  "lastUpdatedAt": "2026-08-16T14:36:57Z"
+  "lastUpdatedAt": "2026-08-16T14:55:56Z"
 }

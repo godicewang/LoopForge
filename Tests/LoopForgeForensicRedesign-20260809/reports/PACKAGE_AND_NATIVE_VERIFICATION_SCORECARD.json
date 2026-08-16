@@ -1,33 +1,33 @@
 {
-  "schemaVersion": 41,
-  "status": "current-clean-package-explicit-non-productive-classification-and-isolated-native-inspection-pass-global-gates-pending",
-  "recordedAt": "2026-08-16T14:06:46Z",
+  "schemaVersion": 42,
+  "status": "current-clean-package-explicit-non-productive-and-non-mutating-classifications-isolated-native-inspection-pass-final-release-false",
+  "recordedAt": "2026-08-16T14:55:56Z",
   "currentSourcePackage": true,
-  "currentSourceSnapshotSHA256": "4b5c8ecf75084c9e86651c5c3b640d081b1406cfc3fafe3427c890b1651e78df",
+  "currentSourceSnapshotSHA256": "7db21a46bdfe9f2795695eafc91c91af71e1163c4557c6620905b92e64253c39",
   "currentSourceVerification": {
-    "executed": 883,
+    "executed": 886,
     "skipped": 8,
     "failures": 0,
-    "seconds": 92.850,
-    "wallSeconds": 92.901,
+    "seconds": 81.035,
+    "wallSeconds": 81.087,
     "releaseBuildPassed": true,
     "packaged": true
   },
   "packagingOwnedFullSuite": {
-    "executed": 883,
+    "executed": 886,
     "skipped": 8,
     "failures": 0,
-    "seconds": 77.283,
-    "wallSeconds": 77.337,
+    "seconds": 83.689,
+    "wallSeconds": 83.743,
     "logPath": "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log",
-    "logSHA256": "83a96a404fe010e0f1b0078c912fad85e76bc8c50716c2bf6200539ae8733719"
+    "logSHA256": "e8dfa695cff6b5dec1231da11973c3894db88dee361b134826909930ade28b4a"
   },
   "sourceBinding": {
-    "gitRevision": "dc33b91606c27fc073773c990e9840ae398e3316",
+    "gitRevision": "6fabd99e94d73d6e21faf17e9e576515843b362a",
     "dirty": false,
-    "builtAtUTC": "2026-08-16T14:02:21Z",
-    "snapshotSHA256": "4b5c8ecf75084c9e86651c5c3b640d081b1406cfc3fafe3427c890b1651e78df",
-    "embeddedManifestSHA256": "a70f0c4a2eeb75775a3eaab7dca48f6f1024bea9084bcc6d1133aedd9bcbf387",
+    "builtAtUTC": "2026-08-16T14:52:38Z",
+    "snapshotSHA256": "7db21a46bdfe9f2795695eafc91c91af71e1163c4557c6620905b92e64253c39",
+    "embeddedManifestSHA256": "5e0d0a98fecf02f880ed4197a76db7185449e097eb168b0a357b41dfbbdd8f25",
     "embeddedManifestVerified": true,
     "smokeRecomputedSnapshot": true,
     "revisionBoundToCleanCommit": true,
@@ -35,7 +35,7 @@
   },
   "signature": {
     "kind": "adhoc",
-    "applicationCDHash": "ac112ed294a8718dc3c1a6b90d2adc0da9acf175",
+    "applicationCDHash": "7caba8ffcf4695a6947bbb975a2d0e08dfc3cc21",
     "gateCDHash": "138982f66022e1d20d76823282ff6a9fc507d3b6",
     "verifiedDeepStrict": true
   },
@@ -53,15 +53,15 @@
     "postVerificationMountCount": 0
   },
   "artifacts": {
-    "executable": {"bytes": 26671120, "sha256": "8f4e3ab923583d71df91d999ea3e0d3981bedb2fa4fc86e36d655ec70fdc8738"},
+    "executable": {"bytes": 26681152, "sha256": "8b942f4262f76b2967801d7762c36c78c196d2a6dd259ffd47b0fdc748e57a23"},
     "sandboxGate": {"bytes": 78512, "sha256": "85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd"},
     "providerHarness": {"bytes": 145952, "sha256": "d4de4d8b38a59186f8f184ddf1c54ea7f63bd5084d18df0bb37fa7edd19154ac"},
-    "zip": {"bytes": 253527370, "sha256": "9e68a631455cffed052cabd5256417400b307570057688fd960a054e956394b3"},
-    "dmg": {"bytes": 285828366, "sha256": "51a1553acaa9ffbbd9a3bc790c15966a40f8927c0e54f226087b6682c32387bb"},
-    "checksumManifest": {"bytes": 278, "sha256": "2fcadd9e9ec52334d81f53ac579b3b90c0594ae16b28f182e75f6ffae34d68cf"},
-    "packageTestLog": {"bytes": 253277, "sha256": "83a96a404fe010e0f1b0078c912fad85e76bc8c50716c2bf6200539ae8733719"},
-    "buildManifest": {"bytes": 506, "sha256": "a70f0c4a2eeb75775a3eaab7dca48f6f1024bea9084bcc6d1133aedd9bcbf387"},
-    "providerHarnessManifest": {"bytes": 456, "sha256": "9f3c8174c7f59f4a705b8c4b143ed489fedcb688af4ce59e89f04e573b258b6c"}
+    "zip": {"bytes": 253530709, "sha256": "7941e7380658e6ba02ec1659065b792e1c0863ac5d3d1577cec68a83d413a66e"},
+    "dmg": {"bytes": 285833367, "sha256": "fc2f6a90680daf582be9e59a36bc91353aaf3d72d8ee54ec378409ca8214c7d0"},
+    "checksumManifest": {"bytes": 278, "sha256": "131f7ae83f2c80efa987305e08f76ba43e2e8454f37586ebb57cc7be518478ec"},
+    "packageTestLog": {"bytes": 254126, "sha256": "e8dfa695cff6b5dec1231da11973c3894db88dee361b134826909930ade28b4a"},
+    "buildManifest": {"bytes": 612, "sha256": "5e0d0a98fecf02f880ed4197a76db7185449e097eb168b0a357b41dfbbdd8f25"},
+    "providerHarnessManifest": {"bytes": 562, "sha256": "ffc0b5638a1d688e5328760fdf0758d197e4be25ab7bf4decb25b4281916ca31"}
   },
   "readyEnrollmentRecovery": {
     "registryAndJournalProofRequired": true,
@@ -176,6 +176,21 @@
     "canonicalWorkspaceChangedAfterVeto": false,
     "exactChangedTestAuthorityPreparesThroughProductionMethod": true,
     "preparedReplayIsExact": true
+  },
+  "currentReleaseMutationCapabilityClassification": {
+    "classification": "nonMutatingContainmentVeto",
+    "workspaceMutationAvailable": false,
+    "mutationCapableCaseExistsInOrdinaryAppEnum": false,
+    "unavailableStateFailsClosed": true,
+    "buildManifestBound": true,
+    "providerManifestBound": true,
+    "forgedAvailabilityRejected": true,
+    "relabeledClassificationRejected": true,
+    "ordinaryProductionPreEffectVetoRetained": true,
+    "nativeUIExactPackageInspected": true,
+    "screenshotPath": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-nonmutating-release-containment-20260816T1455Z.png",
+    "screenshotSHA256": "b0129b04db012154429b1ece2a7424ae8970490aca3f96637c60eebad8e55063",
+    "evidence": "NON_MUTATING_RELEASE_CONTAINMENT_CLASSIFICATION_SCORECARD.json"
   },
   "currentTerminationQuiescence": {
     "receiptProvenStopInterruptsActiveAttempt": true,
@@ -555,14 +570,13 @@
   "gitIntegration": {
     "branch": "main",
     "remote": "origin",
-    "exactImplementationCommit": "dc33b91606c27fc073773c990e9840ae398e3316",
-    "cleanPackageSourceRevision": "dc33b91606c27fc073773c990e9840ae398e3316",
+    "exactImplementationCommit": "4c6bbf8694f4b7caaf9723e2bca6e2a96d1010ba",
+    "cleanPackageSourceRevision": "6fabd99e94d73d6e21faf17e9e576515843b362a",
     "sourceRevisionObservedOnRemote": true,
     "closureReceipt": "the commit containing this scorecard must equal origin/main after publication"
   },
   "remainingGaps": [
-    "an operation-free live Watcher completion-chain fixture and resolved repository-generation telemetry after separately ratified mutation/isolation authority",
-    "trusted Release containment and mutation isolation remain typed vetoes, so mutation-backed execution is intentionally unavailable"
+    "resolved repository-generation telemetry disposition for the explicit non-mutating release"
   ],
   "finalRelease": false,
   "easyBusinessMutated": false,

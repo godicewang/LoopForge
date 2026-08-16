@@ -1,6 +1,6 @@
 # Non-Mutating Release Containment Classification
 
-Status: **the ordinary macOS package is explicitly non-mutating and retains the exact pre-effect containment veto; package and native rebinding are pending**
+Status: **the ordinary macOS package is explicitly non-mutating, retains the exact pre-effect containment veto, and passes package/native verification; final release remains false**
 
 Recorded: `2026-08-16T14:48:15Z`
 
@@ -52,9 +52,30 @@ The root view now exposes a distinct release-mutation banner:
 `Workspace mutation vetoed · No privileged or container containment issuer is packaged; canonical workspace writes are denied.`
 
 Missing or invalid packaged metadata displays an unavailable fail-closed
-variant with the same denied-write result. Package and native evidence will be
-added only after a clean evidence revision is built, signed, hashed, launched
-under the isolated inspection profile, and quit cleanly.
+variant with the same denied-write result.
+
+The exact clean evidence revision
+`6fabd99e94d73d6e21faf17e9e576515843b362a` was packaged with
+`sourceDirty=false` and source snapshot
+`7db21a46bdfe9f2795695eafc91c91af71e1163c4557c6620905b92e64253c39`.
+Both embedded manifests carry the exact non-mutation declaration. The
+package-owned suite passed 886/8/0 in 83.689 XCTest seconds; Release
+compilation, deep-strict signing, ZIP/DMG/checksum validation, provider
+self-test, source/test binding, and isolated startup smoke passed.
+
+Computer Use inspected that signed package under
+`--isolated-inspection-profile`. The Accessibility tree simultaneously exposed
+the non-productive, workspace-mutation-veto, and isolated-profile banners; the
+Watcher list was empty, the authority/completion contract remained visible,
+and Build Watcher was disabled. The
+[1060×752 native receipt](../screenshots/packaged-loopforge-nonmutating-release-containment-20260816T1455Z.png)
+has SHA-256
+`b0129b04db012154429b1ece2a7424ae8970490aca3f96637c60eebad8e55063`.
+
+The user's primary and backup Watcher stores retained SHA-256
+`a59ca5375c6ee3c78de63773df68b20e80106ef15ad1fd7b85776ba78a584d71`,
+891807 bytes, and mtime epoch 1786885277. Quit left zero packaged/helper
+processes and zero verification mounts.
 
 ## Verification
 
@@ -64,6 +85,8 @@ under the isolated inspection profile, and quit cleanly.
   seconds.
 - Complete source suite: 886 executed, 8 environment-gated skips, 0 failures,
   81.035 XCTest seconds.
+- Clean package-owned suite: 886 executed, 8 environment-gated skips, 0
+  failures, 83.689 XCTest seconds.
 - `git diff --check`: passed before the implementation commit.
 - Commit patch SHA-256:
   `ee437699f78720af2e24734fe4f2e4d2bfe3e5b91b0be2402364e4090965873b`.
@@ -75,8 +98,8 @@ status SHA-256
 
 ## Gate result
 
-This closes the Release-containment/mutation-isolation alternative at source
-by retaining and explicitly classifying the non-mutation veto. Final release
+This closes the Release-containment/mutation-isolation alternative across
+source, exact package manifests, smoke policy, and the real native UI by
+retaining and explicitly classifying the non-mutation veto. Final release
 remains false. Resolved repository-generation telemetry still requires a
 separate explicit disposition for this non-mutating product classification.
-

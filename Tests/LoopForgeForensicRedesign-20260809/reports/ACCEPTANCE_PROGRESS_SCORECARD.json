@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-08-16T14:06:46Z",
+  "recordedAt": "2026-08-16T14:55:56Z",
   "contract": "REDESIGN_ACCEPTANCE_MATRIX.md",
   "totalMandatoryGates": 81,
   "finalAcceptedGates": 0,
   "finalAcceptanceBlocked": true,
-  "reasonFinalAcceptedIsZero": "current package, explicit non-productive classification, operation-free isolated native inspection, native activation, native matrix, exact-implementation and deliverable-cardinality confirmation, exact-run repository-status attribution, terminal quiescence, clean source binding, and remote integration pass, but mandatory downstream live visual/final-completion authority, Watcher live-chain, resolved repository telemetry, containment, mutation-isolation, and remaining runtime walkthrough gates remain explicitly pending; this all-or-nothing metric must not convert strong partial evidence into final acceptance",
+  "reasonFinalAcceptedIsZero": "current package, explicit non-productive and non-mutating classifications, operation-free isolated native inspection, disposable Watcher completion chain, native activation, native matrix, exact-implementation and deliverable-cardinality confirmation, exact-run repository-status attribution, terminal quiescence, clean source binding, and remote integration pass, but the resolved repository-generation telemetry gate still needs an explicit disposition consistent with the non-mutating package; this all-or-nothing metric must not convert strong partial evidence into final acceptance",
   "latestCrossCuttingUpdate": {
-    "status": "explicit-non-productive-classification-and-operation-free-isolated-native-inspection-current-clean-package-pass",
-    "result": "Commit dc33b91606c27fc073773c990e9840ae398e3316 explicitly classifies the ordinary app as nonProductiveTransportVeto in code and both manifests, exposes productiveExecutionAvailable=false, gives the enum no productive case, and launches package smoke only through the isolated profile. Source and package-owned 883/8/0 suites passed. Computer Use observed both the non-productive and isolated banners in the exact signed package; the Watcher store stayed exact and quit left zero processes and mounts.",
-    "remaining": "supply downstream live visual/review and final-completion authority through the retained app session, exercise the Watcher live completion chain only in a disposable fixture, demonstrate resolved repository telemetry only through a separately ratified production mutation/isolation path, and retain or replace the containment and mutation-isolation vetoes with exact authority",
-    "evidence": "NON_PRODUCTIVE_RELEASE_CLASSIFICATION_SCORECARD.json"
+    "status": "explicit-non-productive-and-non-mutating-classifications-disposable-watcher-chain-current-clean-package-pass",
+    "result": "Commit 4c6bbf8694f4b7caaf9723e2bca6e2a96d1010ba explicitly classifies the ordinary app as nonMutatingContainmentVeto with workspaceMutationAvailable=false, no mutation-capable enum case, exact dual-manifest binding, forged-availability rejection, and the already journaled pre-effect production veto. Clean source and package-owned 886/8/0 suites passed. Computer Use observed the non-productive, mutation-veto, and isolated banners in exact package revision 6fabd99; the Watcher store stayed exact and quit left zero processes and mounts. The disposable controller Watcher chain is separately closed at 39ebb2a.",
+    "remaining": "give resolved repository-generation telemetry one explicit disposition consistent with the ordinary package's immutable non-mutation policy",
+    "evidence": "NON_MUTATING_RELEASE_CONTAINMENT_CLASSIFICATION_SCORECARD.json"
   },
   "newlyAdvanced": [
     {
@@ -99,9 +99,9 @@
     },
     {
       "id": "C-02",
-      "status": "native-completed-candidate-chain-preapply-containment-veto-and-exact-already-applied-rollback-enforced-release-issuer-pending",
-      "result": "Both mutation-safety halves are now enforced. Future apply requires a non-Codable exact-run/transaction/contract capability covering every ratified verifier/reviewer probe before supervisor construction, lease admission, apply intent, or outbox persistence; ordinary macOS has no Release issuer, so missing or cross-wired readiness leaves rollbackPrepared with no lease or effect. Already-applied journals convert the reducer-accepted launch veto into a deterministic fresh-lease rollback, restore only the retained preimage after full policy-bound CAS, reach rolledBack, release authority, and replay with zero effects. No verification, acceptance, publication, or completion is invented. EasyBusiness remains unchanged read-only evidence.",
-      "remaining": "provide a tested privileged/container Release containment issuer if mutation-backed verification is to run; otherwise retain the pre-apply veto, invoke the journal-bound native visual evaluator from the production execution session, cut the Journaled Auto Graph start flow over to that session, retain the observer containment veto unless trusted containment exists, and complete the unlocked native walkthrough, clean-commit rebuild, commit, and push"
+      "status": "native-completed-candidate-chain-explicit-non-mutating-release-containment-veto-and-exact-already-applied-rollback-enforced",
+      "result": "Both mutation-safety halves are enforced and the ordinary package now explicitly selects the retained-veto alternative. Future apply requires a non-Codable exact-run/transaction/contract capability covering every ratified verifier/reviewer probe before supervisor construction, lease admission, apply intent, or outbox persistence; the ordinary app has no Release issuer or mutation-capable classification, so missing or cross-wired readiness leaves rollbackPrepared with no lease or effect. Both manifests bind nonMutatingContainmentVeto and workspaceMutationAvailable=false, forged claims reject, and the exact native UI discloses denied canonical writes. Already-applied journals still convert the reducer-accepted launch veto into deterministic exact rollback. No verification, acceptance, publication, or completion is invented. EasyBusiness remains unchanged read-only evidence.",
+      "remaining": "none for the ordinary non-mutating Release classification; any future mutation-capable product requires separately isolated privileged/container ratification"
     },
     {
       "id": "B-06",
