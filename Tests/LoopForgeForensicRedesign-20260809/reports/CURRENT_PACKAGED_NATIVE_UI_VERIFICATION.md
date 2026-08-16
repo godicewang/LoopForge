@@ -1,8 +1,26 @@
 # Latest Interactive Packaged Native UI Verification
 
-Status: **current clean package now supports operation-free isolated native inspection; Watcher live-chain and resolved cache telemetry remain pending**
+Status: **current clean package is explicitly non-productive and supports operation-free isolated native inspection; final release remains false**
 
-Recorded: `2026-08-16T13:39:36Z`
+Recorded: `2026-08-16T14:06:46Z`
+
+## Current explicit non-productive classification
+
+Clean revision `dc33b91606c27fc073773c990e9840ae398e3316` makes
+the package capability unambiguous in code, both embedded manifests, smoke,
+and the native UI. The ordinary-app classification enum has no productive case;
+both its packaged transport-veto value and its missing-manifest fallback deny
+productive execution. Source and package-owned suites passed 883/8/0.
+
+Computer Use launched the exact signed package with the isolated flag and
+observed `Non-productive safety build · Transport-veto only · no productive
+provider is installed or authorized.` The
+[current 1060×752 native receipt](../screenshots/packaged-loopforge-nonproductive-release-classification-20260816T1403Z.png)
+has SHA-256
+`e171e5ef2069cbfc52110efe458fd3dbb2718ae00293fbb56a8bf4d478a0fd58`.
+The Watcher store remained byte- and timestamp-identical; quit left zero
+processes and mounts. See the [implementation receipt](NON_PRODUCTIVE_RELEASE_CLASSIFICATION.md)
+and [machine-readable scorecard](NON_PRODUCTIVE_RELEASE_CLASSIFICATION_SCORECARD.json).
 
 ## Current isolated inspection profile
 

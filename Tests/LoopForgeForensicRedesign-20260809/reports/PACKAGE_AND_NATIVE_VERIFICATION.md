@@ -1,27 +1,47 @@
 # Package and Native Verification
 
-Status: **current clean-source package and native exact-run repository-status binding passed; global production cutover remains blocked**
+Status: **current clean-source package is explicitly non-productive and passes isolated native verification; final release remains false**
 
-Recorded: `2026-08-16T12:37:13Z`
+Recorded: `2026-08-16T14:06:46Z`
 
 ## Current package result
 
-Packaging ran from clean exact-run diagnostics implementation revision `7655bb132bd979b12315780f08d8b88c8b11d310`. The embedded manifest records `sourceDirty: false`, source snapshot `1b3cc8cf8d391a4861b1c44b4b4a9a7d5d2e09cd2fe36486bde66252b5136bb4`, and package-owned **878-test, 8-skip, 0-failure** log digest `a8c439f815a043e03318738c1a0c07694584aa457b6c9e394cd52b9081da1446`. Smoke verification independently recomputed the same clean source snapshot and test-log digest from the package.
+Packaging ran from clean revision `dc33b91606c27fc073773c990e9840ae398e3316`. The embedded manifest records `sourceDirty: false`, source snapshot `4b5c8ecf75084c9e86651c5c3b640d081b1406cfc3fafe3427c890b1651e78df`, and package-owned **883-test, 8-skip, 0-failure** log digest `83a96a404fe010e0f1b0078c912fad85e76bc8c50716c2bf6200539ae8733719`. Smoke verification independently recomputed the same clean source snapshot and test-log digest from the package.
 
-The accepted package-owned suite completed in 84.564 test seconds (84.614 wall). All three non-DEBUG arm64 products built. Strict deep ad-hoc signature verification, plist parsing, ZIP integrity, DMG verification, every checksum-manifest entry, embedded source/test binding, exact signed-harness manifest identity, model-weight exclusion, bounded exact packaged Mach-O startup, and cleanup passed.
+The package-owned suite completed in 77.283 test seconds (77.337 wall). All three non-DEBUG arm64 products built. Strict deep ad-hoc signature verification, plist parsing, ZIP integrity, DMG verification, every checksum-manifest entry, embedded source/test binding, exact signed-harness manifest identity, model-weight exclusion, isolated exact packaged Mach-O startup, and cleanup passed.
 
 Artifacts:
 
-- executable: 26,568,192 bytes, `932b60fee705eb70521d013d2021867979f35f701a3f0bf17e847365ef101504`;
+- executable: 26,671,120 bytes, `8f4e3ab923583d71df91d999ea3e0d3981bedb2fa4fc86e36d655ec70fdc8738`;
 - sandbox gate: 78,512 bytes, `85b881caa33ae85c2ff98473bcbf8a227bb18fbcc1fad0c781aeadcc91cf2ebd`;
 - provider harness: 145,952 bytes, `d4de4d8b38a59186f8f184ddf1c54ea7f63bd5084d18df0bb37fa7edd19154ac`;
-- ZIP: 253,502,404 bytes, `5e55b53b50930965c8dae5cb13749d1cf0da97d4de8038dde07d94351400c7e2`;
-- DMG: 285,827,235 bytes, `8b39d09b80c2e65e886e5e0eb72b40325c5a6cadae85f585e03799d99ea75db0`;
-- package test log: 252,018 bytes, `a8c439f815a043e03318738c1a0c07694584aa457b6c9e394cd52b9081da1446`;
-- checksum manifest: 278 bytes, `319a13433f4643cf6d4ce174754018a3d3f0e2863b6a7db7fc304d964a8a2c00`;
-- build manifest: 353 bytes, `a26e700d871249c0b2d7dd77795acfe6beb5433a33b9dcc17582fd37c8eb3a94`;
-- app CDHash: `68f10f7b4135cb62e13cf460885876f7d95a9377`;
+- ZIP: 253,527,370 bytes, `9e68a631455cffed052cabd5256417400b307570057688fd960a054e956394b3`;
+- DMG: 285,828,366 bytes, `51a1553acaa9ffbbd9a3bc790c15966a40f8927c0e54f226087b6682c32387bb`;
+- package test log: 253,277 bytes, `83a96a404fe010e0f1b0078c912fad85e76bc8c50716c2bf6200539ae8733719`;
+- checksum manifest: 278 bytes, `2fcadd9e9ec52334d81f53ac579b3b90c0594ae16b28f182e75f6ffae34d68cf`;
+- build manifest: 506 bytes, `a70f0c4a2eeb75775a3eaab7dca48f6f1024bea9084bcc6d1133aedd9bcbf387`;
+- app CDHash: `ac112ed294a8718dc3c1a6b90d2adc0da9acf175`;
 - gate CDHash: `138982f66022e1d20d76823282ff6a9fc507d3b6`.
+
+## Explicit non-productive release classification
+
+The ordinary app now carries `nonProductiveTransportVeto` and
+`productiveExecutionAvailable=false` in code, the build manifest, and the
+exact provider-harness manifest. Its classification enum contains no
+productive case. The harness loader rejects mismatched fields and forged
+productive availability, while missing metadata becomes unavailable and
+fail-closed. Package smoke verifies the same declarations and launches the app
+only with `--isolated-inspection-profile`.
+
+Computer Use opened the exact package and the visible native banner stated
+`Non-productive safety build · Transport-veto only · no productive provider is
+installed or authorized.` The [native receipt](../screenshots/packaged-loopforge-nonproductive-release-classification-20260816T1403Z.png)
+has SHA-256
+`e171e5ef2069cbfc52110efe458fd3dbb2718ae00293fbb56a8bf4d478a0fd58`.
+The Watcher store retained its exact digest, byte count, and mtime, while quit
+left zero packaged/helper processes and mounts. See
+[Explicit Non-Productive Release Classification](NON_PRODUCTIVE_RELEASE_CLASSIFICATION.md)
+and its [scorecard](NON_PRODUCTIVE_RELEASE_CLASSIFICATION_SCORECARD.json).
 
 ## Native exact-run repository diagnostics
 

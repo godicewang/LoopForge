@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T14:06:46Z",
+  "status": "explicit-non-productive-release-classification-pass-final-release-false",
+  "classification": {
+    "rawValue": "nonProductiveTransportVeto",
+    "productiveExecutionAvailable": false,
+    "productiveCaseExistsInOrdinaryAppEnum": false,
+    "unavailableStateFailsClosed": true,
+    "providerHarnessOperationalMode": "transportVetoOnly",
+    "productiveProviderBackends": [],
+    "forgedProductiveAvailabilityRejected": true,
+    "manifestClassificationMismatchRejected": true
+  },
+  "package": {
+    "sourceRevision": "dc33b91606c27fc073773c990e9840ae398e3316",
+    "sourceDirty": false,
+    "sourceSnapshotSHA256": "4b5c8ecf75084c9e86651c5c3b640d081b1406cfc3fafe3427c890b1651e78df",
+    "builtAtUTC": "2026-08-16T14:02:21Z",
+    "buildManifestClassification": "nonProductiveTransportVeto",
+    "providerManifestClassification": "nonProductiveTransportVeto",
+    "buildManifestProductiveExecutionAvailable": false,
+    "providerManifestProductiveExecutionAvailable": false,
+    "buildManifestSHA256": "a70f0c4a2eeb75775a3eaab7dca48f6f1024bea9084bcc6d1133aedd9bcbf387",
+    "providerManifestSHA256": "9f3c8174c7f59f4a705b8c4b143ed489fedcb688af4ce59e89f04e573b258b6c",
+    "packageTestLogSHA256": "83a96a404fe010e0f1b0078c912fad85e76bc8c50716c2bf6200539ae8733719",
+    "executable": {"bytes": 26671120, "sha256": "8f4e3ab923583d71df91d999ea3e0d3981bedb2fa4fc86e36d655ec70fdc8738"},
+    "zip": {"bytes": 253527370, "sha256": "9e68a631455cffed052cabd5256417400b307570057688fd960a054e956394b3"},
+    "dmg": {"bytes": 285828366, "sha256": "51a1553acaa9ffbbd9a3bc790c15966a40f8927c0e54f226087b6682c32387bb"},
+    "checksumManifest": {"bytes": 278, "sha256": "2fcadd9e9ec52334d81f53ac579b3b90c0594ae16b28f182e75f6ffae34d68cf"},
+    "applicationCDHash": "ac112ed294a8718dc3c1a6b90d2adc0da9acf175",
+    "deepStrictSignaturePassed": true,
+    "isolatedStartupSmokePassed": true
+  },
+  "tests": {
+    "focusedExecuted": 8,
+    "focusedFailures": 0,
+    "sourceExecuted": 883,
+    "sourceSkipped": 8,
+    "sourceFailures": 0,
+    "sourceSeconds": 92.850,
+    "packageOwnedExecuted": 883,
+    "packageOwnedSkipped": 8,
+    "packageOwnedFailures": 0,
+    "packageOwnedSeconds": 77.283
+  },
+  "nativeVerification": {
+    "exactPackagedApplicationInspected": true,
+    "launchArgument": "--isolated-inspection-profile",
+    "classificationVisible": true,
+    "accessibilityValue": "Non-productive safety build Transport-veto only · no productive provider is installed or authorized.",
+    "isolatedProfileVisible": true,
+    "persistedWatcherCountLoaded": 0,
+    "buildWatcherEnabled": false,
+    "operationFree": true,
+    "userWatcherStoreChanged": false,
+    "userWatcherStoreSHA256": "a59ca5375c6ee3c78de63773df68b20e80106ef15ad1fd7b85776ba78a584d71",
+    "userWatcherStoreByteCount": 891807,
+    "userWatcherStoreMtimeEpoch": 1786885277,
+    "screenshotPath": "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-nonproductive-release-classification-20260816T1403Z.png",
+    "screenshotSHA256": "e171e5ef2069cbfc52110efe458fd3dbb2718ae00293fbb56a8bf4d478a0fd58",
+    "screenshotPixelWidth": 1060,
+    "screenshotPixelHeight": 752,
+    "postQuitPackagedProcessCount": 0,
+    "postQuitHelperProcessCount": 0,
+    "postVerificationMountCount": 0
+  },
+  "easyBusiness": {
+    "mutated": false,
+    "branch": "codex/USA_Version",
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "nulDelimitedStatusSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a"
+  },
+  "closedGate": "productive-provider-isolation-or-explicit-non-productive-classification",
+  "remainingGates": [
+    "operation-free live Watcher completion-chain fixture",
+    "resolved repository-generation telemetry after separately ratified mutation/isolation authority",
+    "Release containment and mutation isolation authority"
+  ],
+  "finalAcceptance": false
+}

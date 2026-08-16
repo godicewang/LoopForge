@@ -3,7 +3,7 @@
   "project": "LoopForge Forensic Redesign 20h",
   "startedAt": "2026-08-09T13:13:58Z",
   "requiredActiveSeconds": 72000,
-  "coveredActiveSeconds": 201993,
+  "coveredActiveSeconds": 202593,
   "remainingActiveSeconds": 0,
   "requiredForensicAnalysisBeforeImplementationSeconds": 36000,
   "coveredForensicAnalysisSeconds": 39370,
@@ -5719,7 +5719,37 @@
         "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
         "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
       ]
+    },
+    {
+      "id": "explicit-nonproductive-release-classification-270",
+      "startedAt": "2026-08-16T13:47:35Z",
+      "endedAt": "2026-08-16T14:06:46Z",
+      "coveredSeconds": 600,
+      "status": "accepted",
+      "excludedFailures": [
+        "focused and complete source tests, both package-owned full suites, Release compilation, signing, hashing, archive generation, smoke, and package polling count zero",
+        "the first package built before startup-probe isolation was committed is stale and contributes no package or verification time",
+        "Computer Use launch, accessibility inspection, screenshot capture, quit, process/mount polling, shell inspection, and time beyond the 600-second accepted active-work cap count zero"
+      ],
+      "activity": "Closed the productive-provider-or-explicit-classification alternative without inventing a provider. Commit 571dc66 gives the ordinary app an explicit nonProductiveTransportVeto classification with no productive enum case, binds productiveExecutionAvailable=false into both package manifests, rejects cross-field and forged productive claims, and displays the exact limitation in the native UI. Commit dc33b91 additionally ensures package startup smoke forwards the isolated inspection profile; focused probe tests passed and the complete source suite passed 883/8/0. The clean package-owned suite passed 883/8/0 and exact revision dc33b91 passed Release build, deep-strict signing, ZIP/DMG/checksum validation, source/test manifest binding, isolated smoke, and cleanup. Computer Use inspected the exact signed package and observed both non-productive and isolated banners while Build remained disabled. The Watcher store retained its exact digest, size, and mtime; zero packaged/helper processes or mounts remained. EasyBusiness retained its exact branch, HEAD, and status digest. Final release remains false because the disposable live Watcher chain, resolved repository telemetry, and Release containment/mutation-isolation authority remain pending.",
+      "evidence": [
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/Kernel/NativeProviderHarnessSelection.swift",
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/AppModel.swift",
+        "/Users/godice/Coding/LoopForge/Sources/LoopForge/Views.swift",
+        "/Users/godice/Coding/LoopForge/Scripts/package_app.sh",
+        "/Users/godice/Coding/LoopForge/Scripts/smoke_test.sh",
+        "/Users/godice/Coding/LoopForge/Scripts/probe_executable_startup.sh",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeTests/NativeProviderHarnessSelectionTests.swift",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeTests/HostResourceLeaseTests.swift",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NON_PRODUCTIVE_RELEASE_CLASSIFICATION.md",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/reports/NON_PRODUCTIVE_RELEASE_CLASSIFICATION_SCORECARD.json",
+        "/Users/godice/Coding/LoopForge/Tests/LoopForgeForensicRedesign-20260809/screenshots/packaged-loopforge-nonproductive-release-classification-20260816T1403Z.png",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge.app",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-macOS-arm64.zip",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-1.0.0-arm64.dmg",
+        "/Users/godice/Coding/LoopForge/dist/LoopForge-package-tests.log"
+      ]
     }
   ],
-  "lastUpdatedAt": "2026-08-16T13:39:36Z"
+  "lastUpdatedAt": "2026-08-16T14:06:46Z"
 }

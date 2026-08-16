@@ -96,15 +96,15 @@
     </section>
     <section class="card full">
       <span class="status green">Strict active-work floor reached</span>
-      <div class="metric">201,993 s</div>
-      <div class="label">269 accepted intervals; failed runs, explicit waits, lock/sleep gaps, unintended external work, and prior-task time excluded. This is a minimum-work gate, not completion.</div>
+      <div class="metric">202,593 s</div>
+      <div class="label">270 accepted intervals; failed runs, explicit waits, lock/sleep gaps, unintended external work, and prior-task time excluded. This is a minimum-work gate, not completion.</div>
     </section>
 
     <section class="card full">
-      <span class="status amber">Current isolated native inspection · final release still false</span>
-      <h2>Exact-package UI audits no longer load persisted work</h2>
-      <p>The clean <code>edb3a96</code> package adds an explicit process-isolated inspection profile. It redirects all LoopForge-owned Application Support state, skips startup automation, blocks new work, and states the boundary in a native banner. Source and package-owned suites passed 880/8/0.</p>
-      <p class="small" style="margin-top:10px">Computer Use launched the exact package with the flag. No persisted Watcher loaded, Scheduler ready remained visible, Build stayed disabled, user Watcher-store and prior-fixture hashes stayed exact, and quit left zero packaged/helper processes and mounts. The prior resume incident is closed for package inspection; a disposable live Watcher completion chain is still pending.</p>
+      <span class="status amber">Explicitly non-productive package · final release still false</span>
+      <h2>Transport-veto capability is now named, bound, and visible</h2>
+      <p>The clean <code>dc33b91</code> package declares <code>nonProductiveTransportVeto</code> and <code>productiveExecutionAvailable=false</code> in code and both embedded manifests. Its ordinary-app enum has no productive case. Source and package-owned suites passed 883/8/0.</p>
+      <p class="small" style="margin-top:10px">Computer Use opened the exact signed package under the isolated profile and proved the native “Non-productive safety build” diagnostic. The Watcher store remained exact and quit left zero processes or mounts. This closes the provider-or-classification alternative, not the remaining Watcher, repository-telemetry, containment, or mutation-isolation gates.</p>
     </section>
 
     <section class="card wide">
@@ -126,6 +126,8 @@
     <section class="card full">
       <h2>Implemented side-by-side</h2>
       <div class="links">
+        <a href="NON_PRODUCTIVE_RELEASE_CLASSIFICATION.md">Current explicit non-productive release classification</a>
+        <a href="NON_PRODUCTIVE_RELEASE_CLASSIFICATION_SCORECARD.json">Non-productive classification scorecard (machine-readable)</a>
         <a href="ISOLATED_NATIVE_INSPECTION_PROFILE.md">Current operation-free isolated native inspection</a>
         <a href="ISOLATED_NATIVE_INSPECTION_PROFILE_SCORECARD.json">Isolated native inspection scorecard (machine-readable)</a>
         <a href="WATCHER_AUTHORITY_NATIVE_CONTRACT.md">Current Watcher authority/completion native contract</a>
@@ -395,10 +397,10 @@
     </section>
 
     <section class="card full">
-      <h2>Current signed isolated-inspection evidence</h2>
+      <h2>Current signed non-productive and isolated evidence</h2>
       <figure>
-        <a href="../screenshots/packaged-loopforge-isolated-inspection-profile-20260816T1335Z.png"><img src="../screenshots/packaged-loopforge-isolated-inspection-profile-20260816T1335Z.png" alt="Exact signed LoopForge package showing the isolated inspection profile banner, empty Watcher list, and idle scheduler"></a>
-        <figcaption>Clean <code>edb3a96</code> package · persisted work not loaded · Scheduler ready · Build disabled · screenshot SHA-256 <code>5ce9c28c…58a76</code>.</figcaption>
+        <a href="../screenshots/packaged-loopforge-nonproductive-release-classification-20260816T1403Z.png"><img src="../screenshots/packaged-loopforge-nonproductive-release-classification-20260816T1403Z.png" alt="Exact signed LoopForge package showing the non-productive safety build and isolated inspection profile banners"></a>
+        <figcaption>Clean <code>dc33b91</code> package · non-productive transport-veto classification · persisted work not loaded · Build disabled · screenshot SHA-256 <code>e171e5ef…0fd58</code>.</figcaption>
       </figure>
     </section>
 
