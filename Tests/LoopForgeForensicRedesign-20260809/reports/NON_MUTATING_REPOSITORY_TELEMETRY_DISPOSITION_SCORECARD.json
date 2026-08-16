@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-16T15:12:16Z",
+  "status": "source-non-mutating-repository-telemetry-disposition-pass-package-native-pending",
+  "source": {
+    "commit": "7a6e1d6c20c4ccfe3260803cdeef6d1bac989920",
+    "commitPatchSHA256": "d40c75dc664e4cb6db40a15983950dd0b7ff9b6e6800e7a23091a4403af28bf3",
+    "nativeProviderHarnessSelectionSHA256": "326c350f26403b35b6a151db72435f2d8fea3c3bc1a15cc40dee0e6730f6082e",
+    "appModelSHA256": "a2830be21de058aca9da1705472027650024998610c95a41d9a66543eb834bd3",
+    "viewsSHA256": "efe04ab939e866b9ab92fdad37844da51808ce6cabe65a8a01e11a2ba35ff5f5",
+    "selectionTestsSHA256": "621473e145614bb83a8a587cf6004929cdcaded2f5e08275326142fdcd5f7e17",
+    "packageScriptSHA256": "6b245e08bc05dae0966b5c0684a765367973df3460899e218cdc41eeca5ef98e",
+    "smokeScriptSHA256": "d730f30d090a5584610e7f0e469f5ba44321f0ae278869aa6666cc8bf03fce39"
+  },
+  "disposition": {
+    "rawValue": "nonMutatingNotApplicable",
+    "resolvedRepositoryGenerationTelemetryRequired": false,
+    "resolvedOrCacheHitCaseExistsInReleaseEnum": false,
+    "historicalAcceptedTransitionMayStillResolve": true,
+    "acceptedTransitionMayBeManufactured": false,
+    "notApplicableRunMayBeRelabeledResolved": false,
+    "unavailableStateFailsClosed": true,
+    "buildManifestFieldRequired": true,
+    "providerManifestFieldRequired": true,
+    "forgedResolvedRequirementRejected": true,
+    "relabeledDispositionRejected": true,
+    "crossValidatedWithWorkspaceMutationVeto": true
+  },
+  "runtimeCacheProof": {
+    "issuer": "RunJournal accepted workspace transition",
+    "sameOpaqueGenerationComputesOnce": true,
+    "sameOpaqueGenerationSecondDisposition": "memoryHit",
+    "changedGenerationRecomputes": true,
+    "missingGenerationDisposition": "uncachedObservation",
+    "missingGenerationCacheLookupCount": 0,
+    "crossRootReuseRejected": true,
+    "incompleteJournalProvenanceRejected": true
+  },
+  "tests": {
+    "focusedManifestClassification": {"executed": 10, "failures": 0, "seconds": 0.016, "logSHA256": "9256aa5645011f9dd978a0a9b089ca364e90adfa5de148e363b732f7d0b69d83"},
+    "focusedRepositoryIndexer": {"executed": 5, "failures": 0, "seconds": 0.010, "logSHA256": "1f1bb77a01c26fe2915acea4f9dc2b9b62f369892159d695e4c42d1cc97cded9"},
+    "focusedExactRunPresentation": {"executed": 4, "failures": 0, "seconds": 0.001, "logSHA256": "7096cdecce0f700d2e61a1a980ef1603de0aaf1f8d7a0c4dc27129b70a73452a"},
+    "completeSourceSuite": {"executed": 888, "skipped": 8, "failures": 0, "seconds": 87.936, "logSHA256": "6d735f9dabc7d39e6fd6b0e56236a112ed166cb78b6ccfafc20ba962d811deb4"}
+  },
+  "easyBusiness": {
+    "mutated": false,
+    "branch": "codex/USA_Version",
+    "head": "2ae40452e6d8661c46db466c43ea40bba3bfab04",
+    "nulDelimitedStatusSHA256": "2fe574a1dc8aec8b8df4bfd02da0d698b53ac941076553d58389f01daa35033a"
+  },
+  "sourceDecisionComplete": true,
+  "packageVerificationPending": true,
+  "nativeVerificationPending": true,
+  "finalAcceptance": false
+}
