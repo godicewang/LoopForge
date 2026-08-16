@@ -486,6 +486,14 @@ final class HostResourceLeaseTests: XCTestCase {
         XCTAssertEqual(errno, ESRCH)
     }
 
+    func testPackageSmokeLaunchesOnlyTheIsolatedInspectionProfile() throws {
+        let smoke = projectRoot.appendingPathComponent("Scripts/smoke_test.sh")
+        let source = try String(contentsOf: smoke, encoding: .utf8)
+
+        XCTAssertTrue(source.contains("probe_executable_startup.sh"))
+        XCTAssertTrue(source.contains("--isolated-inspection-profile"))
+    }
+
     func testCodexEnvironmentExposesBrokerButNotLeaseRegistry() async throws {
         let fixture = try makeFixture(states: [:])
         defer { try? FileManager.default.removeItem(at: fixture.directory) }

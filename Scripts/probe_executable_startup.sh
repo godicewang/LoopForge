@@ -1,12 +1,14 @@
 #!/bin/zsh
 set -euo pipefail
 
-if [[ $# -ne 1 || ! -x "$1" ]]; then
-  print -u2 "usage: probe_executable_startup.sh /path/to/executable"
+if [[ $# -lt 1 || ! -x "$1" ]]; then
+  print -u2 "usage: probe_executable_startup.sh /path/to/executable [arguments ...]"
   exit 64
 fi
 
 EXECUTABLE="$1"
+shift
+PROBE_ARGUMENTS=("$@")
 RUNTIME_LOG="$(mktemp /tmp/loopforge-executable-probe.XXXXXX.log)"
 RUNTIME_PID=""
 RUNTIME_EXITED=0
@@ -40,7 +42,7 @@ cleanup_runtime() {
 }
 trap cleanup_runtime EXIT INT TERM
 
-"$EXECUTABLE" --loopforge-package-smoke >"$RUNTIME_LOG" 2>&1 &
+"$EXECUTABLE" "${PROBE_ARGUMENTS[@]}" --loopforge-package-smoke >"$RUNTIME_LOG" 2>&1 &
 RUNTIME_PID=$!
 for _ in {1..20}; do
   (( RUNTIME_EXITED )) && report_early_exit

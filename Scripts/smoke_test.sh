@@ -72,6 +72,7 @@ ACTUAL_TEST_LOG_SHA="$(/usr/bin/shasum -a 256 "$TEST_LOG_PATH" | /usr/bin/awk '{
 # regression-tested with both a deliberately crashing executable and a live
 # executable, including child-process cleanup.
 zsh "$SCRIPT_DIR/probe_executable_startup.sh" \
-  "$APP_DIR/Contents/MacOS/LoopForge"
+  "$APP_DIR/Contents/MacOS/LoopForge" \
+  --isolated-inspection-profile
 
 print "Bundle and executable startup smoke test passed."
